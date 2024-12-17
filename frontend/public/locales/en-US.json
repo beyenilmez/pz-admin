@@ -1,0 +1,139 @@
+{
+  "save": "Save",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "show_in_explorer": "Show in Explorer",
+  "import": "Import",
+  "export": "Export",
+  "error": "Error",
+  "show": "Show",
+  "create": "Create",
+  "delete": "Delete",
+
+  "downloading_missing_external_programs": "Downloading missing external programs...",
+  "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
+
+  "nav": {
+    "my_packs": "My Packs",
+    "settings": "Settings"
+  },
+
+  "settings": {
+    "restart_the_app_for_changes_to_take_effect": "Restart the app for changes to take effect.",
+    "are_you_sure_you_want_to_import_this_config": "Are you sure you want to import this config?",
+    "the_app_will_restart_to_load_the_new_config": "The app will be restarted to load the new config.",
+    "config_saved": "Config saved",
+    "there_was_an_error_saving_the_config": "There was an error saving the config.",
+
+    "categories": {
+      "general": "General",
+      "application": "Application",
+      "advanced": "Advanced",
+      "update": "Update"
+    },
+
+    "setting": {
+      "language": {
+        "label": "Language",
+        "description": "Select your preferred language.",
+        "select_language": "Select language...",
+        "search_language": "Search language...",
+        "no_languages_found": "No languages found."
+      },
+
+      "theme": {
+        "label": "Theme",
+        "description": "Choose a color scheme for the interface."
+      },
+
+      "color_scheme": {
+        "label": "Color Scheme",
+        "description": "Select your preferred color scheme.",
+        "select_color_scheme": "Select color scheme...",
+        "search_color_scheme": "Search color scheme...",
+        "no_color_schemes_found": "No color schemes found.",
+
+        "color_schemes": {
+          "default": "Default",
+          "midnightAsh": "Midnight Ash",
+          "dawnMist": "Dawn Mist",
+          "forestDawn": "Forest Dawn",
+          "goldenEmber": "Golden Ember"
+        }
+      },
+
+      "window_effect": {
+        "label": "Window Effect",
+        "description": "Select the window effect.",
+
+        "auto": "Auto",
+        "none": "None",
+        "acrylic": "Acrylic",
+        "mica": "Mica",
+        "tabbed": "Tabbed"
+      },
+
+      "window_opacity": {
+        "label": "Window Opacity",
+        "description": "Adjust the window opacity. (This setting is ignored if 'None' is selected for window effect.)"
+      },
+
+      "window_scale": {
+        "label": "Window Scale",
+        "description": "Adjust the window scale."
+      },
+
+      "use_system_title_bar": {
+        "label": "Use System Title Bar",
+        "description": "Use the default system title bar instead of a custom one."
+      },
+
+      "logging": {
+        "label": "Enable Logging",
+        "description": "Enable logging to files."
+      },
+
+      "log_levels": {
+        "label": "Log Levels",
+        "description": "Select the log levels to record."
+      },
+
+      "max_log_files": {
+        "label": "Max Log Files",
+        "description": "Set the maximum number of log files to retain."
+      },
+
+      "import_export": {
+        "label": "Import/Export Settings",
+        "description": "Import or export settings your settings from/to a JSON file."
+      },
+
+      "save_window_status": {
+        "label": "Save Window Status",
+        "description": "Save window size, position, and state."
+      },
+
+      "check_for_updates": {
+        "label": "Check For Updates On Startup",
+        "description": "Check for updates on startup."
+      },
+
+      "update": {
+        "update_available": "Update available",
+        "no_updates_available": "No updates available",
+        "last_checked": "Last checked",
+        "check_for_updates": "Check for updates",
+        "update": "Update",
+        "updating": "Updating...",
+        "failed_to_check_for_updates": "Failed to check for updates. Please try again later.",
+        "failed_to_download_update": "Failed to download update. Please try again later.",
+        "failed_to_apply_update": "Failed to apply update.",
+        "update_applied": "Update applied successfully.",
+        "restarting": "Restarting...",
+        "need_admin_privileges": "Administration privileges are needed to update the application.",
+        "update_successful": "Update was successfully applied."
+      }
+    }
+  }
+}

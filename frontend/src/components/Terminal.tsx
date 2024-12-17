@@ -1,0 +1,178 @@
+import React, { useState, useRef, useEffect } from "react";
+import { SendRconCommand, GetAvailableCommands } from "@/wailsjs/go/main/App";
+import { ScrollArea } from "@/components/ui/scroll-area"; // ShadCN ScrollArea
+
+const TerminalPage: React.FC = () => {
+  const [output, setOutput] = useState<{ type: "command" | "response"; line: string }[]>([]);
+  const [currentInput, setCurrentInput] = useState<string>(""); // Input command
+  const [commandHistory, setCommandHistory] = useState<string[]>([]); // Stores entered commands
+  const [historyIndex, setHistoryIndex] = useState<number>(-1); // Tracks current position in history
+  const [commands, setCommands] = useState<string[]>([]); // Stores available commands for auto-completion
+  const [tabMatches, setTabMatches] = useState<string[]>([]); // Matches for Tab completion
+  const [tabIndex, setTabIndex] = useState<number>(-1); // Tracks current match during Tab traversal
+
+  const inputRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Fetch available commands on mount
+  useEffect(() => {
+    const fetchCommands = async () => {
+      const availableCommands = await GetAvailableCommands();
+      if (availableCommands) {
+        setCommands(availableCommands);
+      }
+    };
+    fetchCommands();
+  }, []);
+
+  // Scroll to bottom of output
+  const scrollToBottom = () => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Focus input field when terminal is clicked
+  useEffect(() => {
+    inputRef.current?.focus();
+    scrollToBottom();
+  }, [output]);
+
+  // Add lines to output with type
+  const addOutput = (line: string, type: "command" | "response") => {
+    const newLines = line.split("\n").map((l) => ({ type, line: l }));
+    setOutput((prev) => [...prev, ...newLines]);
+  };
+
+  // Move command to the end of the history
+  const moveCommandToEnd = (command: string) => {
+    setCommandHistory((prev) => {
+      const filteredHistory = prev.filter((cmd) => cmd !== command);
+      return [...filteredHistory, command];
+    });
+  };
+
+  // Handle Tab Auto-Completion Traversal
+  const handleTabCompletion = () => {
+    const trimmedInput = currentInput.trim();
+
+    // Start a new tab match search
+    if (tabIndex === -1) {
+      const matches = commands.filter((cmd) => cmd.startsWith(trimmedInput));
+      if (matches.length > 0) {
+        setTabMatches(matches);
+        setTabIndex(0);
+        setCurrentInput(matches[0]);
+      }
+    } else {
+      // Cycle through existing matches
+      const newIndex = (tabIndex + 1) % tabMatches.length;
+      setTabIndex(newIndex);
+      setCurrentInput(tabMatches[newIndex]);
+    }
+  };
+
+  // Reset Tab Matches when user types
+  const resetTabCompletion = (value: string) => {
+    setCurrentInput(value);
+    setTabMatches([]);
+    setTabIndex(-1);
+  };
+
+  // Handle key events
+  const handleKeyDown = async (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" && currentInput.trim()) {
+      const command = currentInput.trim();
+
+      // Move command to the end if it's from history
+      moveCommandToEnd(command);
+
+      // Display the command entered by the user
+      addOutput(`> ${command}`, "command");
+      resetTabCompletion(""); // Clear input and reset Tab matches
+      setHistoryIndex(-1); // Reset history index
+
+      try {
+        const response = await SendRconCommand(command);
+        addOutput(response !== "" ? response : "No output.", "response");
+      } catch (error) {
+        addOutput(`Error: ${error}`, "response");
+      }
+
+      scrollToBottom();
+    }
+
+    // Navigate command history with Up/Down keys
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      if (commandHistory.length > 0) {
+        const newIndex = historyIndex === -1 ? commandHistory.length - 1 : Math.max(0, historyIndex - 1);
+        setHistoryIndex(newIndex);
+        resetTabCompletion(commandHistory[newIndex]);
+      }
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      if (historyIndex > -1 && historyIndex < commandHistory.length - 1) {
+        const newIndex = historyIndex + 1;
+        setHistoryIndex(newIndex);
+        resetTabCompletion(commandHistory[newIndex]);
+      } else if (historyIndex === commandHistory.length - 1) {
+        setHistoryIndex(-1);
+        resetTabCompletion("");
+      }
+    }
+
+    // Auto-complete on Tab key
+    if (e.key === "Tab") {
+      e.preventDefault(); // Prevent default Tab behavior
+      handleTabCompletion();
+    }
+
+    // Clear current input with ESC key
+    if (e.key === "Escape") {
+      resetTabCompletion("");
+      setHistoryIndex(-1);
+    }
+  };
+
+  return (
+    <div
+      className="w-full h-[calc(100vh-5.5rem)] bg-black font-mono p-2 pb-1"
+      onClick={() => inputRef.current?.focus()}
+    >
+      {/* Scrollable Output */}
+      <ScrollArea className="h-[calc(100%-2rem)] w-full overflow-auto">
+        <div>
+          {output.map((entry, index) => (
+            <div
+              key={index}
+              className={
+                entry.type === "command"
+                  ? "text-green-500" // Brighter green for commands
+                  : "text-green-700" // Darker green for responses
+              }
+            >
+              {entry.line}
+            </div>
+          ))}
+          <div ref={scrollRef}></div>
+        </div>
+      </ScrollArea>
+
+      {/* Inline Input */}
+      <div className="flex">
+        <span className="text-green-400 mr-2 h-[2rem] flex items-center">$</span>
+        <input
+          ref={inputRef}
+          type="text"
+          spellCheck="false"
+          value={currentInput}
+          onChange={(e) => resetTabCompletion(e.target.value)}
+          onKeyDown={handleKeyDown}
+          className="w-full bg-transparent outline-none border-none text-green-400 h-[2rem]"
+          autoFocus
+        />
+      </div>
+    </div>
+  );
+};
+
+export default TerminalPage;

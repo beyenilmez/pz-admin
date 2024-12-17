@@ -1,0 +1,144 @@
+{
+  "save": "Kaydet",
+  "cancel": "İptal",
+  "yes": "Evet",
+  "no": "Hayır",
+  "show_in_explorer": "Klasörü aç",
+  "import": "İçe Aktar",
+  "export": "Dışa Aktar",
+  "error": "Hata",
+  "show": "Göster",
+  "create": "Oluştur",
+  "delete": "Sil",
+
+  "downloading_missing_external_programs": "Eksik dosyalar indiriliyor...",
+  "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",
+
+  "nav": {
+    "my_packs": "Paketlerim",
+    "settings": "Ayarlar"
+  },
+
+  "settings": {
+    "restart_the_app_for_changes_to_take_effect": "Değişikliklerin etkili olması için uygulamayı yeniden başlatın.",
+    "are_you_sure_you_want_to_import_this_config": "Bu ayarları yüklemek istediğinize emin misiniz?",
+    "the_app_will_restart_to_load_the_new_config": "Uygulama, yeni ayarları yüklemek için yeniden başlatılacak.",
+    "config_saved": "Ayarlar kaydedildi",
+    "there_was_an_error_saving_the_config": "Ayarlar kaydedilirken bir hata oluştu.",
+
+    "categories": {
+      "general": "Genel",
+      "application": "Uygulama",
+      "advanced": "Gelişmiş",
+      "update": "Güncelleme"
+    },
+
+    "setting": {
+      "language": {
+        "label": "Dil",
+        "description": "Tercih ettiğiniz dili seçin.",
+        "select_language": "Dil seçin...",
+        "search_language": "Dil ara...",
+        "no_languages_found": "Hiçbir dil bulunamadı."
+      },
+
+      "theme": {
+        "label": "Tema",
+        "description": "Arayüz için bir tema seçin."
+      },
+
+      "color_scheme": {
+        "label": "Renk Şeması",
+        "description": "Tercih ettiğiniz renk şemasını seçin.",
+        "select_color_scheme": "Renk şeması seçin...",
+        "search_color_scheme": "Renk şeması ara...",
+        "no_color_schemes_found": "Renk şeması bulunamadı.",
+
+        "color_schemes": {
+          "default": "Varsayılan",
+          "midnightAsh": "Gece Külü",
+          "dawnMist": "Şafak Sisi",
+          "forestDawn": "Orman Şafağı",
+          "goldenEmber": "Altın Kor"
+        }
+      },
+
+      "window_effect": {
+        "label": "Pencere Efekti",
+        "description": "Pencere efektini seçin.",
+
+        "auto": "Otomatik",
+        "none": "Yok",
+        "acrylic": "Akrilik",
+        "mica": "Mika",
+        "tabbed": "Tabbed"
+      },
+
+      "window_opacity": {
+        "label": "Pencere Opaklığı",
+        "description": "Pencere opaklığını ayarlayın. (Pencere efekti için 'Yok' seçilmişse bu ayar yok sayılır.)"
+      },
+
+      "window_scale": {
+        "label": "Pencere Ölçeği",
+        "description": "Pencere ölçeğini ayarlayın."
+      },
+
+      "use_system_title_bar": {
+        "label": "Sistem Başlık Çubuğunu Kullan",
+        "description": "Özel başlık çubuğu yerine varsayılan sistem başlık çubuğunu kullanın."
+      },
+
+      "logging": {
+        "label": "Günlüğe Kaydetmeyi Etkinleştir",
+        "description": "Dosyalara günlüğe kaydetmeyi etkinleştir."
+      },
+
+      "log_levels": {
+        "label": "Günlük Seviyeleri",
+        "description": "Kaydedilecek günlük seviyelerini seçin."
+      },
+
+      "max_log_files": {
+        "label": "Maksimum Günlük Dosyaları",
+        "description": "Tutulacak maksimum günlük dosyası sayısını ayarlayın."
+      },
+
+      "import_export": {
+        "label": "Ayarları İçe/Dışa Aktar",
+        "description": "Ayarlarınızı bir JSON dosyasından içe veya dışa aktarın."
+      },
+
+      "save_window_status": {
+        "label": "Pencere Durumunu Kaydet",
+        "description": "Pencere boyutunu, konumunu ve durumunu kaydet."
+      },
+
+      "match_by_destination": {
+        "label": "Kısayolları Hedeflerine Göre Eşleştir",
+        "description": "Dosya yolu ile eşleştirme başarısız olursa, kısayolları hedeflerine göre eşleştir."
+      },
+
+      "check_for_updates": {
+        "label": "Başlangıçta Güncellemeleri Kontrol Et",
+        "description": "Başlangıçta güncellemeleri kontrol et."
+      },
+
+      "update": {
+        "update_available": "Güncelleme mevcut",
+        "no_updates_available": "Güncelleme yok",
+        "last_checked": "Son kontrol",
+        "check_for_updates": "Güncellemeleri kontrol et",
+        "update": "Güncelle",
+        "updating": "Güncelleniyor...",
+        "failed_to_check_for_updates": "Güncellemeler kontrol edilemedi. Lütfen daha sonra tekrar deneyin.",
+        "failed_to_download_update": "Güncelleme indirilemedi. Lütfen daha sonra tekrar deneyin.",
+        "failed_to_apply_update": "Güncelleme uygulanamadı.",
+        "update_applied": "Güncelleme uygulandı.",
+        "restarting": "Yeniden başlatılıyor...",
+        "need_admin_privileges": "Uygulamayı güncellemek için yönetici yetkileri gereklidir.",
+        "update_successful": "Güncelleme başarıyla uygulandı."
+      }
+    }
+  }
+}

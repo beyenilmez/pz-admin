@@ -1,0 +1,19 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "pz-admin",
+  "outputfilename": "pz-admin",
+  "wailsjsdir": "./frontend/src",
+  "frontend:install": "yarn",
+  "frontend:build": "yarn build",
+  "frontend:dev:watcher": "yarn dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Bedirhan Yenilmez",
+    "email": "yenilmezbedirhan@gmail.com"
+  },
+  "info": {
+    "productName": "PZ Admin",
+    "productVersion": "1.0.0",
+    "copyright": "Copyright © 2024 Bedirhan Yenilmez"
+  }
+}

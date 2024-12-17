@@ -1,0 +1,14 @@
+{
+    "locales": [
+        {
+            "name": "English",
+            "code": "en-US",
+            "authors": ["Bedirhan Yenilmez"]
+        },
+        {
+            "name": "Türkçe",
+            "code": "tr-TR",
+            "authors": ["Bedirhan Yenilmez"]
+        }
+    ]
+}

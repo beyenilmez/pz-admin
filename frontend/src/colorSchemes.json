@@ -1,0 +1,24 @@
+{
+  "colorSchemes": [
+    {
+      "code": "default",
+      "authors": ["Bedirhan Yenilmez"]
+    },
+    {
+      "code": "midnightAsh",
+      "authors": ["Bedirhan Yenilmez"]
+    },
+    {
+      "code": "dawnMist",
+      "authors": ["Bedirhan Yenilmez"]
+    },
+    {
+      "code": "forestDawn",
+      "authors": ["Bedirhan Yenilmez"]
+    },
+    {
+      "code": "goldenEmber",
+      "authors": ["Bedirhan Yenilmez"]
+    }
+  ]
+}
