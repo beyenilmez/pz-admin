@@ -1,29 +1,71 @@
 import React, { useState, useRef, useEffect } from "react";
-import { SendRconCommand, GetAvailableCommands } from "@/wailsjs/go/main/App";
+import { useRcon } from "@/contexts/rcon-provider";
 import { ScrollArea } from "@/components/ui/scroll-area"; // ShadCN ScrollArea
 
+const commands = [
+  "additem",
+  "adduser",
+  "addvehicle",
+  "addxp",
+  "alarm",
+  "banid",
+  "banuser",
+  "changeoption",
+  "checkModsNeedUpdate",
+  "chopper",
+  "clear",
+  "createhorde",
+  "createhorde2",
+  "godmod",
+  "grantadmin",
+  "gunshot",
+  "help",
+  "invisible",
+  "kick",
+  "lightning",
+  "log",
+  "noclip",
+  "players",
+  "quit",
+  "releasesafehouse",
+  "reloadlua",
+  "reloadoptions",
+  "removeadmin",
+  "removeuserfromwhitelist",
+  "removezombies",
+  "replay",
+  "save",
+  "servermsg",
+  "setaccesslevel",
+  "showoptions",
+  "startrain",
+  "startstorm",
+  "stats",
+  "stoprain",
+  "stopweather",
+  "teleport",
+  "teleportto",
+  "thunder",
+  "unbanid",
+  "unbanuser",
+  "voiceban",
+];
+
 const TerminalPage: React.FC = () => {
-  const [output, setOutput] = useState<{ type: "command" | "response"; line: string }[]>([]);
+  const { sendCommand } = useRcon();
+
+  const [output, setOutput] = useState<{ type: "command" | "response" | "info" | "error"; line: string }[]>([
+    { type: "info", line: "Welcome, type 'help' for commands or 'cls' to clear the terminal." },
+    { type: "info", line: "You can use tab for auto-completion and up/down keys to navigate command history." },
+  ]);
   const [currentInput, setCurrentInput] = useState<string>(""); // Input command
   const [commandHistory, setCommandHistory] = useState<string[]>([]); // Stores entered commands
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // Tracks current position in history
-  const [commands, setCommands] = useState<string[]>([]); // Stores available commands for auto-completion
   const [tabMatches, setTabMatches] = useState<string[]>([]); // Matches for Tab completion
   const [tabIndex, setTabIndex] = useState<number>(-1); // Tracks current match during Tab traversal
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Fetch available commands on mount
-  useEffect(() => {
-    const fetchCommands = async () => {
-      const availableCommands = await GetAvailableCommands();
-      if (availableCommands) {
-        setCommands(availableCommands);
-      }
-    };
-    fetchCommands();
-  }, []);
 
   // Scroll to bottom of output
   const scrollToBottom = () => {
@@ -37,7 +79,7 @@ const TerminalPage: React.FC = () => {
   }, [output]);
 
   // Add lines to output with type
-  const addOutput = (line: string, type: "command" | "response") => {
+  const addOutput = (line: string, type: "command" | "response" | "info" | "error") => {
     const newLines = line.split("\n").map((l) => ({ type, line: l }));
     setOutput((prev) => [...prev, ...newLines]);
   };
@@ -54,19 +96,22 @@ const TerminalPage: React.FC = () => {
   const handleTabCompletion = () => {
     const trimmedInput = currentInput.trim();
 
+    const words = trimmedInput.split(" ");
+    const lastWord = words[words.length - 1];
+
     // Start a new tab match search
     if (tabIndex === -1) {
-      const matches = commands.filter((cmd) => cmd.startsWith(trimmedInput));
+      const matches = commands.filter((cmd) => cmd.startsWith(lastWord));
       if (matches.length > 0) {
         setTabMatches(matches);
         setTabIndex(0);
-        setCurrentInput(matches[0]);
+        setCurrentInput((words.slice(0, words.length - 1).join(" ") + " " + matches[0]).trim());
       }
     } else {
       // Cycle through existing matches
       const newIndex = (tabIndex + 1) % tabMatches.length;
       setTabIndex(newIndex);
-      setCurrentInput(tabMatches[newIndex]);
+      setCurrentInput((words.slice(0, words.length - 1).join(" ") + " " + tabMatches[newIndex]).trim());
     }
   };
 
@@ -91,10 +136,18 @@ const TerminalPage: React.FC = () => {
       setHistoryIndex(-1); // Reset history index
 
       try {
-        const response = await SendRconCommand(command);
-        addOutput(response !== "" ? response : "No output.", "response");
+        if (command === "cls") {
+          setOutput([]);
+        } else {
+          const response = await sendCommand(command);
+          if (response) {
+            addOutput(response, "response");
+          } else {
+            addOutput("No response.", "error");
+          }
+        }
       } catch (error) {
-        addOutput(`Error: ${error}`, "response");
+        addOutput(`Error: ${error}`, "error");
       }
 
       scrollToBottom();
@@ -135,7 +188,7 @@ const TerminalPage: React.FC = () => {
 
   return (
     <div
-      className="w-full h-[calc(100vh-5.5rem)] bg-black font-mono p-2 pb-1"
+      className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 font-mono p-2 pb-1"
       onClick={() => inputRef.current?.focus()}
     >
       {/* Scrollable Output */}
@@ -146,8 +199,12 @@ const TerminalPage: React.FC = () => {
               key={index}
               className={
                 entry.type === "command"
-                  ? "text-green-500" // Brighter green for commands
-                  : "text-green-700" // Darker green for responses
+                  ? "text-green-400" // Brighter green for commands
+                  : entry.type === "response"
+                  ? "text-green-700"
+                  : entry.type === "info"
+                  ? "text-blue-500"
+                  : "text-red-500" // Darker green for responses
               }
             >
               {entry.line}

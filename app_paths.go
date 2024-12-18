@@ -16,6 +16,7 @@ var tempFolder string
 var externalFolder string
 var configPath string
 var appIconPath string
+var credentialsPath string
 
 func path_init() error {
 	appData, err := os.UserConfigDir()
@@ -33,6 +34,7 @@ func path_init() error {
 
 	configPath = filepath.Join(appFolder, "config.json")
 	appIconPath = filepath.Join(appFolder, "appicon.png")
+	credentialsPath = filepath.Join(appFolder, "credentials.json")
 
 	runtime.LogTrace(appContext, "Attempting to create folders")
 	err = create_folder(appFolder)

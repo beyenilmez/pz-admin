@@ -1,6 +1,6 @@
 import { RestartApplication } from "@/wailsjs/go/main/App";
-import { WindowMinimise, WindowToggleMaximise, Quit } from "@/wailsjs/runtime/runtime";
-import { Minus, Copy, X, RotateCcw } from "lucide-react";
+import { WindowMinimise, WindowToggleMaximise, Quit, WindowIsMaximised } from "@/wailsjs/runtime/runtime";
+import { Minus, Copy, X, RotateCcw, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import icon from "../assets/appicon.png";
 import { useEffect, useState } from "react";
@@ -11,6 +11,7 @@ import { useConfig } from "@/contexts/config-provider";
 export default function TitleBar() {
   const { initialConfig } = useConfig();
   const [useSystemTitleBar, setUseSystemTitleBar] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(false);
   const { restartRequired } = useRestart();
   const { getValue } = useStorage();
 
@@ -20,11 +21,24 @@ export default function TitleBar() {
     }
   }, [initialConfig?.useSystemTitleBar]);
 
+  useEffect(() => {
+    handleWindowChange();
+
+    window.addEventListener("resize", handleWindowChange);
+  }, []);
+
+  const handleWindowChange = () => {
+    WindowIsMaximised().then((isMaximized) => setIsMaximized(isMaximized));
+  };
+
   return (
     !useSystemTitleBar && (
       <header
         className="flex justify-between items-center bg-muted pl-3 w-full h-8 wails-drag"
-        onDoubleClick={() => WindowToggleMaximise()}
+        onDoubleClick={() => {
+          WindowToggleMaximise();
+          handleWindowChange();
+        }}
       >
         <h1 className="flex items-center gap-1.5 mt-2.5 font-semibold select-none">
           <img src={icon} className="w-5 h-5" />
@@ -33,7 +47,10 @@ export default function TitleBar() {
         <div className="wails-nodrag">
           <Button
             size={"icon"}
-            onClick={() => WindowMinimise()}
+            onClick={() => {
+              WindowMinimise();
+              handleWindowChange();
+            }}
             variant={"ghost"}
             className="hover:dark:brightness-150 hover:brightness-75 rounded-none h-8 cursor-default"
           >
@@ -41,11 +58,14 @@ export default function TitleBar() {
           </Button>
           <Button
             size={"icon"}
-            onClick={() => WindowToggleMaximise()}
+            onClick={() => {
+              WindowToggleMaximise();
+              handleWindowChange();
+            }}
             variant={"ghost"}
             className="hover:dark:brightness-150 hover:brightness-75 rounded-none h-8 cursor-default"
           >
-            <Copy size={"1rem"} className="rotate-90" />
+            {isMaximized ? <Copy size={"1rem"} className="rotate-90" /> : <Square size={"1rem"} />}
           </Button>
           <Button
             size={"icon"}
