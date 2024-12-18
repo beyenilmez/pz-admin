@@ -27,6 +27,7 @@ func (app *App) ConnectRcon(ip, port, password string) bool {
 	conn, err = rcon.Dial(ip+":"+port, password)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error connecting to RCON: "+err.Error())
+		app.SendNotification("RCON connection failed", err.Error(), "", "error")
 		return false
 	}
 
@@ -37,6 +38,7 @@ func (app *App) ConnectRcon(ip, port, password string) bool {
 		go app.watchConnection()
 	}
 
+	app.SendNotification("RCON connection established", "", "", "success")
 	return true
 }
 
