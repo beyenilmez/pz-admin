@@ -26,6 +26,7 @@ export namespace main {
 	    lastUpdateCheck?: number;
 	    rememberCredentials?: boolean;
 	    autoConnect?: boolean;
+	    rconCheckInterval?: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -58,6 +59,7 @@ export namespace main {
 	        this.lastUpdateCheck = source["lastUpdateCheck"];
 	        this.rememberCredentials = source["rememberCredentials"];
 	        this.autoConnect = source["autoConnect"];
+	        this.rconCheckInterval = source["rconCheckInterval"];
 	    }
 	}
 	export class Credentials {

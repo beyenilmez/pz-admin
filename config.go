@@ -37,6 +37,7 @@ type Config struct {
 	LastUpdateCheck      *int    `json:"lastUpdateCheck"`      // unix timestamp
 	RememberCredentials  *bool   `json:"rememberCredentials"`  // true, false
 	AutoConnect          *bool   `json:"autoConnect"`          // true, false
+	RconCheckInterval    *int    `json:"rconCheckInterval"`    // seconds
 }
 
 func GetDefaultConfig() Config {
@@ -65,6 +66,7 @@ func GetDefaultConfig() Config {
 	defaultLastUpdateCheck := 0
 	defaultRememberCredentials := false
 	defaultAutoConnect := false
+	defaultRconCheckInterval := 10
 
 	return Config{
 		Theme:                &defaultTheme,
@@ -92,6 +94,7 @@ func GetDefaultConfig() Config {
 		LastUpdateCheck:      &defaultLastUpdateCheck,
 		RememberCredentials:  &defaultRememberCredentials,
 		AutoConnect:          &defaultAutoConnect,
+		RconCheckInterval:    &defaultRconCheckInterval,
 	}
 }
 

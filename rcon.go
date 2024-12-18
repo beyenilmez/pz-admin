@@ -104,7 +104,7 @@ func (app *App) watchConnection() {
 			// Stop signal received, exit the goroutine
 			runtime.LogInfo(app.ctx, "Stopping RCON connection watcher")
 			return
-		case <-time.After(5 * time.Second):
+		case <-time.After(time.Duration(*config.RconCheckInterval) * time.Second):
 			connMutex.Lock()
 			if conn == nil {
 				connMutex.Unlock()
