@@ -2,21 +2,19 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import TerminalPage from "./Terminal";
 import { useRcon } from "@/contexts/rcon-provider";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 
 export default function AdminPanel() {
-  const { isConnected, connect, disconnect } = useRcon();
+  const { isConnected, disconnect, ip, port } = useRcon();
 
   const { t } = useTranslation();
   const [tab, setTab] = useState("connection");
-
-  const [ip, setIp] = useState("");
-  const [port, setPort] = useState("");
-  const [password, setPassword] = useState("");
 
   const [settingsState, setSettingsState] = useState<number>(0);
   const [sandboxState, setSandboxState] = useState<number>(0);
@@ -30,25 +28,18 @@ export default function AdminPanel() {
   }, [tab]);
 
   useEffect(() => {
-    if (!isConnected) {
+    if (isConnected) {
+      setSettingsState(settingsState + 1);
+      setSandboxState(sandboxState + 1);
+      setTerminalState(terminalState + 1);
+      setTab("terminal");
+    } else {
       setTab("connection");
       setSettingsState(settingsState + 1);
       setSandboxState(sandboxState + 1);
       setTerminalState(terminalState + 1);
     }
   }, [isConnected]);
-
-  const handleConnect = async () => {
-    if (!ip || !password) return;
-
-    const success = await connect(ip, port || "16261", password);
-    if (success) {
-      setSettingsState(settingsState + 1);
-      setSandboxState(sandboxState + 1);
-      setTerminalState(terminalState + 1);
-      setTab("terminal");
-    }
-  };
 
   const handleDisconnect = async () => {
     disconnect();
@@ -108,51 +99,132 @@ export default function AdminPanel() {
           <TerminalPage />
         </div>
         <div className={tab === "connection" ? "block" : "hidden"}>
-          <div className="flex w-full h-[calc(100vh-12rem)] items-center justify-center">
-            <Card className="bg-transparent border-none w-1/2">
-              <CardHeader>
-                <CardTitle className="text-2xl">Connect to your server</CardTitle>
-                <CardDescription>Enter your server details below to connect</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <div className="flex flex-col gap-6">
-                    <div className="grid gap-2">
-                      <Label htmlFor="ip">Server IP or Domain</Label>
-                      <Input
-                        onChange={(e) => setIp(e.target.value)}
-                        id="ip"
-                        type="text"
-                        placeholder="127.0.0.1"
-                        required
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <Label htmlFor="port">RCON Port</Label>
-                      <Input
-                        onChange={(e) => setPort(e.target.value)}
-                        id="port"
-                        type="text"
-                        placeholder="16261"
-                        required
-                      />
-                    </div>
-                    <div className="grid gap-2">
-                      <div className="flex items-center">
-                        <Label htmlFor="password">RCON Password</Label>
-                      </div>
-                      <Input onChange={(e) => setPassword(e.target.value)} id="password" type="text" required />
-                    </div>
-                    <Button type="button" className="w-full" onClick={handleConnect} disabled={!ip || !password}>
-                      Connect
-                    </Button>
-                  </div>
-                </form>
-              </CardContent>
-            </Card>
-          </div>
+          <ConnectionForm />
         </div>
       </div>
     </Tabs>
+  );
+}
+
+type ConnectionCredentials = {
+  ip: string;
+  port: string;
+  password: string;
+};
+
+interface ConnectionFormProps {
+  defaultValues?: ConnectionCredentials;
+}
+
+function isIpOrDomain(value: string): boolean {
+  // Validates IPv4
+  const ipRegex =
+    /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
+  // Validates Domain
+  const domainRegex = /^(?!-)([a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$/;
+
+  return ipRegex.test(value) || domainRegex.test(value);
+}
+
+function ConnectionForm({ defaultValues }: ConnectionFormProps) {
+  const { isConnected, connect } = useRcon();
+  const { t } = useTranslation();
+
+  // Define form schema
+  const formSchema = z.object({
+    ip: z
+      .string()
+      .min(1, { message: t("(IP or Domain is required)") })
+      .max(253, { message: t("(IP or Domain is too long)") })
+      .refine((value) => isIpOrDomain(value), { message: t("(Invalid IP or Domain)") }),
+    port: z.string().refine((value) => !isNaN(Number(value)) && Number(value) <= 65535 && Number(value) >= 0, {
+      message: t("(Invalid port)"),
+    }),
+    password: z.string().min(1, { message: t("(Password is required)") }),
+  });
+
+  // Initialize form
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      ip: defaultValues?.ip || "",
+      port: defaultValues?.port || "",
+      password: defaultValues?.password || "",
+    },
+  });
+
+  // Handle form submission
+  function onSubmit(data: z.infer<typeof formSchema>) {
+    if (!isConnected) {
+      connect(data.ip, data.port.toString(), data.password);
+    }
+  }
+
+  return (
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(onSubmit)}
+        className="flex w-full h-[calc(100vh-12rem)] items-center justify-center"
+        autoComplete="off"
+      >
+        <div className="w-1/2 space-y-4">
+          <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
+          <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
+
+          {/* IP or Domain Field */}
+          <FormField
+            control={form.control}
+            name="ip"
+            render={({ field }) => (
+              <FormItem className="flex flex-col w-full space-y-0">
+                <div className="flex h-8 items-center gap-1">
+                  <FormLabel>{t("Server IP or Domain")}</FormLabel>
+                  <FormMessage />
+                </div>
+                <FormControl>
+                  <Input type="text" placeholder={t("127.0.0.1")} {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* Port Field */}
+          <FormField
+            control={form.control}
+            name="port"
+            render={({ field }) => (
+              <FormItem className="flex flex-col w-full space-y-0">
+                <div className="flex h-8 items-center gap-1">
+                  <FormLabel>{t("RCON Port")}</FormLabel>
+                  <FormMessage />
+                </div>
+                <FormControl>
+                  <Input type="number" inputMode="numeric" min={0} max={65535} placeholder={t("16261")} {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* Password Field */}
+          <FormField
+            control={form.control}
+            name="password"
+            render={({ field }) => (
+              <FormItem className="flex flex-col w-full space-y-0">
+                <div className="flex h-8 items-center gap-1">
+                  <FormLabel>{t("RCON Password")}</FormLabel>
+                  <FormMessage />
+                </div>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+          {/* Submit Button */}
+          <Button type="submit" className="w-full" disabled={isConnected}>
+            {isConnected ? t("Connected") : t("Connect")}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }

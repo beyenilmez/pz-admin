@@ -1,4 +1,13 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode, Dispatch, SetStateAction } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+} from "react";
 import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
 
 interface RconContextType {
@@ -7,16 +16,24 @@ interface RconContextType {
   connect: (ip: string, port: string, password: string) => Promise<boolean>;
   disconnect: () => Promise<boolean>;
   sendCommand: (command: string) => Promise<string | null>;
+  ip: string;
+  port: string;
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
 
 export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isConnected, setIsConnected] = useState(false);
+  const [ip, setIp] = useState("");
+  const [port, setPort] = useState("");
 
   const connect = useCallback(async (ip: string, port: string, password: string): Promise<boolean> => {
     try {
       const result = await ConnectRcon(ip, port || "16261", password);
+      if (result) {
+        setIp(ip);
+        setPort(port);
+      }
       setIsConnected(result);
       return result;
     } catch (error) {
@@ -52,8 +69,15 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     [isConnected]
   );
 
+  useEffect(() => {
+    if (!isConnected) {
+      setIp("");
+      setPort("");
+    }
+  }, [isConnected]);
+
   return (
-    <RconContext.Provider value={{ isConnected, setIsConnected, connect, disconnect, sendCommand }}>
+    <RconContext.Provider value={{ isConnected, setIsConnected, connect, disconnect, sendCommand, ip, port }}>
       {children}
     </RconContext.Provider>
   );
