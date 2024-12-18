@@ -6,8 +6,12 @@ export function CheckForUpdate() {
   return window['go']['main']['App']['CheckForUpdate']();
 }
 
-export function ConnectRcon(arg1, arg2, arg3) {
-  return window['go']['main']['App']['ConnectRcon'](arg1, arg2, arg3);
+export function ConnectRcon(arg1) {
+  return window['go']['main']['App']['ConnectRcon'](arg1);
+}
+
+export function DeleteCredentials() {
+  return window['go']['main']['App']['DeleteCredentials']();
 }
 
 export function DisconnectRcon() {
@@ -34,6 +38,10 @@ export function IsRconConnected() {
   return window['go']['main']['App']['IsRconConnected']();
 }
 
+export function LoadCredentials() {
+  return window['go']['main']['App']['LoadCredentials']();
+}
+
 export function OpenFileInExplorer(arg1) {
   return window['go']['main']['App']['OpenFileInExplorer'](arg1);
 }
@@ -48,6 +56,10 @@ export function RestartApplication(arg1) {
 
 export function SaveConfigDialog() {
   return window['go']['main']['App']['SaveConfigDialog']();
+}
+
+export function SaveCredentials(arg1) {
+  return window['go']['main']['App']['SaveCredentials'](arg1);
 }
 
 export function SendNotification(arg1, arg2, arg3, arg4) {

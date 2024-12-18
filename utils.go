@@ -1,7 +1,14 @@
 package main
 
 import (
+	"crypto/aes"
+	"crypto/cipher"
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
+	"io"
 	"os"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -40,4 +47,55 @@ func create_folder(folder string) error {
 	runtime.LogDebug(appContext, "Created folder: "+folder)
 
 	return nil
+}
+
+func generateKey(passphrase string) []byte {
+	hash := sha256.Sum256([]byte(passphrase))
+	return hash[:]
+}
+
+func Encrypt(plaintext, key string) (string, error) {
+	aesKey := generateKey(key)
+	block, err := aes.NewCipher(aesKey)
+	if err != nil {
+		return "", err
+	}
+
+	ciphertext := make([]byte, aes.BlockSize+len(plaintext))
+	iv := ciphertext[:aes.BlockSize]
+	if _, err := io.ReadFull(rand.Reader, iv); err != nil {
+		return "", err
+	}
+
+	stream := cipher.NewCFBEncrypter(block, iv)
+	stream.XORKeyStream(ciphertext[aes.BlockSize:], []byte(plaintext))
+
+	// Base64 encode the ciphertext
+	return base64.StdEncoding.EncodeToString(ciphertext), nil
+}
+
+func Decrypt(encryptedText, key string) (string, error) {
+	aesKey := generateKey(key)
+	block, err := aes.NewCipher(aesKey)
+	if err != nil {
+		return "", err
+	}
+
+	// Base64 decode the encrypted text
+	ciphertext, err := base64.StdEncoding.DecodeString(encryptedText)
+	if err != nil {
+		return "", err
+	}
+
+	if len(ciphertext) < aes.BlockSize {
+		return "", errors.New("ciphertext too short")
+	}
+
+	iv := ciphertext[:aes.BlockSize]
+	ciphertext = ciphertext[aes.BlockSize:]
+
+	stream := cipher.NewCFBDecrypter(block, iv)
+	stream.XORKeyStream(ciphertext, ciphertext)
+
+	return string(ciphertext), nil
 }

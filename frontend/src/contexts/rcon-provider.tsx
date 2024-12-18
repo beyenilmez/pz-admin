@@ -9,11 +9,12 @@ import React, {
   useEffect,
 } from "react";
 import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
+import { main } from "@/wailsjs/go/models";
 
 interface RconContextType {
   isConnected: boolean;
   setIsConnected: Dispatch<SetStateAction<boolean>>; // Explicit state setter for external control
-  connect: (ip: string, port: string, password: string) => Promise<boolean>;
+  connect: (credentials: main.Credentials) => Promise<boolean>;
   disconnect: () => Promise<boolean>;
   sendCommand: (command: string) => Promise<string | null>;
   ip: string;
@@ -27,12 +28,12 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [ip, setIp] = useState("");
   const [port, setPort] = useState("");
 
-  const connect = useCallback(async (ip: string, port: string, password: string): Promise<boolean> => {
+  const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {
-      const result = await ConnectRcon(ip, port || "16261", password);
+      const result = await ConnectRcon(credentials);
       if (result) {
-        setIp(ip);
-        setPort(port);
+        setIp(credentials.ip);
+        setPort(credentials.port);
       }
       setIsConnected(result);
       return result;

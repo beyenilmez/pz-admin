@@ -9,6 +9,10 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { main } from "@/wailsjs/go/models";
+import { Checkbox } from "./ui/checkbox";
+import { DeleteCredentials, LoadCredentials, SaveCredentials } from "@/wailsjs/go/main/App";
+import { useConfig } from "@/contexts/config-provider";
 
 export default function AdminPanel() {
   const { isConnected, disconnect, ip, port } = useRcon();
@@ -106,16 +110,6 @@ export default function AdminPanel() {
   );
 }
 
-type ConnectionCredentials = {
-  ip: string;
-  port: string;
-  password: string;
-};
-
-interface ConnectionFormProps {
-  defaultValues?: ConnectionCredentials;
-}
-
 function isIpOrDomain(value: string): boolean {
   // Validates IPv4
   const ipRegex =
@@ -126,9 +120,34 @@ function isIpOrDomain(value: string): boolean {
   return ipRegex.test(value) || domainRegex.test(value);
 }
 
+interface ConnectionFormProps {
+  defaultValues?: main.Credentials;
+}
+
 function ConnectionForm({ defaultValues }: ConnectionFormProps) {
   const { isConnected, connect } = useRcon();
   const { t } = useTranslation();
+
+  const { config, setConfigField } = useConfig();
+  const [oneTime, setOneTime] = useState(true);
+
+  useEffect(() => {
+    if (config && oneTime) {
+      setOneTime(false);
+      LoadCredentials().then((credentials) => {
+        if (credentials && credentials.ip && credentials.password)
+          form.reset({
+            ip: credentials?.ip || "",
+            port: credentials?.port || "",
+            password: credentials?.password || "",
+          });
+
+        if (config?.autoConnect) {
+          connect(credentials);
+        }
+      });
+    }
+  }, [oneTime, config]);
 
   // Define form schema
   const formSchema = z.object({
@@ -156,7 +175,13 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
   // Handle form submission
   function onSubmit(data: z.infer<typeof formSchema>) {
     if (!isConnected) {
-      connect(data.ip, data.port.toString(), data.password);
+      connect(data).then((success) => {
+        if (success && config?.rememberCredentials) {
+          SaveCredentials(data);
+        } else if (!config?.rememberCredentials) {
+          DeleteCredentials();
+        }
+      });
     }
   }
 
@@ -219,6 +244,35 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               </FormItem>
             )}
           />
+          {/* Save Credentials */}
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={config?.rememberCredentials || false}
+              onCheckedChange={(state: boolean) => setConfigField("rememberCredentials", state)}
+              id="save-credentials"
+            />
+            <label
+              htmlFor="save-credentials"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Save credentials
+            </label>
+          </div>
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              checked={config?.autoConnect || false}
+              onCheckedChange={(state: boolean) => setConfigField("autoConnect", state)}
+              id="auto-connect"
+              disabled={config?.rememberCredentials === false}
+            />
+            <label
+              htmlFor="auto-connect"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+            >
+              Automatically connect on startup
+            </label>
+          </div>
+
           {/* Submit Button */}
           <Button type="submit" className="w-full" disabled={isConnected}>
             {isConnected ? t("Connected") : t("Connect")}

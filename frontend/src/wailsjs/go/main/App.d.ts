@@ -4,7 +4,9 @@ import {main} from '../models';
 
 export function CheckForUpdate():Promise<main.UpdateInfo>;
 
-export function ConnectRcon(arg1:string,arg2:string,arg3:string):Promise<boolean>;
+export function ConnectRcon(arg1:main.Credentials):Promise<boolean>;
+
+export function DeleteCredentials():Promise<boolean>;
 
 export function DisconnectRcon():Promise<boolean>;
 
@@ -18,6 +20,8 @@ export function GetVersion():Promise<string>;
 
 export function IsRconConnected():Promise<boolean>;
 
+export function LoadCredentials():Promise<main.Credentials>;
+
 export function OpenFileInExplorer(arg1:string):Promise<void>;
 
 export function ReadConfig(arg1:string):Promise<void>;
@@ -25,6 +29,8 @@ export function ReadConfig(arg1:string):Promise<void>;
 export function RestartApplication(arg1:Array<string>):Promise<void>;
 
 export function SaveConfigDialog():Promise<void>;
+
+export function SaveCredentials(arg1:main.Credentials):Promise<boolean>;
 
 export function SendNotification(arg1:string,arg2:string,arg3:string,arg4:string):Promise<void>;
 

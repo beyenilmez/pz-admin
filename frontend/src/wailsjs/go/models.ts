@@ -24,6 +24,8 @@ export namespace main {
 	    windowEffect?: number;
 	    checkForUpdates?: boolean;
 	    lastUpdateCheck?: number;
+	    rememberCredentials?: boolean;
+	    autoConnect?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -54,6 +56,24 @@ export namespace main {
 	        this.windowEffect = source["windowEffect"];
 	        this.checkForUpdates = source["checkForUpdates"];
 	        this.lastUpdateCheck = source["lastUpdateCheck"];
+	        this.rememberCredentials = source["rememberCredentials"];
+	        this.autoConnect = source["autoConnect"];
+	    }
+	}
+	export class Credentials {
+	    ip: string;
+	    port: string;
+	    password: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Credentials(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.ip = source["ip"];
+	        this.port = source["port"];
+	        this.password = source["password"];
 	    }
 	}
 	export class UpdateInfo {

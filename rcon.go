@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"sync"
 	"time"
 
@@ -15,8 +16,14 @@ var (
 	stopWatching chan struct{}
 )
 
-func (app *App) ConnectRcon(ip, port, password string) bool {
-	if ip == "" || port == "" || password == "" {
+type Credentials struct {
+	IP       string `json:"ip"`
+	Port     string `json:"port"`
+	Password string `json:"password"` // Encrypted
+}
+
+func (app *App) ConnectRcon(credentials Credentials) bool {
+	if credentials.IP == "" || credentials.Port == "" || credentials.Password == "" {
 		return false
 	}
 
@@ -24,7 +31,7 @@ func (app *App) ConnectRcon(ip, port, password string) bool {
 	defer connMutex.Unlock()
 
 	var err error
-	conn, err = rcon.Dial(ip+":"+port, password)
+	conn, err = rcon.Dial(credentials.IP+":"+credentials.Port, credentials.Password)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error connecting to RCON: "+err.Error())
 		app.SendNotification("RCON connection failed", err.Error(), "", "error")
@@ -118,4 +125,51 @@ func (app *App) watchConnection() {
 			connMutex.Unlock()
 		}
 	}
+}
+
+func (app *App) SaveCredentials(credentials Credentials) bool {
+	var err error
+	credentials.Password, err = Encrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
+	if err != nil {
+		app.SendNotification("Error encrypting credentials", err.Error(), "", "error")
+		runtime.LogError(app.ctx, "Error encrypting credentials: "+err.Error())
+		return false
+	}
+
+	err = writeJSON(credentialsPath, credentials)
+	if err != nil {
+		app.SendNotification("Error saving credentials", err.Error(), "", "error")
+		runtime.LogError(app.ctx, "Error saving credentials: "+err.Error())
+		return false
+	}
+
+	return true
+}
+
+func (app *App) LoadCredentials() Credentials {
+	var credentials Credentials
+	err := readJSON(credentialsPath, &credentials)
+	if err != nil {
+		runtime.LogError(app.ctx, "Error loading credentials: "+err.Error())
+		return Credentials{}
+	}
+
+	credentials.Password, err = Decrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
+	if err != nil {
+		app.SendNotification("Error decrypting credentials", err.Error(), "", "error")
+		runtime.LogError(app.ctx, "Error decrypting credentials: "+err.Error())
+		return Credentials{}
+	}
+
+	return credentials
+}
+
+func (app *App) DeleteCredentials() bool {
+	err := os.Remove(credentialsPath)
+	if err != nil {
+		runtime.LogError(app.ctx, "Error deleting credentials: "+err.Error())
+		return false
+	}
+
+	return true
 }
