@@ -93,19 +93,22 @@ const TerminalPage: React.FC = () => {
   const handleTabCompletion = () => {
     const trimmedInput = currentInput.trim();
 
+    const words = trimmedInput.split(" ");
+    const lastWord = words[words.length - 1];
+
     // Start a new tab match search
     if (tabIndex === -1) {
-      const matches = commands.filter((cmd) => cmd.startsWith(trimmedInput));
+      const matches = commands.filter((cmd) => cmd.startsWith(lastWord));
       if (matches.length > 0) {
         setTabMatches(matches);
         setTabIndex(0);
-        setCurrentInput(matches[0]);
+        setCurrentInput((words.slice(0, words.length - 1).join(" ") + " " + matches[0]).trim());
       }
     } else {
       // Cycle through existing matches
       const newIndex = (tabIndex + 1) % tabMatches.length;
       setTabIndex(newIndex);
-      setCurrentInput(tabMatches[newIndex]);
+      setCurrentInput((words.slice(0, words.length - 1).join(" ") + " " + tabMatches[newIndex]).trim());
     }
   };
 
