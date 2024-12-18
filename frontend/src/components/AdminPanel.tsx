@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ConnectRcon, DisconnectRcon } from "@/wailsjs/go/main/App";
 import TerminalPage from "./Terminal";
+import { useRcon } from "@/contexts/rcon-provider";
 
 export default function AdminPanel() {
+  const { isConnected, connect, disconnect } = useRcon();
+
   const { t } = useTranslation();
   const [tab, setTab] = useState("connection");
 
@@ -16,48 +18,37 @@ export default function AdminPanel() {
   const [port, setPort] = useState("");
   const [password, setPassword] = useState("");
 
-  const [connected, setConnected] = useState(false);
-
   const [settingsState, setSettingsState] = useState<number>(0);
   const [sandboxState, setSandboxState] = useState<number>(0);
   const [terminalState, setTerminalState] = useState<number>(0);
 
   useEffect(() => {
-    if (connected && tab === "terminal") {
+    if (isConnected && tab === "terminal") {
       setSettingsState(settingsState + 1);
       setSandboxState(sandboxState + 1);
     }
   }, [tab]);
 
-  const handleConnect = () => {
-    if (!ip || !password) {
-      return;
+  const handleConnect = async () => {
+    if (!ip || !password) return;
+
+    const success = await connect(ip, port || "16261", password);
+    if (success) {
+      setSettingsState(settingsState + 1);
+      setSandboxState(sandboxState + 1);
+      setTerminalState(terminalState + 1);
+      setTab("terminal");
     }
-
-    ConnectRcon(ip, port || "16261", password).then((connected) => {
-      if (connected) {
-        setConnected(true);
-
-        setSettingsState(settingsState + 1);
-        setSandboxState(sandboxState + 1);
-        setTerminalState(terminalState + 1);
-
-        setTab("terminal");
-      }
-    });
   };
 
-  const handleDisconnect = () => {
-    DisconnectRcon().then((disconnected) => {
-      if (disconnected) {
-        setConnected(false);
-        setTab("connection");
-
-        setSettingsState(settingsState + 1);
-        setSandboxState(sandboxState + 1);
-        setTerminalState(terminalState + 1);
-      }
-    });
+  const handleDisconnect = async () => {
+    const success = await disconnect();
+    if (success) {
+      setTab("connection");
+      setSettingsState(settingsState + 1);
+      setSandboxState(sandboxState + 1);
+      setTerminalState(terminalState + 1);
+    }
   };
 
   return (
@@ -69,7 +60,7 @@ export default function AdminPanel() {
               value="settings"
               onClick={() => setTab("settings")}
               className="px-6 w-full"
-              disabled={!connected}
+              disabled={!isConnected}
             >
               {t("Settings")}
             </TabsTrigger>
@@ -77,7 +68,7 @@ export default function AdminPanel() {
               value="sandbox"
               onClick={() => setTab("sandbox")}
               className="px-6 w-full"
-              disabled={!connected}
+              disabled={!isConnected}
             >
               {t("Sandbox")}
             </TabsTrigger>
@@ -85,12 +76,12 @@ export default function AdminPanel() {
               value="terminal"
               onClick={() => setTab("terminal")}
               className="px-6 w-full"
-              disabled={!connected}
+              disabled={!isConnected}
             >
               {t("Terminal")}
             </TabsTrigger>
           </div>
-          {connected && (
+          {isConnected && (
             <div className="text-xs space-y-2 w-full">
               <p>
                 Connected to {ip}:{port}

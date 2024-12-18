@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { SendRconCommand } from "@/wailsjs/go/main/App";
+import { useRcon } from "@/contexts/rcon-provider";
 import { ScrollArea } from "@/components/ui/scroll-area"; // ShadCN ScrollArea
 
 const commands = [
@@ -52,6 +52,8 @@ const commands = [
 ];
 
 const TerminalPage: React.FC = () => {
+  const { sendCommand } = useRcon();
+
   const [output, setOutput] = useState<{ type: "command" | "response"; line: string }[]>([]);
   const [currentInput, setCurrentInput] = useState<string>(""); // Input command
   const [commandHistory, setCommandHistory] = useState<string[]>([]); // Stores entered commands
@@ -131,8 +133,8 @@ const TerminalPage: React.FC = () => {
         if (command === "cls") {
           setOutput([]);
         } else {
-          const response = await SendRconCommand(command);
-          addOutput(response !== "" ? response : "No output.", "response");
+          const response = await sendCommand(command);
+          addOutput(response ? response : "No output.", "response");
         }
       } catch (error) {
         addOutput(`Error: ${error}`, "response");

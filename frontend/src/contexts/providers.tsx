@@ -5,6 +5,7 @@ import { StorageProvider } from "./storage-provider.tsx";
 import { ConfigProvider } from "./config-provider.tsx";
 import { ProgressProvider } from "./progress-provider.tsx";
 import { ColorSchemeProvider } from "./color-scheme-provider.tsx";
+import { RconProvider } from "./rcon-provider.tsx";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -17,7 +18,9 @@ const Providers = ({ children }: ProvidersProps) => {
         <ThemeProvider>
           <ColorSchemeProvider>
             <ProgressProvider>
-              <StorageProvider>{children}</StorageProvider>
+              <StorageProvider>
+                <RconProvider>{children}</RconProvider>
+              </StorageProvider>
             </ProgressProvider>
           </ColorSchemeProvider>
         </ThemeProvider>
