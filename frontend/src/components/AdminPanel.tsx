@@ -144,7 +144,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
           });
 
         if (config?.autoConnect) {
-          connect(credentials);
+          connect({ ip: credentials.ip, port: credentials.port || "27015", password: credentials.password });
         }
       });
     }
@@ -176,7 +176,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
   // Handle form submission
   function onSubmit(data: z.infer<typeof formSchema>) {
     if (!isConnected) {
-      connect(data).then((success) => {
+      connect({ ip: data.ip, port: data.port || "27015", password: data.password }).then((success) => {
         if (success && config?.rememberCredentials) {
           SaveCredentials(data);
         } else if (!config?.rememberCredentials) {
@@ -197,7 +197,9 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={`flex w-full h-[calc(100vh-12rem)] items-center justify-center ${isConnecting ? "pointer-events-none blur-[1px]" : ""}`}
+          className={`flex w-full h-[calc(100vh-12rem)] items-center justify-center ${
+            isConnecting ? "pointer-events-none blur-[1px]" : ""
+          }`}
           autoComplete="off"
         >
           <div className="w-1/2 space-y-4">
@@ -231,7 +233,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                     <FormMessage />
                   </div>
                   <FormControl>
-                    <Input type="number" inputMode="numeric" min={0} max={65535} placeholder={t("16261")} {...field} />
+                    <Input type="number" inputMode="numeric" min={0} max={65535} placeholder={t("27015")} {...field} />
                   </FormControl>
                 </FormItem>
               )}

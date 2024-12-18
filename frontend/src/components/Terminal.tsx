@@ -141,7 +141,7 @@ const TerminalPage: React.FC = () => {
         } else {
           const response = await sendCommand(command);
           if (response) {
-            addOutput(response, response.includes("error") ? "error" : "response");
+            addOutput(response, "response");
           } else {
             addOutput("No response.", "error");
           }
