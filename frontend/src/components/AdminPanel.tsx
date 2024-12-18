@@ -1,5 +1,5 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -10,7 +10,7 @@ import TerminalPage from "./Terminal";
 
 export default function AdminPanel() {
   const { t } = useTranslation();
-  const [tab, setTab] = useState("connect");
+  const [tab, setTab] = useState("connection");
 
   const [ip, setIp] = useState("");
   const [port, setPort] = useState("");
@@ -21,6 +21,13 @@ export default function AdminPanel() {
   const [settingsState, setSettingsState] = useState<number>(0);
   const [sandboxState, setSandboxState] = useState<number>(0);
   const [terminalState, setTerminalState] = useState<number>(0);
+
+  useEffect(() => {
+    if (connected && tab === "terminal") {
+      setSettingsState(settingsState + 1);
+      setSandboxState(sandboxState + 1);
+    }
+  }, [tab]);
 
   const handleConnect = () => {
     if (!ip || !password) {
@@ -44,7 +51,7 @@ export default function AdminPanel() {
     DisconnectRcon().then((disconnected) => {
       if (disconnected) {
         setConnected(false);
-        setTab("connect");
+        setTab("connection");
 
         setSettingsState(settingsState + 1);
         setSandboxState(sandboxState + 1);
@@ -106,7 +113,7 @@ export default function AdminPanel() {
         <div className={tab === "terminal" ? "block" : "hidden"} key={"terminal" + terminalState}>
           <TerminalPage />
         </div>
-        <div className={tab === "connect" ? "block" : "hidden"}>
+        <div className={tab === "connection" ? "block" : "hidden"}>
           <div className="flex w-full h-[calc(100vh-12rem)] items-center justify-center">
             <Card className="bg-transparent border-none w-1/2">
               <CardHeader>

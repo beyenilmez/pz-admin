@@ -14,10 +14,6 @@ export function DisconnectRcon() {
   return window['go']['main']['App']['DisconnectRcon']();
 }
 
-export function GetAvailableCommands() {
-  return window['go']['main']['App']['GetAvailableCommands']();
-}
-
 export function GetConfig() {
   return window['go']['main']['App']['GetConfig']();
 }
@@ -32,6 +28,10 @@ export function GetLoadConfigPath() {
 
 export function GetVersion() {
   return window['go']['main']['App']['GetVersion']();
+}
+
+export function IsRconConnected() {
+  return window['go']['main']['App']['IsRconConnected']();
 }
 
 export function OpenFileInExplorer(arg1) {

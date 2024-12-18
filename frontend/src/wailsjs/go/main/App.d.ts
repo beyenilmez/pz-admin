@@ -8,8 +8,6 @@ export function ConnectRcon(arg1:string,arg2:string,arg3:string):Promise<boolean
 
 export function DisconnectRcon():Promise<boolean>;
 
-export function GetAvailableCommands():Promise<Array<string>>;
-
 export function GetConfig():Promise<main.Config>;
 
 export function GetConfigField(arg1:string):Promise<any>;
@@ -17,6 +15,8 @@ export function GetConfigField(arg1:string):Promise<any>;
 export function GetLoadConfigPath():Promise<string>;
 
 export function GetVersion():Promise<string>;
+
+export function IsRconConnected():Promise<boolean>;
 
 export function OpenFileInExplorer(arg1:string):Promise<void>;
 

@@ -1,29 +1,66 @@
 import React, { useState, useRef, useEffect } from "react";
-import { SendRconCommand, GetAvailableCommands } from "@/wailsjs/go/main/App";
+import { SendRconCommand } from "@/wailsjs/go/main/App";
 import { ScrollArea } from "@/components/ui/scroll-area"; // ShadCN ScrollArea
+
+const commands = [
+  "additem",
+  "adduser",
+  "addvehicle",
+  "addxp",
+  "alarm",
+  "banid",
+  "banuser",
+  "changeoption",
+  "checkModsNeedUpdate",
+  "chopper",
+  "clear",
+  "createhorde",
+  "createhorde2",
+  "godmod",
+  "grantadmin",
+  "gunshot",
+  "help",
+  "invisible",
+  "kick",
+  "lightning",
+  "log",
+  "noclip",
+  "players",
+  "quit",
+  "releasesafehouse",
+  "reloadlua",
+  "reloadoptions",
+  "removeadmin",
+  "removeuserfromwhitelist",
+  "removezombies",
+  "replay",
+  "save",
+  "servermsg",
+  "setaccesslevel",
+  "showoptions",
+  "startrain",
+  "startstorm",
+  "stats",
+  "stoprain",
+  "stopweather",
+  "teleport",
+  "teleportto",
+  "thunder",
+  "unbanid",
+  "unbanuser",
+  "voiceban",
+];
 
 const TerminalPage: React.FC = () => {
   const [output, setOutput] = useState<{ type: "command" | "response"; line: string }[]>([]);
   const [currentInput, setCurrentInput] = useState<string>(""); // Input command
   const [commandHistory, setCommandHistory] = useState<string[]>([]); // Stores entered commands
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // Tracks current position in history
-  const [commands, setCommands] = useState<string[]>([]); // Stores available commands for auto-completion
   const [tabMatches, setTabMatches] = useState<string[]>([]); // Matches for Tab completion
   const [tabIndex, setTabIndex] = useState<number>(-1); // Tracks current match during Tab traversal
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
-
-  // Fetch available commands on mount
-  useEffect(() => {
-    const fetchCommands = async () => {
-      const availableCommands = await GetAvailableCommands();
-      if (availableCommands) {
-        setCommands(availableCommands);
-      }
-    };
-    fetchCommands();
-  }, []);
 
   // Scroll to bottom of output
   const scrollToBottom = () => {
@@ -91,8 +128,12 @@ const TerminalPage: React.FC = () => {
       setHistoryIndex(-1); // Reset history index
 
       try {
-        const response = await SendRconCommand(command);
-        addOutput(response !== "" ? response : "No output.", "response");
+        if (command === "cls") {
+          setOutput([]);
+        } else {
+          const response = await SendRconCommand(command);
+          addOutput(response !== "" ? response : "No output.", "response");
+        }
       } catch (error) {
         addOutput(`Error: ${error}`, "response");
       }

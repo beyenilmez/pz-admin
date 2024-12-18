@@ -1,8 +1,6 @@
 package main
 
 import (
-	"strings"
-
 	"github.com/gorcon/rcon"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -40,32 +38,4 @@ func (app *App) SendRconCommand(command string) (res string) {
 	}
 
 	return res
-}
-
-func (app *App) GetAvailableCommands() []string {
-	for conn == nil {
-	}
-
-	res, err := conn.Execute("help")
-	if err != nil {
-		runtime.LogError(app.ctx, "Error executing RCON command: "+err.Error())
-		return nil
-	}
-
-	lines := strings.Split(res, "\n")
-	var commands []string
-
-	for _, line := range lines {
-		if strings.HasPrefix(strings.TrimSpace(line), "* ") {
-			parts := strings.SplitN(line, ":", 2)
-			if len(parts) > 0 {
-				command := strings.TrimSpace(strings.TrimPrefix(parts[0], "* "))
-				commands = append(commands, command)
-			}
-		}
-	}
-
-	commands = append(commands, "removeadmin")
-
-	return commands
 }
