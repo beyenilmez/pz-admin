@@ -54,7 +54,10 @@ const commands = [
 const TerminalPage: React.FC = () => {
   const { sendCommand } = useRcon();
 
-  const [output, setOutput] = useState<{ type: "command" | "response"; line: string }[]>([]);
+  const [output, setOutput] = useState<{ type: "command" | "response" | "info" | "error"; line: string }[]>([
+    { type: "info", line: "Welcome, type 'help' for commands or 'cls' to clear the terminal." },
+    { type: "info", line: "You can use tab for auto-completion and up/down keys to navigate command history." },
+  ]);
   const [currentInput, setCurrentInput] = useState<string>(""); // Input command
   const [commandHistory, setCommandHistory] = useState<string[]>([]); // Stores entered commands
   const [historyIndex, setHistoryIndex] = useState<number>(-1); // Tracks current position in history
@@ -76,7 +79,7 @@ const TerminalPage: React.FC = () => {
   }, [output]);
 
   // Add lines to output with type
-  const addOutput = (line: string, type: "command" | "response") => {
+  const addOutput = (line: string, type: "command" | "response" | "info" | "error") => {
     const newLines = line.split("\n").map((l) => ({ type, line: l }));
     setOutput((prev) => [...prev, ...newLines]);
   };
@@ -137,10 +140,14 @@ const TerminalPage: React.FC = () => {
           setOutput([]);
         } else {
           const response = await sendCommand(command);
-          addOutput(response ? response : "No output.", "response");
+          if (response) {
+            addOutput(response, response.includes("error") ? "error" : "response");
+          } else {
+            addOutput("No response.", "error");
+          }
         }
       } catch (error) {
-        addOutput(`Error: ${error}`, "response");
+        addOutput(`Error: ${error}`, "error");
       }
 
       scrollToBottom();
@@ -192,8 +199,12 @@ const TerminalPage: React.FC = () => {
               key={index}
               className={
                 entry.type === "command"
-                  ? "text-green-500" // Brighter green for commands
-                  : "text-green-700" // Darker green for responses
+                  ? "text-green-400" // Brighter green for commands
+                  : entry.type === "response"
+                  ? "text-green-700"
+                  : entry.type === "info"
+                  ? "text-blue-500"
+                  : "text-red-500" // Darker green for responses
               }
             >
               {entry.line}
