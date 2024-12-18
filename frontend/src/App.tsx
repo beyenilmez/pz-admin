@@ -14,6 +14,7 @@ import { LogDebug } from "@/wailsjs/runtime/runtime";
 import AdminPanel from "./components/AdminPanel";
 import { Progress } from "./components/ui/progress";
 import { useProgress } from "./contexts/progress-provider";
+import { useRcon } from "./contexts/rcon-provider";
 
 function App() {
   const { config, initialConfig } = useConfig();
@@ -22,6 +23,7 @@ function App() {
   const [tab, setTab] = useState("admin-panel");
 
   const { progress, setProgress } = useProgress();
+  const { setIsConnected } = useRcon();
 
   useLayoutEffect(() => {
     if (
@@ -103,6 +105,11 @@ function App() {
     setProgress(value);
   };
 
+  window.rconDisconnected = () => {
+    setIsConnected(false);
+    setProgress(0);
+  };
+
   return (
     <React.Fragment>
       <div className="flex flex-col h-dvh">
@@ -111,15 +118,10 @@ function App() {
           <div>
             <TabsList className="justify-between px-3 py-7 rounded-none w-full h-12">
               <div>
-                <TabsTrigger value="admin-panel" onClick={() => setTab("admin-panel")}  className="px-6">
+                <TabsTrigger value="admin-panel" onClick={() => setTab("admin-panel")} className="px-6">
                   {t("Admin Panel")}
                 </TabsTrigger>
-                <TabsTrigger
-                  value="settings"
-                  onClick={() => setTab("settings")}
-                  
-                  className="px-6"
-                >
+                <TabsTrigger value="settings" onClick={() => setTab("settings")} className="px-6">
                   {t("nav.settings")}
                 </TabsTrigger>
               </div>

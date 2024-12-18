@@ -1,8 +1,9 @@
-import React, { createContext, useContext, useState, useCallback, ReactNode } from "react";
+import React, { createContext, useContext, useState, useCallback, ReactNode, Dispatch, SetStateAction } from "react";
 import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
 
 interface RconContextType {
   isConnected: boolean;
+  setIsConnected: Dispatch<SetStateAction<boolean>>; // Explicit state setter for external control
   connect: (ip: string, port: string, password: string) => Promise<boolean>;
   disconnect: () => Promise<boolean>;
   sendCommand: (command: string) => Promise<string | null>;
@@ -52,7 +53,9 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   );
 
   return (
-    <RconContext.Provider value={{ isConnected, connect, disconnect, sendCommand }}>{children}</RconContext.Provider>
+    <RconContext.Provider value={{ isConnected, setIsConnected, connect, disconnect, sendCommand }}>
+      {children}
+    </RconContext.Provider>
   );
 };
 

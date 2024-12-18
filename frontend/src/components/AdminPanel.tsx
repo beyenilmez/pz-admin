@@ -29,6 +29,15 @@ export default function AdminPanel() {
     }
   }, [tab]);
 
+  useEffect(() => {
+    if (!isConnected) {
+      setTab("connection");
+      setSettingsState(settingsState + 1);
+      setSandboxState(sandboxState + 1);
+      setTerminalState(terminalState + 1);
+    }
+  }, [isConnected]);
+
   const handleConnect = async () => {
     if (!ip || !password) return;
 
@@ -42,13 +51,7 @@ export default function AdminPanel() {
   };
 
   const handleDisconnect = async () => {
-    const success = await disconnect();
-    if (success) {
-      setTab("connection");
-      setSettingsState(settingsState + 1);
-      setSandboxState(sandboxState + 1);
-      setTerminalState(terminalState + 1);
-    }
+    disconnect();
   };
 
   return (

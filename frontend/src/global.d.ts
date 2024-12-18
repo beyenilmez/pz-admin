@@ -4,6 +4,7 @@ declare global {
     goto: goto;
     sendNotification: sendNotification;
     setProgress: setProgress;
+    rconDisconnected: rconDisconnected;
   }
 }
 
