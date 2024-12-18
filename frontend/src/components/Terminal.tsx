@@ -181,7 +181,7 @@ const TerminalPage: React.FC = () => {
 
   return (
     <div
-      className="w-full h-[calc(100vh-5.5rem)] bg-black font-mono p-2 pb-1"
+      className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 font-mono p-2 pb-1"
       onClick={() => inputRef.current?.focus()}
     >
       {/* Scrollable Output */}

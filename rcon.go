@@ -26,6 +26,9 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	if credentials.IP == "" || credentials.Port == "" || credentials.Password == "" {
 		return false
 	}
+	if conn != nil {
+		app.DisconnectRcon()
+	}
 
 	connMutex.Lock()
 	defer connMutex.Unlock()

@@ -106,7 +106,7 @@ function App() {
   };
 
   window.rconDisconnected = () => {
-    SendNotification("RCON connection losat", "", "", "error");
+    SendNotification("RCON connection lost", "", "", "error");
     setIsConnected(false);
     setProgress(0);
   };

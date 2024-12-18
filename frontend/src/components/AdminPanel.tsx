@@ -13,6 +13,7 @@ import { main } from "@/wailsjs/go/models";
 import { Checkbox } from "./ui/checkbox";
 import { DeleteCredentials, LoadCredentials, SaveCredentials } from "@/wailsjs/go/main/App";
 import { useConfig } from "@/contexts/config-provider";
+import { LoaderCircle } from "lucide-react";
 
 export default function AdminPanel() {
   const { isConnected, disconnect, ip, port } = useRcon();
@@ -85,7 +86,7 @@ export default function AdminPanel() {
                 Connected to {ip}:{port}
               </p>
               <Button className="w-full" variant={"destructive"} onClick={handleDisconnect}>
-                End Connection
+                Disconnect
               </Button>
             </div>
           )}
@@ -125,7 +126,7 @@ interface ConnectionFormProps {
 }
 
 function ConnectionForm({ defaultValues }: ConnectionFormProps) {
-  const { isConnected, connect } = useRcon();
+  const { isConnected, isConnecting, connect } = useRcon();
   const { t } = useTranslation();
 
   const { config, setConfigField } = useConfig();
@@ -186,99 +187,107 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
   }
 
   return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full h-[calc(100vh-12rem)] items-center justify-center"
-        autoComplete="off"
-      >
-        <div className="w-1/2 space-y-4">
-          <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
-          <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
-
-          {/* IP or Domain Field */}
-          <FormField
-            control={form.control}
-            name="ip"
-            render={({ field }) => (
-              <FormItem className="flex flex-col w-full space-y-0">
-                <div className="flex h-8 items-center gap-1">
-                  <FormLabel>{t("Server IP or Domain")}</FormLabel>
-                  <FormMessage />
-                </div>
-                <FormControl>
-                  <Input type="text" placeholder={t("127.0.0.1")} {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          {/* Port Field */}
-          <FormField
-            control={form.control}
-            name="port"
-            render={({ field }) => (
-              <FormItem className="flex flex-col w-full space-y-0">
-                <div className="flex h-8 items-center gap-1">
-                  <FormLabel>{t("RCON Port")}</FormLabel>
-                  <FormMessage />
-                </div>
-                <FormControl>
-                  <Input type="number" inputMode="numeric" min={0} max={65535} placeholder={t("16261")} {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          {/* Password Field */}
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem className="flex flex-col w-full space-y-0">
-                <div className="flex h-8 items-center gap-1">
-                  <FormLabel>{t("RCON Password")}</FormLabel>
-                  <FormMessage />
-                </div>
-                <FormControl>
-                  <Input type="password" {...field} />
-                </FormControl>
-              </FormItem>
-            )}
-          />
-          {/* Save Credentials */}
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              checked={config?.rememberCredentials || false}
-              onCheckedChange={(state: boolean) => setConfigField("rememberCredentials", state)}
-              id="save-credentials"
-            />
-            <label
-              htmlFor="save-credentials"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Save credentials
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Checkbox
-              checked={config?.autoConnect || false}
-              onCheckedChange={(state: boolean) => setConfigField("autoConnect", state)}
-              id="auto-connect"
-              disabled={config?.rememberCredentials === false}
-            />
-            <label
-              htmlFor="auto-connect"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              Automatically connect on startup
-            </label>
-          </div>
-
-          {/* Submit Button */}
-          <Button type="submit" className="w-full" disabled={isConnected}>
-            {isConnected ? t("Connected") : t("Connect")}
-          </Button>
+    <>
+      {isConnecting && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-[50]">
+          <LoaderCircle className="w-20 h-20 animate-spin" />
         </div>
-      </form>
-    </Form>
+      )}
+
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className={`flex w-full h-[calc(100vh-12rem)] items-center justify-center ${isConnecting ? "pointer-events-none blur-[1px]" : ""}`}
+          autoComplete="off"
+        >
+          <div className="w-1/2 space-y-4">
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
+            <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
+
+            {/* IP or Domain Field */}
+            <FormField
+              control={form.control}
+              name="ip"
+              render={({ field }) => (
+                <FormItem className="flex flex-col w-full space-y-0">
+                  <div className="flex h-8 items-center gap-1">
+                    <FormLabel>{t("Server IP or Domain")}</FormLabel>
+                    <FormMessage />
+                  </div>
+                  <FormControl>
+                    <Input type="text" placeholder={t("127.0.0.1")} {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            {/* Port Field */}
+            <FormField
+              control={form.control}
+              name="port"
+              render={({ field }) => (
+                <FormItem className="flex flex-col w-full space-y-0">
+                  <div className="flex h-8 items-center gap-1">
+                    <FormLabel>{t("RCON Port")}</FormLabel>
+                    <FormMessage />
+                  </div>
+                  <FormControl>
+                    <Input type="number" inputMode="numeric" min={0} max={65535} placeholder={t("16261")} {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            {/* Password Field */}
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem className="flex flex-col w-full space-y-0">
+                  <div className="flex h-8 items-center gap-1">
+                    <FormLabel>{t("RCON Password")}</FormLabel>
+                    <FormMessage />
+                  </div>
+                  <FormControl>
+                    <Input type="password" {...field} />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            {/* Save Credentials */}
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={config?.rememberCredentials || false}
+                onCheckedChange={(state: boolean) => setConfigField("rememberCredentials", state)}
+                id="save-credentials"
+              />
+              <label
+                htmlFor="save-credentials"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Save credentials
+              </label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Checkbox
+                checked={config?.autoConnect || false}
+                onCheckedChange={(state: boolean) => setConfigField("autoConnect", state)}
+                id="auto-connect"
+                disabled={config?.rememberCredentials === false}
+              />
+              <label
+                htmlFor="auto-connect"
+                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+              >
+                Automatically connect on startup
+              </label>
+            </div>
+
+            {/* Submit Button */}
+            <Button type="submit" className="w-full" disabled={isConnecting || isConnected}>
+              {isConnected ? t("Connected") : t("Connect")}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </>
   );
 }
