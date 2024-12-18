@@ -1,5 +1,5 @@
 import ModeToggle from "@/components/ModeToggle";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TitleBar from "./components/TitleBar";
 import Settings from "./components/Settings";
 import { useTranslation } from "react-i18next";
@@ -7,13 +7,14 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { useStorage } from "./contexts/storage-provider";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
-import { OpenFileInExplorer, SendWindowsNotification } from "@/wailsjs/go/main/App";
+import { OpenFileInExplorer, SendNotification, SendWindowsNotification } from "@/wailsjs/go/main/App";
 import React from "react";
 import { useConfig } from "./contexts/config-provider";
 import { LogDebug } from "@/wailsjs/runtime/runtime";
 import AdminPanel from "./components/AdminPanel";
 import { Progress } from "./components/ui/progress";
 import { useProgress } from "./contexts/progress-provider";
+import { useRcon } from "./contexts/rcon-provider";
 
 function App() {
   const { config, initialConfig } = useConfig();
@@ -22,6 +23,7 @@ function App() {
   const [tab, setTab] = useState("admin-panel");
 
   const { progress, setProgress } = useProgress();
+  const { setIsConnected } = useRcon();
 
   useLayoutEffect(() => {
     if (
@@ -103,6 +105,12 @@ function App() {
     setProgress(value);
   };
 
+  window.rconDisconnected = () => {
+    SendNotification("RCON connection lost", "", "", "error");
+    setIsConnected(false);
+    setProgress(0);
+  };
+
   return (
     <React.Fragment>
       <div className="flex flex-col h-dvh">
@@ -111,15 +119,10 @@ function App() {
           <div>
             <TabsList className="justify-between px-3 py-7 rounded-none w-full h-12">
               <div>
-                <TabsTrigger value="admin-panel" onClick={() => setTab("admin-panel")}  className="px-6">
+                <TabsTrigger value="admin-panel" onClick={() => setTab("admin-panel")} className="px-6">
                   {t("Admin Panel")}
                 </TabsTrigger>
-                <TabsTrigger
-                  value="settings"
-                  onClick={() => setTab("settings")}
-                  
-                  className="px-6"
-                >
+                <TabsTrigger value="settings" onClick={() => setTab("settings")} className="px-6">
                   {t("nav.settings")}
                 </TabsTrigger>
               </div>
@@ -130,12 +133,15 @@ function App() {
             </div>
           </div>
 
-          <TabsContent value="admin-panel" className="w-ful h-full">
-            <AdminPanel />
-          </TabsContent>
-          <TabsContent value="settings" className="w-ful h-full">
-            <Settings />
-          </TabsContent>
+          {/* Tab Content */}
+          <div className="w-full h-full relative">
+            <div className={tab === "admin-panel" ? "block h-full" : "hidden"}>
+              <AdminPanel />
+            </div>
+            <div className={tab === "settings" ? "block h-full" : "hidden"}>
+              <Settings />
+            </div>
+          </div>
         </Tabs>
       </div>
       <Toaster expand />
