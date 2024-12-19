@@ -2,6 +2,7 @@ package main
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -295,4 +296,24 @@ func players_save() error {
 	}
 
 	return nil
+}
+
+func (app *App) BanUsers(names []string) {
+	success := true
+
+	for _, name := range names {
+		_, err := conn.Execute("banuser " + name)
+		if err != nil {
+			runtime.LogError(app.ctx, "Error banning user: "+err.Error())
+			success = false
+		}
+	}
+
+	if success {
+		if len(names) > 1 {
+			app.SendNotification(fmt.Sprintf("Banned %d users", len(names)), "", "", "success")
+		} else {
+			app.SendNotification("Banned "+names[0], "", "", "success")
+		}
+	}
 }
