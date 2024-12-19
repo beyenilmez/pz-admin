@@ -14,9 +14,10 @@ import { Checkbox } from "./ui/checkbox";
 import { DeleteCredentials, LoadCredentials, SaveCredentials } from "@/wailsjs/go/main/App";
 import { useConfig } from "@/contexts/config-provider";
 import { LoaderCircle } from "lucide-react";
+import { PlayersTab } from "./Players";
 
 export default function AdminPanel() {
-  const { isConnected, disconnect, ip, port, players } = useRcon();
+  const { isConnected, disconnect, ip, port } = useRcon();
 
   const { t } = useTranslation();
   const [tab, setTab] = useState("connection");
@@ -37,7 +38,7 @@ export default function AdminPanel() {
       setPlayersState(playersState + 1);
       setSandboxState(sandboxState + 1);
       setTerminalState(terminalState + 1);
-      setTab("terminal");
+      setTab("players");
     } else {
       setTab("connection");
       setPlayersState(playersState + 1);
@@ -95,14 +96,7 @@ export default function AdminPanel() {
       {/* Tab Content */}
       <div className="w-full h-full relative">
         <div className={tab === "players" ? "block" : "hidden"} key={"players" + playersState}>
-          <div>
-            {players &&
-              players.map((player, index) => (
-                <div key={index}>
-                  {player.name}, {player.online ? "Online" : "Offline"}
-                </div>
-              ))}
-          </div>
+          <PlayersTab />
         </div>
         <div className={tab === "sandbox" ? "block" : "hidden"} key={"sandbox" + sandboxState}>
           <div>Sandbox</div>
