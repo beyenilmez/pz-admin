@@ -321,5 +321,30 @@ func (app *App) BanUsers(names []string) {
 	} else {
 		app.SendNotification("Banned "+names[0], "", "", "success")
 	}
+}
 
+func (app *App) UnbanUsers(names []string) {
+	unbanCount := len(names)
+
+	for _, name := range names {
+		conn.Execute("banuser " + name)
+		res, err := conn.Execute("unbanuser " + name)
+		if err != nil {
+			runtime.LogError(app.ctx, "Error unbanning user: "+err.Error())
+			unbanCount--
+		} else if res != "" && !strings.Contains(res, "is now un-banned") {
+			runtime.LogError(app.ctx, "Error unbanning user: "+res)
+			app.SendNotification("Error unbanning "+name, res, "", "error")
+			unbanCount--
+		}
+	}
+
+	if len(names) > 1 {
+		app.SendNotification(fmt.Sprintf("Unbanned %d users", unbanCount), "", "", "success")
+		if unbanCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to unban %d users", len(names)-unbanCount), "", "", "error")
+		}
+	} else {
+		app.SendNotification("Unbanned "+names[0], "", "", "success")
+	}
 }
