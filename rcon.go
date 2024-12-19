@@ -300,7 +300,7 @@ func players_save() error {
 	return nil
 }
 
-func (app *App) BanUsers(names []string) {
+func (app *App) BanUsers(names []string, reason string, banIp bool) {
 	banCount := len(names)
 
 	playerMap := make(map[string]*Player, len(players))
@@ -310,7 +310,14 @@ func (app *App) BanUsers(names []string) {
 
 	connMutex.Lock()
 	for _, name := range names {
-		res, err := conn.Execute("banuser " + name)
+		commandString := "banuser " + name
+		if banIp {
+			commandString += " -ip"
+		}
+		if reason != "" {
+			commandString += " -r " + reason
+		}
+		res, err := conn.Execute(commandString)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error banning user: "+err.Error())
 			banCount--
@@ -333,7 +340,11 @@ func (app *App) BanUsers(names []string) {
 			app.SendNotification(fmt.Sprintf("Failed to ban %d users", len(names)-banCount), "", "", "error")
 		}
 	} else {
-		app.SendNotification("Banned "+names[0], "", "", "success")
+		if banCount == 0 {
+			app.SendNotification("Failed to ban "+names[0], "", "", "error")
+		} else {
+			app.SendNotification("Banned "+names[0], "", "", "success")
+		}
 	}
 
 	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
@@ -372,7 +383,11 @@ func (app *App) UnbanUsers(names []string) {
 			app.SendNotification(fmt.Sprintf("Failed to unban %d users", len(names)-unbanCount), "", "", "error")
 		}
 	} else {
-		app.SendNotification("Unbanned "+names[0], "", "", "success")
+		if unbanCount == 0 {
+			app.SendNotification("Failed to unban "+names[0], "", "", "error")
+		} else {
+			app.SendNotification("Unbanned "+names[0], "", "", "success")
+		}
 	}
 
 	runtime.WindowExecJS(app.ctx, "window.updateRcon();")

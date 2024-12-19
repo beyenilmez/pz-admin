@@ -18,7 +18,7 @@ interface UnbanUserDialogProps {
 export function UnbanUserDialog({ isOpen, onClose, names }: UnbanUserDialogProps) {
   const handleBan = () => {
     onClose();
-
+    
     UnbanUsers(names);
   };
 
