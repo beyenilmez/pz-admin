@@ -8,7 +8,7 @@ import React, {
   SetStateAction,
   useEffect,
 } from "react";
-import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
+import { ConnectRcon, DisconnectRcon, GetPlayers, SendRconCommand } from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
 
 interface RconContextType {
@@ -20,6 +20,8 @@ interface RconContextType {
   sendCommand: (command: string) => Promise<string | null>;
   ip: string;
   port: string;
+  update: () => void;
+  players: main.Player[];
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
@@ -29,6 +31,9 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isConnecting, setIsConnecting] = useState(false);
   const [ip, setIp] = useState("");
   const [port, setPort] = useState("");
+  const [players, setPlayers] = useState<main.Player[]>([]);
+  const [updateTrigger, setUpdateTrigger] = useState(0); // A trigger to force update
+  const update = useCallback(() => setUpdateTrigger((prev) => prev + 1), []);
 
   const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {
@@ -82,9 +87,13 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [isConnected]);
 
+  useEffect(() => {
+    GetPlayers().then(setPlayers);
+  }, [updateTrigger]);
+
   return (
     <RconContext.Provider
-      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port }}
+      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port, update, players }}
     >
       {children}
     </RconContext.Provider>

@@ -16,6 +16,8 @@ export function GetConfigField(arg1:string):Promise<any>;
 
 export function GetLoadConfigPath():Promise<string>;
 
+export function GetPlayers():Promise<Array<main.Player>>;
+
 export function GetVersion():Promise<string>;
 
 export function IsRconConnected():Promise<boolean>;

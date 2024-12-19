@@ -1,7 +1,10 @@
 package main
 
 import (
+	"errors"
 	"os"
+	"path/filepath"
+	"strings"
 	"sync"
 	"time"
 
@@ -21,6 +24,14 @@ type Credentials struct {
 	Port     string `json:"port"`
 	Password string `json:"password"` // Encrypted
 }
+
+type Player struct {
+	Name   string `json:"name"`
+	Online bool   `json:"online"`
+}
+
+var connectionCredentials Credentials
+var players []Player
 
 func (app *App) ConnectRcon(credentials Credentials) bool {
 	if credentials.IP == "" || credentials.Port == "" || credentials.Password == "" {
@@ -46,6 +57,16 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 		stopWatching = make(chan struct{}) // Create a new channel
 		isWatching = true
 		go app.watchConnection()
+	}
+
+	connectionCredentials = credentials
+	err = players_init()
+	if err != nil {
+		runtime.LogError(app.ctx, "Error initializing players: "+err.Error())
+	}
+	err = players_update()
+	if err != nil {
+		runtime.LogError(app.ctx, "Error updating players: "+err.Error())
 	}
 
 	app.SendNotification("RCON connection established", "", "", "success")
@@ -103,6 +124,10 @@ func (app *App) watchConnection() {
 		case <-stopWatching:
 			// Stop signal received, exit the goroutine
 			runtime.LogInfo(app.ctx, "Stopping RCON connection watcher")
+			err := players_save()
+			if err != nil {
+				runtime.LogError(app.ctx, "Error saving players: "+err.Error())
+			}
 			return
 		case <-time.After(time.Duration(*config.RconCheckInterval) * time.Second):
 			connMutex.Lock()
@@ -115,8 +140,9 @@ func (app *App) watchConnection() {
 			}
 
 			// Check if the connection is still valid by sending a ping command
-			_, err := conn.Execute("watch")
+			err := players_update()
 			if err != nil {
+				runtime.LogError(app.ctx, "Error updating players: "+err.Error())
 				runtime.LogError(app.ctx, "RCON connection lost: "+err.Error())
 				runtime.WindowExecJS(app.ctx, "window.rconDisconnected();")
 				conn.Close()
@@ -175,4 +201,98 @@ func (app *App) DeleteCredentials() bool {
 	}
 
 	return true
+}
+
+func (app *App) GetPlayers() []Player {
+	return players
+}
+
+func players_init() error {
+	players = []Player{}
+
+	playersFilePath := filepath.Join(appFolder, connectionCredentials.IP+"-"+connectionCredentials.Port, "players.json")
+	if !file_exists(playersFilePath) {
+		err := create_folder(filepath.Join(appFolder, connectionCredentials.IP+"-"+connectionCredentials.Port))
+		if err != nil {
+			return errors.New("Error creating server folder: " + err.Error())
+		}
+
+		// If not, create it
+		var newPlayers []string
+		err = writeJSON(playersFilePath, newPlayers)
+		if err != nil {
+			runtime.LogError(app.ctx, "Error creating players file: "+err.Error())
+		}
+	} else {
+		err := readJSON(playersFilePath, &players)
+		runtime.LogDebugf(app.ctx, "Players readed: %v", players)
+		if err != nil {
+			return errors.New("Error reading players file: " + err.Error())
+		}
+	}
+
+	return nil
+}
+
+func players_update() error {
+	res, err := conn.Execute("players")
+	if err != nil {
+		return errors.New("Error getting players: " + err.Error())
+	}
+
+	lines := strings.Split(res, "\n")
+	if len(lines) < 1 {
+		return nil
+	}
+
+	onlinePlayerNames := lines[1:]
+	onlinePlayers := make(map[string]bool)
+
+	for _, playerName := range onlinePlayerNames {
+		playerName = strings.TrimSpace(playerName)
+		if len(playerName) > 1 {
+			onlinePlayers[playerName[1:]] = true
+		}
+	}
+
+	playerMap := make(map[string]*Player, len(players))
+	for i := range players {
+		playerMap[players[i].Name] = &players[i]
+	}
+
+	updatedPlayers := make([]Player, 0, len(players)+len(onlinePlayers))
+	seenPlayers := make(map[string]bool)
+
+	for name, online := range onlinePlayers {
+		if existingPlayer, ok := playerMap[name]; ok {
+			existingPlayer.Online = online
+			updatedPlayers = append(updatedPlayers, *existingPlayer)
+			seenPlayers[name] = true
+		} else {
+			updatedPlayers = append(updatedPlayers, Player{Name: name, Online: online})
+		}
+	}
+
+	// Add offline players who were previously online
+	for _, player := range players {
+		if !seenPlayers[player.Name] {
+			player.Online = false
+			updatedPlayers = append(updatedPlayers, player)
+		}
+	}
+
+	players = updatedPlayers
+	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+	runtime.LogDebugf(app.ctx, "Players: %v", players)
+
+	return nil
+}
+
+func players_save() error {
+	err := writeJSON(filepath.Join(appFolder, connectionCredentials.IP+"-"+connectionCredentials.Port, "players.json"), players)
+	if err != nil {
+		return errors.New("Error saving players: " + err.Error())
+	}
+
+	return nil
 }

@@ -30,6 +30,10 @@ export function GetLoadConfigPath() {
   return window['go']['main']['App']['GetLoadConfigPath']();
 }
 
+export function GetPlayers() {
+  return window['go']['main']['App']['GetPlayers']();
+}
+
 export function GetVersion() {
   return window['go']['main']['App']['GetVersion']();
 }

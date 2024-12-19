@@ -23,7 +23,7 @@ function App() {
   const [tab, setTab] = useState("admin-panel");
 
   const { progress, setProgress } = useProgress();
-  const { setIsConnected } = useRcon();
+  const { setIsConnected, update } = useRcon();
 
   useLayoutEffect(() => {
     if (
@@ -109,6 +109,10 @@ function App() {
     SendNotification("RCON connection lost", "", "", "error");
     setIsConnected(false);
     setProgress(0);
+  };
+
+  window.updateRcon = () => {
+    update();
   };
 
   return (

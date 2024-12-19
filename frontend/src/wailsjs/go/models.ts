@@ -78,6 +78,20 @@ export namespace main {
 	        this.password = source["password"];
 	    }
 	}
+	export class Player {
+	    name: string;
+	    online: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new Player(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.online = source["online"];
+	    }
+	}
 	export class UpdateInfo {
 	    updateAvailable: boolean;
 	    currentVersion: string;
