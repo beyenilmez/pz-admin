@@ -299,21 +299,27 @@ func players_save() error {
 }
 
 func (app *App) BanUsers(names []string) {
-	success := true
+	banCount := len(names)
 
 	for _, name := range names {
-		_, err := conn.Execute("banuser " + name)
+		res, err := conn.Execute("banuser " + name)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error banning user: "+err.Error())
-			success = false
+			banCount--
+		} else if res != "" && !strings.Contains(res, "is now banned") {
+			runtime.LogError(app.ctx, "Error banning user: "+res)
+			app.SendNotification("Error banning "+name, res, "", "error")
+			banCount--
 		}
 	}
 
-	if success {
-		if len(names) > 1 {
-			app.SendNotification(fmt.Sprintf("Banned %d users", len(names)), "", "", "success")
-		} else {
-			app.SendNotification("Banned "+names[0], "", "", "success")
+	if len(names) > 1 {
+		app.SendNotification(fmt.Sprintf("Banned %d users", banCount), "", "", "success")
+		if banCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to ban %d users", len(names)-banCount), "", "", "error")
 		}
+	} else {
+		app.SendNotification("Banned "+names[0], "", "", "success")
 	}
+
 }
