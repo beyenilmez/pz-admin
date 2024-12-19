@@ -28,27 +28,12 @@ import {
 import { main } from "@/wailsjs/go/models";
 import { useState } from "react";
 import { BanUserDialog } from "./Dialogs/BanUserDialog";
-
-const data: main.Player[] = [
-  { name: "Player 13", online: true },
-  { name: "Player 14", online: true },
-  { name: "Player 15", online: false },
-  { name: "Player 8", online: false },
-  { name: "Player 2", online: false },
-  { name: "Player 3", online: true },
-  { name: "Player 4", online: false },
-  { name: "Player 5", online: true },
-  { name: "Player 6", online: false },
-  { name: "Player 7", online: true },
-  { name: "Player 1", online: true },
-  { name: "Player 9", online: true },
-  { name: "Player 10", online: false },
-  { name: "Player 11", online: false },
-  { name: "Player 11", online: true },
-  { name: "Player 12", online: false },
-].sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1));
+import { useRcon } from "@/contexts/rcon-provider";
+import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
 
 export function PlayersTab() {
+  const { players: data } = useRcon();
+
   const columns: ColumnDef<main.Player>[] = [
     {
       id: "select",
@@ -100,16 +85,33 @@ export function PlayersTab() {
       ),
       cell: ({ row }) => {
         const online = row.getValue("online");
+        const banned = row.getValue("banned");
         return (
-          <span
-            className={`px-2 py-1 rounded-full text-xs font-semibold select-none ${
-              online ? "bg-success" : "bg-destructive"
-            }`}
-          >
-            {online ? "Online" : "Offline"}
-          </span>
+          <div className="space-x-1">
+            <span
+              className={`px-2 py-1 rounded-full text-xs font-semibold select-none ${
+                online ? "bg-success" : "bg-destructive"
+              }`}
+            >
+              {online ? "Online" : "Offline"}
+            </span>
+
+            {banned ? (
+              <span className="px-2 py-1 rounded-full text-xs font-semibold select-none bg-warning text-warning-foreground">
+                Banned
+              </span>
+            ) : (
+              ""
+            )}
+          </div>
         );
       },
+    },
+    {
+      accessorKey: "banned",
+      enableHiding: true, // Makes the column hidden from view
+      cell: () => null, // Prevents it from rendering in the table body
+      header: () => null, // Prevents it from rendering in the table header
     },
     {
       id: "actions",
@@ -129,7 +131,8 @@ export function PlayersTab() {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>
+              {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
+              {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
               <DropdownMenuSeparator />
             </DropdownMenuContent>
           </DropdownMenu>
@@ -176,6 +179,12 @@ export function PlayersTab() {
     setBanDialogOpen(true);
   };
 
+  const [isUnbanDialogOpen, setUnbanDialogOpen] = useState(false);
+  const handleUnban = (name?: string) => {
+    handleSelect(name);
+    setUnbanDialogOpen(true);
+  };
+
   return (
     <>
       <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2">
@@ -196,6 +205,15 @@ export function PlayersTab() {
               >
                 Ban Selected
               </Button>
+
+              <Button
+                onClick={() => {
+                  handleUnban();
+                }}
+                disabled={Object.keys(rowSelection).length === 0}
+              >
+                Unban Selected
+              </Button>
             </div>
             <div className="rounded-md border">
               <Table>
@@ -205,15 +223,17 @@ export function PlayersTab() {
                       key={headerGroup.id}
                       className="dark:hover:backdrop-brightness-105 hover:backdrop-brightness-90"
                     >
-                      {headerGroup.headers.map((header) => {
-                        return (
-                          <TableHead key={header.id} className="p-0">
-                            {header.isPlaceholder
-                              ? null
-                              : flexRender(header.column.columnDef.header, header.getContext())}
-                          </TableHead>
-                        );
-                      })}
+                      {headerGroup.headers
+                        .filter((header) => header.column.id !== "banned")
+                        .map((header) => {
+                          return (
+                            <TableHead key={header.id} className="p-0">
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(header.column.columnDef.header, header.getContext())}
+                            </TableHead>
+                          );
+                        })}
                     </TableRow>
                   ))}
                 </TableHeader>
@@ -225,11 +245,14 @@ export function PlayersTab() {
                         data-state={row.getIsSelected() && "selected"}
                         className="dark:hover:backdrop-brightness-105 hover:backdrop-brightness-90"
                       >
-                        {row.getVisibleCells().map((cell) => (
-                          <TableCell className="py-2" key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </TableCell>
-                        ))}
+                        {row
+                          .getVisibleCells()
+                          .filter((cell) => cell.column.id !== "banned")
+                          .map((cell) => (
+                            <TableCell className="py-2" key={cell.id}>
+                              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                            </TableCell>
+                          ))}
                       </TableRow>
                     ))
                   ) : (
@@ -253,6 +276,7 @@ export function PlayersTab() {
       </div>
 
       <BanUserDialog isOpen={isBanDialogOpen} onClose={() => setBanDialogOpen(false)} names={selectedUsers} />
+      <UnbanUserDialog isOpen={isUnbanDialogOpen} onClose={() => setUnbanDialogOpen(false)} names={selectedUsers} />
     </>
   );
 }

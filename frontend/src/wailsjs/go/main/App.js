@@ -86,6 +86,10 @@ export function SetConfigField(arg1, arg2) {
   return window['go']['main']['App']['SetConfigField'](arg1, arg2);
 }
 
+export function UnbanUsers(arg1) {
+  return window['go']['main']['App']['UnbanUsers'](arg1);
+}
+
 export function Update(arg1) {
   return window['go']['main']['App']['Update'](arg1);
 }

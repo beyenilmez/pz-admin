@@ -44,4 +44,6 @@ export function SendWindowsNotification(arg1:string,arg2:string,arg3:string,arg4
 
 export function SetConfigField(arg1:string,arg2:any):Promise<void>;
 
+export function UnbanUsers(arg1:Array<string>):Promise<void>;
+
 export function Update(arg1:string):Promise<void>;

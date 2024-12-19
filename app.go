@@ -151,6 +151,9 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 
 	runtime.LogInfo(a.ctx, "Saving config complete")
 
+	// Disconnect
+	app.DisconnectRcon()
+
 	return false
 }
 

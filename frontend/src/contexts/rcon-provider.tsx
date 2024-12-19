@@ -88,7 +88,9 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [isConnected]);
 
   useEffect(() => {
-    GetPlayers().then(setPlayers);
+    GetPlayers().then((res) => {
+      setPlayers(res.sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1)));
+    });
   }, [updateTrigger]);
 
   return (

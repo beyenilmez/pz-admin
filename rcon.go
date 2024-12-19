@@ -29,6 +29,7 @@ type Credentials struct {
 type Player struct {
 	Name   string `json:"name"`
 	Online bool   `json:"online"`
+	Banned bool   `json:"banned"`
 }
 
 var connectionCredentials Credentials
@@ -267,10 +268,11 @@ func players_update() error {
 	for name, online := range onlinePlayers {
 		if existingPlayer, ok := playerMap[name]; ok {
 			existingPlayer.Online = online
+			existingPlayer.Banned = false
 			updatedPlayers = append(updatedPlayers, *existingPlayer)
 			seenPlayers[name] = true
 		} else {
-			updatedPlayers = append(updatedPlayers, Player{Name: name, Online: online})
+			updatedPlayers = append(updatedPlayers, Player{Name: name, Online: online, Banned: false})
 		}
 	}
 
@@ -301,6 +303,12 @@ func players_save() error {
 func (app *App) BanUsers(names []string) {
 	banCount := len(names)
 
+	playerMap := make(map[string]*Player, len(players))
+	for i := range players {
+		playerMap[players[i].Name] = &players[i]
+	}
+
+	connMutex.Lock()
 	for _, name := range names {
 		res, err := conn.Execute("banuser " + name)
 		if err != nil {
@@ -310,8 +318,14 @@ func (app *App) BanUsers(names []string) {
 			runtime.LogError(app.ctx, "Error banning user: "+res)
 			app.SendNotification("Error banning "+name, res, "", "error")
 			banCount--
+		} else if res != "" && strings.Contains(res, "is now banned") {
+			player, ok := playerMap[name]
+			if ok {
+				player.Banned = true
+			}
 		}
 	}
+	connMutex.Unlock()
 
 	if len(names) > 1 {
 		app.SendNotification(fmt.Sprintf("Banned %d users", banCount), "", "", "success")
@@ -321,13 +335,20 @@ func (app *App) BanUsers(names []string) {
 	} else {
 		app.SendNotification("Banned "+names[0], "", "", "success")
 	}
+
+	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
 }
 
 func (app *App) UnbanUsers(names []string) {
 	unbanCount := len(names)
 
+	playerMap := make(map[string]*Player, len(players))
+	for i := range players {
+		playerMap[players[i].Name] = &players[i]
+	}
+
+	connMutex.Lock()
 	for _, name := range names {
-		conn.Execute("banuser " + name)
 		res, err := conn.Execute("unbanuser " + name)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error unbanning user: "+err.Error())
@@ -336,8 +357,14 @@ func (app *App) UnbanUsers(names []string) {
 			runtime.LogError(app.ctx, "Error unbanning user: "+res)
 			app.SendNotification("Error unbanning "+name, res, "", "error")
 			unbanCount--
+		} else if res != "" && strings.Contains(res, "is now un-banned") {
+			player, ok := playerMap[name]
+			if ok {
+				player.Banned = false
+			}
 		}
 	}
+	connMutex.Unlock()
 
 	if len(names) > 1 {
 		app.SendNotification(fmt.Sprintf("Unbanned %d users", unbanCount), "", "", "success")
@@ -347,4 +374,6 @@ func (app *App) UnbanUsers(names []string) {
 	} else {
 		app.SendNotification("Unbanned "+names[0], "", "", "success")
 	}
+
+	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
 }

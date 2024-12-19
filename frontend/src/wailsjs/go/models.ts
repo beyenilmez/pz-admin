@@ -81,6 +81,7 @@ export namespace main {
 	export class Player {
 	    name: string;
 	    online: boolean;
+	    banned: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Player(source);
@@ -90,6 +91,7 @@ export namespace main {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.name = source["name"];
 	        this.online = source["online"];
+	        this.banned = source["banned"];
 	    }
 	}
 	export class UpdateInfo {
