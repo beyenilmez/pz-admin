@@ -28,7 +28,6 @@ export default function AdminPanel() {
 
   useEffect(() => {
     if (isConnected && tab === "terminal") {
-      setPlayersState(playersState + 1);
       setSandboxState(sandboxState + 1);
     }
   }, [tab]);

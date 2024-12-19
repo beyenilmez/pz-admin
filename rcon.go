@@ -115,6 +115,23 @@ func (app *App) SendRconCommand(command string) string {
 		runtime.LogError(app.ctx, "Error executing RCON command: "+err.Error())
 		return ""
 	}
+	if strings.Contains(command, "banuser") && strings.Contains(res, "is now banned") {
+		for i := range players {
+			if players[i].Name == strings.Split(command, " ")[1] {
+				players[i].Banned = true
+				runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+				break
+			}
+		}
+	} else if strings.Contains(command, "unbanuser") && strings.Contains(res, "is now un-banned") {
+		for i := range players {
+			if players[i].Name == strings.Split(command, " ")[1] {
+				players[i].Banned = false
+				runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+				break
+			}
+		}
+	}
 
 	return res
 }
