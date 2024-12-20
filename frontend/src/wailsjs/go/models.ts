@@ -62,6 +62,22 @@ export namespace main {
 	        this.rconCheckInterval = source["rconCheckInterval"];
 	    }
 	}
+	export class Coordinates {
+	    x: number;
+	    y: number;
+	    z: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new Coordinates(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.x = source["x"];
+	        this.y = source["y"];
+	        this.z = source["z"];
+	    }
+	}
 	export class Credentials {
 	    ip: string;
 	    port: string;

@@ -34,6 +34,12 @@ type Player struct {
 	Godmode bool   `json:"godmode"`
 }
 
+type Coordinates struct {
+	X int `json:"x"`
+	Y int `json:"y"`
+	Z int `json:"z"`
+}
+
 var connectionCredentials Credentials
 var players []Player
 
@@ -117,7 +123,7 @@ func (app *App) SendRconCommand(command string) string {
 		runtime.LogError(app.ctx, "Error executing RCON command: "+err.Error())
 		return ""
 	}
-	if strings.Contains(command, "banuser") && strings.Contains(res, "is now banned") {
+	if strings.Contains(command, "banuser ") && strings.Contains(res, "is now banned") {
 		for i := range players {
 			if players[i].Name == strings.Split(command, " ")[1] {
 				players[i].Banned = true
@@ -125,7 +131,7 @@ func (app *App) SendRconCommand(command string) string {
 				break
 			}
 		}
-	} else if strings.Contains(command, "unbanuser") && strings.Contains(res, "is now un-banned") {
+	} else if strings.Contains(command, "unbanuser ") && strings.Contains(res, "is now un-banned") {
 		for i := range players {
 			if players[i].Name == strings.Split(command, " ")[1] {
 				players[i].Banned = false
@@ -133,8 +139,26 @@ func (app *App) SendRconCommand(command string) string {
 				break
 			}
 		}
-	} else if strings.Contains(command, "kick") && strings.Contains(res, " kicked.") {
+	} else if strings.Contains(command, "kick ") && strings.Contains(res, " kicked.") {
 		runtime.EventsEmit(app.ctx, "update-players", players)
+	} else if strings.Contains(command, "godmode ") || strings.Contains(command, "godmod ") {
+		if strings.Contains(res, " is now invincible.") {
+			for i := range players {
+				if players[i].Name == strings.Split(command, " ")[1] {
+					players[i].Godmode = true
+					runtime.EventsEmit(app.ctx, "update-players", players)
+					break
+				}
+			}
+		} else if strings.Contains(res, " is no more invincible.") {
+			for i := range players {
+				if players[i].Name == strings.Split(command, " ")[1] {
+					players[i].Godmode = false
+					runtime.EventsEmit(app.ctx, "update-players", players)
+					break
+				}
+			}
+		}
 	}
 
 	return res
@@ -381,7 +405,9 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 	connMutex.Unlock()
 
 	if len(names) > 1 {
-		app.SendNotification(fmt.Sprintf("Banned %d users", banCount), "", "", "success")
+		if banCount != 0 {
+			app.SendNotification(fmt.Sprintf("Banned %d users", banCount), "", "", "success")
+		}
 		if banCount < len(names) {
 			app.SendNotification(fmt.Sprintf("Failed to ban %d users", len(names)-banCount), "", "", "error")
 		}
@@ -423,7 +449,9 @@ func (app *App) UnbanUsers(names []string) {
 	connMutex.Unlock()
 
 	if len(names) > 1 {
-		app.SendNotification(fmt.Sprintf("Unbanned %d users", unbanCount), "", "", "success")
+		if unbanCount != 0 {
+			app.SendNotification(fmt.Sprintf("Unbanned %d users", unbanCount), "", "", "success")
+		}
 		if unbanCount < len(names) {
 			app.SendNotification(fmt.Sprintf("Failed to unban %d users", len(names)-unbanCount), "", "", "error")
 		}
@@ -439,7 +467,7 @@ func (app *App) UnbanUsers(names []string) {
 func (app *App) KickUsers(names []string, reason string) {
 	defer players_update()
 
-	banCount := len(names)
+	kickCount := len(names)
 
 	connMutex.Lock()
 	for _, name := range names {
@@ -451,22 +479,24 @@ func (app *App) KickUsers(names []string, reason string) {
 		if err != nil {
 			runtime.LogError(app.ctx, "Error kicking user: "+err.Error())
 			app.SendNotification("Error kicking "+name, err.Error(), "", "error")
-			banCount--
+			kickCount--
 		} else if res != "" && !strings.Contains(res, " kicked.") {
 			runtime.LogError(app.ctx, "Error kicking user: "+res)
 			app.SendNotification("Error kicking "+name, res, "", "error")
-			banCount--
+			kickCount--
 		}
 	}
 	connMutex.Unlock()
 
 	if len(names) > 1 {
-		app.SendNotification(fmt.Sprintf("Kicked %d users", banCount), "", "", "success")
-		if banCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to kick %d users", len(names)-banCount), "", "", "error")
+		if kickCount != 0 {
+			app.SendNotification(fmt.Sprintf("Kicked %d users", kickCount), "", "", "success")
+		}
+		if kickCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to kick %d users", len(names)-kickCount), "", "", "error")
 		}
 	} else {
-		if banCount != 0 {
+		if kickCount != 0 {
 			app.SendNotification("Kicked "+names[0], "", "", "success")
 		}
 	}
@@ -518,4 +548,68 @@ func (app *App) CheatPower(names []string, power string, value bool) {
 	//}
 
 	runtime.EventsEmit(app.ctx, "update-players", players)
+}
+
+func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
+	teleportCount := len(names)
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(fmt.Sprintf("teleport \"%s\" %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z))
+		if err != nil {
+			runtime.LogError(app.ctx, "Error teleporting user: "+err.Error())
+			app.SendNotification("Error teleporting "+name, err.Error(), "", "error")
+			teleportCount--
+		} else if res != "" && !strings.Contains(res, fmt.Sprintf("%s teleported to %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z)) {
+			runtime.LogError(app.ctx, "Error teleporting user: "+res)
+			app.SendNotification("Error teleporting "+name, res, "", "error")
+			teleportCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		if teleportCount != 0 {
+			app.SendNotification(fmt.Sprintf("Teleported %d users", teleportCount), "", "", "success")
+		}
+		if teleportCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to teleport %d users", len(names)-teleportCount), "", "", "error")
+		}
+	} else {
+		if teleportCount != 0 {
+			app.SendNotification("Teleported "+names[0], "", "", "success")
+		}
+	}
+}
+
+func (app *App) TeleportToUser(names []string, targetUser string) {
+	teleportCount := len(names)
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(fmt.Sprintf("teleport \"%s\" \"%s\"", name, targetUser))
+		if err != nil {
+			runtime.LogError(app.ctx, "Error teleporting user: "+err.Error())
+			app.SendNotification("Error teleporting "+name, err.Error(), "", "error")
+			teleportCount--
+		} else if res != "" && res != fmt.Sprintf("teleported %s to %s", name, targetUser) {
+			runtime.LogError(app.ctx, "Error teleporting user: "+res)
+			app.SendNotification("Error teleporting "+name, res, "", "error")
+			teleportCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		if teleportCount != 0 {
+			app.SendNotification(fmt.Sprintf("Teleported %d users", teleportCount), "", "", "success")
+		}
+		if teleportCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to teleport %d users", len(names)-teleportCount), "", "", "error")
+		}
+	} else {
+		if teleportCount != 0 {
+			app.SendNotification("Teleported "+names[0], "", "", "success")
+		}
+	}
 }

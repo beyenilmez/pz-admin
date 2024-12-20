@@ -94,6 +94,14 @@ export function SetConfigField(arg1, arg2) {
   return window['go']['main']['App']['SetConfigField'](arg1, arg2);
 }
 
+export function TeleportToCoordinates(arg1, arg2) {
+  return window['go']['main']['App']['TeleportToCoordinates'](arg1, arg2);
+}
+
+export function TeleportToUser(arg1, arg2) {
+  return window['go']['main']['App']['TeleportToUser'](arg1, arg2);
+}
+
 export function UnbanUsers(arg1) {
   return window['go']['main']['App']['UnbanUsers'](arg1);
 }

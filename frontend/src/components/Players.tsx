@@ -39,6 +39,7 @@ import { useRcon } from "@/contexts/rcon-provider";
 import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
 import { KickUserDialog } from "./Dialogs/KickUserDialog";
 import { CheatPower } from "@/wailsjs/go/main/App";
+import { TeleportDialog } from "./Dialogs/TeleportDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -140,14 +141,9 @@ export function PlayersTab() {
             </DropdownMenuTrigger>
             <DropdownMenuPortal>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
                 {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
-                {player.online && (
-                  <DropdownMenuItem disabled={!player.online} onClick={() => handleKick(player.name)}>
-                    Kick
-                  </DropdownMenuItem>
-                )}
+                {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem
@@ -158,19 +154,9 @@ export function PlayersTab() {
                     God Mode
                     {player.godmode && <Check />}
                   </DropdownMenuItem>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>Teleport</DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem onClick={() => handleTeleportToPlayer(player.name)}>
-                          To Player
-                        </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleTeleportPlayerToCoords(player.name)}>
-                          To Coordinates
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                  {!player.online && (
+                    <DropdownMenuItem onClick={() => handleTeleport(player.name)}>Teleport</DropdownMenuItem>
+                  )}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuSub>
@@ -245,14 +231,9 @@ export function PlayersTab() {
   };
 
   const [isTeleportDialogOpen, setTeleportDialogOpen] = useState(false);
-  const handleTeleportToPlayer = (name?: string) => {
+  const handleTeleport = (name?: string) => {
     handleSelect(name);
     setTeleportDialogOpen(true);
-  };
-
-  const handleTeleportPlayerToCoords = (name?: string) => {
-    handleSelect(name);
-    // Open a dialog for inputting coordinates if needed
   };
 
   const handleCheat = (cheat: string, value: boolean, name?: string) => {
@@ -313,6 +294,15 @@ export function PlayersTab() {
                 disabled={Object.keys(rowSelection).length === 0}
               >
                 Unban Selected
+              </Button>
+
+              <Button
+                onClick={() => {
+                  handleKick();
+                }}
+                disabled={Object.keys(rowSelection).length === 0}
+              >
+                Kick Selected
               </Button>
             </div>
             <div className="rounded-md border">
@@ -378,6 +368,11 @@ export function PlayersTab() {
       <BanUserDialog isOpen={isBanDialogOpen} onClose={() => setBanDialogOpen(false)} names={selectedUsers} />
       <UnbanUserDialog isOpen={isUnbanDialogOpen} onClose={() => setUnbanDialogOpen(false)} names={selectedUsers} />
       <KickUserDialog isOpen={isKickDialogOpen} onClose={() => setKickDialogOpen(false)} names={selectedUsers} />
+      <TeleportDialog
+        isOpen={isTeleportDialogOpen}
+        onClose={() => setTeleportDialogOpen(false)}
+        names={selectedUsers}
+      />
     </>
   );
 }
