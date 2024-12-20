@@ -46,6 +46,10 @@ export function IsRconConnected() {
   return window['go']['main']['App']['IsRconConnected']();
 }
 
+export function KickUsers(arg1, arg2) {
+  return window['go']['main']['App']['KickUsers'](arg1, arg2);
+}
+
 export function LoadCredentials() {
   return window['go']['main']['App']['LoadCredentials']();
 }

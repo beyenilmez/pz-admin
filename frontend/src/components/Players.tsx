@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 "use client";
 
 import {
@@ -36,6 +36,7 @@ import { useState } from "react";
 import { BanUserDialog } from "./Dialogs/BanUserDialog";
 import { useRcon } from "@/contexts/rcon-provider";
 import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
+import { KickUserDialog } from "./Dialogs/KickUserDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -142,7 +143,7 @@ export function PlayersTab() {
                 {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>
+                  {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>Teleport</DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
@@ -385,6 +386,7 @@ export function PlayersTab() {
 
       <BanUserDialog isOpen={isBanDialogOpen} onClose={() => setBanDialogOpen(false)} names={selectedUsers} />
       <UnbanUserDialog isOpen={isUnbanDialogOpen} onClose={() => setUnbanDialogOpen(false)} names={selectedUsers} />
+      <KickUserDialog isOpen={isKickDialogOpen} onClose={() => setKickDialogOpen(false)} names={selectedUsers} />
     </>
   );
 }

@@ -8,39 +8,36 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "../ui/textarea";
-import { BanUsers } from "@/wailsjs/go/main/App";
+import { KickUsers } from "@/wailsjs/go/main/App";
 import { useEffect, useState } from "react";
 
-interface BanUserDialogProps {
+interface KickUserDialogProps {
   isOpen: boolean;
   onClose: () => void;
   names: string[];
 }
 
-export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
+export function KickUserDialog({ isOpen, onClose, names }: KickUserDialogProps) {
   const [reason, setReason] = useState("");
-  const [banIp, setBanIp] = useState(false);
 
   const handleBan = () => {
     onClose();
 
-    BanUsers(names, reason, banIp);
+    KickUsers(names, reason);
   };
 
   useEffect(() => {
     setReason("");
-    setBanIp(false);
   }, [isOpen]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
-          <DialogTitle>{names.length > 1 ? "Ban Users" : "Ban User"}</DialogTitle>
+          <DialogTitle>{names.length > 1 ? "Kick Users" : "Kick User"}</DialogTitle>
           <DialogDescription>
-            <p>{"You will ban " + names.join(", ") + "."}</p>
+            <p>{"You will kick " + names.join(", ") + "."}</p>
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1">
@@ -55,18 +52,9 @@ export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
             className="col-span-3 max-h-64"
           />
         </div>
-        <div className="flex items-center space-x-2">
-          <Checkbox id="ban-ip" checked={banIp} onCheckedChange={(value: boolean) => setBanIp(value)} />
-          <label
-            htmlFor="ban-ip"
-            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Ban IP
-          </label>
-        </div>
         <DialogFooter>
           <Button type="submit" onClick={handleBan}>
-            Ban
+            Kick
           </Button>
         </DialogFooter>
       </DialogContent>

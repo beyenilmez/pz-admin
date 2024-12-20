@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -261,6 +260,9 @@ func players_update() error {
 		return errors.New("Error getting players: " + err.Error())
 	}
 
+	oldPlayers := make([]Player, len(players))
+	copy(oldPlayers, players)
+
 	lines := strings.Split(res, "\n")
 	if len(lines) < 1 {
 		return nil
@@ -303,12 +305,20 @@ func players_update() error {
 		}
 	}
 
-	// Check if players have actually changed
-	updatedPlayersJSON, _ := json.Marshal(updatedPlayers)
-	currentPlayersJSON, _ := json.Marshal(players)
+	// Check for any changes in player states
+	playersChanged := len(oldPlayers) != len(updatedPlayers)
+	if !playersChanged {
+		for i := range oldPlayers {
+			if oldPlayers[i].Name != updatedPlayers[i].Name ||
+				oldPlayers[i].Online != updatedPlayers[i].Online ||
+				oldPlayers[i].Banned != updatedPlayers[i].Banned {
+				playersChanged = true
+				break
+			}
+		}
+	}
 
-	if string(updatedPlayersJSON) == string(currentPlayersJSON) {
-		// No changes detected; skip emitting event
+	if !playersChanged {
 		runtime.LogDebugf(app.ctx, "No changes in players, skipping event emission")
 		return nil
 	}
@@ -345,11 +355,12 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 			commandString += " -ip"
 		}
 		if reason != "" {
-			commandString += " -r " + reason
+			commandString += " -r \"" + strings.TrimSpace(reason) + "\""
 		}
 		res, err := conn.Execute(commandString)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error banning user: "+err.Error())
+			app.SendNotification("Error banning "+name, err.Error(), "", "error")
 			banCount--
 		} else if res != "" && !strings.Contains(res, "is now banned") {
 			runtime.LogError(app.ctx, "Error banning user: "+res)
@@ -359,6 +370,7 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 			player, ok := playerMap[name]
 			if ok {
 				player.Banned = true
+				player.Online = false
 			}
 		}
 	}
@@ -370,9 +382,7 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 			app.SendNotification(fmt.Sprintf("Failed to ban %d users", len(names)-banCount), "", "", "error")
 		}
 	} else {
-		if banCount == 0 {
-			app.SendNotification("Failed to ban "+names[0], "", "", "error")
-		} else {
+		if banCount != 0 {
 			app.SendNotification("Banned "+names[0], "", "", "success")
 		}
 	}
@@ -393,6 +403,7 @@ func (app *App) UnbanUsers(names []string) {
 		res, err := conn.Execute("unbanuser " + name)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error unbanning user: "+err.Error())
+			app.SendNotification("Error unbanning "+name, err.Error(), "", "error")
 			unbanCount--
 		} else if res != "" && !strings.Contains(res, "is now un-banned") {
 			runtime.LogError(app.ctx, "Error unbanning user: "+res)
@@ -413,12 +424,46 @@ func (app *App) UnbanUsers(names []string) {
 			app.SendNotification(fmt.Sprintf("Failed to unban %d users", len(names)-unbanCount), "", "", "error")
 		}
 	} else {
-		if unbanCount == 0 {
-			app.SendNotification("Failed to unban "+names[0], "", "", "error")
-		} else {
+		if unbanCount != 0 {
 			app.SendNotification("Unbanned "+names[0], "", "", "success")
 		}
 	}
 
 	runtime.EventsEmit(app.ctx, "update-players", players)
+}
+
+func (app *App) KickUsers(names []string, reason string) {
+	defer players_update()
+
+	banCount := len(names)
+
+	connMutex.Lock()
+	for _, name := range names {
+		commandString := "kick " + name
+		if reason != "" {
+			commandString += " -r \"" + strings.TrimSpace(reason) + "\""
+		}
+		res, err := conn.Execute(commandString)
+		if err != nil {
+			runtime.LogError(app.ctx, "Error kicking user: "+err.Error())
+			app.SendNotification("Error kicking "+name, err.Error(), "", "error")
+			banCount--
+		} else if res != "" && !strings.Contains(res, " kicked.") {
+			runtime.LogError(app.ctx, "Error kicking user: "+res)
+			app.SendNotification("Error kicking "+name, res, "", "error")
+			banCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		app.SendNotification(fmt.Sprintf("Kicked %d users", banCount), "", "", "success")
+		if banCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to kick %d users", len(names)-banCount), "", "", "error")
+		}
+	} else {
+		if banCount != 0 {
+			app.SendNotification("Kicked "+names[0], "", "", "success")
+		}
+	}
 }

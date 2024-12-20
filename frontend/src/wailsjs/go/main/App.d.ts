@@ -24,6 +24,8 @@ export function GetVersion():Promise<string>;
 
 export function IsRconConnected():Promise<boolean>;
 
+export function KickUsers(arg1:Array<string>,arg2:string):Promise<void>;
+
 export function LoadCredentials():Promise<main.Credentials>;
 
 export function OpenFileInExplorer(arg1:string):Promise<void>;
