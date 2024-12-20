@@ -82,6 +82,7 @@ export namespace main {
 	    name: string;
 	    online: boolean;
 	    banned: boolean;
+	    godmode: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Player(source);
@@ -92,6 +93,7 @@ export namespace main {
 	        this.name = source["name"];
 	        this.online = source["online"];
 	        this.banned = source["banned"];
+	        this.godmode = source["godmode"];
 	    }
 	}
 	export class UpdateInfo {

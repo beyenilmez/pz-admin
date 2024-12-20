@@ -1,4 +1,4 @@
-//@ts-nocheck
+//@ts-nochec
 "use client";
 
 import {
@@ -12,7 +12,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Check, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -20,6 +20,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { ScrollArea } from "./ui/scroll-area";
 import {
   DropdownMenu,
+  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
@@ -37,6 +38,7 @@ import { BanUserDialog } from "./Dialogs/BanUserDialog";
 import { useRcon } from "@/contexts/rcon-provider";
 import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
 import { KickUserDialog } from "./Dialogs/KickUserDialog";
+import { CheatPower } from "@/wailsjs/go/main/App";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -141,9 +143,21 @@ export function PlayersTab() {
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
                 {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
+                {player.online && (
+                  <DropdownMenuItem disabled={!player.online} onClick={() => handleKick(player.name)}>
+                    Kick
+                  </DropdownMenuItem>
+                )}
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
+                  <DropdownMenuItem
+                    disabled={!player.online}
+                    className="flex justify-between"
+                    onClick={() => handleCheat("godmode", !player.godmode, player.name)}
+                  >
+                    God Mode
+                    {player.godmode && <Check />}
+                  </DropdownMenuItem>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>Teleport</DropdownMenuSubTrigger>
                     <DropdownMenuPortal>
@@ -154,16 +168,6 @@ export function PlayersTab() {
                         <DropdownMenuItem onClick={() => handleTeleportPlayerToCoords(player.name)}>
                           To Coordinates
                         </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>Control</DropdownMenuSubTrigger>
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent>
-                        <DropdownMenuItem onClick={() => handleGodMode(player.name)}>God Mode</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleInvisible(player.name)}>Invisible</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleNoClip(player.name)}>No Clip</DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
@@ -251,22 +255,9 @@ export function PlayersTab() {
     // Open a dialog for inputting coordinates if needed
   };
 
-  const [isGodModeDialogOpen, setGodModeDialogOpen] = useState(false);
-  const handleGodMode = (name?: string) => {
+  const handleCheat = (cheat: string, value: boolean, name?: string) => {
     handleSelect(name);
-    setGodModeDialogOpen(true);
-  };
-
-  const [isInvisibleDialogOpen, setInvisibleDialogOpen] = useState(false);
-  const handleInvisible = (name?: string) => {
-    handleSelect(name);
-    setInvisibleDialogOpen(true);
-  };
-
-  const [isNoClipDialogOpen, setNoClipDialogOpen] = useState(false);
-  const handleNoClip = (name?: string) => {
-    handleSelect(name);
-    setNoClipDialogOpen(true);
+    CheatPower(selectedUsers, cheat, value);
   };
 
   const handleCreateHorde = (name?: string) => {

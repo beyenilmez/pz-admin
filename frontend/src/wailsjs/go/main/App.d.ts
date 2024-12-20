@@ -4,6 +4,8 @@ import {main} from '../models';
 
 export function BanUsers(arg1:Array<string>,arg2:string,arg3:boolean):Promise<void>;
 
+export function CheatPower(arg1:Array<string>,arg2:string,arg3:boolean):Promise<void>;
+
 export function CheckForUpdate():Promise<main.UpdateInfo>;
 
 export function ConnectRcon(arg1:main.Credentials):Promise<boolean>;

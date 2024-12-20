@@ -6,6 +6,10 @@ export function BanUsers(arg1, arg2, arg3) {
   return window['go']['main']['App']['BanUsers'](arg1, arg2, arg3);
 }
 
+export function CheatPower(arg1, arg2, arg3) {
+  return window['go']['main']['App']['CheatPower'](arg1, arg2, arg3);
+}
+
 export function CheckForUpdate() {
   return window['go']['main']['App']['CheckForUpdate']();
 }

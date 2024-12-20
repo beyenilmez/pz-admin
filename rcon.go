@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -27,9 +28,10 @@ type Credentials struct {
 }
 
 type Player struct {
-	Name   string `json:"name"`
-	Online bool   `json:"online"`
-	Banned bool   `json:"banned"`
+	Name    string `json:"name"`
+	Online  bool   `json:"online"`
+	Banned  bool   `json:"banned"`
+	Godmode bool   `json:"godmode"`
 }
 
 var connectionCredentials Credentials
@@ -131,6 +133,8 @@ func (app *App) SendRconCommand(command string) string {
 				break
 			}
 		}
+	} else if strings.Contains(command, "kick") && strings.Contains(res, " kicked.") {
+		runtime.EventsEmit(app.ctx, "update-players", players)
 	}
 
 	return res
@@ -350,7 +354,7 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 
 	connMutex.Lock()
 	for _, name := range names {
-		commandString := "banuser " + name
+		commandString := "banuser \"" + name + "\""
 		if banIp {
 			commandString += " -ip"
 		}
@@ -400,7 +404,7 @@ func (app *App) UnbanUsers(names []string) {
 
 	connMutex.Lock()
 	for _, name := range names {
-		res, err := conn.Execute("unbanuser " + name)
+		res, err := conn.Execute("unbanuser \"" + name + "\"")
 		if err != nil {
 			runtime.LogError(app.ctx, "Error unbanning user: "+err.Error())
 			app.SendNotification("Error unbanning "+name, err.Error(), "", "error")
@@ -439,7 +443,7 @@ func (app *App) KickUsers(names []string, reason string) {
 
 	connMutex.Lock()
 	for _, name := range names {
-		commandString := "kick " + name
+		commandString := "kick \"" + name + "\""
 		if reason != "" {
 			commandString += " -r \"" + strings.TrimSpace(reason) + "\""
 		}
@@ -466,4 +470,52 @@ func (app *App) KickUsers(names []string, reason string) {
 			app.SendNotification("Kicked "+names[0], "", "", "success")
 		}
 	}
+}
+
+func (app *App) CheatPower(names []string, power string, value bool) {
+	cheatCount := len(names)
+
+	if cheatCount == 0 || power != "godmode" {
+		return
+	}
+
+	playerMap := make(map[string]*Player, len(players))
+	for i := range players {
+		playerMap[players[i].Name] = &players[i]
+	}
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(power + " \"" + name + "\" -" + strconv.FormatBool(value))
+		if err != nil {
+			runtime.LogErrorf(app.ctx, "Error %s user: %s", power, err.Error())
+			app.SendNotification("Error "+power+" "+name, err.Error(), "", "error")
+			cheatCount--
+		} else if res != "" && !strings.Contains(res, " invincible.") {
+			runtime.LogErrorf(app.ctx, "Error %s user: %s", power, res)
+			app.SendNotification("Error "+power+" "+name, res, "", "error")
+			cheatCount--
+		} else if res != "" {
+			if strings.Contains(res, " is now invincible.") || strings.Contains(res, " is no more invincible.") {
+				player, ok := playerMap[name]
+				if ok {
+					player.Godmode = value
+				}
+			}
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		//app.SendNotification(fmt.Sprintf("%s %d users", power, cheatCount), "", "", "success")
+		if cheatCount < len(names) {
+			app.SendNotification(fmt.Sprintf("Failed to %s %d users", power, len(names)-cheatCount), "", "", "error")
+		}
+	} //else {
+	//if cheatCount != 0 {
+	//	app.SendNotification(power+" "+names[0], "", "", "success")
+	//}
+	//}
+
+	runtime.EventsEmit(app.ctx, "update-players", players)
 }
