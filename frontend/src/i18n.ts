@@ -19,7 +19,7 @@ const initializeI18n = async () => {
       lng: language,
       supportedLngs: supportedLngs, // Add supported languages here
       fallbackLng: "en-US",
-      debug: true,
+      debug: false,
       interpolation: {
         escapeValue: false, // React already safes from XSS
       },

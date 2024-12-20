@@ -8,8 +8,9 @@ import React, {
   SetStateAction,
   useEffect,
 } from "react";
-import { ConnectRcon, DisconnectRcon, GetPlayers, SendRconCommand } from "@/wailsjs/go/main/App";
+import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
+import { EventsOn } from "@/wailsjs/runtime/runtime";
 
 interface RconContextType {
   isConnected: boolean;
@@ -20,7 +21,6 @@ interface RconContextType {
   sendCommand: (command: string) => Promise<string | null>;
   ip: string;
   port: string;
-  update: () => void;
   players: main.Player[];
 }
 
@@ -32,8 +32,10 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [ip, setIp] = useState("");
   const [port, setPort] = useState("");
   const [players, setPlayers] = useState<main.Player[]>([]);
-  const [updateTrigger, setUpdateTrigger] = useState(0); // A trigger to force update
-  const update = useCallback(() => setUpdateTrigger((prev) => prev + 1), []);
+
+  EventsOn("update-players", (players: main.Player[]) => {
+    setPlayers(players.sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1)));
+  });
 
   const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {
@@ -87,15 +89,9 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [isConnected]);
 
-  useEffect(() => {
-    GetPlayers().then((res) => {
-      setPlayers(res.sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1)));
-    });
-  }, [updateTrigger]);
-
   return (
     <RconContext.Provider
-      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port, update, players }}
+      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port, players }}
     >
       {children}
     </RconContext.Provider>

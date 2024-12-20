@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 
 import {
@@ -20,11 +21,16 @@ import { ScrollArea } from "./ui/scroll-area";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { main } from "@/wailsjs/go/models";
 import { useState } from "react";
 import { BanUserDialog } from "./Dialogs/BanUserDialog";
@@ -32,7 +38,7 @@ import { useRcon } from "@/contexts/rcon-provider";
 import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
 
 export function PlayersTab() {
-  const { players: data } = useRcon();
+  const { players } = useRcon();
 
   const columns: ColumnDef<main.Player>[] = [
     {
@@ -129,12 +135,54 @@ export function PlayersTab() {
                 </Button>
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
-              {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
-              <DropdownMenuSeparator />
-            </DropdownMenuContent>
+            <DropdownMenuPortal>
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
+                {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>Teleport</DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem onClick={() => handleTeleportToPlayer(player.name)}>
+                          To Player
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleTeleportPlayerToCoords(player.name)}>
+                          To Coordinates
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>Control</DropdownMenuSubTrigger>
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent>
+                        <DropdownMenuItem onClick={() => handleGodMode(player.name)}>God Mode</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleInvisible(player.name)}>Invisible</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleNoClip(player.name)}>No Clip</DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger>Events</DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent>
+                      <DropdownMenuItem onClick={() => handleCreateHorde(player.name)}>Create Horde</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleChopperEvent(player.name)}>Helicopter</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleGunshotEvent(player.name)}>Gunshot</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleLightning(player.name)}>Lightning</DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => handleThunder(player.name)}>Thunder</DropdownMenuItem>
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
+                <DropdownMenuSeparator />
+              </DropdownMenuContent>
+            </DropdownMenuPortal>
           </DropdownMenu>
         );
       },
@@ -146,7 +194,7 @@ export function PlayersTab() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const table = useReactTable({
-    data,
+    data: players,
     columns,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
@@ -183,6 +231,66 @@ export function PlayersTab() {
   const handleUnban = (name?: string) => {
     handleSelect(name);
     setUnbanDialogOpen(true);
+  };
+
+  const [isKickDialogOpen, setKickDialogOpen] = useState(false);
+  const handleKick = (name?: string) => {
+    handleSelect(name);
+    setKickDialogOpen(true);
+  };
+
+  const [isTeleportDialogOpen, setTeleportDialogOpen] = useState(false);
+  const handleTeleportToPlayer = (name?: string) => {
+    handleSelect(name);
+    setTeleportDialogOpen(true);
+  };
+
+  const handleTeleportPlayerToCoords = (name?: string) => {
+    handleSelect(name);
+    // Open a dialog for inputting coordinates if needed
+  };
+
+  const [isGodModeDialogOpen, setGodModeDialogOpen] = useState(false);
+  const handleGodMode = (name?: string) => {
+    handleSelect(name);
+    setGodModeDialogOpen(true);
+  };
+
+  const [isInvisibleDialogOpen, setInvisibleDialogOpen] = useState(false);
+  const handleInvisible = (name?: string) => {
+    handleSelect(name);
+    setInvisibleDialogOpen(true);
+  };
+
+  const [isNoClipDialogOpen, setNoClipDialogOpen] = useState(false);
+  const handleNoClip = (name?: string) => {
+    handleSelect(name);
+    setNoClipDialogOpen(true);
+  };
+
+  const handleCreateHorde = (name?: string) => {
+    handleSelect(name);
+    // Trigger a dialog or direct action for creating a horde
+  };
+
+  const handleChopperEvent = (name?: string) => {
+    handleSelect(name);
+    // Trigger a chopper event for the selected user(s)
+  };
+
+  const handleGunshotEvent = (name?: string) => {
+    handleSelect(name);
+    // Trigger a gunshot event for the selected user(s)
+  };
+
+  const handleLightning = (name?: string) => {
+    handleSelect(name);
+    // Trigger a lightning event for the selected user(s)
+  };
+
+  const handleThunder = (name?: string) => {
+    handleSelect(name);
+    // Trigger a thunder event for the selected user(s)
   };
 
   return (

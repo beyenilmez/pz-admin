@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
@@ -119,7 +120,7 @@ func (app *App) SendRconCommand(command string) string {
 		for i := range players {
 			if players[i].Name == strings.Split(command, " ")[1] {
 				players[i].Banned = true
-				runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+				runtime.EventsEmit(app.ctx, "update-players", players)
 				break
 			}
 		}
@@ -127,7 +128,7 @@ func (app *App) SendRconCommand(command string) string {
 		for i := range players {
 			if players[i].Name == strings.Split(command, " ")[1] {
 				players[i].Banned = false
-				runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+				runtime.EventsEmit(app.ctx, "update-players", players)
 				break
 			}
 		}
@@ -245,6 +246,7 @@ func players_init() error {
 	} else {
 		err := readJSON(playersFilePath, &players)
 		runtime.LogDebugf(app.ctx, "Players readed: %v", players)
+		runtime.EventsEmit(app.ctx, "update-players", players)
 		if err != nil {
 			return errors.New("Error reading players file: " + err.Error())
 		}
@@ -301,9 +303,20 @@ func players_update() error {
 		}
 	}
 
+	// Check if players have actually changed
+	updatedPlayersJSON, _ := json.Marshal(updatedPlayers)
+	currentPlayersJSON, _ := json.Marshal(players)
+
+	if string(updatedPlayersJSON) == string(currentPlayersJSON) {
+		// No changes detected; skip emitting event
+		runtime.LogDebugf(app.ctx, "No changes in players, skipping event emission")
+		return nil
+	}
+
+	// Update players and emit event
 	players = updatedPlayers
-	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
-	runtime.LogDebugf(app.ctx, "Players: %v", players)
+	runtime.EventsEmit(app.ctx, "update-players", players)
+	runtime.LogDebugf(app.ctx, "Players updated: %v", players)
 
 	return nil
 }
@@ -364,7 +377,7 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 		}
 	}
 
-	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+	runtime.EventsEmit(app.ctx, "update-players", players)
 }
 
 func (app *App) UnbanUsers(names []string) {
@@ -407,5 +420,5 @@ func (app *App) UnbanUsers(names []string) {
 		}
 	}
 
-	runtime.WindowExecJS(app.ctx, "window.updateRcon();")
+	runtime.EventsEmit(app.ctx, "update-players", players)
 }
