@@ -325,7 +325,7 @@ export function PlayersTab() {
                   }}
                   disabled={Object.keys(rowSelection).length === 0}
                 >
-                  Ban Selected
+                  Ban
                 </Button>
 
                 <Button
@@ -334,25 +334,31 @@ export function PlayersTab() {
                   }}
                   disabled={Object.keys(rowSelection).length === 0}
                 >
-                  Unban Selected
+                  Unban
                 </Button>
 
                 <Button
                   onClick={() => {
                     handleKick();
                   }}
-                  disabled={Object.keys(rowSelection).length === 0}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !Object.keys(rowSelection).some((id) => players.find((player) => player.name === id)?.online)
+                  }
                 >
-                  Kick Selected
+                  Kick
                 </Button>
 
                 <Button
                   onClick={() => {
                     handleTeleport();
                   }}
-                  disabled={Object.keys(rowSelection).length === 0}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !Object.keys(rowSelection).some((id) => players.find((player) => player.name === id)?.online)
+                  }
                 >
-                  Teleport Selected
+                  Teleport
                 </Button>
 
                 <Button
@@ -433,9 +439,16 @@ export function PlayersTab() {
         defaultValue={
           selectedUsers.length === 1
             ? players.find((player) => player.name === selectedUsers[0])?.accessLevel
+            : selectedUsers.every(
+                (user) =>
+                  players.find((player) => player.name === user)?.accessLevel ===
+                  players.find((player) => player.name === selectedUsers[0])?.accessLevel
+              )
+            ? players.find((player) => player.name === selectedUsers[0])?.accessLevel
             : undefined
         }
       />
+
       <UnbanUserDialog isOpen={isUnbanDialogOpen} onClose={() => setUnbanDialogOpen(false)} names={selectedUsers} />
       <KickUserDialog isOpen={isKickDialogOpen} onClose={() => setKickDialogOpen(false)} names={selectedUsers} />
       <TeleportDialog

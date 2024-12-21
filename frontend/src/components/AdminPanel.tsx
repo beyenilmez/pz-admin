@@ -52,7 +52,7 @@ export default function AdminPanel() {
 
   return (
     <Tabs value={tab} className="flex w-full h-full">
-      <TabsList defaultValue={"connection"} className="h-full backdrop-brightness-0 rounded-none min-w-52 p-2">
+      <TabsList defaultValue={"connection"} className={`h-full backdrop-brightness-0 rounded-none min-w-52 p-2 ${!isConnected ? "hidden" : ""}`}>
         <div className="flex flex-col justify-between w-full h-full">
           <div>
             <TabsTrigger
@@ -202,7 +202,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
           }`}
           autoComplete="off"
         >
-          <div className="w-1/2 space-y-4">
+          <div className="w-[30rem] space-y-4">
             {/* Header */}
             <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
             <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
