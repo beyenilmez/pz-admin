@@ -152,7 +152,7 @@ export function PlayersTab() {
                     God Mode
                     {player.godmode && <Check />}
                   </DropdownMenuItem>
-                  {!player.online && (
+                  {player.online && (
                     <DropdownMenuItem onClick={() => handleTeleport(player.name)}>Teleport</DropdownMenuItem>
                   )}
                 </DropdownMenuGroup>
@@ -301,6 +301,15 @@ export function PlayersTab() {
                 disabled={Object.keys(rowSelection).length === 0}
               >
                 Kick Selected
+              </Button>
+
+              <Button
+                onClick={() => {
+                  handleTeleport();
+                }}
+                disabled={Object.keys(rowSelection).length === 0}
+              >
+                Teleport Selected
               </Button>
             </div>
             <div className="rounded-md border">

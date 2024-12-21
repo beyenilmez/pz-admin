@@ -636,7 +636,7 @@ func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 
 	connMutex.Lock()
 	for _, name := range names {
-		res, err := conn.Execute(fmt.Sprintf("teleport \"%s\" %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z))
+		res, err := conn.Execute(fmt.Sprintf("teleportto \"%s\" %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z))
 		if err != nil {
 			runtime.LogError(app.ctx, "Error teleporting user: "+err.Error())
 			app.SendNotification(Notification{
