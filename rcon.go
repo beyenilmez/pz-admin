@@ -426,6 +426,31 @@ func players_save() error {
 	return nil
 }
 
+func (app *App) AddPlayer(name string) {
+	connMutex.Lock()
+
+	// Check if the player is already in the list
+	for _, player := range players {
+		if player.Name == name {
+			connMutex.Unlock()
+			runtime.LogWarningf(app.ctx, "Player %s is already in the list", name)
+			app.SendNotification(Notification{
+				Title:   "Can't add player",
+				Message: "Player " + name + " is already in the list",
+				Variant: "warning",
+			})
+			return
+		}
+	}
+
+	// Add the player to the list
+	players = append(players, Player{Name: name, Online: false, AccessLevel: ""})
+	runtime.EventsEmit(app.ctx, "update-players", players)
+	runtime.LogDebugf(app.ctx, "Players updated: %v", players)
+
+	connMutex.Unlock()
+}
+
 func (app *App) BanUsers(names []string, reason string, banIp bool) {
 	banCount := len(names)
 

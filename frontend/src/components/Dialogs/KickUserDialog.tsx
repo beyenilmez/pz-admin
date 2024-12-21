@@ -41,13 +41,13 @@ export function KickUserDialog({ isOpen, onClose, names }: KickUserDialogProps) 
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1">
-          <Label htmlFor="reason" className="text-right">
+          <Label htmlFor="kick-reason" className="text-right">
             Reason
           </Label>
           <Textarea
             value={reason}
             onChange={(e) => setReason(e.target.value.replace(/[\\"']/g, ""))}
-            id="reason"
+            id="kick-reason"
             placeholder="Spam, etc."
             className="col-span-3 max-h-64"
           />

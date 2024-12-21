@@ -44,13 +44,13 @@ export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1">
-          <Label htmlFor="reason" className="text-right">
+          <Label htmlFor="ban-reason" className="text-right">
             Reason
           </Label>
           <Textarea
             value={reason}
             onChange={(e) => setReason(e.target.value.replace(/[\\"']/g, ""))}
-            id="reason"
+            id="ban-reason"
             placeholder="Spam, etc."
             className="col-span-3 max-h-64"
           />

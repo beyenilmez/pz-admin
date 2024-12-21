@@ -40,6 +40,7 @@ import { CheatPower } from "@/wailsjs/go/main/App";
 import { TeleportDialog } from "./Dialogs/TeleportDialog";
 import { SetAccessLevelDialog } from "./Dialogs/SetAccessLevelDialog";
 import { Badge } from "./ui/badge";
+import { AddPlayerDialog } from "./Dialogs/AddPlayerDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -246,6 +247,8 @@ export function PlayersTab() {
     }
   };
 
+  const [isAddPlayerDialogOpen, setAddPlayerDialogOpen] = useState(false);
+
   const [isBanDialogOpen, setBanDialogOpen] = useState(false);
   const handleBan = (name?: string) => {
     handleSelect(name);
@@ -343,7 +346,10 @@ export function PlayersTab() {
                   }}
                   disabled={
                     Object.keys(rowSelection).length === 0 ||
-                    !Object.keys(rowSelection).some((id) => players.find((player) => player.name === id)?.online)
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
                   }
                 >
                   Kick
@@ -355,7 +361,10 @@ export function PlayersTab() {
                   }}
                   disabled={
                     Object.keys(rowSelection).length === 0 ||
-                    !Object.keys(rowSelection).some((id) => players.find((player) => player.name === id)?.online)
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
                   }
                 >
                   Teleport
@@ -421,11 +430,17 @@ export function PlayersTab() {
                 </TableBody>
               </Table>
             </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
-              <div className="flex-1 text-sm text-muted-foreground">
-                {table.getFilteredSelectedRowModel().rows.length} of {table.getFilteredRowModel().rows.length} row(s)
-                selected.
-              </div>
+            <div className="flex justify-center">
+              <Button
+                onClick={() => {
+                  console.log("Opening dialog");
+                  setAddPlayerDialogOpen(true);
+                }}
+                variant="link"
+                className="text-sky-600 dark:text-sky-400"
+              >
+                Missing a player? Add an offline player to the list.
+              </Button>
             </div>
           </div>
         </ScrollArea>
@@ -455,6 +470,12 @@ export function PlayersTab() {
         isOpen={isTeleportDialogOpen}
         onClose={() => setTeleportDialogOpen(false)}
         names={selectedUsers}
+      />
+      <AddPlayerDialog
+        isOpen={isAddPlayerDialogOpen}
+        onClose={() => {
+          setAddPlayerDialogOpen(false);
+        }}
       />
     </>
   );

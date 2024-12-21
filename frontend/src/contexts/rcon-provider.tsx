@@ -35,7 +35,11 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   useEffect(() => {
     EventsOn("update-players", (players: main.Player[]) => {
-      setPlayers(players.sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1)));
+      //let newPlayers = players.sort((a, b) =>
+      //  a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1
+      //);
+      //newPlayers.push({ name: "Online_player", online: true, accessLevel: "admin" } as main.Player);
+      setPlayers(players);
     });
   }, []);
 
