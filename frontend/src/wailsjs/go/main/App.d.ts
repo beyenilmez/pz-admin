@@ -46,6 +46,8 @@ export function SendRconCommand(arg1:string):Promise<string>;
 
 export function SendWindowsNotification(arg1:main.Notification):Promise<void>;
 
+export function SetAccessLevel(arg1:Array<string>,arg2:string):Promise<void>;
+
 export function SetConfigField(arg1:string,arg2:any):Promise<void>;
 
 export function TeleportToCoordinates(arg1:Array<string>,arg2:main.Coordinates):Promise<void>;

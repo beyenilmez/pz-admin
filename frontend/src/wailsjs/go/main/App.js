@@ -90,6 +90,10 @@ export function SendWindowsNotification(arg1) {
   return window['go']['main']['App']['SendWindowsNotification'](arg1);
 }
 
+export function SetAccessLevel(arg1, arg2) {
+  return window['go']['main']['App']['SetAccessLevel'](arg1, arg2);
+}
+
 export function SetConfigField(arg1, arg2) {
   return window['go']['main']['App']['SetConfigField'](arg1, arg2);
 }

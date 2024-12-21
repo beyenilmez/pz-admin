@@ -28,10 +28,11 @@ type Credentials struct {
 }
 
 type Player struct {
-	Name    string `json:"name"`
-	Online  bool   `json:"online"`
-	Banned  bool   `json:"banned"`
-	Godmode bool   `json:"godmode"`
+	Name        string `json:"name"`
+	Online      bool   `json:"online"`
+	AccessLevel string `json:"accessLevel"`
+	Banned      bool   `json:"banned"`
+	Godmode     bool   `json:"godmode"`
 }
 
 type Coordinates struct {
@@ -164,6 +165,44 @@ func (app *App) SendRconCommand(command string) string {
 					runtime.EventsEmit(app.ctx, "update-players", players)
 					break
 				}
+			}
+		}
+	} else if strings.Contains(command, "setaccesslevel ") {
+		if strings.Contains(res, " no longer has access level") {
+			for i := range players {
+				if players[i].Name == strings.Split(command, " ")[1] {
+					players[i].AccessLevel = "player"
+					runtime.EventsEmit(app.ctx, "update-players", players)
+					break
+				}
+			}
+		} else if strings.Contains(res, " is now ") {
+			// Split and get last word
+			accessLevel := strings.Split(res, " ")[len(strings.Split(res, " "))-1]
+			if accessLevel == "observer" || accessLevel == "gm" || accessLevel == "overseer" || accessLevel == "moderator" || accessLevel == "admin" {
+				for i := range players {
+					if players[i].Name == strings.Split(command, " ")[1] {
+						players[i].AccessLevel = accessLevel
+						runtime.EventsEmit(app.ctx, "update-players", players)
+						break
+					}
+				}
+			}
+		}
+	} else if strings.Contains(command, "grantadmin ") && strings.Contains(res, " is now admin") {
+		for i := range players {
+			if players[i].Name == strings.Split(command, " ")[1] {
+				players[i].AccessLevel = "admin"
+				runtime.EventsEmit(app.ctx, "update-players", players)
+				break
+			}
+		}
+	} else if strings.Contains(command, "removeadmin ") && strings.Contains(res, " no longer has access level") {
+		for i := range players {
+			if players[i].Name == strings.Split(command, " ")[1] {
+				players[i].AccessLevel = "player"
+				runtime.EventsEmit(app.ctx, "update-players", players)
+				break
 			}
 		}
 	}
@@ -340,7 +379,7 @@ func players_update() error {
 			updatedPlayers = append(updatedPlayers, *existingPlayer)
 			seenPlayers[name] = true
 		} else {
-			updatedPlayers = append(updatedPlayers, Player{Name: name, Online: online, Banned: false})
+			updatedPlayers = append(updatedPlayers, Player{Name: name, Online: online, AccessLevel: ""})
 		}
 	}
 
@@ -727,4 +766,75 @@ func (app *App) TeleportToUser(names []string, targetUser string) {
 			})
 		}
 	}
+}
+
+func (app *App) SetAccessLevel(names []string, accessLevel string) {
+	if !(accessLevel == "player" || accessLevel == "observer" || accessLevel == "gm" || accessLevel == "overseer" || accessLevel == "moderator" || accessLevel == "admin") {
+		return
+	}
+	accessLevelCount := len(names)
+
+	playerMap := make(map[string]*Player, len(players))
+	for i := range players {
+		playerMap[players[i].Name] = &players[i]
+	}
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(fmt.Sprintf("setaccesslevel \"%s\" %s", name, accessLevel))
+		if err != nil {
+			runtime.LogError(app.ctx, "Error setting access level for user: "+err.Error())
+			app.SendNotification(Notification{
+				Title:   "Error setting access level for " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
+			accessLevelCount--
+		} else if res == fmt.Sprintf("User %s no longer has access level", name) {
+			player, ok := playerMap[name]
+			if ok {
+				player.AccessLevel = "player"
+			}
+			continue
+		} else if res == fmt.Sprintf("User %s is now %s", name, accessLevel) {
+			player, ok := playerMap[name]
+			if ok {
+				player.AccessLevel = accessLevel
+			}
+			continue
+		} else {
+			runtime.LogError(app.ctx, "Error setting access level for user: "+res)
+			app.SendNotification(Notification{
+				Title:   "Error setting access level for " + name,
+				Message: res,
+				Variant: "error",
+			})
+			accessLevelCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		if accessLevelCount != 0 {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Setted access level for %d users", accessLevelCount),
+				Variant: "success",
+			})
+		}
+		if accessLevelCount < len(names) {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to set access level for %d users", len(names)-accessLevelCount),
+				Variant: "error",
+			})
+		}
+	} else {
+		if accessLevelCount != 0 {
+			app.SendNotification(Notification{
+				Title:   "Setted access level for " + names[0],
+				Variant: "success",
+			})
+		}
+	}
+
+	runtime.EventsEmit(app.ctx, "update-players", players)
 }

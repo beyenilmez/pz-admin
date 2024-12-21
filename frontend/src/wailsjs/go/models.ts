@@ -115,6 +115,7 @@ export namespace main {
 	export class Player {
 	    name: string;
 	    online: boolean;
+	    accessLevel: string;
 	    banned: boolean;
 	    godmode: boolean;
 	
@@ -126,6 +127,7 @@ export namespace main {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.name = source["name"];
 	        this.online = source["online"];
+	        this.accessLevel = source["accessLevel"];
 	        this.banned = source["banned"];
 	        this.godmode = source["godmode"];
 	    }

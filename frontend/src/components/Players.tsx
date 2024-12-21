@@ -38,6 +38,8 @@ import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
 import { KickUserDialog } from "./Dialogs/KickUserDialog";
 import { CheatPower } from "@/wailsjs/go/main/App";
 import { TeleportDialog } from "./Dialogs/TeleportDialog";
+import { SetAccessLevelDialog } from "./Dialogs/SetAccessLevelDialog";
+import { Badge } from "./ui/badge";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -96,22 +98,55 @@ export function PlayersTab() {
         const banned = row.getValue("banned");
         return (
           <div className="space-x-1">
-            <span
-              className={`px-2 py-1 rounded-full text-xs font-semibold select-none ${
-                online ? "bg-success" : "bg-destructive"
+            <Badge
+              className={`${
+                online ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground"
               }`}
             >
               {online ? "Online" : "Offline"}
-            </span>
+            </Badge>
 
-            {banned ? (
-              <span className="px-2 py-1 rounded-full text-xs font-semibold select-none bg-warning text-warning-foreground">
-                Banned
-              </span>
-            ) : (
-              ""
-            )}
+            {banned ? <Badge className="bg-warning text-warning-foreground">Banned</Badge> : ""}
           </div>
+        );
+      },
+    },
+    {
+      accessorKey: "accessLevel",
+      header: ({ column }) => (
+        <Button
+          className="hover:no-underline hover:text-foreground"
+          variant="link"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Access Level
+          <ArrowUpDown className="w-4 h-4 ml-1" />
+        </Button>
+      ),
+      cell: ({ row }) => {
+        //Admin, Moderator, Overseer, GM, Observer
+        const accessLevel: String = row.getValue("accessLevel") || "unknown";
+        const accessLevelBgClass =
+          accessLevel === "admin"
+            ? "dark:bg-rose-700 bg-rose-500"
+            : accessLevel === "moderator"
+            ? "dark:bg-emerald-700 bg-emerald-500"
+            : accessLevel === "overseer"
+            ? "dark:bg-sky-700 bg-sky-500"
+            : accessLevel === "gm"
+            ? "dark:bg-amber-700 bg-amber-500"
+            : accessLevel === "observer"
+            ? "dark:bg-slate-700 bg-slate-500"
+            : "";
+        return (
+          <Badge
+            className={`${accessLevelBgClass} ${
+              accessLevel !== "unknown" && accessLevel !== "player" ? "dark:text-foreground" : ""
+            }`}
+            variant={accessLevel === "unknown" ? "outline" : "default"}
+          >
+            {accessLevel[0].toUpperCase() + accessLevel.slice(1)}
+          </Badge>
         );
       },
     },
@@ -140,6 +175,7 @@ export function PlayersTab() {
             <DropdownMenuPortal>
               <DropdownMenuContent align="end">
                 {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
+                <DropdownMenuItem onClick={() => handleSetAccessLevel(player.name)}>Set Access Level</DropdownMenuItem>
                 {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
                 {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
                 <DropdownMenuSeparator />
@@ -216,6 +252,12 @@ export function PlayersTab() {
     setBanDialogOpen(true);
   };
 
+  const [isSetAccessLevelDialogOpen, setSetAccessLevelDialogOpen] = useState(false);
+  const handleSetAccessLevel = (name?: string) => {
+    handleSelect(name);
+    setSetAccessLevelDialogOpen(true);
+  };
+
   const [isUnbanDialogOpen, setUnbanDialogOpen] = useState(false);
   const handleUnban = (name?: string) => {
     handleSelect(name);
@@ -269,48 +311,59 @@ export function PlayersTab() {
       <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2">
         <ScrollArea className="h-full w-full overflow-auto">
           <div className="w-[calc(100%-1rem)]">
-            <div className="flex items-center mb-2 space-x-2">
+            <div className="flex mb-2 space-x-2">
               <Input
                 placeholder="Filter by name..."
                 value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                 onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-                className="max-w-sm focus-visible:ring-0 focus-visible:ring-offset-0"
+                className="max-w-sm focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0"
               />
-              <Button
-                onClick={() => {
-                  handleBan();
-                }}
-                disabled={Object.keys(rowSelection).length === 0}
-              >
-                Ban Selected
-              </Button>
+              <div className="flex flex-wrap gap-2">
+                <Button
+                  onClick={() => {
+                    handleBan();
+                  }}
+                  disabled={Object.keys(rowSelection).length === 0}
+                >
+                  Ban Selected
+                </Button>
 
-              <Button
-                onClick={() => {
-                  handleUnban();
-                }}
-                disabled={Object.keys(rowSelection).length === 0}
-              >
-                Unban Selected
-              </Button>
+                <Button
+                  onClick={() => {
+                    handleUnban();
+                  }}
+                  disabled={Object.keys(rowSelection).length === 0}
+                >
+                  Unban Selected
+                </Button>
 
-              <Button
-                onClick={() => {
-                  handleKick();
-                }}
-                disabled={Object.keys(rowSelection).length === 0}
-              >
-                Kick Selected
-              </Button>
+                <Button
+                  onClick={() => {
+                    handleKick();
+                  }}
+                  disabled={Object.keys(rowSelection).length === 0}
+                >
+                  Kick Selected
+                </Button>
 
-              <Button
-                onClick={() => {
-                  handleTeleport();
-                }}
-                disabled={Object.keys(rowSelection).length === 0}
-              >
-                Teleport Selected
-              </Button>
+                <Button
+                  onClick={() => {
+                    handleTeleport();
+                  }}
+                  disabled={Object.keys(rowSelection).length === 0}
+                >
+                  Teleport Selected
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    handleSetAccessLevel();
+                  }}
+                  disabled={Object.keys(rowSelection).length === 0}
+                >
+                  Set Access Level
+                </Button>
+              </div>
             </div>
             <div className="rounded-md border">
               <Table>
@@ -373,6 +426,16 @@ export function PlayersTab() {
       </div>
 
       <BanUserDialog isOpen={isBanDialogOpen} onClose={() => setBanDialogOpen(false)} names={selectedUsers} />
+      <SetAccessLevelDialog
+        isOpen={isSetAccessLevelDialogOpen}
+        onClose={() => setSetAccessLevelDialogOpen(false)}
+        names={selectedUsers}
+        defaultValue={
+          selectedUsers.length === 1
+            ? players.find((player) => player.name === selectedUsers[0])?.accessLevel
+            : undefined
+        }
+      />
       <UnbanUserDialog isOpen={isUnbanDialogOpen} onClose={() => setUnbanDialogOpen(false)} names={selectedUsers} />
       <KickUserDialog isOpen={isKickDialogOpen} onClose={() => setKickDialogOpen(false)} names={selectedUsers} />
       <TeleportDialog
