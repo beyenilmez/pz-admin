@@ -78,16 +78,16 @@ export function SaveCredentials(arg1) {
   return window['go']['main']['App']['SaveCredentials'](arg1);
 }
 
-export function SendNotification(arg1, arg2, arg3, arg4) {
-  return window['go']['main']['App']['SendNotification'](arg1, arg2, arg3, arg4);
+export function SendNotification(arg1) {
+  return window['go']['main']['App']['SendNotification'](arg1);
 }
 
 export function SendRconCommand(arg1) {
   return window['go']['main']['App']['SendRconCommand'](arg1);
 }
 
-export function SendWindowsNotification(arg1, arg2, arg3, arg4) {
-  return window['go']['main']['App']['SendWindowsNotification'](arg1, arg2, arg3, arg4);
+export function SendWindowsNotification(arg1) {
+  return window['go']['main']['App']['SendWindowsNotification'](arg1);
 }
 
 export function SetConfigField(arg1, arg2) {

@@ -40,11 +40,11 @@ export function SaveConfigDialog():Promise<void>;
 
 export function SaveCredentials(arg1:main.Credentials):Promise<boolean>;
 
-export function SendNotification(arg1:string,arg2:string,arg3:string,arg4:string):Promise<void>;
+export function SendNotification(arg1:main.Notification):Promise<void>;
 
 export function SendRconCommand(arg1:string):Promise<string>;
 
-export function SendWindowsNotification(arg1:string,arg2:string,arg3:string,arg4:string):Promise<void>;
+export function SendWindowsNotification(arg1:main.Notification):Promise<void>;
 
 export function SetConfigField(arg1:string,arg2:any):Promise<void>;
 

@@ -33,9 +33,11 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [port, setPort] = useState("");
   const [players, setPlayers] = useState<main.Player[]>([]);
 
-  EventsOn("update-players", (players: main.Player[]) => {
-    setPlayers(players.sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1)));
-  });
+  useEffect(() => {
+    EventsOn("update-players", (players: main.Player[]) => {
+      setPlayers(players.sort((a, b) => (a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1)));
+    });
+  }, []);
 
   const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {

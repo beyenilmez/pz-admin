@@ -10,11 +10,12 @@ import { toast } from "sonner";
 import { OpenFileInExplorer, SendNotification, SendWindowsNotification } from "@/wailsjs/go/main/App";
 import React from "react";
 import { useConfig } from "./contexts/config-provider";
-import { LogDebug } from "@/wailsjs/runtime/runtime";
+import { EventsOn, LogDebug } from "@/wailsjs/runtime/runtime";
 import AdminPanel from "./components/AdminPanel";
 import { Progress } from "./components/ui/progress";
 import { useProgress } from "./contexts/progress-provider";
 import { useRcon } from "./contexts/rcon-provider";
+import { main } from "./wailsjs/go/models";
 
 function App() {
   const { config, initialConfig } = useConfig();
@@ -42,37 +43,48 @@ function App() {
     }
   }, [config?.windowScale, config?.opacity, initialConfig?.windowEffect]);
 
-  window.toast = ({ title, description, path, variant }: any) => {
-    const props = {
-      description: t(description),
-      action: path
-        ? {
-            label: path.startsWith("__") ? t("show") : t("show_in_explorer"),
-            onClick: () => handleToastGotoPath(path),
-          }
-        : undefined,
-    };
-    switch (variant) {
-      case "message":
-        toast.message(t(title), props);
-        break;
-      case "success":
-        toast.success(t(title), props);
-        break;
-      case "info":
-        toast.info(t(title), props);
-        break;
-      case "warning":
-        toast.warning(t(title), props);
-        break;
-      case "error":
-        toast.error(t(title), props);
-        break;
-      default:
-        toast(t(title), props);
-        break;
-    }
-  };
+  useEffect(() => {
+    EventsOn("toast", (data: main.Notification) => {
+      const props = {
+        description: t(data.message),
+        action: data.path
+          ? {
+              label: data.path.startsWith("__") ? t("show") : t("show_in_explorer"),
+              onClick: () => handleToastGotoPath(data.path),
+            }
+          : undefined,
+      };
+      switch (data.variant) {
+        case "message":
+          toast.message(t(data.title), props);
+          break;
+        case "success":
+          toast.success(t(data.title), props);
+          break;
+        case "info":
+          toast.info(t(data.title), props);
+          break;
+        case "warning":
+          toast.warning(t(data.title), props);
+          break;
+        case "error":
+          toast.error(t(data.title), props);
+          break;
+        default:
+          toast(t(data.title), props);
+          break;
+      }
+    });
+
+    EventsOn("sendNotification", (data: main.Notification) => {
+      SendWindowsNotification({
+        title: t(data.title),
+        message: t(data.message),
+        path: data.path,
+        variant: data.variant,
+      });
+    });
+  }, []);
 
   const handleToastGotoPath = (path: string) => {
     if (path.startsWith("__")) {
@@ -97,16 +109,15 @@ function App() {
     setValue("path1", tab);
   }, [tab]);
 
-  window.sendNotification = (title: string, message: string, path: string, variant: string) => {
-    SendWindowsNotification(t(title), t(message), path, variant);
-  };
-
   window.setProgress = (value: number) => {
     setProgress(value);
   };
 
   window.rconDisconnected = () => {
-    SendNotification("RCON connection lost", "", "", "error");
+    SendNotification({
+      title: "RCON connection lost",
+      variant: "error",
+    } as main.Notification);
     setIsConnected(false);
     setProgress(0);
   };

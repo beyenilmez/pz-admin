@@ -58,7 +58,11 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	conn, err = rcon.Dial(credentials.IP+":"+credentials.Port, credentials.Password)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error connecting to RCON: "+err.Error())
-		app.SendNotification("RCON connection failed", err.Error(), "", "error")
+		app.SendNotification(Notification{
+			Title:   "RCON connection failed",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		return false
 	}
 
@@ -79,7 +83,10 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 		runtime.LogError(app.ctx, "Error updating players: "+err.Error())
 	}
 
-	app.SendNotification("RCON connection established", "", "", "success")
+	app.SendNotification(Notification{
+		Title:   "RCON connection established",
+		Variant: "success",
+	})
 	return true
 }
 
@@ -207,14 +214,22 @@ func (app *App) SaveCredentials(credentials Credentials) bool {
 	var err error
 	credentials.Password, err = Encrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
 	if err != nil {
-		app.SendNotification("Error encrypting credentials", err.Error(), "", "error")
+		app.SendNotification(Notification{
+			Title:   "Error encrypting credentials",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		runtime.LogError(app.ctx, "Error encrypting credentials: "+err.Error())
 		return false
 	}
 
 	err = writeJSON(credentialsPath, credentials)
 	if err != nil {
-		app.SendNotification("Error saving credentials", err.Error(), "", "error")
+		app.SendNotification(Notification{
+			Title:   "Error saving credentials",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		runtime.LogError(app.ctx, "Error saving credentials: "+err.Error())
 		return false
 	}
@@ -232,7 +247,11 @@ func (app *App) LoadCredentials() Credentials {
 
 	credentials.Password, err = Decrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
 	if err != nil {
-		app.SendNotification("Error decrypting credentials", err.Error(), "", "error")
+		app.SendNotification(Notification{
+			Title:   "Error decrypting credentials",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		runtime.LogError(app.ctx, "Error decrypting credentials: "+err.Error())
 		return Credentials{}
 	}
@@ -388,11 +407,19 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 		res, err := conn.Execute(commandString)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error banning user: "+err.Error())
-			app.SendNotification("Error banning "+name, err.Error(), "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error banning " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
 			banCount--
 		} else if res != "" && !strings.Contains(res, "is now banned") {
 			runtime.LogError(app.ctx, "Error banning user: "+res)
-			app.SendNotification("Error banning "+name, res, "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error banning " + name,
+				Message: res,
+				Variant: "error",
+			})
 			banCount--
 		} else if res != "" && strings.Contains(res, "is now banned") {
 			player, ok := playerMap[name]
@@ -406,14 +433,23 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 
 	if len(names) > 1 {
 		if banCount != 0 {
-			app.SendNotification(fmt.Sprintf("Banned %d users", banCount), "", "", "success")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Banned %d users", banCount),
+				Variant: "success",
+			})
 		}
 		if banCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to ban %d users", len(names)-banCount), "", "", "error")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to ban %d users", len(names)-banCount),
+				Variant: "error",
+			})
 		}
 	} else {
 		if banCount != 0 {
-			app.SendNotification("Banned "+names[0], "", "", "success")
+			app.SendNotification(Notification{
+				Title:   "Banned " + names[0],
+				Variant: "success",
+			})
 		}
 	}
 
@@ -433,11 +469,19 @@ func (app *App) UnbanUsers(names []string) {
 		res, err := conn.Execute("unbanuser \"" + name + "\"")
 		if err != nil {
 			runtime.LogError(app.ctx, "Error unbanning user: "+err.Error())
-			app.SendNotification("Error unbanning "+name, err.Error(), "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error unbanning " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
 			unbanCount--
 		} else if res != "" && !strings.Contains(res, "is now un-banned") {
 			runtime.LogError(app.ctx, "Error unbanning user: "+res)
-			app.SendNotification("Error unbanning "+name, res, "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error unbanning " + name,
+				Message: res,
+				Variant: "error",
+			})
 			unbanCount--
 		} else if res != "" && strings.Contains(res, "is now un-banned") {
 			player, ok := playerMap[name]
@@ -450,14 +494,23 @@ func (app *App) UnbanUsers(names []string) {
 
 	if len(names) > 1 {
 		if unbanCount != 0 {
-			app.SendNotification(fmt.Sprintf("Unbanned %d users", unbanCount), "", "", "success")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Unbanned %d users", unbanCount),
+				Variant: "success",
+			})
 		}
 		if unbanCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to unban %d users", len(names)-unbanCount), "", "", "error")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to unban %d users", len(names)-unbanCount),
+				Variant: "error",
+			})
 		}
 	} else {
 		if unbanCount != 0 {
-			app.SendNotification("Unbanned "+names[0], "", "", "success")
+			app.SendNotification(Notification{
+				Title:   "Unbanned " + names[0],
+				Variant: "success",
+			})
 		}
 	}
 
@@ -478,11 +531,19 @@ func (app *App) KickUsers(names []string, reason string) {
 		res, err := conn.Execute(commandString)
 		if err != nil {
 			runtime.LogError(app.ctx, "Error kicking user: "+err.Error())
-			app.SendNotification("Error kicking "+name, err.Error(), "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error kicking " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
 			kickCount--
 		} else if res != "" && !strings.Contains(res, " kicked.") {
 			runtime.LogError(app.ctx, "Error kicking user: "+res)
-			app.SendNotification("Error kicking "+name, res, "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error kicking " + name,
+				Message: res,
+				Variant: "error",
+			})
 			kickCount--
 		}
 	}
@@ -490,14 +551,23 @@ func (app *App) KickUsers(names []string, reason string) {
 
 	if len(names) > 1 {
 		if kickCount != 0 {
-			app.SendNotification(fmt.Sprintf("Kicked %d users", kickCount), "", "", "success")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Kicked %d users", kickCount),
+				Variant: "success",
+			})
 		}
 		if kickCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to kick %d users", len(names)-kickCount), "", "", "error")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to kick %d users", len(names)-kickCount),
+				Variant: "error",
+			})
 		}
 	} else {
 		if kickCount != 0 {
-			app.SendNotification("Kicked "+names[0], "", "", "success")
+			app.SendNotification(Notification{
+				Title:   "Kicked " + names[0],
+				Variant: "success",
+			})
 		}
 	}
 }
@@ -519,11 +589,19 @@ func (app *App) CheatPower(names []string, power string, value bool) {
 		res, err := conn.Execute(power + " \"" + name + "\" -" + strconv.FormatBool(value))
 		if err != nil {
 			runtime.LogErrorf(app.ctx, "Error %s user: %s", power, err.Error())
-			app.SendNotification("Error "+power+" "+name, err.Error(), "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error " + power + " " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
 			cheatCount--
 		} else if res != "" && !strings.Contains(res, " invincible.") {
 			runtime.LogErrorf(app.ctx, "Error %s user: %s", power, res)
-			app.SendNotification("Error "+power+" "+name, res, "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error " + power + " " + name,
+				Message: res,
+				Variant: "error",
+			})
 			cheatCount--
 		} else if res != "" {
 			if strings.Contains(res, " is now invincible.") || strings.Contains(res, " is no more invincible.") {
@@ -539,7 +617,10 @@ func (app *App) CheatPower(names []string, power string, value bool) {
 	if len(names) > 1 {
 		//app.SendNotification(fmt.Sprintf("%s %d users", power, cheatCount), "", "", "success")
 		if cheatCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to %s %d users", power, len(names)-cheatCount), "", "", "error")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to %s %d users", power, len(names)-cheatCount),
+				Variant: "error",
+			})
 		}
 	} //else {
 	//if cheatCount != 0 {
@@ -558,11 +639,19 @@ func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 		res, err := conn.Execute(fmt.Sprintf("teleport \"%s\" %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z))
 		if err != nil {
 			runtime.LogError(app.ctx, "Error teleporting user: "+err.Error())
-			app.SendNotification("Error teleporting "+name, err.Error(), "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error teleporting " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
 			teleportCount--
 		} else if res != "" && !strings.Contains(res, fmt.Sprintf("%s teleported to %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z)) {
 			runtime.LogError(app.ctx, "Error teleporting user: "+res)
-			app.SendNotification("Error teleporting "+name, res, "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error teleporting " + name,
+				Message: res,
+				Variant: "error",
+			})
 			teleportCount--
 		}
 	}
@@ -570,14 +659,23 @@ func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 
 	if len(names) > 1 {
 		if teleportCount != 0 {
-			app.SendNotification(fmt.Sprintf("Teleported %d users", teleportCount), "", "", "success")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Teleported %d users", teleportCount),
+				Variant: "success",
+			})
 		}
 		if teleportCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to teleport %d users", len(names)-teleportCount), "", "", "error")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to teleport %d users", len(names)-teleportCount),
+				Variant: "error",
+			})
 		}
 	} else {
 		if teleportCount != 0 {
-			app.SendNotification("Teleported "+names[0], "", "", "success")
+			app.SendNotification(Notification{
+				Title:   "Teleported " + names[0],
+				Variant: "success",
+			})
 		}
 	}
 }
@@ -590,11 +688,19 @@ func (app *App) TeleportToUser(names []string, targetUser string) {
 		res, err := conn.Execute(fmt.Sprintf("teleport \"%s\" \"%s\"", name, targetUser))
 		if err != nil {
 			runtime.LogError(app.ctx, "Error teleporting user: "+err.Error())
-			app.SendNotification("Error teleporting "+name, err.Error(), "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error teleporting " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
 			teleportCount--
 		} else if res != "" && res != fmt.Sprintf("teleported %s to %s", name, targetUser) {
 			runtime.LogError(app.ctx, "Error teleporting user: "+res)
-			app.SendNotification("Error teleporting "+name, res, "", "error")
+			app.SendNotification(Notification{
+				Title:   "Error teleporting " + name,
+				Message: res,
+				Variant: "error",
+			})
 			teleportCount--
 		}
 	}
@@ -602,14 +708,23 @@ func (app *App) TeleportToUser(names []string, targetUser string) {
 
 	if len(names) > 1 {
 		if teleportCount != 0 {
-			app.SendNotification(fmt.Sprintf("Teleported %d users", teleportCount), "", "", "success")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Teleported %d users", teleportCount),
+				Variant: "success",
+			})
 		}
 		if teleportCount < len(names) {
-			app.SendNotification(fmt.Sprintf("Failed to teleport %d users", len(names)-teleportCount), "", "", "error")
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to teleport %d users", len(names)-teleportCount),
+				Variant: "error",
+			})
 		}
 	} else {
 		if teleportCount != 0 {
-			app.SendNotification("Teleported "+names[0], "", "", "success")
+			app.SendNotification(Notification{
+				Title:   "Teleported " + names[0],
+				Variant: "success",
+			})
 		}
 	}
 }

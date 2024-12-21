@@ -35,7 +35,7 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
     if (tab === "coordinates") {
       TeleportToCoordinates(names, coordinates);
     } else {
-      TeleportToUser(names, "");
+      TeleportToUser(names, player);
     }
   };
 
@@ -116,13 +116,15 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
             <div className="pt-6">
               <Combobox
                 mandatory
-                elements={players.map((player) => ({
-                  value: player.name,
-                  label: player.name,
-                }))}
+                elements={players
+                  .filter((player) => player.online)
+                  .map((player) => ({
+                    value: player.name,
+                    label: player.name,
+                  }))}
                 placeholder={"Select target player..."}
                 searchPlaceholder={"Search player..."}
-                nothingFoundMessage={"No players found"}
+                nothingFoundMessage={"No online players found"}
                 onChange={handlePlayerChange}
               />
             </div>
@@ -132,7 +134,7 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
           <Button
             type="submit"
             onClick={handleTeleport}
-            disabled={(tab == "coordinates" && (!coordinates.x || !coordinates.y) || (tab == "player" && !player))}
+            disabled={(tab == "coordinates" && (!coordinates.x || !coordinates.y)) || (tab == "player" && !player)}
           >
             Teleport
           </Button>

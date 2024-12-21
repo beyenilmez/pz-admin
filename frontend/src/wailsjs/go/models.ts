@@ -94,6 +94,24 @@ export namespace main {
 	        this.password = source["password"];
 	    }
 	}
+	export class Notification {
+	    title: string;
+	    message: string;
+	    path: string;
+	    variant: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Notification(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.title = source["title"];
+	        this.message = source["message"];
+	        this.path = source["path"];
+	        this.variant = source["variant"];
+	    }
+	}
 	export class Player {
 	    name: string;
 	    online: boolean;
