@@ -36,7 +36,7 @@ import { BanUserDialog } from "./Dialogs/BanUserDialog";
 import { useRcon } from "@/contexts/rcon-provider";
 import { UnbanUserDialog } from "./Dialogs/UnbanUserDialog";
 import { KickUserDialog } from "./Dialogs/KickUserDialog";
-import { CheatPower } from "@/wailsjs/go/main/App";
+import { GodMode } from "@/wailsjs/go/main/App";
 import { TeleportDialog } from "./Dialogs/TeleportDialog";
 import { SetAccessLevelDialog } from "./Dialogs/SetAccessLevelDialog";
 import { Badge } from "./ui/badge";
@@ -187,7 +187,7 @@ export function PlayersTab() {
                   <DropdownMenuItem
                     disabled={!player.online}
                     className="flex justify-between"
-                    onClick={() => handleCheat("godmode", !player.godmode, player.name)}
+                    onClick={() => handleCheat(!player.godmode, player.name)}
                   >
                     God Mode
                     {player.godmode && <Check />}
@@ -285,9 +285,9 @@ export function PlayersTab() {
     setTeleportDialogOpen(true);
   };
 
-  const handleCheat = (cheat: string, value: boolean, name?: string) => {
+  const handleCheat = (value: boolean, name?: string) => {
     handleSelect(name);
-    CheatPower(selectedUsers, cheat, value);
+    GodMode(selectedUsers, value);
   };
 
   const [isCreateHordeDialogOpen, setCreateHordeDialogOpen] = useState(false);

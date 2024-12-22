@@ -84,6 +84,15 @@ function App() {
         variant: data.variant,
       });
     });
+
+    EventsOn("rconDisconnected", () => {
+      SendNotification({
+        title: "RCON connection lost",
+        variant: "error",
+      } as main.Notification);
+      setIsConnected(false);
+      setProgress(0);
+    });
   }, []);
 
   const handleToastGotoPath = (path: string) => {
@@ -111,15 +120,6 @@ function App() {
 
   window.setProgress = (value: number) => {
     setProgress(value);
-  };
-
-  window.rconDisconnected = () => {
-    SendNotification({
-      title: "RCON connection lost",
-      variant: "error",
-    } as main.Notification);
-    setIsConnected(false);
-    setProgress(0);
   };
 
   return (
