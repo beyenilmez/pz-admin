@@ -42,6 +42,8 @@ import { SetAccessLevelDialog } from "./Dialogs/SetAccessLevelDialog";
 import { Badge } from "./ui/badge";
 import { AddPlayerDialog } from "./Dialogs/AddPlayerDialog";
 import { CreateHordeDialog } from "./Dialogs/CreateHordeDialog";
+import { LightningDialog } from "./Dialogs/LightningDialog";
+import { ThunderDialog } from "./Dialogs/ThunderDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -196,7 +198,12 @@ export function PlayersTab() {
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuSub>
-                  <DropdownMenuSubTrigger>Events</DropdownMenuSubTrigger>
+                  <DropdownMenuSubTrigger
+                    disabled={!player.online}
+                    className="data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                  >
+                    Events
+                  </DropdownMenuSubTrigger>
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem onClick={() => handleCreateHorde(player.name)}>Create Horde</DropdownMenuItem>
@@ -289,14 +296,16 @@ export function PlayersTab() {
     setCreateHordeDialogOpen(true);
   };
 
+  const [isLightningDialogOpen, setLightningDialogOpen] = useState(false);
   const handleLightning = (name?: string) => {
     handleSelect(name);
-    // Trigger a lightning event for the selected user(s)
+    setLightningDialogOpen(true);
   };
 
+  const [isThunderDialogOpen, setThunderDialogOpen] = useState(false);
   const handleThunder = (name?: string) => {
     handleSelect(name);
-    // Trigger a thunder event for the selected user(s)
+    setThunderDialogOpen(true);
   };
 
   return (
@@ -383,6 +392,36 @@ export function PlayersTab() {
                 >
                   Create Horde
                 </Button>
+
+                <Button
+                  onClick={() => {
+                    handleLightning();
+                  }}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
+                  }
+                >
+                  Lightning
+                </Button>
+
+                <Button
+                  onClick={() => {
+                    handleThunder();
+                  }}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
+                  }
+                >
+                  Thunder
+                </Button>
               </div>
             </div>
             <div className="rounded-md border">
@@ -450,7 +489,6 @@ export function PlayersTab() {
           </div>
         </ScrollArea>
       </div>
-
       <BanUserDialog isOpen={isBanDialogOpen} onClose={() => setBanDialogOpen(false)} names={selectedUsers} />
       <SetAccessLevelDialog
         isOpen={isSetAccessLevelDialogOpen}
@@ -468,7 +506,6 @@ export function PlayersTab() {
             : undefined
         }
       />
-
       <UnbanUserDialog isOpen={isUnbanDialogOpen} onClose={() => setUnbanDialogOpen(false)} names={selectedUsers} />
       <KickUserDialog isOpen={isKickDialogOpen} onClose={() => setKickDialogOpen(false)} names={selectedUsers} />
       <TeleportDialog
@@ -481,6 +518,12 @@ export function PlayersTab() {
         onClose={() => setCreateHordeDialogOpen(false)}
         names={selectedUsers}
       />
+      <LightningDialog
+        isOpen={isLightningDialogOpen}
+        onClose={() => setLightningDialogOpen(false)}
+        names={selectedUsers}
+      />
+      <ThunderDialog isOpen={isThunderDialogOpen} onClose={() => setThunderDialogOpen(false)} names={selectedUsers} />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}
         onClose={() => {

@@ -916,3 +916,101 @@ func (app *App) CreateHorde(names []string, count int) {
 		}
 	}
 }
+
+func (app *App) Lightning(names []string) {
+	triggerCount := len(names)
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(fmt.Sprintf("lightning \"%s\"", name))
+		if err != nil {
+			runtime.LogError(app.ctx, "Error triggering lightning: "+err.Error())
+			app.SendNotification(Notification{
+				Title:   "Error triggering lightning near " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
+			triggerCount--
+		} else if res != "Lightning triggered" {
+			runtime.LogError(app.ctx, "Error triggering lightning: "+res)
+			app.SendNotification(Notification{
+				Title:   "Error triggering lightning near " + name,
+				Message: res,
+				Variant: "error",
+			})
+			triggerCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		if triggerCount != 0 {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Triggered lightning near %d users", triggerCount),
+				Variant: "success",
+			})
+		}
+		if triggerCount < len(names) {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to trigger lightning near %d users", len(names)-triggerCount),
+				Variant: "error",
+			})
+		}
+	} else {
+		if triggerCount != 0 {
+			app.SendNotification(Notification{
+				Title:   "Triggered lightning near " + names[0],
+				Variant: "success",
+			})
+		}
+	}
+}
+
+func (app *App) Thunder(names []string) {
+	triggerCount := len(names)
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(fmt.Sprintf("thunder \"%s\"", name))
+		if err != nil {
+			runtime.LogError(app.ctx, "Error triggering thunder: "+err.Error())
+			app.SendNotification(Notification{
+				Title:   "Error triggering thunder near " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
+			triggerCount--
+		} else if res != "Thunder triggered" {
+			runtime.LogError(app.ctx, "Error triggering thunder: "+res)
+			app.SendNotification(Notification{
+				Title:   "Error triggering thunder near " + name,
+				Message: res,
+				Variant: "error",
+			})
+			triggerCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		if triggerCount != 0 {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Triggered thunder near %d users", triggerCount),
+				Variant: "success",
+			})
+		}
+		if triggerCount < len(names) {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to trigger thunder near %d users", len(names)-triggerCount),
+				Variant: "error",
+			})
+		}
+	} else {
+		if triggerCount != 0 {
+			app.SendNotification(Notification{
+				Title:   "Triggered thunder near " + names[0],
+				Variant: "success",
+			})
+		}
+	}
+}

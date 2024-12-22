@@ -62,6 +62,10 @@ export function KickUsers(arg1, arg2) {
   return window['go']['main']['App']['KickUsers'](arg1, arg2);
 }
 
+export function Lightning(arg1) {
+  return window['go']['main']['App']['Lightning'](arg1);
+}
+
 export function LoadCredentials() {
   return window['go']['main']['App']['LoadCredentials']();
 }
@@ -112,6 +116,10 @@ export function TeleportToCoordinates(arg1, arg2) {
 
 export function TeleportToUser(arg1, arg2) {
   return window['go']['main']['App']['TeleportToUser'](arg1, arg2);
+}
+
+export function Thunder(arg1) {
+  return window['go']['main']['App']['Thunder'](arg1);
 }
 
 export function UnbanUsers(arg1) {
