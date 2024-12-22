@@ -10,6 +10,10 @@ export function AddPlayerToWhitelist(arg1, arg2) {
   return window['go']['main']['App']['AddPlayerToWhitelist'](arg1, arg2);
 }
 
+export function AddXp(arg1, arg2, arg3) {
+  return window['go']['main']['App']['AddXp'](arg1, arg2, arg3);
+}
+
 export function BanUsers(arg1, arg2, arg3) {
   return window['go']['main']['App']['BanUsers'](arg1, arg2, arg3);
 }

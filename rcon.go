@@ -494,7 +494,7 @@ func (app *App) AddPlayerToWhitelist(username string, password string) {
 			return isErr
 		},
 		UpdateFunc: func(name string, response string) {
-			players = append(players, Player{Name: username, Online: false, AccessLevel: ""})
+			players = append(players, Player{Name: username, Online: false, AccessLevel: "player"})
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
@@ -535,6 +535,13 @@ func (app *App) RemovePlayersFromWhitelist(names []string, removeFromList bool) 
 						Message: "Player " + name + " not found in the list",
 						Variant: "warning",
 					})
+				}
+			} else {
+				for i := range players {
+					if players[i].Name == name {
+						players[i].AccessLevel = "player"
+						break
+					}
 				}
 			}
 		},
@@ -615,7 +622,7 @@ func (params *RCONCommand) execute() int {
 		if names == nil {
 			command = baseCommand
 		} else {
-			command = strings.Replace(baseCommand, "{name}", names[i], 1)
+			command = strings.Replace(baseCommand, "{name}", "\""+names[i]+"\"", 1)
 		}
 
 		command = strings.Join(strings.Fields(command), " ") // Collapse spaces
@@ -652,52 +659,54 @@ func (params *RCONCommand) execute() int {
 		}
 	}
 
-	if total > 1 {
-		if successCount == total {
-			// All Success (Multiple)
-			app.SendNotification(Notification{
-				Title:   fmt.Sprintf(params.Notifications.AllSuccess, successCount),
-				Variant: "success",
-			})
-		} else if successCount == 0 {
-			// All Fail (Multiple)
-			app.SendNotification(Notification{
-				Title:   fmt.Sprintf(params.Notifications.AllFail, total),
-				Variant: "error",
-			})
-		} else {
-			// Partial Success
-			app.SendNotification(Notification{
-				Title:   fmt.Sprintf(params.Notifications.Partial, successCount, total-successCount),
-				Variant: "warning",
-			})
-		}
-	} else if len(names) == 1 {
-		if successCount == 1 {
-			// Single Success
-			app.SendNotification(Notification{
-				Title:   fmt.Sprintf(params.Notifications.SingleSuccess, names[0]),
-				Variant: "success",
-			})
-		} else {
-			// Single Fail
-			app.SendNotification(Notification{
-				Title:   fmt.Sprintf(params.Notifications.SingleFail, names[0]),
-				Variant: "error",
-			})
-		}
-	} else if names == nil {
-		// Commands Without Names
-		if successCount == total {
-			app.SendNotification(Notification{
-				Title:   params.Notifications.SingleSuccess,
-				Variant: "success",
-			})
-		} else {
-			app.SendNotification(Notification{
-				Title:   params.Notifications.SingleFail,
-				Variant: "error",
-			})
+	if params.Notifications != (RCONCommandNotifications{}) {
+		if total > 1 {
+			if successCount == total {
+				// All Success (Multiple)
+				app.SendNotification(Notification{
+					Title:   fmt.Sprintf(params.Notifications.AllSuccess, successCount),
+					Variant: "success",
+				})
+			} else if successCount == 0 {
+				// All Fail (Multiple)
+				app.SendNotification(Notification{
+					Title:   fmt.Sprintf(params.Notifications.AllFail, total),
+					Variant: "error",
+				})
+			} else {
+				// Partial Success
+				app.SendNotification(Notification{
+					Title:   fmt.Sprintf(params.Notifications.Partial, successCount, total-successCount),
+					Variant: "warning",
+				})
+			}
+		} else if len(names) == 1 {
+			if successCount == 1 {
+				// Single Success
+				app.SendNotification(Notification{
+					Title:   fmt.Sprintf(params.Notifications.SingleSuccess, names[0]),
+					Variant: "success",
+				})
+			} else {
+				// Single Fail
+				app.SendNotification(Notification{
+					Title:   fmt.Sprintf(params.Notifications.SingleFail, names[0]),
+					Variant: "error",
+				})
+			}
+		} else if names == nil {
+			// Commands Without Names
+			if successCount == total {
+				app.SendNotification(Notification{
+					Title:   params.Notifications.SingleSuccess,
+					Variant: "success",
+				})
+			} else {
+				app.SendNotification(Notification{
+					Title:   params.Notifications.SingleFail,
+					Variant: "error",
+				})
+			}
 		}
 	}
 
@@ -1060,4 +1069,46 @@ func (app *App) Thunder(names []string) {
 	}
 
 	command.execute()
+}
+
+func (app *App) AddXp(names []string, perks []string, amount int) {
+	successCount := 0
+
+	for _, perk := range perks {
+		command := RCONCommand{
+			CommandTemplate: "addxp {name} {perk}",
+			PlayerNames:     names,
+			Args: []RCONCommandParam{
+				{
+					Name: "perk",
+					Value: func() interface{} {
+						return fmt.Sprintf("%s=%d", perk, amount)
+					}(),
+					Mandatory: true,
+				},
+			},
+			SuccessCheck: func(name string, response string) bool {
+				return response == fmt.Sprintf("Added %d %s xp's to %s", amount, perk, name)
+			},
+			ErrorCheck: func(_ string, response string) bool {
+				return response == "No such user"
+			},
+		}
+
+		successCount += command.execute()
+	}
+
+	if successCount > 0 {
+		runtime.LogInfof(app.ctx, "Added %d xp's to %d skills", amount, successCount)
+		app.SendNotification(Notification{
+			Title:   fmt.Sprintf("Added %d xp's to %d skills", amount, successCount),
+			Variant: "success",
+		})
+	} else {
+		runtime.LogInfo(app.ctx, "Failed to add xp")
+		app.SendNotification(Notification{
+			Title:   "Failed to add xp",
+			Variant: "error",
+		})
+	}
 }

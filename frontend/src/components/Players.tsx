@@ -46,6 +46,7 @@ import { LightningDialog } from "./Dialogs/LightningDialog";
 import { ThunderDialog } from "./Dialogs/ThunderDialog";
 import { AddPlayerToWhitelistDialog } from "./Dialogs/AddPlayerToWhitelistDialog";
 import { RemovePlayerFromWhitelistDialog } from "./Dialogs/RemovePlayerFromWhitelistDialog";
+import { AddXpDialog } from "./Dialogs/AddXpDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -180,45 +181,65 @@ export function PlayersTab() {
             </DropdownMenuTrigger>
             <DropdownMenuPortal>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleSetAccessLevel(player.name)}>Set Access Level</DropdownMenuItem>
-                {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
-                {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
-                {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
-                <DropdownMenuItem onClick={() => handleRemovePlayerFromWhitelist(player.name)}>
-                  Remove from Whitelist
-                </DropdownMenuItem>
-
-                <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem
-                    disabled={!player.online}
-                    className="flex justify-between"
-                    onClick={() => handleCheat(!player.godmode, player.name)}
-                  >
-                    God Mode
-                    {player.godmode && <Check />}
+                  <DropdownMenuItem onClick={() => handleSetAccessLevel(player.name)}>
+                    Set Access Level
                   </DropdownMenuItem>
-                  {player.online && (
-                    <DropdownMenuItem onClick={() => handleTeleport(player.name)}>Teleport</DropdownMenuItem>
-                  )}
+                  {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
+                  {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
+                  {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
+                  <DropdownMenuItem onClick={() => handleRemovePlayerFromWhitelist(player.name)}>
+                    Remove from Whitelist
+                  </DropdownMenuItem>
                 </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuSub>
-                  <DropdownMenuSubTrigger
-                    disabled={!player.online}
-                    className="data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-                  >
-                    Events
-                  </DropdownMenuSubTrigger>
-                  <DropdownMenuPortal>
-                    <DropdownMenuSubContent>
-                      <DropdownMenuItem onClick={() => handleCreateHorde(player.name)}>Create Horde</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleLightning(player.name)}>Lightning</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleThunder(player.name)}>Thunder</DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuPortal>
-                </DropdownMenuSub>
-                <DropdownMenuSeparator />
+
+                {player.online && (
+                  <>
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem
+                        disabled={!player.online}
+                        className="flex justify-between"
+                        onClick={() => handleCheat(!player.godmode, player.name)}
+                      >
+                        God Mode
+                        {player.godmode && <Check />}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem disabled={!player.online} onClick={() => handleTeleport(player.name)}>
+                        Teleport
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuGroup>
+                      <DropdownMenuItem disabled={!player.online} onClick={() => handleAddXp(player.name)}>
+                        Add XP
+                      </DropdownMenuItem>
+                    </DropdownMenuGroup>
+
+                    <DropdownMenuSeparator />
+
+                    <DropdownMenuSub>
+                      <DropdownMenuSubTrigger
+                        disabled={!player.online}
+                        className="data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                      >
+                        Events
+                      </DropdownMenuSubTrigger>
+                      <DropdownMenuPortal>
+                        <DropdownMenuSubContent>
+                          <DropdownMenuItem onClick={() => handleCreateHorde(player.name)}>
+                            Create Horde
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleLightning(player.name)}>Lightning</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleThunder(player.name)}>Thunder</DropdownMenuItem>
+                        </DropdownMenuSubContent>
+                      </DropdownMenuPortal>
+                    </DropdownMenuSub>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenuPortal>
           </DropdownMenu>
@@ -320,6 +341,12 @@ export function PlayersTab() {
   const handleRemovePlayerFromWhitelist = (name?: string) => {
     handleSelect(name);
     setRemovePlayerFromWhitelistDialogOpen(true);
+  };
+
+  const [isAddXpDialogOpen, setAddXpDialogOpen] = useState(false);
+  const handleAddXp = (name?: string) => {
+    handleSelect(name);
+    setAddXpDialogOpen(true);
   };
 
   return (
@@ -455,6 +482,21 @@ export function PlayersTab() {
                 >
                   Thunder
                 </Button>
+
+                <Button
+                  onClick={() => {
+                    handleAddXp();
+                  }}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
+                  }
+                >
+                  Add XP
+                </Button>
               </div>
             </div>
             <div className="rounded-md border">
@@ -557,6 +599,7 @@ export function PlayersTab() {
         names={selectedUsers}
       />
       <ThunderDialog isOpen={isThunderDialogOpen} onClose={() => setThunderDialogOpen(false)} names={selectedUsers} />
+      <AddXpDialog isOpen={isAddXpDialogOpen} onClose={() => setAddXpDialogOpen(false)} names={selectedUsers} />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}
         onClose={() => {
