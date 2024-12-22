@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/dialog";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 
-// Static imports for images
 import Fitness from "@/assets/perks/Fitness.png";
 import Strength from "@/assets/perks/Strength.png";
 
@@ -141,6 +140,9 @@ const perks_default = [
   },
 ];
 
+const regularSkillXp = [75, 150, 300, 750, 1500, 3000, 4500, 6000, 7500, 9000];
+const passiveSkillXp = [1500, 3000, 6000, 9000, 18000, 30000, 60000, 90000, 120000, 150000];
+
 interface AddXpDialogProps {
   isOpen: boolean;
   onClose: () => void;
@@ -150,6 +152,9 @@ interface AddXpDialogProps {
 export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
   const [count, setCount] = useState("");
   const [selectedPerks, setSelectedPerks] = useState<string[]>([]);
+
+  const [selectedRegularXp, setSelectedRegularXp] = useState<string[]>([]);
+  const [selectedPassiveXp, setSelectedPassiveXp] = useState<string[]>([]);
 
   const handleTogglePerk = (perkName: string) => {
     setSelectedPerks((prev) =>
@@ -168,14 +173,28 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
     onClose();
   };
 
+  const handleRegularXpChange = (values: string[]) => {
+    setSelectedRegularXp(values);
+    setSelectedPassiveXp([]);
+    setCount(values.reduce((total, xp) => total + parseInt(xp), 0).toString());
+  };
+
+  const handlePassiveXpChange = (values: string[]) => {
+    setSelectedPassiveXp(values);
+    setSelectedRegularXp([]);
+    setCount(values.reduce((total, xp) => total + parseInt(xp), 0).toString());
+  };
+
   useEffect(() => {
     setSelectedPerks([]);
     setCount("");
+    setSelectedRegularXp([]);
+    setSelectedPassiveXp([]);
   }, [isOpen]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[60rem] max-w-full">
+      <DialogContent className="w-[60rem] max-w-full max-h-full">
         <DialogHeader>
           <DialogTitle>Add XP</DialogTitle>
           <DialogDescription>
@@ -207,6 +226,58 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
               </ToggleGroup>
             </div>
           ))}
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 ml-[7.3rem]">
+            {Array.from({ length: 10 }).map((_: any, i: number) => (
+              <div className="w-[3.9rem]">{`Lvl ${i + 1}`}</div>
+            ))}
+          </div>
+
+          {/* Regular Skill XP Buttons */}
+          <div className="flex items-center gap-2">
+            <h4 className="text-md font-medium w-24">Regular Skill</h4>
+            <ToggleGroup
+              type="multiple"
+              size="sm"
+              className="flex flex-wrap gap-2 justify-start"
+              value={selectedRegularXp}
+              onValueChange={handleRegularXpChange}
+            >
+              {regularSkillXp.map((xp) => (
+                <ToggleGroupItem
+                  key={`regular-${xp}`}
+                  value={xp.toString()}
+                  className="border text-xs w-[3.9rem] hover:bg-accent hover:text-accent-foreground hover:backdrop-brightness-75"
+                >
+                  +{xp}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
+
+          {/* Passive Skill XP Buttons */}
+          <div className="flex items-center gap-2">
+            <h4 className="text-md font-medium w-24">Passive Skill</h4>
+            <ToggleGroup
+              type="multiple"
+              size="sm"
+              className="flex flex-wrap gap-2 justify-start"
+              value={selectedPassiveXp}
+              onValueChange={handlePassiveXpChange}
+            >
+              {passiveSkillXp.map((xp) => (
+                <ToggleGroupItem
+                  key={`passive-${xp}`}
+                  value={xp.toString()}
+                  className="border text-xs w-[3.9rem] hover:bg-accent hover:text-accent-foreground hover:backdrop-brightness-75"
+                >
+                  +{xp}
+                </ToggleGroupItem>
+              ))}
+            </ToggleGroup>
+          </div>
         </div>
 
         <DialogFooter className="flex items-end w-full gap-6">
