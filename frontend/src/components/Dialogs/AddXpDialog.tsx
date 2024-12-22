@@ -206,7 +206,12 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
           {perks_default.map((category) => (
             <div key={category.category} className="space-y-2">
               <h3 className="text-lg font-semibold">{category.category}</h3>
-              <ToggleGroup type="multiple" size="sm" className="flex flex-wrap gap-2 justify-start">
+              <ToggleGroup
+                type="multiple"
+                size="sm"
+                className="flex flex-wrap gap-2 justify-start"
+                value={selectedPerks}
+              >
                 {category.perks.map((perk) => (
                   <ToggleGroupItem
                     key={perk.perkName}
@@ -280,7 +285,7 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
           </div>
         </div>
 
-        <DialogFooter className="flex items-end w-full gap-6">
+        <DialogFooter className="flex items-end w-full">
           <div className="space-y-1 w-full">
             <Label htmlFor="xp-amount" className="text-right">
               XP Amount
@@ -289,11 +294,20 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
               value={count}
               onChange={(e) => setCount(e.target.value)}
               min={0}
+              max={487500}
               id="xp-amount"
               type="number"
               placeholder="2"
             />
           </div>
+          <Button
+            onClick={() => {
+              setSelectedPerks(perks_default.flatMap((category) => category.perks.map((perk) => perk.perkName)));
+              setCount("487500");
+            }}
+          >
+            Max all
+          </Button>
           <Button
             type="submit"
             onClick={handleAddXp}
