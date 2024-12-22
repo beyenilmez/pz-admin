@@ -467,6 +467,7 @@ type RCONCommandNotifications struct {
 
 type RCONCommand struct {
 	CommandTemplate   string                    // Command template with placeholders
+	PlayerNames       []string                  // List of player names
 	Args              []RCONCommandParam        // List of arguments
 	SuccessCheck      func(string, string) bool // Function to check success in response
 	ErrorCheck        func(string, string) bool // Function to check errors in response
@@ -479,9 +480,12 @@ func (params *RCONCommand) execute() int {
 	connMutex.Lock()
 	defer connMutex.Unlock()
 
-	names := []string{}
-	total := 1 // Default to 1 for commands without names
+	names := params.PlayerNames
 	successCount := 0
+	total := 1 // Default to 1 for commands without names
+	if len(names) > 0 {
+		total = len(names)
+	}
 
 	baseCommand := params.CommandTemplate
 
@@ -491,26 +495,27 @@ func (params *RCONCommand) execute() int {
 				runtime.LogError(app.ctx, fmt.Sprintf("Missing mandatory argument: %s", arg.Key))
 				return 0
 			} else {
-				runtime.LogInfo(app.ctx, fmt.Sprintf("Skipping optional argument: %s", arg.Key))
+				runtime.LogDebugf(app.ctx, "Skipping optional argument: %s", arg.Key)
 				baseCommand = strings.Replace(baseCommand, fmt.Sprintf("{%s}", arg.Name), "", 1)
 				continue
 			}
 		}
 
-		if arg.Key != "{name}" {
-			if arg.Key != "" {
-				baseCommand = strings.Replace(baseCommand, fmt.Sprintf("{%s}", arg.Name), fmt.Sprintf("%s %v", arg.Key, arg.Value), 1)
-			} else {
-				baseCommand = strings.Replace(baseCommand, fmt.Sprintf("{%s}", arg.Name), fmt.Sprintf("%v", arg.Value), 1)
-			}
+		if arg.Key != "" {
+			baseCommand = strings.Replace(baseCommand, fmt.Sprintf("{%s}", arg.Name), fmt.Sprintf("%s %v", arg.Key, arg.Value), 1)
 		} else {
-			names, _ = arg.Value.([]string)
-			total = max(1, len(names))
+			baseCommand = strings.Replace(baseCommand, fmt.Sprintf("{%s}", arg.Name), fmt.Sprintf("%v", arg.Value), 1)
 		}
+
 	}
 
 	for i := 0; i < total; i++ {
-		command := strings.Replace(baseCommand, "{name}", names[i], 1)
+		var command string
+		if names == nil {
+			command = baseCommand
+		} else {
+			command = strings.Replace(baseCommand, "{name}", names[i], 1)
+		}
 
 		command = strings.Join(strings.Fields(command), " ") // Collapse spaces
 		res, err := conn.Execute(command)
@@ -565,7 +570,7 @@ func (params *RCONCommand) execute() int {
 				Variant: "error",
 			})
 		}
-	} else if len(names) == 0 {
+	} else if names == nil {
 		// Commands Without Names
 		if successCount == total {
 			app.SendNotification(Notification{
@@ -596,11 +601,8 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 
 	command := RCONCommand{
 		CommandTemplate: "banuser {name} {ip} {reason}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
-			{
-				Key:   "{name}",
-				Value: names,
-			},
 			{
 				Name: "reason",
 				Key:  "-r",
@@ -657,12 +659,7 @@ func (app *App) UnbanUsers(names []string) {
 
 	command := RCONCommand{
 		CommandTemplate: "unbanuser {name}",
-		Args: []RCONCommandParam{
-			{
-				Key:   "{name}",
-				Value: names,
-			},
-		},
+		PlayerNames:     names,
 		SuccessCheck: func(name string, response string) bool {
 			return response == fmt.Sprintf("User %s is now un-banned", name)
 		},
@@ -698,11 +695,9 @@ func (app *App) KickUsers(names []string, reason string) {
 
 	command := RCONCommand{
 		CommandTemplate: "kick {name} {reason}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
 			{
-				Key:   "{name}",
-				Value: names,
-			}, {
 				Name: "reason",
 				Key:  "-r",
 				Value: func() interface{} {
@@ -739,11 +734,9 @@ func (app *App) GodMode(names []string, value bool) {
 
 	command := RCONCommand{
 		CommandTemplate: "godmode {name} {value}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
 			{
-				Key:   "{name}",
-				Value: names,
-			}, {
 				Name: "value",
 				Value: func() interface{} {
 					if value {
@@ -783,11 +776,9 @@ func (app *App) GodMode(names []string, value bool) {
 func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 	command := RCONCommand{
 		CommandTemplate: "teleportto {name} {coordinates}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
 			{
-				Key:   "{name}",
-				Value: names,
-			}, {
 				Name: "coordinates",
 				Value: func() interface{} {
 					return fmt.Sprintf("%d,%d,%d", coordinates.X, coordinates.Y, coordinates.Z)
@@ -816,11 +807,9 @@ func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 func (app *App) TeleportToUser(names []string, targetUser string) {
 	command := RCONCommand{
 		CommandTemplate: "teleport {name} {target}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
 			{
-				Key:   "{name}",
-				Value: names,
-			}, {
 				Name: "target",
 				Value: func() interface{} {
 					return fmt.Sprintf("\"%s\"", targetUser)
@@ -854,11 +843,9 @@ func (app *App) SetAccessLevel(names []string, accessLevel string) {
 
 	command := RCONCommand{
 		CommandTemplate: "setaccesslevel {name} {accessLevel}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
 			{
-				Key:   "{name}",
-				Value: names,
-			}, {
 				Name: "accessLevel",
 				Value: func() interface{} {
 					if !(accessLevel == "player" || accessLevel == "observer" || accessLevel == "gm" || accessLevel == "overseer" || accessLevel == "moderator" || accessLevel == "admin") {
@@ -893,11 +880,9 @@ func (app *App) SetAccessLevel(names []string, accessLevel string) {
 func (app *App) CreateHorde(names []string, count int) {
 	command := RCONCommand{
 		CommandTemplate: "createhorde {count} {name}",
+		PlayerNames:     names,
 		Args: []RCONCommandParam{
 			{
-				Key:   "{name}",
-				Value: names,
-			}, {
 				Name: "count",
 				Value: func() interface{} {
 					if count < 0 {
@@ -926,12 +911,7 @@ func (app *App) CreateHorde(names []string, count int) {
 func (app *App) Lightning(names []string) {
 	command := RCONCommand{
 		CommandTemplate: "lightning {name}",
-		Args: []RCONCommandParam{
-			{
-				Key:   "{name}",
-				Value: names,
-			},
-		},
+		PlayerNames:     names,
 		SuccessCheck: func(name string, response string) bool {
 			return response == "Lightning triggered"
 		},
@@ -950,12 +930,7 @@ func (app *App) Lightning(names []string) {
 func (app *App) Thunder(names []string) {
 	command := RCONCommand{
 		CommandTemplate: "thunder {name}",
-		Args: []RCONCommandParam{
-			{
-				Key:   "{name}",
-				Value: names,
-			},
-		},
+		PlayerNames:     names,
 		SuccessCheck: func(name string, response string) bool {
 			return response == "Thunder triggered"
 		},
