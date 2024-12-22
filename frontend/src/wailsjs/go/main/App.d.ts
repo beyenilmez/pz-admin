@@ -12,6 +12,8 @@ export function CheckForUpdate():Promise<main.UpdateInfo>;
 
 export function ConnectRcon(arg1:main.Credentials):Promise<boolean>;
 
+export function CreateHorde(arg1:Array<string>,arg2:number):Promise<void>;
+
 export function DeleteCredentials():Promise<boolean>;
 
 export function DisconnectRcon():Promise<boolean>;

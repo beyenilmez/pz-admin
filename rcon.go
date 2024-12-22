@@ -375,6 +375,7 @@ func players_update() error {
 	for name, online := range onlinePlayers {
 		if existingPlayer, ok := playerMap[name]; ok {
 			existingPlayer.Online = online
+			existingPlayer.Godmode = existingPlayer.AccessLevel == "observer" || existingPlayer.AccessLevel == "gm" || existingPlayer.AccessLevel == "overseer" || existingPlayer.AccessLevel == "moderator" || existingPlayer.AccessLevel == "admin"
 			existingPlayer.Banned = false
 			updatedPlayers = append(updatedPlayers, *existingPlayer)
 			seenPlayers[name] = true
@@ -862,4 +863,56 @@ func (app *App) SetAccessLevel(names []string, accessLevel string) {
 	}
 
 	runtime.EventsEmit(app.ctx, "update-players", players)
+}
+
+func (app *App) CreateHorde(names []string, count int) {
+	if count < 0 {
+		return
+	}
+	spawnCount := len(names)
+
+	connMutex.Lock()
+	for _, name := range names {
+		res, err := conn.Execute(fmt.Sprintf("createhorde %d \"%s\"", count, name))
+		if err != nil {
+			runtime.LogError(app.ctx, "Error creating horde: "+err.Error())
+			app.SendNotification(Notification{
+				Title:   "Error creating horde near " + name,
+				Message: err.Error(),
+				Variant: "error",
+			})
+			spawnCount--
+		} else if res != "Horde spawned." {
+			runtime.LogError(app.ctx, "Error creating horde: "+res)
+			app.SendNotification(Notification{
+				Title:   "Error creating horde near " + name,
+				Message: res,
+				Variant: "error",
+			})
+			spawnCount--
+		}
+	}
+	connMutex.Unlock()
+
+	if len(names) > 1 {
+		if spawnCount != 0 {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Created a horde near %d users", spawnCount),
+				Variant: "success",
+			})
+		}
+		if spawnCount < len(names) {
+			app.SendNotification(Notification{
+				Title:   fmt.Sprintf("Failed to create a horde near %d users", len(names)-spawnCount),
+				Variant: "error",
+			})
+		}
+	} else {
+		if spawnCount != 0 {
+			app.SendNotification(Notification{
+				Title:   "Created a horde near " + names[0],
+				Variant: "success",
+			})
+		}
+	}
 }

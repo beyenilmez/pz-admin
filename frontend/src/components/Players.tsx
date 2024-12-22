@@ -41,6 +41,7 @@ import { TeleportDialog } from "./Dialogs/TeleportDialog";
 import { SetAccessLevelDialog } from "./Dialogs/SetAccessLevelDialog";
 import { Badge } from "./ui/badge";
 import { AddPlayerDialog } from "./Dialogs/AddPlayerDialog";
+import { CreateHordeDialog } from "./Dialogs/CreateHordeDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -199,8 +200,6 @@ export function PlayersTab() {
                   <DropdownMenuPortal>
                     <DropdownMenuSubContent>
                       <DropdownMenuItem onClick={() => handleCreateHorde(player.name)}>Create Horde</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleChopperEvent(player.name)}>Helicopter</DropdownMenuItem>
-                      <DropdownMenuItem onClick={() => handleGunshotEvent(player.name)}>Gunshot</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleLightning(player.name)}>Lightning</DropdownMenuItem>
                       <DropdownMenuItem onClick={() => handleThunder(player.name)}>Thunder</DropdownMenuItem>
                     </DropdownMenuSubContent>
@@ -284,19 +283,10 @@ export function PlayersTab() {
     CheatPower(selectedUsers, cheat, value);
   };
 
+  const [isCreateHordeDialogOpen, setCreateHordeDialogOpen] = useState(false);
   const handleCreateHorde = (name?: string) => {
     handleSelect(name);
-    // Trigger a dialog or direct action for creating a horde
-  };
-
-  const handleChopperEvent = (name?: string) => {
-    handleSelect(name);
-    // Trigger a chopper event for the selected user(s)
-  };
-
-  const handleGunshotEvent = (name?: string) => {
-    handleSelect(name);
-    // Trigger a gunshot event for the selected user(s)
+    setCreateHordeDialogOpen(true);
   };
 
   const handleLightning = (name?: string) => {
@@ -322,6 +312,15 @@ export function PlayersTab() {
                 className="max-w-sm focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0"
               />
               <div className="flex flex-wrap gap-2">
+                <Button
+                  onClick={() => {
+                    handleSetAccessLevel();
+                  }}
+                  disabled={Object.keys(rowSelection).length === 0}
+                >
+                  Set Access Level
+                </Button>
+
                 <Button
                   onClick={() => {
                     handleBan();
@@ -372,11 +371,17 @@ export function PlayersTab() {
 
                 <Button
                   onClick={() => {
-                    handleSetAccessLevel();
+                    handleCreateHorde();
                   }}
-                  disabled={Object.keys(rowSelection).length === 0}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
+                  }
                 >
-                  Set Access Level
+                  Create Horde
                 </Button>
               </div>
             </div>
@@ -469,6 +474,11 @@ export function PlayersTab() {
       <TeleportDialog
         isOpen={isTeleportDialogOpen}
         onClose={() => setTeleportDialogOpen(false)}
+        names={selectedUsers}
+      />
+      <CreateHordeDialog
+        isOpen={isCreateHordeDialogOpen}
+        onClose={() => setCreateHordeDialogOpen(false)}
         names={selectedUsers}
       />
       <AddPlayerDialog
