@@ -787,7 +787,7 @@ func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 			},
 		},
 		SuccessCheck: func(name string, response string) bool {
-			return response == fmt.Sprintf("%s teleported to %d,%d,%d", name, coordinates.X, coordinates.Y, coordinates.Z)
+			return response == fmt.Sprintf("%s teleported to %d,%d,%d please wait two seconds to show the map around you.", name, coordinates.X, coordinates.Y, coordinates.Z)
 		},
 		ErrorCheck: func(name string, response string) bool {
 			return response == fmt.Sprintf("Can't find player %s", name)
