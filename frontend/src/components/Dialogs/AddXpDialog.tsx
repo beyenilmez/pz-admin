@@ -193,7 +193,7 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
                     key={perk.perkName}
                     value={perk.perkName}
                     aria-label={`Toggle ${perk.name}`}
-                    className="border p-2 rounded flex gap-1"
+                    className="border flex gap-1 hover:bg-accent hover:text-accent-foreground hover:backdrop-brightness-75"
                     onClick={() => handleTogglePerk(perk.perkName)}
                   >
                     <img
