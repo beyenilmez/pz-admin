@@ -44,6 +44,8 @@ import { AddPlayerDialog } from "./Dialogs/AddPlayerDialog";
 import { CreateHordeDialog } from "./Dialogs/CreateHordeDialog";
 import { LightningDialog } from "./Dialogs/LightningDialog";
 import { ThunderDialog } from "./Dialogs/ThunderDialog";
+import { AddPlayerToWhitelistDialog } from "./Dialogs/AddPlayerToWhitelistDialog";
+import { RemovePlayerFromWhitelistDialog } from "./Dialogs/RemovePlayerFromWhitelistDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -178,10 +180,14 @@ export function PlayersTab() {
             </DropdownMenuTrigger>
             <DropdownMenuPortal>
               <DropdownMenuContent align="end">
-                {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
                 <DropdownMenuItem onClick={() => handleSetAccessLevel(player.name)}>Set Access Level</DropdownMenuItem>
+                {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
                 {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
                 {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
+                <DropdownMenuItem onClick={() => handleRemovePlayerFromWhitelist(player.name)}>
+                  Remove from Whitelist
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   <DropdownMenuItem
@@ -308,18 +314,45 @@ export function PlayersTab() {
     setThunderDialogOpen(true);
   };
 
+  const [isAddPlayerToWhitelistDialogOpen, setAddPlayerToWhitelistDialogOpen] = useState(false);
+
+  const [isRemovePlayerFromWhitelistDialogOpen, setRemovePlayerFromWhitelistDialogOpen] = useState(false);
+  const handleRemovePlayerFromWhitelist = (name?: string) => {
+    handleSelect(name);
+    setRemovePlayerFromWhitelistDialogOpen(true);
+  };
+
   return (
     <>
       <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2">
         <ScrollArea className="h-full w-full overflow-auto">
           <div className="w-[calc(100%-1rem)]">
             <div className="flex mb-2 space-x-2">
-              <Input
-                placeholder="Filter by name..."
-                value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-                className="max-w-sm focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0"
-              />
+              <div className="shrink-0 w-72 space-y-2">
+                <Input
+                  placeholder="Filter by name..."
+                  value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                  onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+                  className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0"
+                />
+                <div className="space-x-2">
+                  <Button
+                    onClick={() => {
+                      setAddPlayerToWhitelistDialogOpen(true);
+                    }}
+                  >
+                    Add Player
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      handleRemovePlayerFromWhitelist();
+                    }}
+                    disabled={Object.keys(rowSelection).length === 0}
+                  >
+                    Remove Players
+                  </Button>
+                </div>
+              </div>
               <div className="flex flex-wrap gap-2">
                 <Button
                   onClick={() => {
@@ -529,6 +562,16 @@ export function PlayersTab() {
         onClose={() => {
           setAddPlayerDialogOpen(false);
         }}
+      />
+      <AddPlayerToWhitelistDialog
+        isOpen={isAddPlayerToWhitelistDialogOpen}
+        onClose={() => setAddPlayerToWhitelistDialogOpen(false)}
+      />
+      <RemovePlayerFromWhitelistDialog
+        isOpen={isRemovePlayerFromWhitelistDialogOpen}
+        onClose={() => setRemovePlayerFromWhitelistDialogOpen(false)}
+        names={selectedUsers}
+        setRowSelection={setRowSelection}
       />
     </>
   );

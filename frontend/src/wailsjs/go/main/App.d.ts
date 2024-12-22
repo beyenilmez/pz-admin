@@ -4,6 +4,8 @@ import {main} from '../models';
 
 export function AddPlayer(arg1:string):Promise<void>;
 
+export function AddPlayerToWhitelist(arg1:string,arg2:string):Promise<void>;
+
 export function BanUsers(arg1:Array<string>,arg2:string,arg3:boolean):Promise<void>;
 
 export function CheckForUpdate():Promise<main.UpdateInfo>;
@@ -39,6 +41,8 @@ export function LoadCredentials():Promise<main.Credentials>;
 export function OpenFileInExplorer(arg1:string):Promise<void>;
 
 export function ReadConfig(arg1:string):Promise<void>;
+
+export function RemovePlayersFromWhitelist(arg1:Array<string>,arg2:boolean):Promise<number>;
 
 export function RestartApplication(arg1:Array<string>):Promise<void>;
 

@@ -450,6 +450,107 @@ func (app *App) AddPlayer(name string) {
 	runtime.LogDebugf(app.ctx, "Players updated: %v", players)
 }
 
+func (app *App) AddPlayerToWhitelist(username string, password string) {
+	username = strings.TrimSpace(username)
+	password = strings.TrimSpace(password)
+
+	command := RCONCommand{
+		CommandTemplate: "adduser {username} {password}",
+		Args: []RCONCommandParam{
+			{
+				Name: "username",
+				Value: func() interface{} {
+					if username != "" {
+						return fmt.Sprintf("\"%s\"", username)
+					}
+					return nil
+				}(),
+				Mandatory: true,
+			},
+			{
+				Name: "password",
+				Value: func() interface{} {
+					if password != "" {
+						return fmt.Sprintf("\"%s\"", password)
+					}
+					return nil
+				}(),
+				Mandatory: true,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return strings.Contains(response, fmt.Sprintf("User %s created with the password ", username))
+		},
+		ErrorCheck: func(name string, response string) bool {
+			isErr := response == "A user with this name already exists"
+			if isErr {
+				runtime.LogWarningf(app.ctx, "User %s already exists", username)
+				app.SendNotification(Notification{
+					Title:   "Can't add player",
+					Message: "User " + username + " already exists",
+					Variant: "warning",
+				})
+			}
+			return isErr
+		},
+		UpdateFunc: func(name string, response string) {
+			players = append(players, Player{Name: username, Online: false, AccessLevel: ""})
+		},
+		EmitUpdatePlayers: true,
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully added player",
+			SingleFail:    "Failed to add player",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) RemovePlayersFromWhitelist(names []string, removeFromList bool) int {
+	command := RCONCommand{
+		CommandTemplate: "removeuserfromwhitelist {name}",
+		PlayerNames:     names,
+		SuccessCheck: func(name string, response string) bool {
+			return response == fmt.Sprintf("User %s removed from white list", name)
+		},
+		ErrorCheck: func(name string, response string) bool {
+			return response == "Remove a user from the whitelist. Use: /removeuserfromwhitelist \"username\""
+		},
+		UpdateFunc: func(name string, response string) {
+			if removeFromList {
+				success := false
+
+				for i := range players {
+					if players[i].Name == name {
+						players = append(players[:i], players[i+1:]...)
+						success = true
+						break
+					}
+				}
+
+				if !success {
+					runtime.LogWarningf(app.ctx, "Player %s not found in the list", name)
+					app.SendNotification(Notification{
+						Title:   "Can't remove player",
+						Message: "Player " + name + " not found in the list",
+						Variant: "warning",
+					})
+				}
+			}
+		},
+		EmitUpdatePlayers: true,
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully removed player %s",
+			SingleFail:    "Failed to remove player %s",
+			Partial:       "Successfully removed %d players, failed to remove %d players",
+			AllSuccess:    "Successfully removed %d players",
+			AllFail:       "Failed to remove %d players",
+		},
+	}
+
+	return command.execute()
+}
+
 type RCONCommandParam struct {
 	Name      string      // Command argument name, e.g., "name"
 	Key       string      // Command argument key, e.g., "-r" or "{name}"
@@ -520,17 +621,32 @@ func (params *RCONCommand) execute() int {
 		command = strings.Join(strings.Fields(command), " ") // Collapse spaces
 		res, err := conn.Execute(command)
 
-		if err != nil || (params.ErrorCheck != nil && params.ErrorCheck(names[i], res)) {
-			continue
+		if names == nil {
+			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck("", res)) {
+				continue
+			}
+		} else {
+			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck(names[i], res)) {
+				continue
+			}
 		}
 
-		if params.SuccessCheck != nil && params.SuccessCheck(names[i], res) {
-			successCount++
-			if params.UpdateFunc != nil {
-				if len(names) > 0 {
-					params.UpdateFunc(names[i], res)
-				} else {
+		if names == nil {
+			if params.SuccessCheck != nil && params.SuccessCheck("", res) {
+				successCount++
+				if params.UpdateFunc != nil {
 					params.UpdateFunc("", res)
+				}
+			}
+		} else {
+			if params.SuccessCheck != nil && params.SuccessCheck(names[i], res) {
+				successCount++
+				if params.UpdateFunc != nil {
+					if len(names) > 0 {
+						params.UpdateFunc(names[i], res)
+					} else {
+						params.UpdateFunc("", res)
+					}
 				}
 			}
 		}

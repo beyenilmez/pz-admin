@@ -6,6 +6,10 @@ export function AddPlayer(arg1) {
   return window['go']['main']['App']['AddPlayer'](arg1);
 }
 
+export function AddPlayerToWhitelist(arg1, arg2) {
+  return window['go']['main']['App']['AddPlayerToWhitelist'](arg1, arg2);
+}
+
 export function BanUsers(arg1, arg2, arg3) {
   return window['go']['main']['App']['BanUsers'](arg1, arg2, arg3);
 }
@@ -76,6 +80,10 @@ export function OpenFileInExplorer(arg1) {
 
 export function ReadConfig(arg1) {
   return window['go']['main']['App']['ReadConfig'](arg1);
+}
+
+export function RemovePlayersFromWhitelist(arg1, arg2) {
+  return window['go']['main']['App']['RemovePlayersFromWhitelist'](arg1, arg2);
 }
 
 export function RestartApplication(arg1) {
