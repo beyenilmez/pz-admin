@@ -540,6 +540,7 @@ func (app *App) RemovePlayersFromWhitelist(names []string, removeFromList bool) 
 				for i := range players {
 					if players[i].Name == name {
 						players[i].AccessLevel = "player"
+						players[i].Godmode = false
 						break
 					}
 				}
@@ -987,6 +988,11 @@ func (app *App) SetAccessLevel(names []string, accessLevel string) {
 		UpdateFunc: func(name string, response string) {
 			if player, ok := playerMap[name]; ok {
 				player.AccessLevel = accessLevel
+				if accessLevel == "player" {
+					player.Godmode = false
+				} else {
+					player.Godmode = true
+				}
 			}
 		},
 		EmitUpdatePlayers: true,
