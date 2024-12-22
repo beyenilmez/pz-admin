@@ -52,7 +52,7 @@ export default function AdminPanel() {
 
   return (
     <Tabs value={tab} className="flex w-full h-full">
-      <TabsList defaultValue={"connection"} className={`h-full backdrop-brightness-0 rounded-none p-2 duration-500 delay-[50] transition-all ${!isConnected ? "w-0 opacity-0" : "w-80 opacity-100"}`}>
+      <TabsList defaultValue={"connection"} className={`h-full backdrop-brightness-0 rounded-none p-2 ${!isConnected ? "hidden" : ""}`}>
         <div className="flex flex-col justify-between w-full h-full">
           <div>
             <TabsTrigger
