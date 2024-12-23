@@ -46,14 +46,14 @@ const loadVehicleData = async (): Promise<VehicleData> => {
   }
 };
 
-interface VehicleSpawnerDialogProps {
+interface AddVehicleDialogProps {
   isOpen: boolean;
   onClose: () => void;
   names: string[];
   initialNames?: string[];
 }
 
-export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = [] }: VehicleSpawnerDialogProps) {
+export function AddVehicleDialog({ isOpen, onClose, names, initialNames = [] }: AddVehicleDialogProps) {
   const [path, setPath] = useState<Vehicle[]>([]);
   const [vehicles, setVehicles] = useState<VehicleData>([]);
   const [loading, setLoading] = useState(true);
@@ -82,7 +82,6 @@ export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = []
     fetchVehicles();
   }, []);
 
-  // Reset path when dialog state changes
   useEffect(() => {
     //setPath([]);
   }, [isOpen]);
@@ -93,29 +92,13 @@ export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = []
   const selectedModel =
     selectedId && path.length > 1 && path[path.length - 2].type === "model" ? path[path.length - 2] : null;
 
-  const handleBack = () => {
-    if (path.length > 0) setPath(path.slice(0, -1));
-  };
-
-  if (loading) {
+  if (loading || error) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-[80vw] h-[40vh] flex items-center justify-center">
           <DialogHeader>
-            <DialogTitle>Loading...</DialogTitle>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
-    );
-  }
-
-  if (error) {
-    return (
-      <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-[80vw] h-[40vh] flex items-center justify-center">
-          <DialogHeader>
-            <DialogTitle>Error</DialogTitle>
-            <DialogDescription>{error}</DialogDescription>
+            <DialogTitle>{loading ? "Loading..." : "Error"}</DialogTitle>
+            {error && <DialogDescription>{error}</DialogDescription>}
           </DialogHeader>
         </DialogContent>
       </Dialog>
@@ -129,85 +112,9 @@ export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = []
         <DialogHeader className="pb-4">
           <DialogTitle>Add Vehicle</DialogTitle>
         </DialogHeader>
-        <Breadcrumb className="mb-2.5">
-          <BreadcrumbList>
-            <BreadcrumbItem
-              onClick={handleBack}
-              className={`${path.length === 0 ? "pointer-events-none opacity-50" : ""}`}
-            >
-              <BreadcrumbLink className="flex items-center gap-1 cursor-pointer">
-                <ArrowLeft className="h-4 w-4" />
-                Back
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator>/</BreadcrumbSeparator>
 
-            <BreadcrumbItem className="items-center gap-0.5">
-              <BreadcrumbLink className="cursor-pointer" onClick={() => setPath([])}>
-                Vehicles
-              </BreadcrumbLink>
-              {path.length > 0 && (
-                <DropdownMenu>
-                  <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
-                    <ChevronDown className="h-5 w-5 mt-0.5" />
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="start">
-                    {vehicles.map((vehicle) => (
-                      <DropdownMenuItem
-                        key={vehicle.name}
-                        onClick={() => setPath([vehicle])}
-                        className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                      >
-                        {vehicle.name}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
-            </BreadcrumbItem>
+        <BreadcrumbNavigation path={path} setPath={setPath} vehicles={vehicles} />
 
-            {path.map((item, index) => (
-              <Fragment key={item.name}>
-                <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                <BreadcrumbItem className="items-center gap-0.5">
-                  {index === path.length - 1 ? (
-                    <BreadcrumbPage className="pointer-events-none">{item.name}</BreadcrumbPage>
-                  ) : (
-                    <>
-                      {item.children && item.children.length > 0 && hasUniformType(item.children) ? (
-                        <>
-                          <BreadcrumbLink className="cursor-pointer" onClick={() => setPath(path.slice(0, index + 1))}>
-                            {item.name}
-                          </BreadcrumbLink>
-                          <DropdownMenu>
-                            <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
-                              <ChevronDown className="h-5 w-5 mt-0.5" />
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="start">
-                              {item.children.map((child) => (
-                                <DropdownMenuItem
-                                  key={child.name}
-                                  onClick={() => setPath(path.slice(0, index + 1).concat(child))}
-                                  className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                                >
-                                  {child.name}
-                                </DropdownMenuItem>
-                              ))}
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </>
-                      ) : (
-                        <BreadcrumbLink className="cursor-pointer" onClick={() => setPath(path.slice(0, index + 1))}>
-                          {item.name}
-                        </BreadcrumbLink>
-                      )}
-                    </>
-                  )}
-                </BreadcrumbItem>
-              </Fragment>
-            ))}
-          </BreadcrumbList>
-        </Breadcrumb>
         <ScrollArea className="w-full h-96">
           {selectedCar ? (
             <>
@@ -248,41 +155,7 @@ export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = []
             <>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 mr-4">
                 {currentLevel.map((item, index) => (
-                  <Card
-                    key={index}
-                    onClick={() => setPath(path.concat(item))}
-                    className="cursor-pointer relative overflow-clip aspect-[3/2]"
-                  >
-                    <div className="relative w-full h-full hover:scale-105 transition-transform">
-                      {item.images ? (
-                        <>
-                          {item.images.length > 1 ? (
-                            <ItemImage images={item.images} name={item.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <img src={item.images?.[0]} alt={item.name} className="w-full h-full object-cover" />
-                          )}
-                        </>
-                      ) : (
-                        <>
-                          {item.thumbnails && item.thumbnails.length > 0 && (
-                            <div className="grid grid-cols-2">
-                              {item.thumbnails.map((image, index) => (
-                                <img
-                                  key={index}
-                                  src={image}
-                                  alt={item.name}
-                                  className="w-full h-full object-cover aspect-[3/2]"
-                                />
-                              ))}
-                            </div>
-                          )}
-                        </>
-                      )}
-                    </div>
-                    <div className="absolute bottom-0 left-0 w-full text-center font-semibold bg-black bg-opacity-40 text-background dark:text-foreground py-1">
-                      {item.name}
-                    </div>
-                  </Card>
+                  <VehicleCard key={index} vehicle={item} onClick={() => setPath([...path, item])} />
                 ))}
               </div>
             </>
@@ -297,18 +170,154 @@ export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = []
   );
 }
 
-const hasUniformType = (children: Vehicle[] | undefined): boolean => {
-  if (!children || children.length === 0) return false; // No children or empty array
-  const firstType = children[0].type; // Get the type of the first child
-  return children.every((child) => child.type === firstType);
+// Vehicle Card Component
+const VehicleCard = ({ vehicle, onClick }: { vehicle: Vehicle; onClick: () => void }) => (
+  <Card onClick={onClick} className="cursor-pointer relative overflow-clip aspect-[3/2]">
+    <div className="relative w-full h-full hover:scale-105 transition-transform">
+      {vehicle.images ? (
+        <>
+          {vehicle.images.length > 1 ? (
+            <ItemImage images={vehicle.images} name={vehicle.name} className="w-full h-full object-cover" />
+          ) : (
+            <img src={vehicle.images?.[0]} alt={vehicle.name} className="w-full h-full object-cover" />
+          )}
+        </>
+      ) : (
+        <>
+          {vehicle.thumbnails && vehicle.thumbnails.length > 0 && (
+            <div className="grid grid-cols-2">
+              {vehicle.thumbnails.map((image, index) => (
+                <img key={index} src={image} alt={vehicle.name} className="w-full h-full object-cover aspect-[3/2]" />
+              ))}
+            </div>
+          )}
+        </>
+      )}
+    </div>
+    <div className="absolute bottom-0 left-0 w-full text-center font-semibold bg-black bg-opacity-40 text-background dark:text-foreground py-1">
+      {vehicle.name}
+    </div>
+  </Card>
+);
+
+// Breadcrumb navigation
+interface BreadcrumbNavigationProps {
+  path: Vehicle[];
+  setPath: (path: Vehicle[]) => void;
+  vehicles: VehicleData;
+}
+const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationProps) => {
+  // Handler for moving back in the path
+  const handleBack = () => setPath(path.slice(0, path.length - 1));
+
+  // Handler for resetting the path
+  const handleResetPath = () => setPath([]);
+
+  // Handler for navigating to a specific path
+  const handleNavigateToPath = (newPath: Vehicle[]) => setPath(newPath);
+
+  // Dropdown menu for vehicle list
+  const VehicleDropdown = () => (
+    <DropdownMenu>
+      <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
+        <ChevronDown className="h-5 w-5 mt-0.5" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="start">
+        {vehicles.map((vehicle) => (
+          <DropdownMenuItem
+            key={vehicle.name}
+            onClick={() => handleNavigateToPath([vehicle])}
+            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+          >
+            {vehicle.name}
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+
+  // Breadcrumb item with optional dropdown for children
+  const BreadcrumbItemWithDropdown = ({ item, isLast, index }: { item: Vehicle; isLast: boolean; index: number }) => {
+    const hasUniformType = (children: Vehicle[] | undefined): boolean => {
+      if (!children || children.length === 0) return false; // No children or empty array
+      const firstType = children[0].type; // Get the type of the first child
+      return children.every((child) => child.type === firstType);
+    };
+
+    const hasUniformChildren = item.children && item.children.length > 0 && hasUniformType(item.children);
+
+    return (
+      <BreadcrumbItem className="items-center gap-0.5">
+        {isLast ? (
+          <BreadcrumbPage className="pointer-events-none">{item.name}</BreadcrumbPage>
+        ) : hasUniformChildren ? (
+          <>
+            <BreadcrumbLink className="cursor-pointer" onClick={() => handleNavigateToPath(path.slice(0, index + 1))}>
+              {item.name}
+            </BreadcrumbLink>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
+                <ChevronDown className="h-5 w-5 mt-0.5" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start">
+                {item.children?.map((child) => (
+                  <DropdownMenuItem
+                    key={child.name}
+                    onClick={() => handleNavigateToPath(path.slice(0, index + 1).concat(child))}
+                    className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                  >
+                    {child.name}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </>
+        ) : (
+          <BreadcrumbLink className="cursor-pointer" onClick={() => handleNavigateToPath(path.slice(0, index + 1))}>
+            {item.name}
+          </BreadcrumbLink>
+        )}
+      </BreadcrumbItem>
+    );
+  };
+
+  return (
+    <Breadcrumb className="mb-2.5">
+      <BreadcrumbList>
+        {/* Back Button */}
+        <BreadcrumbItem onClick={handleBack} className={`${path.length === 0 ? "pointer-events-none opacity-50" : ""}`}>
+          <BreadcrumbLink className="flex items-center gap-1 cursor-pointer">
+            <ArrowLeft className="h-4 w-4 mt-0.5" />
+            Back
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator>/</BreadcrumbSeparator>
+
+        {/* Root Vehicles Item */}
+        <BreadcrumbItem className="items-center gap-0.5">
+          <BreadcrumbLink className="cursor-pointer" onClick={handleResetPath}>
+            Vehicles
+          </BreadcrumbLink>
+          {path.length > 0 && <VehicleDropdown />}
+        </BreadcrumbItem>
+
+        {/* Dynamic Path Items */}
+        {path.map((item, index) => (
+          <Fragment key={item.name}>
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
+            <BreadcrumbItemWithDropdown item={item} isLast={index === path.length - 1} index={index} />
+          </Fragment>
+        ))}
+      </BreadcrumbList>
+    </Breadcrumb>
+  );
 };
 
 interface ItemImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   images: string[];
-  interval?: number; // Interval duration in milliseconds
-  name: string; // Alt text or fallback
+  interval?: number;
+  name: string;
 }
-
 const ItemImage: React.FC<ItemImageProps> = ({ images, interval = 1500, name, ...imgProps }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
 

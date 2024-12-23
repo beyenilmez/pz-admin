@@ -47,7 +47,7 @@ import { ThunderDialog } from "./Dialogs/ThunderDialog";
 import { AddPlayerToWhitelistDialog } from "./Dialogs/AddPlayerToWhitelistDialog";
 import { RemovePlayerFromWhitelistDialog } from "./Dialogs/RemovePlayerFromWhitelistDialog";
 import { AddXpDialog } from "./Dialogs/AddXpDialog";
-import { VehicleSpawnerDialog } from "./Dialogs/AddVehicleDialog";
+import { AddVehicleDialog } from "./Dialogs/AddVehicleDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -619,7 +619,7 @@ export function PlayersTab() {
       />
       <ThunderDialog isOpen={isThunderDialogOpen} onClose={() => setThunderDialogOpen(false)} names={selectedUsers} />
       <AddXpDialog isOpen={isAddXpDialogOpen} onClose={() => setAddXpDialogOpen(false)} names={selectedUsers} />
-      <VehicleSpawnerDialog
+      <AddVehicleDialog
         isOpen={isAddVehicleDialogOpen}
         onClose={() => setAddVehicleDialogOpen(false)}
         names={players.filter((player) => !player.online).map((player) => player.name)}
