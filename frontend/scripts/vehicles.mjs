@@ -3,7 +3,7 @@ import path from "node:path";
 
 const VEHICLES_DIR = path.join(process.cwd(), "public", "vehicles");
 const OUTPUT_FILE = path.join(process.cwd(), "src", "assets", "vehicles.json");
-const BASE_IMAGE_PATH = "public/vehicles";
+const BASE_IMAGE_PATH = "vehicles";
 
 async function processDirectory(dirPath, type) {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });
@@ -16,6 +16,7 @@ async function processDirectory(dirPath, type) {
       const item = { name: entry.name, type };
 
       if (type === "type") {
+        // Skip adding thumbnails for types
         try {
           const idEntries = await fs.readdir(fullPath, { withFileTypes: true });
           const idDir = idEntries.find((f) => f.isDirectory());
@@ -56,6 +57,12 @@ async function processDirectory(dirPath, type) {
         }
       } else {
         item.children = await processDirectory(fullPath, getNextType(type));
+
+        // Add thumbnails to categories and models
+        if (type === "category" || type === "model") {
+          item.thumbnails = await getThumbnails(item.children, 4);
+        }
+
         // Merge if only one child (type)
         if (item.children && item.children.length === 1 && item.children[0].type === "type") {
           const child = item.children[0];
@@ -69,6 +76,39 @@ async function processDirectory(dirPath, type) {
     }
   }
   return items;
+}
+
+async function getThumbnails(children, limit) {
+  const thumbnails = [];
+  const queues = children.map((child) => ({
+    child,
+    imagesQueue: [...(child.images || [])],
+    childrenQueue: [...(child.children || [])],
+  }));
+
+  while (thumbnails.length < limit) {
+    let added = false;
+
+    for (const queue of queues) {
+      if (queue.imagesQueue.length > 0) {
+        thumbnails.push(queue.imagesQueue.shift());
+        added = true;
+        if (thumbnails.length === limit) break;
+      } else if (queue.childrenQueue.length > 0) {
+        const subChild = queue.childrenQueue.shift();
+        if (subChild.images && subChild.images.length > 0) {
+          queue.imagesQueue.push(subChild.images[0]);
+        }
+        if (subChild.children && subChild.children.length > 0) {
+          queue.childrenQueue.push(...subChild.children);
+        }
+      }
+    }
+
+    if (!added) break; // Exit if no more images or children are available
+  }
+
+  return thumbnails;
 }
 
 function getNextType(currentType) {

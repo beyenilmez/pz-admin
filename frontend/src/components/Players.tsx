@@ -47,6 +47,7 @@ import { ThunderDialog } from "./Dialogs/ThunderDialog";
 import { AddPlayerToWhitelistDialog } from "./Dialogs/AddPlayerToWhitelistDialog";
 import { RemovePlayerFromWhitelistDialog } from "./Dialogs/RemovePlayerFromWhitelistDialog";
 import { AddXpDialog } from "./Dialogs/AddXpDialog";
+import { VehicleSpawnerDialog } from "./Dialogs/AddVehicleDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -193,7 +194,7 @@ export function PlayersTab() {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
-                {player.online && (
+                {!player.online && (
                   <>
                     <DropdownMenuSeparator />
 
@@ -216,6 +217,9 @@ export function PlayersTab() {
                     <DropdownMenuGroup>
                       <DropdownMenuItem disabled={!player.online} onClick={() => handleAddXp(player.name)}>
                         Add XP
+                      </DropdownMenuItem>
+                      <DropdownMenuItem disabled={player.online} onClick={() => handleAddVehicle(player.name)}>
+                        Add Vehicle
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
 
@@ -333,6 +337,12 @@ export function PlayersTab() {
   const handleThunder = (name?: string) => {
     handleSelect(name);
     setThunderDialogOpen(true);
+  };
+
+  const [isAddVehicleDialogOpen, setAddVehicleDialogOpen] = useState(false);
+  const handleAddVehicle = (name?: string) => {
+    handleSelect(name);
+    setAddVehicleDialogOpen(true);
   };
 
   const [isAddPlayerToWhitelistDialogOpen, setAddPlayerToWhitelistDialogOpen] = useState(false);
@@ -600,6 +610,7 @@ export function PlayersTab() {
       />
       <ThunderDialog isOpen={isThunderDialogOpen} onClose={() => setThunderDialogOpen(false)} names={selectedUsers} />
       <AddXpDialog isOpen={isAddXpDialogOpen} onClose={() => setAddXpDialogOpen(false)} names={selectedUsers} />
+      <VehicleSpawnerDialog isOpen={isAddVehicleDialogOpen} onClose={() => setAddVehicleDialogOpen(false)} />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}
         onClose={() => {
