@@ -13,6 +13,7 @@ interface ComboboxProps {
   nothingFoundMessage?: string;
   mandatory?: boolean;
   initialValue?: any;
+  multiSelect?: boolean;
   onChange: (value: any) => void;
   onCollapse?: (value: any) => void;
   onMouseEnter?: (value: any) => void;
@@ -21,7 +22,7 @@ interface ComboboxProps {
 }
 
 export function Combobox(props: ComboboxProps) {
-  const [value, setValue] = React.useState(props.initialValue);
+  const [value, setValue] = React.useState(props.multiSelect ? props.initialValue || [] : props.initialValue);
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
@@ -34,15 +35,41 @@ export function Combobox(props: ComboboxProps) {
     }
   }, [open]);
 
+  const toggleValue = (currentValue: any) => {
+    if (props.multiSelect) {
+      setValue((prev: any[]) => {
+        if (prev.includes(currentValue)) {
+          return prev.filter((item) => item !== currentValue);
+        } else {
+          return [...prev, currentValue];
+        }
+      });
+    } else {
+      setValue(!props.mandatory && currentValue === value ? "" : currentValue);
+      setOpen(false);
+    }
+  };
+
+  const isSelected = (currentValue: any) => {
+    if (props.multiSelect) {
+      return value.includes(currentValue);
+    }
+    return value === currentValue;
+  };
+
+  const displayValue = () => {
+    if (props.multiSelect) {
+      const selectedItems = props.elements.filter((element) => value.includes(element.value));
+      return selectedItems.map((item) => item.label).join(", ") || props.placeholder || "Select...";
+    }
+    return props.elements.find((element) => element.value === value)?.label || props.placeholder || "Select...";
+  };
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" role="combobox" aria-expanded={open} className="justify-between w-[200px]">
-          {value
-            ? props.elements.find((element) => element.value === value)?.label
-            : props.placeholder
-            ? props.placeholder
-            : "Select..."}
+          <span className="truncate">{displayValue()}</span>
           <ChevronsUpDown className="opacity-50 ml-2 w-4 h-4 shrink-0" />
         </Button>
       </PopoverTrigger>
@@ -61,10 +88,7 @@ export function Combobox(props: ComboboxProps) {
                 <CommandItem
                   key={element.value}
                   value={element.value}
-                  onSelect={(currentValue) => {
-                    setValue(!props.mandatory && currentValue === value ? "" : currentValue);
-                    setOpen(false);
-                  }}
+                  onSelect={(currentValue) => toggleValue(currentValue)}
                   onMouseEnter={() => {
                     if (open) {
                       props.onMouseEnter?.(element.value);
@@ -75,7 +99,7 @@ export function Combobox(props: ComboboxProps) {
                   }}
                 >
                   {element.label}
-                  <Check className={cn("ml-auto h-4 w-4", value === element.value ? "opacity-100" : "opacity-0")} />
+                  <Check className={cn("ml-auto h-4 w-4", isSelected(element.value) ? "opacity-100" : "opacity-0")} />
                 </CommandItem>
               ))}
             </CommandGroup>

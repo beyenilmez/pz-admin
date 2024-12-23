@@ -507,6 +507,15 @@ export function PlayersTab() {
                 >
                   Add XP
                 </Button>
+
+                <Button
+                  onClick={() => {
+                    handleAddVehicle();
+                  }}
+                 
+                >
+                  Add Vehicle
+                </Button>
               </div>
             </div>
             <div className="rounded-md border">
@@ -610,7 +619,12 @@ export function PlayersTab() {
       />
       <ThunderDialog isOpen={isThunderDialogOpen} onClose={() => setThunderDialogOpen(false)} names={selectedUsers} />
       <AddXpDialog isOpen={isAddXpDialogOpen} onClose={() => setAddXpDialogOpen(false)} names={selectedUsers} />
-      <VehicleSpawnerDialog isOpen={isAddVehicleDialogOpen} onClose={() => setAddVehicleDialogOpen(false)} />
+      <VehicleSpawnerDialog
+        isOpen={isAddVehicleDialogOpen}
+        onClose={() => setAddVehicleDialogOpen(false)}
+        names={players.filter((player) => !player.online).map((player) => player.name)}
+        initialNames={selectedUsers}
+      />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}
         onClose={() => {

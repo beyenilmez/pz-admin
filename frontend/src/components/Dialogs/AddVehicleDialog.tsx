@@ -20,6 +20,7 @@ import { ArrowLeft, ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { ScrollArea } from "../ui/scroll-area";
 import { Card } from "../ui/card";
+import { Combobox } from "../ui/combobox";
 
 // Define the Vehicle interface
 interface Vehicle {
@@ -48,13 +49,21 @@ const loadVehicleData = async (): Promise<VehicleData> => {
 interface VehicleSpawnerDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  names: string[];
+  initialNames?: string[];
 }
 
-export function VehicleSpawnerDialog({ isOpen, onClose }: VehicleSpawnerDialogProps) {
+export function VehicleSpawnerDialog({ isOpen, onClose, names, initialNames = [] }: VehicleSpawnerDialogProps) {
   const [path, setPath] = useState<Vehicle[]>([]);
   const [vehicles, setVehicles] = useState<VehicleData>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [selectedNames, setSelectedNames] = useState<string[]>(initialNames);
+
+  const handleAddVehicle = () => {
+    onClose();
+  };
 
   // Load vehicle data when component mounts
   useEffect(() => {
@@ -79,6 +88,10 @@ export function VehicleSpawnerDialog({ isOpen, onClose }: VehicleSpawnerDialogPr
   }, [isOpen]);
 
   const currentLevel = path.length === 0 ? vehicles : path[path.length - 1]?.children || [];
+  const selectedId = path.length > 0 ? path[path.length - 1].id : null;
+  const selectedCar = selectedId ? path[path.length - 1] : null;
+  const selectedModel =
+    selectedId && path.length > 1 && path[path.length - 2].type === "model" ? path[path.length - 2] : null;
 
   const handleBack = () => {
     if (path.length > 0) setPath(path.slice(0, -1));
@@ -110,106 +123,130 @@ export function VehicleSpawnerDialog({ isOpen, onClose }: VehicleSpawnerDialogPr
   }
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[80vw] max-h-full">
-        <DialogHeader>
+    <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
+      <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />{" "}
+      <DialogContent className="max-w-[80vw] max-h-full gap-0">
+        <DialogHeader className="pb-4">
           <DialogTitle>Add Vehicle</DialogTitle>
         </DialogHeader>
+        <Breadcrumb className="mb-2.5">
+          <BreadcrumbList>
+            <BreadcrumbItem
+              onClick={handleBack}
+              className={`${path.length === 0 ? "pointer-events-none opacity-50" : ""}`}
+            >
+              <BreadcrumbLink className="flex items-center gap-1 cursor-pointer">
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
 
-        <ScrollArea className="w-full h-96">
-          <DialogDescription>
-            <Breadcrumb className="mb-4">
-              <BreadcrumbList>
-                <BreadcrumbItem
-                  onClick={handleBack}
-                  className={`${path.length === 0 ? "pointer-events-none opacity-50" : ""}`}
-                >
-                  <BreadcrumbLink className="flex items-center gap-1 cursor-pointer">
-                    <ArrowLeft className="h-4 w-4" />
-                    Back
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
+            <BreadcrumbItem className="items-center gap-0.5">
+              <BreadcrumbLink className="cursor-pointer" onClick={() => setPath([])}>
+                Vehicles
+              </BreadcrumbLink>
+              {path.length > 0 && (
+                <DropdownMenu>
+                  <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
+                    <ChevronDown className="h-5 w-5 mt-0.5" />
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="start">
+                    {vehicles.map((vehicle) => (
+                      <DropdownMenuItem
+                        key={vehicle.name}
+                        onClick={() => setPath([vehicle])}
+                        className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                      >
+                        {vehicle.name}
+                      </DropdownMenuItem>
+                    ))}
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              )}
+            </BreadcrumbItem>
+
+            {path.map((item, index) => (
+              <Fragment key={item.name}>
                 <BreadcrumbSeparator>/</BreadcrumbSeparator>
-
                 <BreadcrumbItem className="items-center gap-0.5">
-                  <BreadcrumbLink className="cursor-pointer" onClick={() => setPath([])}>
-                    Vehicles
-                  </BreadcrumbLink>
-                  {path.length > 0 && (
-                    <DropdownMenu>
-                      <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
-                        <ChevronDown className="h-5 w-5 mt-0.5" />
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start">
-                        {vehicles.map((vehicle) => (
-                          <DropdownMenuItem
-                            key={vehicle.name}
-                            onClick={() => setPath([vehicle])}
-                            className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                          >
-                            {vehicle.name}
-                          </DropdownMenuItem>
-                        ))}
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                  {index === path.length - 1 ? (
+                    <BreadcrumbPage className="pointer-events-none">{item.name}</BreadcrumbPage>
+                  ) : (
+                    <>
+                      {item.children && item.children.length > 0 && hasUniformType(item.children) ? (
+                        <>
+                          <BreadcrumbLink className="cursor-pointer" onClick={() => setPath(path.slice(0, index + 1))}>
+                            {item.name}
+                          </BreadcrumbLink>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
+                              <ChevronDown className="h-5 w-5 mt-0.5" />
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="start">
+                              {item.children.map((child) => (
+                                <DropdownMenuItem
+                                  key={child.name}
+                                  onClick={() => setPath(path.slice(0, index + 1).concat(child))}
+                                  className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
+                                >
+                                  {child.name}
+                                </DropdownMenuItem>
+                              ))}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </>
+                      ) : (
+                        <BreadcrumbLink className="cursor-pointer" onClick={() => setPath(path.slice(0, index + 1))}>
+                          {item.name}
+                        </BreadcrumbLink>
+                      )}
+                    </>
                   )}
                 </BreadcrumbItem>
-
-                {path.map((item, index) => (
-                  <Fragment key={item.name}>
-                    <BreadcrumbSeparator>/</BreadcrumbSeparator>
-                    <BreadcrumbItem className="items-center gap-0.5">
-                      {index === path.length - 1 ? (
-                        <BreadcrumbPage className="pointer-events-none">{item.name}</BreadcrumbPage>
-                      ) : (
-                        <>
-                          {item.children && item.children.length > 0 && hasUniformType(item.children) ? (
-                            <>
-                              <BreadcrumbLink
-                                className="cursor-pointer"
-                                onClick={() => setPath(path.slice(0, index + 1))}
-                              >
-                                {item.name}
-                              </BreadcrumbLink>
-                              <DropdownMenu>
-                                <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
-                                  <ChevronDown className="h-5 w-5 mt-0.5" />
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="start">
-                                  {item.children.map((child) => (
-                                    <DropdownMenuItem
-                                      key={child.name}
-                                      onClick={() => setPath(path.slice(0, index + 1).concat(child))}
-                                      className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
-                                    >
-                                      {child.name}
-                                    </DropdownMenuItem>
-                                  ))}
-                                </DropdownMenuContent>
-                              </DropdownMenu>
-                            </>
-                          ) : (
-                            <BreadcrumbLink
-                              className="cursor-pointer"
-                              onClick={() => setPath(path.slice(0, index + 1))}
-                            >
-                              {item.name}
-                            </BreadcrumbLink>
-                          )}
-                        </>
-                      )}
-                    </BreadcrumbItem>
-                  </Fragment>
-                ))}
-              </BreadcrumbList>
-            </Breadcrumb>
-          </DialogDescription>
-
-          {path.length > 0 && path[path.length - 1].type && path[path.length - 1].type === "type" ? (
-            <div>{JSON.stringify(path[path.length - 1])}</div>
+              </Fragment>
+            ))}
+          </BreadcrumbList>
+        </Breadcrumb>
+        <ScrollArea className="w-full h-96">
+          {selectedCar ? (
+            <>
+              <h1 className="text-2xl font-semibold leading-none tracking-tight mb-2.5">
+                {selectedModel ? selectedModel.name + " - " : ""} {selectedCar.name}
+              </h1>
+              <div className="flex gap-3">
+                <div>
+                  <div className="aspect-[3/2] h-60 rounded overflow-clip">
+                    {selectedCar.images && selectedCar.images.length > 1 ? (
+                      <ItemImage
+                        images={selectedCar.images}
+                        name={selectedCar.name}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <img
+                        src={selectedCar.images?.[0]}
+                        alt={selectedCar.name}
+                        className="w-full h-full object-cover"
+                      />
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground">{selectedId}</p>
+                </div>
+                <div>
+                  <Combobox
+                    elements={names.map((name) => ({ value: name, label: name }))}
+                    initialValue={selectedNames}
+                    multiSelect={true}
+                    placeholder="Select players"
+                    onChange={setSelectedNames}
+                  />
+                </div>
+              </div>
+            </>
           ) : (
             <>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mr-4">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 mr-4">
                 {currentLevel.map((item, index) => (
                   <Card
                     key={index}
@@ -228,7 +265,7 @@ export function VehicleSpawnerDialog({ isOpen, onClose }: VehicleSpawnerDialogPr
                       ) : (
                         <>
                           {item.thumbnails && item.thumbnails.length > 0 && (
-                            <div className="grid grid-cols-2 ">
+                            <div className="grid grid-cols-2">
                               {item.thumbnails.map((image, index) => (
                                 <img
                                   key={index}
@@ -253,9 +290,7 @@ export function VehicleSpawnerDialog({ isOpen, onClose }: VehicleSpawnerDialogPr
         </ScrollArea>
 
         <DialogFooter>
-          <Button variant="secondary" onClick={onClose}>
-            Close
-          </Button>
+          <Button onClick={handleAddVehicle}>Add Vehicle</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
