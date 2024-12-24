@@ -501,11 +501,11 @@ export function PlayersTab() {
                     handleAddXp();
                   }}
                   disabled={
-                    !(Object.keys(rowSelection).length === 0 ||
+                    Object.keys(rowSelection).length === 0 ||
                     !table
                       .getSelectedRowModel()
                       .rows.map((row) => row.original)
-                      .some((player) => player.online))
+                      .some((player) => player.online)
                   }
                 >
                   Add XP
