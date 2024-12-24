@@ -485,15 +485,16 @@ func (app *App) AddPlayerToWhitelist(username string, password string) {
 			isErr := response == "A user with this name already exists"
 			if isErr {
 				runtime.LogWarningf(app.ctx, "User %s already exists", username)
-				app.SendNotification(Notification{
-					Title:   "Can't add player",
-					Message: "User " + username + " already exists",
-					Variant: "warning",
-				})
 			}
 			return isErr
 		},
 		UpdateFunc: func(name string, response string) {
+			for i := range players {
+				if players[i].Name == username {
+					return
+				}
+			}
+
 			players = append(players, Player{Name: username, Online: false, AccessLevel: "player"})
 		},
 		EmitUpdatePlayers: true,
@@ -575,14 +576,15 @@ type RCONCommandNotifications struct {
 }
 
 type RCONCommand struct {
-	CommandTemplate   string                    // Command template with placeholders
-	PlayerNames       []string                  // List of player names
-	Args              []RCONCommandParam        // List of arguments
-	SuccessCheck      func(string, string) bool // Function to check success in response
-	ErrorCheck        func(string, string) bool // Function to check errors in response
-	UpdateFunc        func(string, string)      // Function to update player state
-	EmitUpdatePlayers bool                      // Whether to emit "update-players"
-	Notifications     RCONCommandNotifications  // Notifications for outcomes
+	CommandTemplate   string                      // Command template with placeholders
+	PlayerNames       []string                    // List of player names
+	Args              []RCONCommandParam          // List of arguments
+	ResponseUpdate    func(string, string) string // Function to update response
+	SuccessCheck      func(string, string) bool   // Function to check success in response
+	ErrorCheck        func(string, string) bool   // Function to check errors in response
+	UpdateFunc        func(string, string)        // Function to update player state
+	EmitUpdatePlayers bool                        // Whether to emit "update-players"
+	Notifications     RCONCommandNotifications    // Notifications for outcomes
 }
 
 func (params *RCONCommand) execute() int {
@@ -618,6 +620,10 @@ func (params *RCONCommand) execute() int {
 
 	}
 
+	var res string
+	var err error
+	var lastErrRes string
+
 	for i := 0; i < total; i++ {
 		var command string
 		if names == nil {
@@ -627,14 +633,20 @@ func (params *RCONCommand) execute() int {
 		}
 
 		command = strings.Join(strings.Fields(command), " ") // Collapse spaces
-		res, err := conn.Execute(command)
+		res, err = conn.Execute(command)
+
+		if params.ResponseUpdate != nil {
+			res = params.ResponseUpdate(names[i], res)
+		}
 
 		if names == nil {
 			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck("", res)) {
+				lastErrRes = res
 				continue
 			}
 		} else {
 			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck(names[i], res)) {
+				lastErrRes = res
 				continue
 			}
 		}
@@ -645,6 +657,8 @@ func (params *RCONCommand) execute() int {
 				if params.UpdateFunc != nil {
 					params.UpdateFunc("", res)
 				}
+			} else {
+				lastErrRes = res
 			}
 		} else {
 			if params.SuccessCheck != nil && params.SuccessCheck(names[i], res) {
@@ -656,6 +670,8 @@ func (params *RCONCommand) execute() int {
 						params.UpdateFunc("", res)
 					}
 				}
+			} else {
+				lastErrRes = res
 			}
 		}
 	}
@@ -672,12 +688,14 @@ func (params *RCONCommand) execute() int {
 				// All Fail (Multiple)
 				app.SendNotification(Notification{
 					Title:   fmt.Sprintf(params.Notifications.AllFail, total),
+					Message: lastErrRes,
 					Variant: "error",
 				})
 			} else {
 				// Partial Success
 				app.SendNotification(Notification{
 					Title:   fmt.Sprintf(params.Notifications.Partial, successCount, total-successCount),
+					Message: lastErrRes,
 					Variant: "warning",
 				})
 			}
@@ -692,6 +710,7 @@ func (params *RCONCommand) execute() int {
 				// Single Fail
 				app.SendNotification(Notification{
 					Title:   fmt.Sprintf(params.Notifications.SingleFail, names[0]),
+					Message: lastErrRes,
 					Variant: "error",
 				})
 			}
@@ -705,6 +724,7 @@ func (params *RCONCommand) execute() int {
 			} else {
 				app.SendNotification(Notification{
 					Title:   params.Notifications.SingleFail,
+					Message: lastErrRes,
 					Variant: "error",
 				})
 			}
@@ -1117,4 +1137,39 @@ func (app *App) AddXp(names []string, perks []string, amount int) {
 			Variant: "error",
 		})
 	}
+}
+
+func (app *App) AddVehicle(vehicleId string, names []string, coordinates Coordinates) {
+	command := RCONCommand{
+		CommandTemplate: "addvehicle {vehicleId} {name}",
+		PlayerNames:     names,
+		Args: []RCONCommandParam{
+			{
+				Name: "vehicleId",
+				Value: func() interface{} {
+					return fmt.Sprintf("\"%s\"", vehicleId)
+				}(),
+				Mandatory: true,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Vehicle spawned"
+		},
+		ErrorCheck: func(name string, response string) bool {
+			return response == fmt.Sprintf("Unknown vehicle script \"%s\"", vehicleId) || response == fmt.Sprintf("User \"%s\" not found", name) || response == "Z coordinate must be 0 for now" || response == fmt.Sprintf("Invalid location %d,%d,%d", coordinates.X, coordinates.Y, coordinates.Z)
+		},
+		Notifications: RCONCommandNotifications{
+			AllSuccess:    "Added %d vehicles",
+			AllFail:       "Failed to add %d vehicles",
+			Partial:       "Added %d vehicles, failed to add %d vehicles",
+			SingleSuccess: "Successfully added a vehicle to %s",
+			SingleFail:    "Failed to add a vehicle to %s",
+		},
+	}
+
+	if len(names) == 0 {
+		command.PlayerNames = []string{fmt.Sprintf("%d,%d,%d", coordinates.X, coordinates.Y, coordinates.Z)}
+	}
+
+	command.execute()
 }

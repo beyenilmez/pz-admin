@@ -189,12 +189,15 @@ export function PlayersTab() {
                   {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
                   {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
                   {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
-                  <DropdownMenuItem onClick={() => handleRemovePlayerFromWhitelist(player.name)}>
+                  <DropdownMenuItem
+                    disabled={player.banned}
+                    onClick={() => handleRemovePlayerFromWhitelist(player.name)}
+                  >
                     Remove from Whitelist
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
-                {!player.online && (
+                {player.online && (
                   <>
                     <DropdownMenuSeparator />
 
@@ -218,7 +221,7 @@ export function PlayersTab() {
                       <DropdownMenuItem disabled={!player.online} onClick={() => handleAddXp(player.name)}>
                         Add XP
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled={player.online} onClick={() => handleAddVehicle(player.name)}>
+                      <DropdownMenuItem disabled={!player.online} onClick={() => handleAddVehicle(player.name)}>
                         Add Vehicle
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
@@ -622,7 +625,7 @@ export function PlayersTab() {
         isOpen={isAddVehicleDialogOpen}
         onClose={() => setAddVehicleDialogOpen(false)}
         initialNames={selectedUsers}
-        initialTab="player"
+        initialTab={selectedUsers.length > 0 ? "player" : "coordinates"}
       />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}

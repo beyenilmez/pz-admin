@@ -6,6 +6,8 @@ export function AddPlayer(arg1:string):Promise<void>;
 
 export function AddPlayerToWhitelist(arg1:string,arg2:string):Promise<void>;
 
+export function AddVehicle(arg1:string,arg2:Array<string>,arg3:main.Coordinates):Promise<void>;
+
 export function AddXp(arg1:Array<string>,arg2:Array<string>,arg3:number):Promise<void>;
 
 export function BanUsers(arg1:Array<string>,arg2:string,arg3:boolean):Promise<void>;

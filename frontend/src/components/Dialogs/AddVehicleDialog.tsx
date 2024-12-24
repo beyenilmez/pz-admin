@@ -27,6 +27,7 @@ import { Input } from "../ui/input";
 import { BrowserOpenURL } from "@/wailsjs/runtime/runtime";
 import { main } from "@/wailsjs/go/models";
 import { useRcon } from "@/contexts/rcon-provider";
+import { AddVehicle } from "@/wailsjs/go/main/App";
 
 // Define the Vehicle interface
 interface Vehicle {
@@ -66,8 +67,8 @@ export function AddVehicleDialog({
   initialTab = "coordinates",
 }: AddVehicleDialogProps) {
   const { players } = useRcon();
-  //const onlinePlayers = players.filter((player) => player.online);
-  const onlinePlayers = players;
+  const onlinePlayers = players.filter((player) => player.online);
+  //const onlinePlayers = players;
 
   const [path, setPath] = useState<Vehicle[]>([]);
   const [vehicles, setVehicles] = useState<VehicleData>([]);
@@ -83,20 +84,11 @@ export function AddVehicleDialog({
   const handleAddVehicle = () => {
     if (tab === "coordinates") {
       if (coordinates.x && coordinates.y && selectedId) {
-        console.log(
-          "Adding vehicle " +
-            selectedId +
-            " at coordinates " +
-            coordinates.x +
-            ", " +
-            coordinates.y +
-            ", " +
-            coordinates.z
-        );
+        AddVehicle(selectedId, [], coordinates);
       }
     } else {
       if (selectedNames && selectedNames.length > 0 && selectedId) {
-        console.log("Adding vehicle " + selectedId + " to " + selectedNames.join(", "));
+        AddVehicle(selectedId, selectedNames, {} as main.Coordinates);
       }
     }
 
@@ -214,6 +206,7 @@ export function AddVehicleDialog({
                         <div className="flex items-center gap-2">
                           <Label htmlFor="teleport_z">Z</Label>
                           <Input
+                            disabled
                             value={coordinates.z}
                             onChange={(e) => setCoordinates({ ...coordinates, z: parseInt(e.target.value) })}
                             placeholder="0"

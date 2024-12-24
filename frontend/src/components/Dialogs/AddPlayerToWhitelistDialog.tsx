@@ -3,7 +3,6 @@ import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "
 import { Label } from "@/components/ui/label";
 import { AddPlayerToWhitelist } from "@/wailsjs/go/main/App";
 import { useEffect, useState } from "react";
-import { useRcon } from "@/contexts/rcon-provider";
 import { Input } from "../ui/input";
 
 interface AddPlayerToWhitelistDialogProps {
@@ -12,7 +11,6 @@ interface AddPlayerToWhitelistDialogProps {
 }
 
 export function AddPlayerToWhitelistDialog({ isOpen, onClose }: AddPlayerToWhitelistDialogProps) {
-  const { players } = useRcon();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -44,9 +42,6 @@ export function AddPlayerToWhitelistDialog({ isOpen, onClose }: AddPlayerToWhite
               id="w-name"
               placeholder="John Doe"
             />
-            <p className="text-sm font-medium text-destructive h-4">
-              {players.some((player) => player.name === name) && "Player already exists in list"}
-            </p>
           </div>
           <div className="space-y-1">
             <Label htmlFor="w-pass" className="text-right">
@@ -59,13 +54,7 @@ export function AddPlayerToWhitelistDialog({ isOpen, onClose }: AddPlayerToWhite
           <Button
             type="submit"
             onClick={handleAddPlayer}
-            disabled={
-              !name ||
-              !password ||
-              name.length < 3 ||
-              password.length < 1 ||
-              players.some((player) => player.name === name)
-            }
+            disabled={!name || !password || name.length < 3 || password.length < 1}
           >
             Add Player to Whitelist
           </Button>
