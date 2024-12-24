@@ -512,7 +512,6 @@ export function PlayersTab() {
                   onClick={() => {
                     handleAddVehicle();
                   }}
-                 
                 >
                   Add Vehicle
                 </Button>
@@ -622,8 +621,8 @@ export function PlayersTab() {
       <AddVehicleDialog
         isOpen={isAddVehicleDialogOpen}
         onClose={() => setAddVehicleDialogOpen(false)}
-        names={players.filter((player) => !player.online).map((player) => player.name)}
         initialNames={selectedUsers}
+        initialTab="player"
       />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}

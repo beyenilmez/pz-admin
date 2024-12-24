@@ -15,12 +15,18 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "../ui/button";
 import { ArrowLeft, ChevronDown } from "lucide-react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu";
 import { ScrollArea } from "../ui/scroll-area";
 import { Card } from "../ui/card";
 import { Combobox } from "../ui/combobox";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { BrowserOpenURL } from "@/wailsjs/runtime/runtime";
+import { main } from "@/wailsjs/go/models";
+import { useRcon } from "@/contexts/rcon-provider";
 
 // Define the Vehicle interface
 interface Vehicle {
@@ -49,19 +55,51 @@ const loadVehicleData = async (): Promise<VehicleData> => {
 interface AddVehicleDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  names: string[];
   initialNames?: string[];
+  initialTab?: string;
 }
 
-export function AddVehicleDialog({ isOpen, onClose, names, initialNames = [] }: AddVehicleDialogProps) {
+export function AddVehicleDialog({
+  isOpen,
+  onClose,
+  initialNames = [],
+  initialTab = "coordinates",
+}: AddVehicleDialogProps) {
+  const { players } = useRcon();
+  //const onlinePlayers = players.filter((player) => player.online);
+  const onlinePlayers = players;
+
   const [path, setPath] = useState<Vehicle[]>([]);
   const [vehicles, setVehicles] = useState<VehicleData>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const [selectedNames, setSelectedNames] = useState<string[]>(initialNames);
+  const [selectedNames, setSelectedNames] = useState<string[]>(
+    initialNames.filter((name) => onlinePlayers.some((player) => player.name === name))
+  );
+  const [tab, setTab] = useState(initialTab);
+  const [coordinates, setCoordinates] = useState({} as main.Coordinates);
 
   const handleAddVehicle = () => {
+    if (tab === "coordinates") {
+      if (coordinates.x && coordinates.y && selectedId) {
+        console.log(
+          "Adding vehicle " +
+            selectedId +
+            " at coordinates " +
+            coordinates.x +
+            ", " +
+            coordinates.y +
+            ", " +
+            coordinates.z
+        );
+      }
+    } else {
+      if (selectedNames && selectedNames.length > 0 && selectedId) {
+        console.log("Adding vehicle " + selectedId + " to " + selectedNames.join(", "));
+      }
+    }
+
     onClose();
   };
 
@@ -83,8 +121,11 @@ export function AddVehicleDialog({ isOpen, onClose, names, initialNames = [] }: 
   }, []);
 
   useEffect(() => {
-    //setPath([]);
-  }, [isOpen]);
+    setSelectedNames(initialNames.filter((name) => onlinePlayers.some((player) => player.name === name)));
+    setTab(initialTab);
+    setCoordinates({} as main.Coordinates);
+    setPath([]);
+  }, [isOpen, initialNames, initialTab]);
 
   const currentLevel = path.length === 0 ? vehicles : path[path.length - 1]?.children || [];
   const selectedId = path.length > 0 ? path[path.length - 1].id : null;
@@ -140,14 +181,74 @@ export function AddVehicleDialog({ isOpen, onClose, names, initialNames = [] }: 
                   </div>
                   <p className="text-sm text-muted-foreground">{selectedId}</p>
                 </div>
-                <div>
-                  <Combobox
-                    elements={names.map((name) => ({ value: name, label: name }))}
-                    initialValue={selectedNames}
-                    multiSelect={true}
-                    placeholder="Select players"
-                    onChange={setSelectedNames}
-                  />
+                <div className="w-full flex justify-center">
+                  <Tabs value={tab} className="w-3/4 max-w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="coordinates" onClick={() => setTab("coordinates")}>
+                        To Coordinates
+                      </TabsTrigger>
+                      <TabsTrigger value="player" onClick={() => setTab("player")}>
+                        To Player
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="coordinates" className="h-24">
+                      <div className="grid grid-cols-3 gap-10 pt-6 pb-2">
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="teleport_x">X</Label>
+                          <Input
+                            value={coordinates.x}
+                            onChange={(e) => setCoordinates({ ...coordinates, x: parseInt(e.target.value) })}
+                            id="teleport_x"
+                            type="number"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="teleport_y">Y</Label>
+                          <Input
+                            value={coordinates.y}
+                            onChange={(e) => setCoordinates({ ...coordinates, y: parseInt(e.target.value) })}
+                            id="teleport_y"
+                            type="number"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Label htmlFor="teleport_z">Z</Label>
+                          <Input
+                            value={coordinates.z}
+                            onChange={(e) => setCoordinates({ ...coordinates, z: parseInt(e.target.value) })}
+                            placeholder="0"
+                            id="teleport_z"
+                            type="number"
+                          />
+                        </div>
+                      </div>
+                      <Button
+                        variant={"link"}
+                        onClick={() =>
+                          BrowserOpenURL(
+                            `https://map.projectzomboid.com/${
+                              coordinates.x && coordinates.y ? "#" + coordinates.x + "x" + coordinates.y : ""
+                            }`
+                          )
+                        }
+                      >
+                        Preview in map website
+                      </Button>
+                    </TabsContent>
+                    <TabsContent value="player" className="h-24">
+                      <div className="pt-6">
+                        <Combobox
+                          elements={onlinePlayers.map((player) => ({ value: player.name, label: player.name }))}
+                          initialValue={selectedNames}
+                          multiSelect={true}
+                          placeholder={"Select target player..."}
+                          searchPlaceholder={"Search player..."}
+                          nothingFoundMessage={"No online players found"}
+                          onChange={setSelectedNames}
+                        />
+                      </div>
+                    </TabsContent>
+                  </Tabs>
                 </div>
               </div>
             </>
@@ -163,7 +264,16 @@ export function AddVehicleDialog({ isOpen, onClose, names, initialNames = [] }: 
         </ScrollArea>
 
         <DialogFooter>
-          <Button onClick={handleAddVehicle}>Add Vehicle</Button>
+          <Button
+            onClick={handleAddVehicle}
+            disabled={
+              !selectedCar ||
+              (tab == "coordinates" && (!coordinates.x || !coordinates.y)) ||
+              (tab == "player" && (!selectedNames || selectedNames.length === 0))
+            }
+          >
+            Add Vehicle
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -295,7 +405,10 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
 
         {/* Root Vehicles Item */}
         <BreadcrumbItem className="items-center gap-0.5">
-          <BreadcrumbLink className="cursor-pointer" onClick={handleResetPath}>
+          <BreadcrumbLink
+            className={`${path.length === 0 ? "text-foreground pointer-events-none" : "cursor-pointer"}`}
+            onClick={handleResetPath}
+          >
             Vehicles
           </BreadcrumbLink>
           {path.length > 0 && <VehicleDropdown />}
