@@ -1,4 +1,3 @@
-// File: scripts/scrapeItems.js
 import puppeteer from "puppeteer-extra";
 import StealthPlugin from "puppeteer-extra-plugin-stealth";
 import fs from "fs/promises";

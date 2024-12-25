@@ -2,7 +2,6 @@ package main
 
 import (
 	"os/exec"
-	"strings"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -42,7 +41,6 @@ func (a *App) SaveConfigDialog() {
 	}
 
 	runtime.LogInfo(a.ctx, "Config saved to "+path)
-	path = strings.ReplaceAll(path, "\\", "\\\\")
 	app.SendNotification(Notification{
 		Message: "settings.config_saved",
 		Path:    path,

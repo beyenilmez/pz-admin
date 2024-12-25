@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { useStorage } from "@/contexts/storage-provider";
 import { ColorSchemeSetting } from "./SettingItems/ColorSchemeSetting";
 import { RCONCheckIntervalSetting } from "./SettingItems/RCONCheckIntervalSetting";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -33,8 +34,8 @@ export default function Settings() {
   }, [tab]);
 
   return (
-    <Tabs value={tab} className="flex flex-row w-full h-full">
-      <TabsList className="flex-col justify-start px-2 rounded-none w-fit h-full">
+    <Tabs value={tab} className="flex w-full h-full">
+      <TabsList className="h-full backdrop-brightness-0 rounded-none p-2 flex flex-col justify-start w-80">
         <TabsTrigger value="general" onClick={() => setTab("general")} className="px-12 py-2 w-full">
           {t("settings.categories.general")}
         </TabsTrigger>
@@ -52,47 +53,57 @@ export default function Settings() {
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="general" className="w-full h-[calc(100vh-5.5rem)] overflow-y-auto">
-        <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
-          <LocaleSetting />
-          <ColorSchemeSetting />
-          <ThemeSetting />
-        </SettingsGroup>
+      <TabsContent value="general" className="w-full h-[calc(100vh-5.5rem)]">
+        <ScrollArea className="h-full w-full overflow-auto">
+          <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
+            <LocaleSetting />
+            <ColorSchemeSetting />
+            <ThemeSetting />
+          </SettingsGroup>
+        </ScrollArea>
       </TabsContent>
-      <TabsContent value="app" className="w-full h-[calc(100vh-5.5rem)] overflow-y-auto">
-        <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
-          <ThemeSetting />
-          <ColorSchemeSetting />
-          <WindowEffectSetting />
-          <WindowOpacitySetting />
-          <WindowScaleSetting />
-          {false && <UseSystemTitleBarSetting />}
-          <SaveWindowStatusSetting />
-        </SettingsGroup>
+      <TabsContent value="app" className="w-full h-[calc(100vh-5.5rem)]">
+        <ScrollArea className="h-full w-full overflow-auto">
+          <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
+            <ThemeSetting />
+            <ColorSchemeSetting />
+            <WindowEffectSetting />
+            <WindowOpacitySetting />
+            <WindowScaleSetting />
+            {false && <UseSystemTitleBarSetting />}
+            <SaveWindowStatusSetting />
+          </SettingsGroup>
+        </ScrollArea>
       </TabsContent>
-      <TabsContent value="rcon" className="w-full h-[calc(100vh-5.5rem)] overflow-y-auto">
-        <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
-          <RCONCheckIntervalSetting />
-        </SettingsGroup>
+      <TabsContent value="rcon" className="w-full h-[calc(100vh-5.5rem)]">
+        <ScrollArea className="h-full w-full overflow-auto">
+          <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
+            <RCONCheckIntervalSetting />
+          </SettingsGroup>
+        </ScrollArea>
       </TabsContent>
       {false && (
-        <TabsContent value="system" className="w-full h-[calc(100vh-5.5rem)] overflow-y-auto">
+        <TabsContent value="system" className="w-full h-[calc(100vh-5.5rem)]">
           Edit your system settings here.
         </TabsContent>
       )}
       <TabsContent value="advanced" className="w-full">
-        <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
-          <EnableLoggingSetting />
-          <LogLevelSetting />
-          <MaxLogFilesSetting />
-          <ImportExportSetting />
-        </SettingsGroup>
+        <ScrollArea className="h-full w-full overflow-auto">
+          <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
+            <EnableLoggingSetting />
+            <LogLevelSetting />
+            <MaxLogFilesSetting />
+            <ImportExportSetting />
+          </SettingsGroup>
+        </ScrollArea>
       </TabsContent>
-      <TabsContent value="update" className="w-full h-[calc(100vh-5.5rem)] overflow-y-auto">
-        <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
-          <CheckForUpdatesSetting />
-          <UpdateSetting />
-        </SettingsGroup>
+      <TabsContent value="update" className="w-full h-[calc(100vh-5.5rem)]">
+        <ScrollArea className="h-full w-full overflow-auto">
+          <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
+            <CheckForUpdatesSetting />
+            <UpdateSetting />
+          </SettingsGroup>
+        </ScrollArea>
       </TabsContent>
     </Tabs>
   );
