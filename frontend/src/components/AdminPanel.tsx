@@ -15,6 +15,7 @@ import { DeleteCredentials, LoadCredentials, SaveCredentials } from "@/wailsjs/g
 import { useConfig } from "@/contexts/config-provider";
 import { LoaderCircle } from "lucide-react";
 import { PlayersTab } from "./Players";
+import { ManagementTab } from "./Management";
 
 export default function AdminPanel() {
   const { isConnected, disconnect, ip, port } = useRcon();
@@ -22,6 +23,7 @@ export default function AdminPanel() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("connection");
 
+  const [managementState, setManagementState] = useState<number>(0);
   const [playersState, setPlayersState] = useState<number>(0);
   const [sandboxState, setSandboxState] = useState<number>(0);
   const [terminalState, setTerminalState] = useState<number>(0);
@@ -34,12 +36,14 @@ export default function AdminPanel() {
 
   useEffect(() => {
     if (isConnected) {
+      setManagementState(managementState + 1);
       setPlayersState(playersState + 1);
       setSandboxState(sandboxState + 1);
       setTerminalState(terminalState + 1);
-      setTab("players");
+      setTab("management");
     } else {
       setTab("connection");
+      setManagementState(managementState + 1);
       setPlayersState(playersState + 1);
       setSandboxState(sandboxState + 1);
       setTerminalState(terminalState + 1);
@@ -52,9 +56,20 @@ export default function AdminPanel() {
 
   return (
     <Tabs value={tab} className="flex w-full h-full">
-      <TabsList defaultValue={"connection"} className={`h-full backdrop-brightness-0 rounded-none p-2 ${!isConnected ? "hidden" : ""}`}>
+      <TabsList
+        defaultValue={"connection"}
+        className={`h-full backdrop-brightness-0 rounded-none p-2 ${!isConnected ? "hidden" : ""}`}
+      >
         <div className="flex flex-col justify-between w-full h-full">
           <div>
+            <TabsTrigger
+              value="management"
+              onClick={() => setTab("management")}
+              className="px-6 w-full"
+              disabled={!isConnected}
+            >
+              {t("Management")}
+            </TabsTrigger>
             <TabsTrigger
               value="players"
               onClick={() => setTab("players")}
@@ -62,14 +77,6 @@ export default function AdminPanel() {
               disabled={!isConnected}
             >
               {t("Players")}
-            </TabsTrigger>
-            <TabsTrigger
-              value="sandbox"
-              onClick={() => setTab("sandbox")}
-              className="px-6 w-full"
-              disabled={!isConnected}
-            >
-              {t("Sandbox")}
             </TabsTrigger>
             <TabsTrigger
               value="terminal"
@@ -94,6 +101,9 @@ export default function AdminPanel() {
       </TabsList>
       {/* Tab Content */}
       <div className="w-full h-full relative">
+        <div className={tab === "management" ? "block" : "hidden"} key={"management" + managementState}>
+          <ManagementTab />
+        </div>
         <div className={tab === "players" ? "block" : "hidden"} key={"players" + playersState}>
           <PlayersTab />
         </div>

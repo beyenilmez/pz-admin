@@ -1249,3 +1249,18 @@ func (app *App) AddItems(names []string, itemRecords []ItemRecord) {
 		})
 	}
 }
+
+func (app *App) SaveWorld() {
+	command := RCONCommand{
+		CommandTemplate: "save",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "World saved"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully saved the world",
+			SingleFail:    "Failed to save the world",
+		},
+	}
+
+	command.execute()
+}

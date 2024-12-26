@@ -118,6 +118,10 @@ export function SaveItemsDialog(arg1) {
   return window['go']['main']['App']['SaveItemsDialog'](arg1);
 }
 
+export function SaveWorld() {
+  return window['go']['main']['App']['SaveWorld']();
+}
+
 export function SendNotification(arg1) {
   return window['go']['main']['App']['SendNotification'](arg1);
 }

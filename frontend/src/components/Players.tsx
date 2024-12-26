@@ -1,4 +1,3 @@
-//@ts-nochec
 "use client";
 
 import {
