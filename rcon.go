@@ -209,6 +209,35 @@ func (app *App) SendRconCommand(command string) string {
 				break
 			}
 		}
+	} else if strings.Contains(command, "adduser ") && strings.Contains(res, fmt.Sprintf(" created with the password ")) {
+		name := strings.Split(command, " ")[1]
+		nameExists := false
+		for i := range players {
+			if players[i].Name == name {
+				nameExists = true
+				break
+			}
+		}
+
+		if !nameExists {
+			players = append(players, Player{Name: name, Banned: false, AccessLevel: "player"})
+			runtime.EventsEmit(app.ctx, "update-players", players)
+		}
+	} else if strings.Contains(command, "removeuserfromwhitelist ") && strings.Contains(res, " removed from white list") {
+		name := strings.Split(command, " ")[1]
+		nameExists := false
+		for i := range players {
+			if players[i].Name == name {
+				players[i].Godmode = false
+				players[i].AccessLevel = "player"
+				nameExists = true
+				break
+			}
+		}
+
+		if nameExists {
+			runtime.EventsEmit(app.ctx, "update-players", players)
+		}
 	}
 
 	return res
