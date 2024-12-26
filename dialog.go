@@ -69,6 +69,84 @@ func (a *App) GetLoadConfigPath() string {
 	return path
 }
 
+func (a *App) SaveItemsDialog(items []ItemRecord) {
+	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		Title:                "Save items",
+		DefaultDirectory:     savedItemsFolder,
+		DefaultFilename:      "items.json",
+		CanCreateDirectories: true,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "JSON",
+				Pattern:     "*.json",
+			},
+		},
+	})
+
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		return
+	}
+
+	err = writeJSON(path, items)
+
+	if err != nil {
+		if path == "" {
+			runtime.LogInfo(a.ctx, "No path given, not saving items")
+			return
+		}
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error saving the items",
+			Variant: "error",
+		})
+		return
+	}
+
+	runtime.LogInfo(a.ctx, "Items saved to "+path)
+	app.SendNotification(Notification{
+		Message: "Items saved",
+		Path:    path,
+		Variant: "success",
+	})
+}
+
+func (a *App) LoadItemsDialog() []ItemRecord {
+	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title:                "Load items",
+		DefaultDirectory:     savedItemsFolder,
+		CanCreateDirectories: true,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "JSON",
+				Pattern:     "*.json",
+			},
+		},
+	})
+
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error loading the items",
+			Variant: "error",
+		})
+		return nil
+	}
+
+	var items []ItemRecord
+	err = readJSON(path, &items)
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error loading the items",
+			Variant: "error",
+		})
+		return nil
+	}
+
+	return items
+}
+
 func (a *App) OpenFileInExplorer(path string) {
 	runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
 

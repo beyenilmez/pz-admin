@@ -6,6 +6,7 @@ import { ConfigProvider } from "./config-provider.tsx";
 import { ProgressProvider } from "./progress-provider.tsx";
 import { ColorSchemeProvider } from "./color-scheme-provider.tsx";
 import { RconProvider } from "./rcon-provider.tsx";
+import { TooltipProvider } from "@/components/ui/tooltip.tsx";
 
 interface ProvidersProps {
   children: ReactNode;
@@ -19,7 +20,9 @@ const Providers = ({ children }: ProvidersProps) => {
           <ColorSchemeProvider>
             <ProgressProvider>
               <StorageProvider>
-                <RconProvider>{children}</RconProvider>
+                <RconProvider>
+                  <TooltipProvider>{children}</TooltipProvider>
+                </RconProvider>
               </StorageProvider>
             </ProgressProvider>
           </ColorSchemeProvider>

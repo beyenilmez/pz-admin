@@ -48,6 +48,7 @@ import { AddPlayerToWhitelistDialog } from "./Dialogs/AddPlayerToWhitelistDialog
 import { RemovePlayerFromWhitelistDialog } from "./Dialogs/RemovePlayerFromWhitelistDialog";
 import { AddXpDialog } from "./Dialogs/AddXpDialog";
 import { AddVehicleDialog } from "./Dialogs/AddVehicleDialog";
+import { AddItemDialog } from "./Dialogs/AddItemDialog";
 
 export function PlayersTab() {
   const { players } = useRcon();
@@ -221,6 +222,9 @@ export function PlayersTab() {
                       <DropdownMenuItem disabled={!player.online} onClick={() => handleAddXp(player.name)}>
                         Add XP
                       </DropdownMenuItem>
+                      <DropdownMenuItem disabled={!player.online} onClick={() => handleAddItem(player.name)}>
+                        Add Item
+                      </DropdownMenuItem>
                       <DropdownMenuItem disabled={!player.online} onClick={() => handleAddVehicle(player.name)}>
                         Add Vehicle
                       </DropdownMenuItem>
@@ -342,12 +346,6 @@ export function PlayersTab() {
     setThunderDialogOpen(true);
   };
 
-  const [isAddVehicleDialogOpen, setAddVehicleDialogOpen] = useState(false);
-  const handleAddVehicle = (name?: string) => {
-    handleSelect(name);
-    setAddVehicleDialogOpen(true);
-  };
-
   const [isAddPlayerToWhitelistDialogOpen, setAddPlayerToWhitelistDialogOpen] = useState(false);
 
   const [isRemovePlayerFromWhitelistDialogOpen, setRemovePlayerFromWhitelistDialogOpen] = useState(false);
@@ -360,6 +358,18 @@ export function PlayersTab() {
   const handleAddXp = (name?: string) => {
     handleSelect(name);
     setAddXpDialogOpen(true);
+  };
+
+  const [isAddVehicleDialogOpen, setAddVehicleDialogOpen] = useState(false);
+  const handleAddVehicle = (name?: string) => {
+    handleSelect(name);
+    setAddVehicleDialogOpen(true);
+  };
+
+  const [isAddItemDialogOpen, setAddItemDialogOpen] = useState(false);
+  const handleAddItem = (name?: string) => {
+    handleSelect(name);
+    setAddItemDialogOpen(true);
   };
 
   return (
@@ -513,6 +523,21 @@ export function PlayersTab() {
 
                 <Button
                   onClick={() => {
+                    handleAddItem();
+                  }}
+                  disabled={
+                    Object.keys(rowSelection).length === 0 ||
+                    !table
+                      .getSelectedRowModel()
+                      .rows.map((row) => row.original)
+                      .some((player) => player.online)
+                  }
+                >
+                  Add Item
+                </Button>
+
+                <Button
+                  onClick={() => {
                     handleAddVehicle();
                   }}
                 >
@@ -585,6 +610,8 @@ export function PlayersTab() {
           </div>
         </ScrollArea>
       </div>
+
+      {/*Dialogs*/}
       <BanUserDialog isOpen={isBanDialogOpen} onClose={() => setBanDialogOpen(false)} names={selectedUsers} />
       <SetAccessLevelDialog
         isOpen={isSetAccessLevelDialogOpen}
@@ -627,6 +654,7 @@ export function PlayersTab() {
         initialNames={selectedUsers}
         initialTab={selectedUsers.length > 0 ? "player" : "coordinates"}
       />
+      <AddItemDialog isOpen={isAddItemDialogOpen} onClose={() => setAddItemDialogOpen(false)} names={selectedUsers} />
       <AddPlayerDialog
         isOpen={isAddPlayerDialogOpen}
         onClose={() => {

@@ -420,7 +420,7 @@
     overflow: hidden;
   }
   * {
-    @apply border-border scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent;
+    @apply border-border divide-border scrollbar-thin scrollbar-thumb-primary scrollbar-track-transparent;
   }
   body {
     @apply bg-background text-foreground;

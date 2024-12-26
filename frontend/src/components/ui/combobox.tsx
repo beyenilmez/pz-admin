@@ -1,5 +1,5 @@
 import * as React from "react";
-import { ChevronsUpDown, Check } from "lucide-react";
+import { ChevronsUpDown, Check, ListX } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -19,6 +19,10 @@ interface ComboboxProps {
   onMouseEnter?: (value: any) => void;
   onMouseLeave?: (value: any) => void;
   disableSearch?: boolean;
+  unselectAllButton?: boolean;
+  unselectAllButtonText?: string;
+  icon?: React.ReactNode;
+  hideDisplayText?: boolean;
 }
 
 export function Combobox(props: ComboboxProps) {
@@ -34,6 +38,11 @@ export function Combobox(props: ComboboxProps) {
       props.onCollapse?.(value);
     }
   }, [open]);
+
+  const unselectValues = () => {
+    setValue(props.multiSelect ? [] : "");
+    setOpen(false);
+  };
 
   const toggleValue = (currentValue: any) => {
     if (props.multiSelect) {
@@ -68,9 +77,19 @@ export function Combobox(props: ComboboxProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" role="combobox" aria-expanded={open} className="justify-between w-[200px]">
-          <span className="truncate">{displayValue()}</span>
-          <ChevronsUpDown className="opacity-50 ml-2 w-4 h-4 shrink-0" />
+        <Button
+          variant="outline"
+          size={props.hideDisplayText ? "icon" : "default"}
+          role="combobox"
+          aria-expanded={open}
+          className={`justify-between ${props.hideDisplayText ? "w-12 flex justify-center items-center" : "w-[200px]"}`}
+        >
+          {!props.hideDisplayText && <span className="truncate">{displayValue()}</span>}
+          {props.icon ? (
+            props.icon
+          ) : (
+            <ChevronsUpDown className={`opacity-50 w-4 h-4 shrink-0 ${!props.hideDisplayText && "ml-2"}`} />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="p-0 w-[200px]">
@@ -84,6 +103,17 @@ export function Combobox(props: ComboboxProps) {
           <CommandList>
             <CommandEmpty>{props.nothingFoundMessage ? props.nothingFoundMessage : "Nothing found..."}</CommandEmpty>
             <CommandGroup>
+              <CommandItem
+                onSelect={unselectValues}
+                className={`transition-all ${
+                  props.unselectAllButton && props.multiSelect && value.length > 0
+                    ? "opacity-100"
+                    : "opacity-0 h-0 py-0"
+                }`}
+              >
+                {props.unselectAllButtonText ? props.unselectAllButtonText : "Unselect all"}
+                <ListX className="ml-auto h-4 w-4" />
+              </CommandItem>
               {props.elements.map((element) => (
                 <CommandItem
                   key={element.value}

@@ -40,6 +40,11 @@ type Coordinates struct {
 	Z int `json:"z"`
 }
 
+type ItemRecord struct {
+	ItemId string `json:"itemId"`
+	Count  int    `json:"count"`
+}
+
 var connectionCredentials Credentials
 var players []Player
 
@@ -1172,4 +1177,46 @@ func (app *App) AddVehicle(vehicleId string, names []string, coordinates Coordin
 	}
 
 	command.execute()
+}
+
+func (app *App) AddItems(names []string, itemRecords []ItemRecord) {
+	successCount := 0
+
+	for _, itemRecord := range itemRecords {
+		command := RCONCommand{
+			CommandTemplate: "additem {name} {item}",
+			PlayerNames:     names,
+			Args: []RCONCommandParam{
+				{
+					Name: "item",
+					Value: func() interface{} {
+						return fmt.Sprintf("\"%s\" %d", itemRecord.ItemId, itemRecord.Count)
+					}(),
+					Mandatory: true,
+				},
+			},
+			SuccessCheck: func(name string, response string) bool {
+				return response == fmt.Sprintf("Item %s Added in %s's inventory.", itemRecord.ItemId, name)
+			},
+			ErrorCheck: func(_ string, response string) bool {
+				return response == "No such user"
+			},
+		}
+
+		successCount += command.execute()
+	}
+
+	if successCount > 0 {
+		runtime.LogInfof(app.ctx, "Added items")
+		app.SendNotification(Notification{
+			Title:   "Added items",
+			Variant: "success",
+		})
+	} else {
+		runtime.LogInfo(app.ctx, "Failed to add items")
+		app.SendNotification(Notification{
+			Title:   "Failed to add items",
+			Variant: "error",
+		})
+	}
 }

@@ -94,6 +94,20 @@ export namespace main {
 	        this.password = source["password"];
 	    }
 	}
+	export class ItemRecord {
+	    itemId: string;
+	    count: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new ItemRecord(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.itemId = source["itemId"];
+	        this.count = source["count"];
+	    }
+	}
 	export class Notification {
 	    title: string;
 	    message: string;

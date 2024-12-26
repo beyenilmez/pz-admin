@@ -140,7 +140,7 @@ export function AddVehicleDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
-      <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />{" "}
+      <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />
       <DialogContent className="max-w-[80vw] max-h-full gap-0">
         <DialogHeader className="pb-4">
           <DialogTitle>Add Vehicle</DialogTitle>
