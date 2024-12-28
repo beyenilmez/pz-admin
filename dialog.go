@@ -6,6 +6,12 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
+type ServerMessage struct {
+	Message         string         `json:"message"`
+	LineColors      map[int]string `json:"lineColors"`
+	LineColorsFloat map[int]string `json:"lineColorsFloat"`
+}
+
 func (a *App) SaveConfigDialog() {
 	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
 		Title:                "Save configuration",
@@ -145,6 +151,84 @@ func (a *App) LoadItemsDialog() []ItemRecord {
 	}
 
 	return items
+}
+
+func (a *App) SaveMessagesDialog(message ServerMessage) {
+	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		Title:                "Save message",
+		DefaultDirectory:     savedMessagesFolder,
+		DefaultFilename:      "message.json",
+		CanCreateDirectories: true,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "JSON",
+				Pattern:     "*.json",
+			},
+		},
+	})
+
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		return
+	}
+
+	err = writeJSON(path, message)
+
+	if err != nil {
+		if path == "" {
+			runtime.LogInfo(a.ctx, "No path given, not saving the message")
+			return
+		}
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error saving the message",
+			Variant: "error",
+		})
+		return
+	}
+
+	runtime.LogInfo(a.ctx, "Message saved to "+path)
+	app.SendNotification(Notification{
+		Message: "Message saved",
+		Path:    path,
+		Variant: "success",
+	})
+}
+
+func (a *App) LoadMessageDialog() ServerMessage {
+	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title:                "Load message",
+		DefaultDirectory:     savedMessagesFolder,
+		CanCreateDirectories: true,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "JSON",
+				Pattern:     "*.json",
+			},
+		},
+	})
+
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error loading the message",
+			Variant: "error",
+		})
+		return ServerMessage{}
+	}
+
+	var message ServerMessage
+	err = readJSON(path, &message)
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error loading the message",
+			Variant: "error",
+		})
+		return ServerMessage{}
+	}
+
+	return message
 }
 
 func (a *App) OpenFileInExplorer(path string) {

@@ -90,6 +90,10 @@ export function LoadItemsDialog() {
   return window['go']['main']['App']['LoadItemsDialog']();
 }
 
+export function LoadMessageDialog() {
+  return window['go']['main']['App']['LoadMessageDialog']();
+}
+
 export function OpenFileInExplorer(arg1) {
   return window['go']['main']['App']['OpenFileInExplorer'](arg1);
 }
@@ -118,6 +122,10 @@ export function SaveItemsDialog(arg1) {
   return window['go']['main']['App']['SaveItemsDialog'](arg1);
 }
 
+export function SaveMessagesDialog(arg1) {
+  return window['go']['main']['App']['SaveMessagesDialog'](arg1);
+}
+
 export function SaveWorld() {
   return window['go']['main']['App']['SaveWorld']();
 }
@@ -132,6 +140,10 @@ export function SendRconCommand(arg1) {
 
 export function SendWindowsNotification(arg1) {
   return window['go']['main']['App']['SendWindowsNotification'](arg1);
+}
+
+export function ServerMsg(arg1) {
+  return window['go']['main']['App']['ServerMsg'](arg1);
 }
 
 export function SetAccessLevel(arg1, arg2) {

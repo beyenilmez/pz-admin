@@ -13,6 +13,7 @@ var appFolder string
 var logsFolder string
 var savedConfigFolder string
 var savedItemsFolder string
+var savedMessagesFolder string
 var tempFolder string
 var externalFolder string
 var configPath string
@@ -31,6 +32,7 @@ func path_init() error {
 	logsFolder = filepath.Join(appFolder, "logs")
 	savedConfigFolder = filepath.Join(appFolder, "savedconfigs")
 	savedItemsFolder = filepath.Join(appFolder, "saveditems")
+	savedMessagesFolder = filepath.Join(appFolder, "savedmessages")
 	tempFolder = filepath.Join(appFolder, "temp")
 	externalFolder = filepath.Join(appFolder, "external")
 
@@ -53,6 +55,10 @@ func path_init() error {
 		return err
 	}
 	err = create_folder(savedItemsFolder)
+	if err != nil {
+		return err
+	}
+	err = create_folder(savedMessagesFolder)
 	if err != nil {
 		return err
 	}

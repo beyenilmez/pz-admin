@@ -1264,3 +1264,25 @@ func (app *App) SaveWorld() {
 
 	command.execute()
 }
+
+func (app *App) ServerMsg(message string) {
+	command := RCONCommand{
+		CommandTemplate: "servermsg {message}",
+		Args: []RCONCommandParam{
+			{
+				Name:      "message",
+				Value:     fmt.Sprintf("\"%s\"", message),
+				Mandatory: true,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Message sent."
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully sent server message",
+			SingleFail:    "Failed to send server message",
+		},
+	}
+
+	command.execute()
+}

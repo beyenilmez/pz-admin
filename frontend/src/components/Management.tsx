@@ -4,6 +4,7 @@ import { SaveWorld } from "@/wailsjs/go/main/App";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { useState } from "react";
+import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 
 export function ManagementTab() {
   const [saving, setSaving] = useState(false);
@@ -12,6 +13,8 @@ export function ManagementTab() {
     await SaveWorld();
     setSaving(false);
   };
+
+  const [isSendMessageDialogOpen, setIsSendMessageDialogOpen] = useState(false);
 
   return (
     <>
@@ -26,7 +29,7 @@ export function ManagementTab() {
                 <Button variant={"destructive"}>Quit</Button>
               </div>
               <div className="space-x-2">
-                <Button>Message</Button>
+                <Button onClick={() => setIsSendMessageDialogOpen(true)}>Message</Button>
                 <Button>Check Mod Updates</Button>
               </div>
             </div>
@@ -34,6 +37,8 @@ export function ManagementTab() {
           </ScrollArea>
         </div>
       </div>
+
+      <SendMessageDialog isOpen={isSendMessageDialogOpen} onClose={() => setIsSendMessageDialogOpen(false)} />
     </>
   );
 }

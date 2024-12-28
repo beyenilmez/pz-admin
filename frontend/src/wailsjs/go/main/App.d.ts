@@ -46,6 +46,8 @@ export function LoadCredentials():Promise<main.Credentials>;
 
 export function LoadItemsDialog():Promise<Array<main.ItemRecord>>;
 
+export function LoadMessageDialog():Promise<main.ServerMessage>;
+
 export function OpenFileInExplorer(arg1:string):Promise<void>;
 
 export function ReadConfig(arg1:string):Promise<void>;
@@ -60,6 +62,8 @@ export function SaveCredentials(arg1:main.Credentials):Promise<boolean>;
 
 export function SaveItemsDialog(arg1:Array<main.ItemRecord>):Promise<void>;
 
+export function SaveMessagesDialog(arg1:main.ServerMessage):Promise<void>;
+
 export function SaveWorld():Promise<void>;
 
 export function SendNotification(arg1:main.Notification):Promise<void>;
@@ -67,6 +71,8 @@ export function SendNotification(arg1:main.Notification):Promise<void>;
 export function SendRconCommand(arg1:string):Promise<string>;
 
 export function SendWindowsNotification(arg1:main.Notification):Promise<void>;
+
+export function ServerMsg(arg1:string):Promise<void>;
 
 export function SetAccessLevel(arg1:Array<string>,arg2:string):Promise<void>;
 

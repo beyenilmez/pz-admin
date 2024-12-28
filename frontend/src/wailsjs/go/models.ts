@@ -146,6 +146,22 @@ export namespace main {
 	        this.godmode = source["godmode"];
 	    }
 	}
+	export class ServerMessage {
+	    message: string;
+	    lineColors: {[key: number]: string};
+	    lineColorsFloat: {[key: number]: string};
+	
+	    static createFrom(source: any = {}) {
+	        return new ServerMessage(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.message = source["message"];
+	        this.lineColors = source["lineColors"];
+	        this.lineColorsFloat = source["lineColorsFloat"];
+	    }
+	}
 	export class UpdateInfo {
 	    updateAvailable: boolean;
 	    currentVersion: string;
