@@ -26,6 +26,7 @@ export namespace main {
 	    lastUpdateCheck?: number;
 	    rememberCredentials?: boolean;
 	    autoConnect?: boolean;
+	    rconCheckInterval?: number;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -58,6 +59,23 @@ export namespace main {
 	        this.lastUpdateCheck = source["lastUpdateCheck"];
 	        this.rememberCredentials = source["rememberCredentials"];
 	        this.autoConnect = source["autoConnect"];
+	        this.rconCheckInterval = source["rconCheckInterval"];
+	    }
+	}
+	export class Coordinates {
+	    x: number;
+	    y: number;
+	    z: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new Coordinates(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.x = source["x"];
+	        this.y = source["y"];
+	        this.z = source["z"];
 	    }
 	}
 	export class Credentials {
@@ -74,6 +92,58 @@ export namespace main {
 	        this.ip = source["ip"];
 	        this.port = source["port"];
 	        this.password = source["password"];
+	    }
+	}
+	export class ItemRecord {
+	    itemId: string;
+	    count: number;
+	
+	    static createFrom(source: any = {}) {
+	        return new ItemRecord(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.itemId = source["itemId"];
+	        this.count = source["count"];
+	    }
+	}
+	export class Notification {
+	    title: string;
+	    message: string;
+	    path: string;
+	    variant: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new Notification(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.title = source["title"];
+	        this.message = source["message"];
+	        this.path = source["path"];
+	        this.variant = source["variant"];
+	    }
+	}
+	export class Player {
+	    name: string;
+	    online: boolean;
+	    accessLevel: string;
+	    banned: boolean;
+	    godmode: boolean;
+	
+	    static createFrom(source: any = {}) {
+	        return new Player(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.name = source["name"];
+	        this.online = source["online"];
+	        this.accessLevel = source["accessLevel"];
+	        this.banned = source["banned"];
+	        this.godmode = source["godmode"];
 	    }
 	}
 	export class UpdateInfo {

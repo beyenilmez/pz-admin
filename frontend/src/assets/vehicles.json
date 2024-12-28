@@ -1,0 +1,506 @@
+[
+  {
+    "name": "Heavy-duty Vehicles",
+    "type": "category",
+    "children": [
+      {
+        "name": "Chevalier D6",
+        "type": "model",
+        "children": [
+          {
+            "name": "Fire",
+            "type": "type",
+            "id": "Base.PickUpTruckLightsFire",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier D6/Fire/Base.PickUpTruckLightsFire/image.webp"
+            ]
+          },
+          {
+            "name": "McCoy",
+            "type": "type",
+            "id": "Base.PickUpTruckMccoy",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier D6/McCoy/Base.PickUpTruckMccoy/image.webp"
+            ]
+          },
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.PickUpTruck",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier D6/Normal/Base.PickUpTruck/image.webp"
+            ]
+          },
+          {
+            "name": "Ranger-Fossoil",
+            "type": "type",
+            "id": "Base.PickUpTruckLights",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier D6/Ranger-Fossoil/Base.PickUpTruckLights/image.webp",
+              "vehicles/Heavy-duty Vehicles/Chevalier D6/Ranger-Fossoil/Base.PickUpTruckLights/image2.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Heavy-duty Vehicles/Chevalier D6/Fire/Base.PickUpTruckLightsFire/image.webp",
+          "vehicles/Heavy-duty Vehicles/Chevalier D6/McCoy/Base.PickUpTruckMccoy/image.webp",
+          "vehicles/Heavy-duty Vehicles/Chevalier D6/Normal/Base.PickUpTruck/image.webp",
+          "vehicles/Heavy-duty Vehicles/Chevalier D6/Ranger-Fossoil/Base.PickUpTruckLights/image.webp"
+        ]
+      },
+      {
+        "name": "Chevalier Step Van",
+        "type": "model",
+        "children": [
+          {
+            "name": "Kentucky Herald",
+            "type": "type",
+            "id": "Base.StepVan_Heralds",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Kentucky Herald/Base.StepVan_Heralds/image.webp"
+            ]
+          },
+          {
+            "name": "Mail",
+            "type": "type",
+            "id": "Base.StepVanMail",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Mail/Base.StepVanMail/image.webp"
+            ]
+          },
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.StepVan",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Normal/Base.StepVan/image.webp"
+            ]
+          },
+          {
+            "name": "Scarlet Oak Distillery",
+            "type": "type",
+            "id": "Base.StepVan_Scarlet",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Scarlet Oak Distillery/Base.StepVan_Scarlet/image.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Kentucky Herald/Base.StepVan_Heralds/image.webp",
+          "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Mail/Base.StepVanMail/image.webp",
+          "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Normal/Base.StepVan/image.webp",
+          "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Scarlet Oak Distillery/Base.StepVan_Scarlet/image.webp"
+        ]
+      },
+      {
+        "name": "Dash Bulldriver",
+        "type": "model",
+        "children": [
+          {
+            "name": "Fire Dept",
+            "type": "type",
+            "id": "Base.PickUpVanLightsFire",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Fire Dept/Base.PickUpVanLightsFire/image.webp"
+            ]
+          },
+          {
+            "name": "McCoy Logging Co",
+            "type": "type",
+            "id": "Base.PickUpVanMccoy",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Dash Bulldriver/McCoy Logging Co/Base.PickUpVanMccoy/image.webp"
+            ]
+          },
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.PickUpVan",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Normal/Base.PickUpVan/image.webp"
+            ]
+          },
+          {
+            "name": "Police",
+            "type": "type",
+            "id": "Base.PickUpVanLightsPolice",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Police/Base.PickUpVanLightsPolice/image.webp"
+            ]
+          },
+          {
+            "name": "Ranger-Fossoil",
+            "type": "type",
+            "id": "Base.PickUpVanLights",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Ranger-Fossoil/Base.PickUpVanLights/image.webp",
+              "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Ranger-Fossoil/Base.PickUpVanLights/image2.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Fire Dept/Base.PickUpVanLightsFire/image.webp",
+          "vehicles/Heavy-duty Vehicles/Dash Bulldriver/McCoy Logging Co/Base.PickUpVanMccoy/image.webp",
+          "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Normal/Base.PickUpVan/image.webp",
+          "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Police/Base.PickUpVanLightsPolice/image.webp"
+        ]
+      },
+      {
+        "name": "Franklin All-Terrain",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Heavy-duty Vehicles/Franklin All-Terrain/Base.SUV/image.webp"
+        ],
+        "id": "Base.SUV",
+        "images": [
+          "vehicles/Heavy-duty Vehicles/Franklin All-Terrain/Base.SUV/image.webp"
+        ]
+      },
+      {
+        "name": "Franklin Valuline",
+        "type": "model",
+        "children": [
+          {
+            "name": "6-Seater",
+            "type": "type",
+            "id": "Base.VanSeats",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/6-Seater/Base.VanSeats/image.webp"
+            ]
+          },
+          {
+            "name": "Ambulance",
+            "type": "type",
+            "id": "Base.VanAmbulance",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Ambulance/Base.VanAmbulance/image.webp"
+            ]
+          },
+          {
+            "name": "Fossoil Van",
+            "type": "type",
+            "id": "Base.VanSpecial",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Fossoil Van/Base.VanSpecial/image.webp"
+            ]
+          },
+          {
+            "name": "Knox Distillery Van",
+            "type": "type",
+            "id": "Base.Van_KnoxDisti",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Knox Distillery Van/Base.Van_KnoxDisti/image.webp"
+            ]
+          },
+          {
+            "name": "KY Transit Van",
+            "type": "type",
+            "id": "Base.Van_Transit",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/KY Transit Van/Base.Van_Transit/image.webp"
+            ]
+          },
+          {
+            "name": "LBMW Network Radio Van",
+            "type": "type",
+            "id": "Base.VanRadio",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/LBMW Network Radio Van/Base.VanRadio/image.webp"
+            ]
+          },
+          {
+            "name": "Lectromax Manufacturing Van",
+            "type": "type",
+            "id": "Base.Van_LectroMax",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Lectromax Manufacturing Van/Base.Van_LectroMax/image.webp"
+            ]
+          },
+          {
+            "name": "Mass-Genfac Co. Van",
+            "type": "type",
+            "id": "Base.Van_MassGenFac",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Mass-Genfac Co. Van/Base.Van_MassGenFac/image.webp"
+            ]
+          },
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.Van",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Normal/Base.Van/image.webp"
+            ]
+          },
+          {
+            "name": "Spiffo's Van",
+            "type": "type",
+            "id": "Base.VanSpiffo",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Spiffo's Van/Base.VanSpiffo/image.webp"
+            ]
+          },
+          {
+            "name": "Triple-N Radio Van",
+            "type": "type",
+            "id": "Base.VanRadio_3N",
+            "images": [
+              "vehicles/Heavy-duty Vehicles/Franklin Valuline/Triple-N Radio Van/Base.VanRadio_3N/image.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Heavy-duty Vehicles/Franklin Valuline/6-Seater/Base.VanSeats/image.webp",
+          "vehicles/Heavy-duty Vehicles/Franklin Valuline/Ambulance/Base.VanAmbulance/image.webp",
+          "vehicles/Heavy-duty Vehicles/Franklin Valuline/Fossoil Van/Base.VanSpecial/image.webp",
+          "vehicles/Heavy-duty Vehicles/Franklin Valuline/Knox Distillery Van/Base.Van_KnoxDisti/image.webp"
+        ]
+      }
+    ],
+    "thumbnails": [
+      "vehicles/Heavy-duty Vehicles/Franklin All-Terrain/Base.SUV/image.webp",
+      "vehicles/Heavy-duty Vehicles/Chevalier D6/Fire/Base.PickUpTruckLightsFire/image.webp",
+      "vehicles/Heavy-duty Vehicles/Chevalier Step Van/Kentucky Herald/Base.StepVan_Heralds/image.webp",
+      "vehicles/Heavy-duty Vehicles/Dash Bulldriver/Fire Dept/Base.PickUpVanLightsFire/image.webp"
+    ]
+  },
+  {
+    "name": "Sport vehicles",
+    "type": "category",
+    "children": [
+      {
+        "name": "Chevalier Cossette",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Sport vehicles/Chevalier Cossette/Base.SportsCar/image.webp"
+        ],
+        "id": "Base.SportsCar",
+        "images": [
+          "vehicles/Sport vehicles/Chevalier Cossette/Base.SportsCar/image.webp"
+        ]
+      },
+      {
+        "name": "Chevalier Primani",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Sport vehicles/Chevalier Primani/Base.ModernCar02/image.webp"
+        ],
+        "id": "Base.ModernCar02",
+        "images": [
+          "vehicles/Sport vehicles/Chevalier Primani/Base.ModernCar02/image.webp"
+        ]
+      },
+      {
+        "name": "Dash Elite",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Sport vehicles/Dash Elite/Base.ModernCar/image.webp"
+        ],
+        "id": "Base.ModernCar",
+        "images": [
+          "vehicles/Sport vehicles/Dash Elite/Base.ModernCar/image.webp"
+        ]
+      },
+      {
+        "name": "Mercia Lang 4000",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Sport vehicles/Mercia Lang 4000/Base.CarLuxury/image.webp"
+        ],
+        "id": "Base.CarLuxury",
+        "images": [
+          "vehicles/Sport vehicles/Mercia Lang 4000/Base.CarLuxury/image.webp"
+        ]
+      }
+    ],
+    "thumbnails": [
+      "vehicles/Sport vehicles/Chevalier Cossette/Base.SportsCar/image.webp",
+      "vehicles/Sport vehicles/Chevalier Primani/Base.ModernCar02/image.webp",
+      "vehicles/Sport vehicles/Dash Elite/Base.ModernCar/image.webp",
+      "vehicles/Sport vehicles/Mercia Lang 4000/Base.CarLuxury/image.webp"
+    ]
+  },
+  {
+    "name": "Standard vehicles",
+    "type": "category",
+    "children": [
+      {
+        "name": "Chevalier Cerise Wagon",
+        "type": "model",
+        "children": [
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.CarStationWagon",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Cerise Wagon/Normal/Base.CarStationWagon/image.webp"
+            ]
+          },
+          {
+            "name": "Wood Siding",
+            "type": "type",
+            "id": "Base.CarStationWagon2",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Cerise Wagon/Wood Siding/Base.CarStationWagon2/image.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Standard vehicles/Chevalier Cerise Wagon/Normal/Base.CarStationWagon/image.webp",
+          "vehicles/Standard vehicles/Chevalier Cerise Wagon/Wood Siding/Base.CarStationWagon2/image.webp"
+        ]
+      },
+      {
+        "name": "Chevalier Dart",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Standard vehicles/Chevalier Dart/Base.SmallCar/image.webp"
+        ],
+        "id": "Base.SmallCar",
+        "images": [
+          "vehicles/Standard vehicles/Chevalier Dart/Base.SmallCar/image.webp"
+        ]
+      },
+      {
+        "name": "Chevalier Nyala",
+        "type": "model",
+        "children": [
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.CarNormal",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Nyala/Normal/Base.CarNormal/image.webp"
+            ]
+          },
+          {
+            "name": "Police",
+            "type": "type",
+            "id": "Base.CarLightsPolice",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Nyala/Police/Base.CarLightsPolice/image.webp"
+            ]
+          },
+          {
+            "name": "Ranger",
+            "type": "type",
+            "id": "Base.CarLights",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Nyala/Ranger/Base.CarLights/image.webp"
+            ]
+          },
+          {
+            "name": "Taxi (green)",
+            "type": "type",
+            "id": "Base.CarTaxi2",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Nyala/Taxi (green)/Base.CarTaxi2/image.webp"
+            ]
+          },
+          {
+            "name": "Taxi (yellow)",
+            "type": "type",
+            "id": "Base.CarTaxi",
+            "images": [
+              "vehicles/Standard vehicles/Chevalier Nyala/Taxi (yellow)/Base.CarTaxi/image.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Standard vehicles/Chevalier Nyala/Normal/Base.CarNormal/image.webp",
+          "vehicles/Standard vehicles/Chevalier Nyala/Police/Base.CarLightsPolice/image.webp",
+          "vehicles/Standard vehicles/Chevalier Nyala/Ranger/Base.CarLights/image.webp",
+          "vehicles/Standard vehicles/Chevalier Nyala/Taxi (green)/Base.CarTaxi2/image.webp"
+        ]
+      },
+      {
+        "name": "Dash Rancher",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Standard vehicles/Dash Rancher/Base.OffRoad/image.webp"
+        ],
+        "id": "Base.OffRoad",
+        "images": [
+          "vehicles/Standard vehicles/Dash Rancher/Base.OffRoad/image.webp"
+        ]
+      },
+      {
+        "name": "Masterson Horizon",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Standard vehicles/Masterson Horizon/Base.SmallCar02/image.webp"
+        ],
+        "id": "Base.SmallCar02",
+        "images": [
+          "vehicles/Standard vehicles/Masterson Horizon/Base.SmallCar02/image.webp"
+        ]
+      }
+    ],
+    "thumbnails": [
+      "vehicles/Standard vehicles/Chevalier Dart/Base.SmallCar/image.webp",
+      "vehicles/Standard vehicles/Dash Rancher/Base.OffRoad/image.webp",
+      "vehicles/Standard vehicles/Masterson Horizon/Base.SmallCar02/image.webp",
+      "vehicles/Standard vehicles/Chevalier Cerise Wagon/Normal/Base.CarStationWagon/image.webp"
+    ]
+  },
+  {
+    "name": "Trailers",
+    "type": "category",
+    "children": [
+      {
+        "name": "Advert Trailer",
+        "type": "type",
+        "thumbnails": [
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image2.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image3.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image4.webp"
+        ],
+        "id": "Base.TrailerAdvert",
+        "images": [
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image2.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image3.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image4.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image5.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image6.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image7.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image8.webp",
+          "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image9.webp"
+        ]
+      },
+      {
+        "name": "Trailer",
+        "type": "model",
+        "children": [
+          {
+            "name": "Cover",
+            "type": "type",
+            "id": "Base.TrailerCover",
+            "images": [
+              "vehicles/Trailers/Trailer/Cover/Base.TrailerCover/image.webp"
+            ]
+          },
+          {
+            "name": "Normal",
+            "type": "type",
+            "id": "Base.Trailer",
+            "images": [
+              "vehicles/Trailers/Trailer/Normal/Base.Trailer/image.webp"
+            ]
+          }
+        ],
+        "thumbnails": [
+          "vehicles/Trailers/Trailer/Cover/Base.TrailerCover/image.webp",
+          "vehicles/Trailers/Trailer/Normal/Base.Trailer/image.webp"
+        ]
+      }
+    ],
+    "thumbnails": [
+      "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image.webp",
+      "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image2.webp",
+      "vehicles/Trailers/Trailer/Cover/Base.TrailerCover/image.webp",
+      "vehicles/Trailers/Advert Trailer/Base.TrailerAdvert/image3.webp"
+    ]
+  }
+]

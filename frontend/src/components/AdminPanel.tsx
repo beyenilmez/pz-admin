@@ -14,6 +14,8 @@ import { Checkbox } from "./ui/checkbox";
 import { DeleteCredentials, LoadCredentials, SaveCredentials } from "@/wailsjs/go/main/App";
 import { useConfig } from "@/contexts/config-provider";
 import { LoaderCircle } from "lucide-react";
+import { PlayersTab } from "./Players";
+import { ManagementTab } from "./Management";
 
 export default function AdminPanel() {
   const { isConnected, disconnect, ip, port } = useRcon();
@@ -21,26 +23,28 @@ export default function AdminPanel() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("connection");
 
-  const [settingsState, setSettingsState] = useState<number>(0);
+  const [managementState, setManagementState] = useState<number>(0);
+  const [playersState, setPlayersState] = useState<number>(0);
   const [sandboxState, setSandboxState] = useState<number>(0);
   const [terminalState, setTerminalState] = useState<number>(0);
 
   useEffect(() => {
     if (isConnected && tab === "terminal") {
-      setSettingsState(settingsState + 1);
       setSandboxState(sandboxState + 1);
     }
   }, [tab]);
 
   useEffect(() => {
     if (isConnected) {
-      setSettingsState(settingsState + 1);
+      setManagementState(managementState + 1);
+      setPlayersState(playersState + 1);
       setSandboxState(sandboxState + 1);
       setTerminalState(terminalState + 1);
-      setTab("terminal");
+      setTab("management");
     } else {
       setTab("connection");
-      setSettingsState(settingsState + 1);
+      setManagementState(managementState + 1);
+      setPlayersState(playersState + 1);
       setSandboxState(sandboxState + 1);
       setTerminalState(terminalState + 1);
     }
@@ -52,24 +56,27 @@ export default function AdminPanel() {
 
   return (
     <Tabs value={tab} className="flex w-full h-full">
-      <TabsList defaultValue={"settings"} className="h-full backdrop-brightness-0 rounded-none min-w-52 p-2">
+      <TabsList
+        defaultValue={"connection"}
+        className={`h-full backdrop-brightness-0 rounded-none p-2 ${!isConnected ? "hidden" : ""}`}
+      >
         <div className="flex flex-col justify-between w-full h-full">
           <div>
             <TabsTrigger
-              value="settings"
-              onClick={() => setTab("settings")}
+              value="management"
+              onClick={() => setTab("management")}
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Settings")}
+              {t("Management")}
             </TabsTrigger>
             <TabsTrigger
-              value="sandbox"
-              onClick={() => setTab("sandbox")}
+              value="players"
+              onClick={() => setTab("players")}
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Sandbox")}
+              {t("Players")}
             </TabsTrigger>
             <TabsTrigger
               value="terminal"
@@ -94,8 +101,11 @@ export default function AdminPanel() {
       </TabsList>
       {/* Tab Content */}
       <div className="w-full h-full relative">
-        <div className={tab === "settings" ? "block" : "hidden"} key={"settings" + settingsState}>
-          <div>Settingsaaaaaaaaaaaaaaaaaaaaaaa</div>
+        <div className={tab === "management" ? "block" : "hidden"} key={"management" + managementState}>
+          <ManagementTab />
+        </div>
+        <div className={tab === "players" ? "block" : "hidden"} key={"players" + playersState}>
+          <PlayersTab />
         </div>
         <div className={tab === "sandbox" ? "block" : "hidden"} key={"sandbox" + sandboxState}>
           <div>Sandbox</div>
@@ -198,11 +208,12 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={`flex w-full h-[calc(100vh-12rem)] items-center justify-center ${
-            isConnecting ? "pointer-events-none blur-[1px]" : ""
+            isConnecting ? "pointer-events-none blur-[1px] select-none opacity-80" : ""
           }`}
           autoComplete="off"
         >
-          <div className="w-1/2 space-y-4">
+          <div className="w-[30rem] space-y-4">
+            {/* Header */}
             <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
             <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
 
@@ -222,6 +233,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 </FormItem>
               )}
             />
+
             {/* Port Field */}
             <FormField
               control={form.control}
@@ -238,6 +250,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 </FormItem>
               )}
             />
+
             {/* Password Field */}
             <FormField
               control={form.control}
@@ -254,7 +267,8 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 </FormItem>
               )}
             />
-            {/* Save Credentials */}
+
+            {/* Checkboxes */}
             <div className="flex items-center space-x-2">
               <Checkbox
                 checked={config?.rememberCredentials || false}
@@ -285,7 +299,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
 
             {/* Submit Button */}
             <Button type="submit" className="w-full" disabled={isConnecting || isConnected}>
-              {isConnected ? t("Connected") : t("Connect")}
+              {t("Connect")}
             </Button>
           </div>
         </form>

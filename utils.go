@@ -49,6 +49,14 @@ func create_folder(folder string) error {
 	return nil
 }
 
+func file_exists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
 func generateKey(passphrase string) []byte {
 	hash := sha256.Sum256([]byte(passphrase))
 	return hash[:]

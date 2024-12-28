@@ -10,6 +10,7 @@ import React, {
 } from "react";
 import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
+import { EventsOn } from "@/wailsjs/runtime/runtime";
 
 interface RconContextType {
   isConnected: boolean;
@@ -20,6 +21,7 @@ interface RconContextType {
   sendCommand: (command: string) => Promise<string | null>;
   ip: string;
   port: string;
+  players: main.Player[];
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
@@ -29,6 +31,17 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [isConnecting, setIsConnecting] = useState(false);
   const [ip, setIp] = useState("");
   const [port, setPort] = useState("");
+  const [players, setPlayers] = useState<main.Player[]>([]);
+
+  useEffect(() => {
+    EventsOn("update-players", (players: main.Player[]) => {
+      //let newPlayers = players.sort((a, b) =>
+      //  a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1
+      //);
+      //newPlayers.push({ name: "Online_player", online: true, accessLevel: "admin" } as main.Player);
+      setPlayers(players);
+    });
+  }, []);
 
   const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {
@@ -84,7 +97,7 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   return (
     <RconContext.Provider
-      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port }}
+      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port, players }}
     >
       {children}
     </RconContext.Provider>

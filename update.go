@@ -54,7 +54,10 @@ func (app *App) CheckForUpdate() UpdateInfo {
 	resp, err := http.Get(apiUrl)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error sending request: "+err.Error())
-		app.SendNotification("settings.setting.update.failed_to_check_for_updates", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_check_for_updates",
+			Variant: "error",
+		})
 		return updateInfo
 	}
 	defer resp.Body.Close()
@@ -62,7 +65,10 @@ func (app *App) CheckForUpdate() UpdateInfo {
 
 	// Check if response was successful
 	if resp.StatusCode != http.StatusOK {
-		app.SendNotification("settings.setting.update.failed_to_check_for_updates", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_check_for_updates",
+			Variant: "error",
+		})
 		return updateInfo
 	}
 
@@ -133,7 +139,10 @@ func (app *App) Update(downloadUrl string) error {
 	resp, err := http.Get(downloadUrl)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error downloading update: "+err.Error())
-		app.SendNotification("settings.setting.update.failed_to_download_update", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_download_update",
+			Variant: "error",
+		})
 		return err
 	}
 	defer resp.Body.Close()
@@ -143,7 +152,10 @@ func (app *App) Update(downloadUrl string) error {
 
 	// Check if the response was successful
 	if resp.StatusCode != http.StatusOK {
-		app.SendNotification("settings.setting.update.failed_to_download_update", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_download_update",
+			Variant: "error",
+		})
 		return err
 	}
 
@@ -151,12 +163,20 @@ func (app *App) Update(downloadUrl string) error {
 	err = selfupdate.Apply(resp.Body, selfupdate.Options{})
 	if err != nil {
 		runtime.LogError(app.ctx, "Error applying update: "+err.Error())
-		app.SendNotification("settings.setting.update.failed_to_apply_update", err.Error(), "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_apply_update",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		return err
 	}
 
 	runtime.LogInfo(app.ctx, "Update applied successfully. Restarting.")
-	app.SendNotification("settings.setting.update.update_applied", "settings.setting.update.restarting", "", "success")
+	app.SendNotification(Notification{
+		Title:   "settings.setting.update.update_applied",
+		Message: "settings.setting.update.restarting",
+		Variant: "success",
+	})
 
 	// Restart the application
 	app.RestartApplication([]string{"--goto", "settings__update", "--notify", "settings.setting.update.update_successful", "", "", "success"})
