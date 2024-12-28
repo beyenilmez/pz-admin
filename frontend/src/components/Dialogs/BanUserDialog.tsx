@@ -49,7 +49,7 @@ export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
           </Label>
           <Textarea
             value={reason}
-            onChange={(e) => setReason(e.target.value.replace(/[\\"']/g, ""))}
+            onChange={(e) => setReason(e.target.value.replace(/[\\"'\n\r]/g, ""))}
             id="ban-reason"
             placeholder="Spam, etc."
             className="col-span-3 max-h-64"

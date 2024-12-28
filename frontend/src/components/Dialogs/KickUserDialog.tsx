@@ -46,7 +46,7 @@ export function KickUserDialog({ isOpen, onClose, names }: KickUserDialogProps) 
           </Label>
           <Textarea
             value={reason}
-            onChange={(e) => setReason(e.target.value.replace(/[\\"']/g, ""))}
+            onChange={(e) => setReason(e.target.value.replace(/[\\"'\n\r]/g, ""))}
             id="kick-reason"
             placeholder="Spam, etc."
             className="col-span-3 max-h-64"
