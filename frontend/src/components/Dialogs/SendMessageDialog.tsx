@@ -185,12 +185,22 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
           </Label>
           {renderTextareaWithColors()}
           <div className="space-y-0.5">
-            <Label className="font-bold">Preview:</Label>
-            <ScrollArea className="p-2 py-0.5 pr-5 border rounded h-32 w-[45rem]">
-              <div className="w-[43rem]">
-                <code className="text-sm break-words whitespace-pre-wrap">{formattedMessage}</code>
+            <div className="space-y-1 mt-4">
+              <div className="flex w-full justify-between">
+                <Label className="font-bold">Preview:</Label>
+                <p className="text-right text-xs text-muted-foreground" role="status">
+                  <span className="tabular-nums">
+                    {remainingBytes}/{maxBytes}
+                  </span>{" "}
+                  characters left
+                </p>
               </div>
-            </ScrollArea>
+              <ScrollArea className="p-2 py-0.5 pr-5 border rounded h-32 w-[45rem]">
+                <div className="w-[43rem]">
+                  <code className="text-sm break-words whitespace-pre-wrap">{formattedMessage}</code>
+                </div>
+              </ScrollArea>
+            </div>
           </div>
         </div>
         <DialogFooter className="w-full flex flex-row sm:flex-row sm:justify-between justify-between">
