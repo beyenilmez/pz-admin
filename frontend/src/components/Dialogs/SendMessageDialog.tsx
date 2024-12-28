@@ -14,6 +14,7 @@ import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "../ui/scroll-area";
 import { main } from "@/wailsjs/go/models";
 import { LoadMessageDialog, SaveMessagesDialog, ServerMsg } from "@/wailsjs/go/main/App";
+import { useConfig } from "@/contexts/config-provider";
 
 interface SendMessageDialogProps {
   isOpen: boolean;
@@ -114,6 +115,11 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
   const renderTextareaWithColors = () => {
     const lines = message.split("\n");
     const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const lineRefs = useRef<(HTMLDivElement | null)[]>([]);
+    const [lineHeights, setLineHeights] = useState<number[]>([]);
+    const { config } = useConfig();
+
+    const MIN_LINE_HEIGHT = 20 * (config?.windowScale ? config.windowScale / 100 : 1);
 
     useEffect(() => {
       if (textareaRef.current) {
@@ -121,6 +127,17 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
         textareaRef.current.style.height = textareaRef.current.scrollHeight + "px";
       }
     }, [message]);
+
+    useEffect(() => {
+      const heights = lineRefs.current.map((line, index) =>
+        line && lines[index].trim() !== "" ? line.offsetHeight : MIN_LINE_HEIGHT
+      );
+      setLineHeights(heights);
+    }, [message, lineRefs.current]);
+
+    const getTopPosition = (index: number) => {
+      return lineHeights.slice(0, index).reduce((sum, height) => sum + height, 0);
+    };
 
     return (
       <ScrollArea className="h-80 rounded-md">
@@ -131,7 +148,7 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
             value={message}
             onChange={handleInputChange}
             placeholder="Your message"
-            className="break-words whitespace-pre-wrap bg-black/40 w-[45rem] min-h-80 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
+            className="pt-3 break-words whitespace-pre-wrap bg-black/40 w-[45rem] min-h-80 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
           />
           <div className="absolute top-3 left-0 w-full pointer-events-none">
             {lines.map((line, index) => (
@@ -139,7 +156,10 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
                 <div
                   key={"color" + index}
                   className="absolute pointer-events-auto"
-                  style={{ top: `${index * 1.25}rem`, left: "0.5rem" }}
+                  style={{
+                    top: `${getTopPosition(index) + 2}px`,
+                    left: "0.5rem",
+                  }}
                 >
                   <ColorPicker
                     className="h-4 w-4 rounded-sm"
@@ -153,14 +173,18 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
 
                 <div
                   key={"line" + index}
+                  ref={(el) => {
+                    lineRefs.current[index] = el;
+                    return;
+                  }}
                   className="pr-12 w-full break-words whitespace-pre-wrap absolute pointer-events-none text-white font-semibold text-sm select-none font-[corbel]"
                   style={{
-                    top: `${index * 1.25 - 0.2}rem`,
+                    top: `${getTopPosition(index)}px`,
                     left: "2.03rem",
                     color: `rgb(${lineColors[index] || "255,255,255"})`,
                   }}
                 >
-                  {line}
+                  {line.trim() === "" ? "\u00A0" : line}
                 </div>
               </>
             ))}
