@@ -16,6 +16,8 @@ export function BanUsers(arg1:Array<string>,arg2:string,arg3:boolean):Promise<vo
 
 export function CheckForUpdate():Promise<main.UpdateInfo>;
 
+export function CheckModsNeedUpdate():Promise<void>;
+
 export function ConnectRcon(arg1:main.Credentials):Promise<boolean>;
 
 export function CreateHorde(arg1:Array<string>,arg2:number):Promise<void>;

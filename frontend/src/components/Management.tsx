@@ -1,6 +1,6 @@
 "use client";
 
-import { SaveWorld } from "@/wailsjs/go/main/App";
+import { CheckModsNeedUpdate, SaveWorld } from "@/wailsjs/go/main/App";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { useState } from "react";
@@ -30,7 +30,7 @@ export function ManagementTab() {
               </div>
               <div className="space-x-2">
                 <Button onClick={() => setIsSendMessageDialogOpen(true)}>Message</Button>
-                <Button>Check Mod Updates</Button>
+                <Button onClick={() => CheckModsNeedUpdate()}>Check Mod Updates</Button>
               </div>
             </div>
             <div>Content</div>

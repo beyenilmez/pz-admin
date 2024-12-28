@@ -30,6 +30,10 @@ export function CheckForUpdate() {
   return window['go']['main']['App']['CheckForUpdate']();
 }
 
+export function CheckModsNeedUpdate() {
+  return window['go']['main']['App']['CheckModsNeedUpdate']();
+}
+
 export function ConnectRcon(arg1) {
   return window['go']['main']['App']['ConnectRcon'](arg1);
 }

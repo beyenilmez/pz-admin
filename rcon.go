@@ -1299,6 +1299,21 @@ func (app *App) SaveWorld() {
 	command.execute()
 }
 
+func (app *App) CheckModsNeedUpdate() {
+	command := RCONCommand{
+		CommandTemplate: "checkModsNeedUpdate",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Checking started. The answer will be written in the log file and in the chat"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Checking started. The answer will be written in the log file and in the chat",
+			SingleFail:    "Failed to check mods that need update",
+		},
+	}
+
+	command.execute()
+}
+
 func (app *App) ServerMsg(message string) {
 	command := RCONCommand{
 		CommandTemplate: "servermsg {message}",
