@@ -18,7 +18,7 @@ interface RconContextType {
   setIsConnected: Dispatch<SetStateAction<boolean>>; // Explicit state setter for external control
   connect: (credentials: main.Credentials) => Promise<boolean>;
   disconnect: () => Promise<boolean>;
-  sendCommand: (command: string) => Promise<string | null>;
+  sendCommand: (command: string) => Promise<main.RconResponse>;
   ip: string;
   port: string;
   players: main.Player[];
@@ -73,16 +73,16 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, []);
 
   const sendCommand = useCallback(
-    async (command: string): Promise<string | null> => {
+    async (command: string): Promise<main.RconResponse> => {
       if (!isConnected) {
         console.warn("Cannot send command: Not connected to RCON");
-        return null;
+        return {} as main.RconResponse;
       }
       try {
         return await SendRconCommand(command);
       } catch (error) {
         console.error("Error sending RCON command:", error);
-        return null;
+        return {} as main.RconResponse;
       }
     },
     [isConnected]

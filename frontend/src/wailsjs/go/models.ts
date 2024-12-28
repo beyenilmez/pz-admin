@@ -146,6 +146,20 @@ export namespace main {
 	        this.godmode = source["godmode"];
 	    }
 	}
+	export class RconResponse {
+	    response: string;
+	    error: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new RconResponse(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.response = source["response"];
+	        this.error = source["error"];
+	    }
+	}
 	export class ServerMessage {
 	    message: string;
 	    lineColors: {[key: number]: string};

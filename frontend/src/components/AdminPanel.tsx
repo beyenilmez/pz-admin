@@ -58,7 +58,7 @@ export default function AdminPanel() {
     <Tabs value={tab} className="flex w-full h-full">
       <TabsList
         defaultValue={"connection"}
-        className={`h-full backdrop-brightness-0 rounded-none p-2 ${!isConnected ? "hidden" : ""}`}
+        className={`h-full backdrop-brightness-0 rounded-none p-2 w-64 shrink-0 ${!isConnected ? "hidden" : ""}`}
       >
         <div className="flex flex-col justify-between w-full h-full">
           <div>

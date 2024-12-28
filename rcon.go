@@ -45,6 +45,11 @@ type ItemRecord struct {
 	Count  int    `json:"count"`
 }
 
+type RconResponse struct {
+	Response string `json:"response"`
+	Error    string `json:"error"`
+}
+
 var connectionCredentials Credentials
 var players []Player
 
@@ -121,19 +126,33 @@ func (app *App) DisconnectRcon() bool {
 	return err == nil
 }
 
-func (app *App) SendRconCommand(command string) string {
+func (app *App) SendRconCommand(command string) RconResponse {
 	connMutex.Lock()
 	defer connMutex.Unlock()
 
 	if conn == nil {
 		runtime.LogError(app.ctx, "RCON is not connected")
-		return ""
+		return RconResponse{
+			Response: "",
+			Error:    "RCON is not connected",
+		}
+	}
+
+	if len([]byte(command)) > 1000 {
+		runtime.LogError(app.ctx, "RCON command size exceeds 1000 bytes")
+		return RconResponse{
+			Response: "",
+			Error:    "RCON command size exceeds 1000 bytes",
+		}
 	}
 
 	res, err := conn.Execute(command)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error executing RCON command: "+err.Error())
-		return ""
+		return RconResponse{
+			Response: "",
+			Error:    "Error executing RCON command: " + err.Error(),
+		}
 	}
 	if strings.Contains(command, "banuser ") && strings.Contains(res, "is now banned") {
 		for i := range players {
@@ -240,7 +259,10 @@ func (app *App) SendRconCommand(command string) string {
 		}
 	}
 
-	return res
+	return RconResponse{
+		Response: res,
+		Error:    "",
+	}
 }
 
 // watchConnection monitors the RCON connection and logs if it is lost
@@ -667,19 +689,31 @@ func (params *RCONCommand) execute() int {
 		}
 
 		command = strings.Join(strings.Fields(command), " ") // Collapse spaces
+
+		if len([]byte(command)) > 1000 {
+			runtime.LogError(app.ctx, "RCON command size exceeds 1000 bytes")
+			lastErrRes = "RCON command size exceeds 1000 bytes"
+			continue
+		}
+
 		res, err = conn.Execute(command)
+
+		if err != nil {
+			lastErrRes = res
+			continue
+		}
 
 		if params.ResponseUpdate != nil {
 			res = params.ResponseUpdate(names[i], res)
 		}
 
 		if names == nil {
-			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck("", res)) {
+			if params.ErrorCheck != nil && params.ErrorCheck("", res) {
 				lastErrRes = res
 				continue
 			}
 		} else {
-			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck(names[i], res)) {
+			if params.ErrorCheck != nil && params.ErrorCheck(names[i], res) {
 				lastErrRes = res
 				continue
 			}

@@ -68,7 +68,7 @@ export function SaveWorld():Promise<void>;
 
 export function SendNotification(arg1:main.Notification):Promise<void>;
 
-export function SendRconCommand(arg1:string):Promise<string>;
+export function SendRconCommand(arg1:string):Promise<main.RconResponse>;
 
 export function SendWindowsNotification(arg1:main.Notification):Promise<void>;
 

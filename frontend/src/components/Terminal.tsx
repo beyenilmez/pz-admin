@@ -139,11 +139,11 @@ const TerminalPage: React.FC = () => {
         if (command === "cls") {
           setOutput([]);
         } else {
-          const response = await sendCommand(command);
-          if (response) {
+          const { response, error } = await sendCommand(command);
+          if (response && !error) {
             addOutput(response, "response");
           } else {
-            addOutput("No response.", "error");
+            addOutput(error || "No response.", "error");
           }
         }
       } catch (error) {
@@ -188,24 +188,24 @@ const TerminalPage: React.FC = () => {
 
   return (
     <div
-      className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 font-mono p-2 pb-1"
+      className="w-[calc(100vw-16rem)] h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 font-mono p-2 pb-1"
       onClick={() => inputRef.current?.focus()}
     >
       {/* Scrollable Output */}
-      <ScrollArea className="h-[calc(100%-2rem)] w-full overflow-auto">
-        <div>
+      <ScrollArea className="h-[calc(100%-2rem)] overflow-auto pr-4">
+        <div className="">
           {output.map((entry, index) => (
             <div
               key={index}
-              className={
+              className={`break-words whitespace-pre-wrap w-[calc(100vw-18rem)] ${
                 entry.type === "command"
                   ? "text-green-400" // Brighter green for commands
                   : entry.type === "response"
                   ? "text-green-700"
                   : entry.type === "info"
                   ? "text-blue-500"
-                  : "text-red-500" // Darker green for responses
-              }
+                  : "text-red-500"
+              }`}
             >
               {entry.line}
             </div>
