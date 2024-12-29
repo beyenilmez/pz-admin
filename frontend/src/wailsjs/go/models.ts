@@ -29,6 +29,7 @@ export namespace main {
 	    rconCheckInterval?: number;
 	    disableWeatherControlButtons?: boolean;
 	    disableRandomButtons?: boolean;
+	    disableOtherButtons?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -64,6 +65,7 @@ export namespace main {
 	        this.rconCheckInterval = source["rconCheckInterval"];
 	        this.disableWeatherControlButtons = source["disableWeatherControlButtons"];
 	        this.disableRandomButtons = source["disableRandomButtons"];
+	        this.disableOtherButtons = source["disableOtherButtons"];
 	    }
 	}
 	export class Coordinates {

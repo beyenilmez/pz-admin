@@ -21,6 +21,7 @@ import { RCONCheckIntervalSetting } from "./SettingItems/RCONCheckIntervalSettin
 import { ScrollArea } from "./ui/scroll-area";
 import { DisableWeatherControlsSetting } from "./SettingItems/DisableWeatherControlsSetting";
 import { DisableRandomButtonsSetting } from "./SettingItems/DisableRandomButtonsSetting";
+import { DisableOtherButtonsSetting } from "./SettingItems/DisableOtherButtonsSetting";
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -83,6 +84,7 @@ export default function Settings() {
             <RCONCheckIntervalSetting />
             <DisableWeatherControlsSetting />
             <DisableRandomButtonsSetting />
+            <DisableOtherButtonsSetting />
           </SettingsGroup>
         </ScrollArea>
       </TabsContent>

@@ -22,6 +22,10 @@ export function AddXp(arg1, arg2, arg3) {
   return window['go']['main']['App']['AddXp'](arg1, arg2, arg3);
 }
 
+export function Alarm() {
+  return window['go']['main']['App']['Alarm']();
+}
+
 export function BanUsers(arg1, arg2, arg3) {
   return window['go']['main']['App']['BanUsers'](arg1, arg2, arg3);
 }

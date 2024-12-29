@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckModsNeedUpdate, SaveWorld } from "@/wailsjs/go/main/App";
+import { SaveWorld } from "@/wailsjs/go/main/App";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { useState } from "react";
@@ -8,6 +8,7 @@ import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 import { StopDialog } from "./Dialogs/StopDialog";
 import { WeatherControl } from "./WeatherControl";
 import { RandomButtons } from "./RandomButtons";
+import { OtherButtons } from "./OtherButtons";
 
 export function ManagementTab() {
   const [saving, setSaving] = useState(false);
@@ -35,14 +36,12 @@ export function ManagementTab() {
                   Stop
                 </Button>
               </div>
-              <div className="space-x-2">
-                <Button onClick={() => setIsSendMessageDialogOpen(true)}>Message</Button>
-                <Button onClick={() => CheckModsNeedUpdate()}>Check Mod Updates</Button>
-              </div>
+              <Button onClick={() => setIsSendMessageDialogOpen(true)}>Message</Button>
             </div>
             <div>
               <WeatherControl />
               <RandomButtons />
+              <OtherButtons />
             </div>
           </ScrollArea>
         </div>

@@ -12,6 +12,8 @@ export function AddVehicle(arg1:string,arg2:Array<string>,arg3:main.Coordinates)
 
 export function AddXp(arg1:Array<string>,arg2:Array<string>,arg3:number):Promise<void>;
 
+export function Alarm():Promise<void>;
+
 export function BanUsers(arg1:Array<string>,arg2:string,arg3:boolean):Promise<void>;
 
 export function CheckForUpdate():Promise<main.UpdateInfo>;

@@ -1503,3 +1503,21 @@ func (app *App) RandomThunder() {
 
 	app.Thunder([]string{randomPlayer})
 }
+
+func (app *App) Alarm() {
+	command := RCONCommand{
+		CommandTemplate: "alarm",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Alarm triggered"
+		},
+		ErrorCheck: func(name string, response string) bool {
+			return response == "Not in a room"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully triggered alarm",
+			SingleFail:    "Failed to trigger alarm",
+		},
+	}
+
+	command.execute()
+}

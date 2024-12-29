@@ -40,6 +40,7 @@ type Config struct {
 	RconCheckInterval            *int    `json:"rconCheckInterval"`            // seconds
 	DisableWeatherControlButtons *bool   `json:"disableWeatherControlButtons"` // true, false
 	DisableRandomButtons         *bool   `json:"disableRandomButtons"`         // true, false
+	DisableOtherButtons          *bool   `json:"disableOtherButtons"`          // true, false
 }
 
 func GetDefaultConfig() Config {
@@ -71,6 +72,7 @@ func GetDefaultConfig() Config {
 	defaultRconCheckInterval := 10
 	defaultDisableWeatherControlButtons := false
 	defaultDisableRandomButtons := false
+	defaultDisableOtherButtons := false
 
 	return Config{
 		Theme:                        &defaultTheme,
@@ -101,6 +103,7 @@ func GetDefaultConfig() Config {
 		RconCheckInterval:            &defaultRconCheckInterval,
 		DisableWeatherControlButtons: &defaultDisableWeatherControlButtons,
 		DisableRandomButtons:         &defaultDisableRandomButtons,
+		DisableOtherButtons:          &defaultDisableOtherButtons,
 	}
 }
 
