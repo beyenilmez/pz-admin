@@ -1350,3 +1350,87 @@ func (app *App) ServerMsg(message string) {
 
 	command.execute()
 }
+
+func (app *App) StartRain(intensity int) {
+	command := RCONCommand{
+		CommandTemplate: "startrain {intensity}",
+		Args: []RCONCommandParam{
+			{
+				Name: "intensity",
+				Value: func() interface{} {
+					if intensity == -1 {
+						return nil
+					}
+					return fmt.Sprintf("%d", intensity)
+				}(),
+				Mandatory: false,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Rain started"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully started rain",
+			SingleFail:    "Failed to start rain",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StartStorm(duration int) {
+	command := RCONCommand{
+		CommandTemplate: "startstorm {duration}",
+		Args: []RCONCommandParam{
+			{
+				Name: "duration",
+				Value: func() interface{} {
+					if duration == -1 {
+						return nil
+					}
+					return fmt.Sprintf("%d", duration)
+				}(),
+				Mandatory: false,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Thunderstorm started"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully started storm",
+			SingleFail:    "Failed to start storm",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StopRain() {
+	command := RCONCommand{
+		CommandTemplate: "stoprain",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Rain stopped"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully stopped rain",
+			SingleFail:    "Failed to stop rain",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StopWeather() {
+	command := RCONCommand{
+		CommandTemplate: "stopweather",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Weather stopped"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully stopped weather",
+			SingleFail:    "Failed to stop weather",
+		},
+	}
+
+	command.execute()
+}

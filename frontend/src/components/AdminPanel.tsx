@@ -127,8 +127,9 @@ function isIpOrDomain(value: string): boolean {
     /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
   // Validates Domain
   const domainRegex = /^(?!-)([a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$/;
+  const localHostRegex = /^localhost(:\d{1,5})?$/;
 
-  return ipRegex.test(value) || domainRegex.test(value);
+  return ipRegex.test(value) || domainRegex.test(value) || localHostRegex.test(value);
 }
 
 interface ConnectionFormProps {

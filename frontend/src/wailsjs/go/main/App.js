@@ -158,8 +158,24 @@ export function SetConfigField(arg1, arg2) {
   return window['go']['main']['App']['SetConfigField'](arg1, arg2);
 }
 
+export function StartRain(arg1) {
+  return window['go']['main']['App']['StartRain'](arg1);
+}
+
+export function StartStorm(arg1) {
+  return window['go']['main']['App']['StartStorm'](arg1);
+}
+
+export function StopRain() {
+  return window['go']['main']['App']['StopRain']();
+}
+
 export function StopServer() {
   return window['go']['main']['App']['StopServer']();
+}
+
+export function StopWeather() {
+  return window['go']['main']['App']['StopWeather']();
 }
 
 export function TeleportToCoordinates(arg1, arg2) {

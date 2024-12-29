@@ -80,7 +80,15 @@ export function SetAccessLevel(arg1:Array<string>,arg2:string):Promise<void>;
 
 export function SetConfigField(arg1:string,arg2:any):Promise<void>;
 
+export function StartRain(arg1:number):Promise<void>;
+
+export function StartStorm(arg1:number):Promise<void>;
+
+export function StopRain():Promise<void>;
+
 export function StopServer():Promise<boolean>;
+
+export function StopWeather():Promise<void>;
 
 export function TeleportToCoordinates(arg1:Array<string>,arg2:main.Coordinates):Promise<void>;
 
