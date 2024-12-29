@@ -12,32 +12,33 @@ import (
 )
 
 type Config struct {
-	Theme                *string `json:"theme"`                // system, light, dark
-	ColorScheme          *string `json:"colorScheme"`          // default, midnightAsh
-	UseSystemTitleBar    *bool   `json:"useSystemTitleBar"`    // true, false
-	EnableLogging        *bool   `json:"enableLogging"`        // true, false
-	EnableTrace          *bool   `json:"enableTrace"`          // true, false
-	EnableDebug          *bool   `json:"enableDebug"`          // true, false
-	EnableInfo           *bool   `json:"enableInfo"`           // true, false
-	EnableWarn           *bool   `json:"enableWarn"`           // true, false
-	EnableError          *bool   `json:"enableError"`          // true, false
-	EnableFatal          *bool   `json:"enableFatal"`          // true, false
-	MaxLogFiles          *int    `json:"maxLogFiles"`          // int
-	Language             *string `json:"language"`             // en-US, tr-TR
-	SaveWindowStatus     *bool   `json:"saveWindowStatus"`     // true, false
-	WindowStartState     *int    `json:"windowStartState"`     // 0 = Normal, 1 = Maximized, 2 = Minimized, 3 = Fullscreen
-	WindowStartPositionX *int    `json:"windowStartPositionX"` // x
-	WindowStartPositionY *int    `json:"windowStartPositionY"` // y
-	WindowStartSizeX     *int    `json:"windowStartSizeX"`     // x
-	WindowStartSizeY     *int    `json:"windowStartSizeY"`     // y
-	WindowScale          *int    `json:"windowScale"`          // %
-	Opacity              *int    `json:"opacity"`              // %
-	WindowEffect         *int    `json:"windowEffect"`         // 0 = Auto, 1 = None, 2 = Mica, 3 = Acrylic, 4 = Tabbed
-	CheckForUpdates      *bool   `json:"checkForUpdates"`      // true, false
-	LastUpdateCheck      *int    `json:"lastUpdateCheck"`      // unix timestamp
-	RememberCredentials  *bool   `json:"rememberCredentials"`  // true, false
-	AutoConnect          *bool   `json:"autoConnect"`          // true, false
-	RconCheckInterval    *int    `json:"rconCheckInterval"`    // seconds
+	Theme                        *string `json:"theme"`                        // system, light, dark
+	ColorScheme                  *string `json:"colorScheme"`                  // default, midnightAsh
+	UseSystemTitleBar            *bool   `json:"useSystemTitleBar"`            // true, false
+	EnableLogging                *bool   `json:"enableLogging"`                // true, false
+	EnableTrace                  *bool   `json:"enableTrace"`                  // true, false
+	EnableDebug                  *bool   `json:"enableDebug"`                  // true, false
+	EnableInfo                   *bool   `json:"enableInfo"`                   // true, false
+	EnableWarn                   *bool   `json:"enableWarn"`                   // true, false
+	EnableError                  *bool   `json:"enableError"`                  // true, false
+	EnableFatal                  *bool   `json:"enableFatal"`                  // true, false
+	MaxLogFiles                  *int    `json:"maxLogFiles"`                  // int
+	Language                     *string `json:"language"`                     // en-US, tr-TR
+	SaveWindowStatus             *bool   `json:"saveWindowStatus"`             // true, false
+	WindowStartState             *int    `json:"windowStartState"`             // 0 = Normal, 1 = Maximized, 2 = Minimized, 3 = Fullscreen
+	WindowStartPositionX         *int    `json:"windowStartPositionX"`         // x
+	WindowStartPositionY         *int    `json:"windowStartPositionY"`         // y
+	WindowStartSizeX             *int    `json:"windowStartSizeX"`             // x
+	WindowStartSizeY             *int    `json:"windowStartSizeY"`             // y
+	WindowScale                  *int    `json:"windowScale"`                  // %
+	Opacity                      *int    `json:"opacity"`                      // %
+	WindowEffect                 *int    `json:"windowEffect"`                 // 0 = Auto, 1 = None, 2 = Mica, 3 = Acrylic, 4 = Tabbed
+	CheckForUpdates              *bool   `json:"checkForUpdates"`              // true, false
+	LastUpdateCheck              *int    `json:"lastUpdateCheck"`              // unix timestamp
+	RememberCredentials          *bool   `json:"rememberCredentials"`          // true, false
+	AutoConnect                  *bool   `json:"autoConnect"`                  // true, false
+	RconCheckInterval            *int    `json:"rconCheckInterval"`            // seconds
+	DisableWeatherControlButtons *bool   `json:"disableWeatherControlButtons"` // true, false
 }
 
 func GetDefaultConfig() Config {
@@ -67,34 +68,36 @@ func GetDefaultConfig() Config {
 	defaultRememberCredentials := false
 	defaultAutoConnect := false
 	defaultRconCheckInterval := 10
+	defaultDisableWeatherControlButtons := false
 
 	return Config{
-		Theme:                &defaultTheme,
-		ColorScheme:          &defaultColorScheme,
-		UseSystemTitleBar:    &defaultUseSystemTitleBar,
-		EnableLogging:        &defaultEnableLogging,
-		EnableTrace:          &defaultEnableTrace,
-		EnableDebug:          &defaultEnableDebug,
-		EnableInfo:           &defaultEnableInfo,
-		EnableWarn:           &defaultEnableWarn,
-		EnableError:          &defaultEnableError,
-		EnableFatal:          &defaultEnableFatal,
-		MaxLogFiles:          &defaultMaxLogFiles,
-		Language:             &defaultLanguage,
-		SaveWindowStatus:     &defaultSaveWindowStatus,
-		WindowStartState:     &defaultWindowStartState,
-		WindowStartPositionX: &defaultWindowStartPositionX,
-		WindowStartPositionY: &defaultWindowStartPositionY,
-		WindowStartSizeX:     &defaultWindowStartSizeX,
-		WindowStartSizeY:     &defaultWindowStartSizeY,
-		WindowScale:          &defaultWindowScale,
-		Opacity:              &defaultOpacity,
-		WindowEffect:         &defaultWindowEffect,
-		CheckForUpdates:      &defaultCheckForUpdates,
-		LastUpdateCheck:      &defaultLastUpdateCheck,
-		RememberCredentials:  &defaultRememberCredentials,
-		AutoConnect:          &defaultAutoConnect,
-		RconCheckInterval:    &defaultRconCheckInterval,
+		Theme:                        &defaultTheme,
+		ColorScheme:                  &defaultColorScheme,
+		UseSystemTitleBar:            &defaultUseSystemTitleBar,
+		EnableLogging:                &defaultEnableLogging,
+		EnableTrace:                  &defaultEnableTrace,
+		EnableDebug:                  &defaultEnableDebug,
+		EnableInfo:                   &defaultEnableInfo,
+		EnableWarn:                   &defaultEnableWarn,
+		EnableError:                  &defaultEnableError,
+		EnableFatal:                  &defaultEnableFatal,
+		MaxLogFiles:                  &defaultMaxLogFiles,
+		Language:                     &defaultLanguage,
+		SaveWindowStatus:             &defaultSaveWindowStatus,
+		WindowStartState:             &defaultWindowStartState,
+		WindowStartPositionX:         &defaultWindowStartPositionX,
+		WindowStartPositionY:         &defaultWindowStartPositionY,
+		WindowStartSizeX:             &defaultWindowStartSizeX,
+		WindowStartSizeY:             &defaultWindowStartSizeY,
+		WindowScale:                  &defaultWindowScale,
+		Opacity:                      &defaultOpacity,
+		WindowEffect:                 &defaultWindowEffect,
+		CheckForUpdates:              &defaultCheckForUpdates,
+		LastUpdateCheck:              &defaultLastUpdateCheck,
+		RememberCredentials:          &defaultRememberCredentials,
+		AutoConnect:                  &defaultAutoConnect,
+		RconCheckInterval:            &defaultRconCheckInterval,
+		DisableWeatherControlButtons: &defaultDisableWeatherControlButtons,
 	}
 }
 

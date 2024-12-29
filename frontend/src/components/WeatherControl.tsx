@@ -4,8 +4,11 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { SettingContent, SettingDescription, SettingLabel, SettingsGroup, SettingsItem } from "./ui/settings-group";
 import { StartRain, StartStorm, StopRain, StopWeather } from "@/wailsjs/go/main/App";
+import { useConfig } from "@/contexts/config-provider";
 
 export function WeatherControl() {
+  const { config } = useConfig();
+
   const [rainIntensity, setRainIntensity] = useState<number>();
   const handleRainIntensityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(e.target.value);
@@ -28,11 +31,15 @@ export function WeatherControl() {
 
   return (
     <div className="py-4">
-      <h1 className="text-2xl font-semibold leading-none tracking-tight">
+      <h1
+        className={`text-2xl font-semibold leading-none tracking-tight ${
+          config?.disableWeatherControlButtons ? "opacity-60 pointer-events-none select-none" : ""
+        }`}
+      >
         Weather<span className="text-sm text-warning ml-3">Reported to cause problems with weather cycles.</span>
       </h1>
       <SettingsGroup>
-        <SettingsItem className="pt-0">
+        <SettingsItem disabled={config?.disableWeatherControlButtons} className="pt-0">
           <div className="h-14 flex justify-end flex-col">
             <SettingLabel>Start Rain</SettingLabel>
             <SettingDescription>Starts rain with an optional intensity of 1-100</SettingDescription>
@@ -62,7 +69,7 @@ export function WeatherControl() {
           </SettingContent>
         </SettingsItem>
 
-        <SettingsItem>
+        <SettingsItem disabled={config?.disableWeatherControlButtons}>
           <div className="h-14 flex justify-end flex-col">
             <SettingLabel>Start Storm</SettingLabel>
             <SettingDescription>Starts a storm with an optional duration (in game hours)</SettingDescription>
@@ -93,7 +100,7 @@ export function WeatherControl() {
         </SettingsItem>
 
         <SettingsGroup className="flex">
-          <SettingsItem className="flex-col justify-center">
+          <SettingsItem disabled={config?.disableWeatherControlButtons} className="flex-col justify-center">
             <SettingContent>
               <div className="flex gap-2 items-end">
                 <Button onClick={StopRain} className="w-32" variant="destructive">
@@ -103,7 +110,7 @@ export function WeatherControl() {
             </SettingContent>
           </SettingsItem>
 
-          <SettingsItem className="flex-col justify-center">
+          <SettingsItem disabled={config?.disableWeatherControlButtons} className="flex-col justify-center">
             <SettingContent>
               <div className="flex gap-2 items-end">
                 <Button onClick={StopWeather} className="w-32" variant="destructive">

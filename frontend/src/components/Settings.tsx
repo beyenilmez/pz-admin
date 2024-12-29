@@ -19,6 +19,7 @@ import { useStorage } from "@/contexts/storage-provider";
 import { ColorSchemeSetting } from "./SettingItems/ColorSchemeSetting";
 import { RCONCheckIntervalSetting } from "./SettingItems/RCONCheckIntervalSetting";
 import { ScrollArea } from "./ui/scroll-area";
+import { DisableWeatherControlsSetting } from "./SettingItems/DisableWeatherControlsSetting";
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -79,6 +80,7 @@ export default function Settings() {
         <ScrollArea className="h-full w-full overflow-auto">
           <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
             <RCONCheckIntervalSetting />
+            <DisableWeatherControlsSetting />
           </SettingsGroup>
         </ScrollArea>
       </TabsContent>

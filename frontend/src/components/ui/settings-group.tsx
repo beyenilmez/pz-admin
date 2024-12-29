@@ -75,7 +75,7 @@ export const SettingsItem: React.FC<SettingsItemProps> = ({
         className={`flex gap-4 justify-between py-2 w-full border-b ${
           vertical ? "flex-col" : "flex-row items-center"
         } 
-    ${disabled ? "opacity-50 pointer-events-none" : ""}
+    ${disabled ? "opacity-50 pointer-events-none select-none" : ""}
        ${className}`}
         {...rest}
       >

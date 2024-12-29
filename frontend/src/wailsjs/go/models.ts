@@ -27,6 +27,7 @@ export namespace main {
 	    rememberCredentials?: boolean;
 	    autoConnect?: boolean;
 	    rconCheckInterval?: number;
+	    disableWeatherControlButtons?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -60,6 +61,7 @@ export namespace main {
 	        this.rememberCredentials = source["rememberCredentials"];
 	        this.autoConnect = source["autoConnect"];
 	        this.rconCheckInterval = source["rconCheckInterval"];
+	        this.disableWeatherControlButtons = source["disableWeatherControlButtons"];
 	    }
 	}
 	export class Coordinates {
