@@ -5,6 +5,7 @@ import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
 import { useState } from "react";
 import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
+import { StopDialog } from "./Dialogs/StopDialog";
 
 export function ManagementTab() {
   const [saving, setSaving] = useState(false);
@@ -15,6 +16,8 @@ export function ManagementTab() {
   };
 
   const [isSendMessageDialogOpen, setIsSendMessageDialogOpen] = useState(false);
+  const [isStopDialogOpen, setIsStopDialogOpen] = useState(false);
+  const [disableStop, setDisableStop] = useState(false);
 
   return (
     <>
@@ -26,7 +29,9 @@ export function ManagementTab() {
                 <Button className="bg-success text-success-foreground" onClick={handleSave} disabled={saving}>
                   Save
                 </Button>
-                <Button variant={"destructive"}>Quit</Button>
+                <Button variant={"destructive"} onClick={() => setIsStopDialogOpen(true)} disabled={disableStop}>
+                  Stop
+                </Button>
               </div>
               <div className="space-x-2">
                 <Button onClick={() => setIsSendMessageDialogOpen(true)}>Message</Button>
@@ -39,6 +44,11 @@ export function ManagementTab() {
       </div>
 
       <SendMessageDialog isOpen={isSendMessageDialogOpen} onClose={() => setIsSendMessageDialogOpen(false)} />
+      <StopDialog
+        isOpen={isStopDialogOpen}
+        onClose={() => setIsStopDialogOpen(false)}
+        onSuccess={() => setDisableStop(true)}
+      />
     </>
   );
 }

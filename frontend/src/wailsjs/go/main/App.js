@@ -158,6 +158,10 @@ export function SetConfigField(arg1, arg2) {
   return window['go']['main']['App']['SetConfigField'](arg1, arg2);
 }
 
+export function StopServer() {
+  return window['go']['main']['App']['StopServer']();
+}
+
 export function TeleportToCoordinates(arg1, arg2) {
   return window['go']['main']['App']['TeleportToCoordinates'](arg1, arg2);
 }

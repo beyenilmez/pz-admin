@@ -1299,6 +1299,21 @@ func (app *App) SaveWorld() {
 	command.execute()
 }
 
+func (app *App) StopServer() bool {
+	command := RCONCommand{
+		CommandTemplate: "quit",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Quit"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Stopping the server",
+			SingleFail:    "Failed to stop the server",
+		},
+	}
+
+	return command.execute() == 1
+}
+
 func (app *App) CheckModsNeedUpdate() {
 	command := RCONCommand{
 		CommandTemplate: "checkModsNeedUpdate",
