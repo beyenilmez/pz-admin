@@ -28,6 +28,7 @@ export namespace main {
 	    autoConnect?: boolean;
 	    rconCheckInterval?: number;
 	    disableWeatherControlButtons?: boolean;
+	    disableRandomButtons?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -62,6 +63,7 @@ export namespace main {
 	        this.autoConnect = source["autoConnect"];
 	        this.rconCheckInterval = source["rconCheckInterval"];
 	        this.disableWeatherControlButtons = source["disableWeatherControlButtons"];
+	        this.disableRandomButtons = source["disableRandomButtons"];
 	    }
 	}
 	export class Coordinates {

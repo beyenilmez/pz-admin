@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"math/rand"
+
 	"github.com/gorcon/rcon"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -1433,4 +1435,71 @@ func (app *App) StopWeather() {
 	}
 
 	command.execute()
+}
+
+func (app *App) Chopper() {
+	command := RCONCommand{
+		CommandTemplate: "chopper",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Chopper launched"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully launched chopper",
+			SingleFail:    "Failed to launch chopper",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) Gunshot() {
+	command := RCONCommand{
+		CommandTemplate: "gunshot",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Gunshot fired"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully fired gunshot",
+			SingleFail:    "Failed to fire gunshot",
+		},
+	}
+
+	command.execute()
+}
+
+func getRandomOnlinePlayer() (string, bool) {
+	onlinePlayers := make([]string, 0)
+
+	for _, player := range players {
+		if player.Online && player.Name != "" {
+			onlinePlayers = append(onlinePlayers, player.Name)
+		}
+	}
+
+	if len(onlinePlayers) == 0 {
+		return "", false // No online players
+	}
+
+	randomPlayer := onlinePlayers[rand.Intn(len(onlinePlayers))]
+	return randomPlayer, true
+}
+
+func (app *App) RandomLightning() {
+	randomPlayer, found := getRandomOnlinePlayer()
+	if !found {
+		runtime.LogDebugf(app.ctx, "No players online")
+		return
+	}
+
+	app.Lightning([]string{randomPlayer})
+}
+
+func (app *App) RandomThunder() {
+	randomPlayer, found := getRandomOnlinePlayer()
+	if !found {
+		runtime.LogDebugf(app.ctx, "No players online")
+		return
+	}
+
+	app.Thunder([]string{randomPlayer})
 }

@@ -18,6 +18,8 @@ export function CheckForUpdate():Promise<main.UpdateInfo>;
 
 export function CheckModsNeedUpdate():Promise<void>;
 
+export function Chopper():Promise<void>;
+
 export function ConnectRcon(arg1:main.Credentials):Promise<boolean>;
 
 export function CreateHorde(arg1:Array<string>,arg2:number):Promise<void>;
@@ -38,6 +40,8 @@ export function GetVersion():Promise<string>;
 
 export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;
 
+export function Gunshot():Promise<void>;
+
 export function IsRconConnected():Promise<boolean>;
 
 export function KickUsers(arg1:Array<string>,arg2:string):Promise<void>;
@@ -51,6 +55,10 @@ export function LoadItemsDialog():Promise<Array<main.ItemRecord>>;
 export function LoadMessageDialog():Promise<main.ServerMessage>;
 
 export function OpenFileInExplorer(arg1:string):Promise<void>;
+
+export function RandomLightning():Promise<void>;
+
+export function RandomThunder():Promise<void>;
 
 export function ReadConfig(arg1:string):Promise<void>;
 

@@ -39,6 +39,7 @@ type Config struct {
 	AutoConnect                  *bool   `json:"autoConnect"`                  // true, false
 	RconCheckInterval            *int    `json:"rconCheckInterval"`            // seconds
 	DisableWeatherControlButtons *bool   `json:"disableWeatherControlButtons"` // true, false
+	DisableRandomButtons         *bool   `json:"disableRandomButtons"`         // true, false
 }
 
 func GetDefaultConfig() Config {
@@ -69,6 +70,7 @@ func GetDefaultConfig() Config {
 	defaultAutoConnect := false
 	defaultRconCheckInterval := 10
 	defaultDisableWeatherControlButtons := false
+	defaultDisableRandomButtons := false
 
 	return Config{
 		Theme:                        &defaultTheme,
@@ -98,6 +100,7 @@ func GetDefaultConfig() Config {
 		AutoConnect:                  &defaultAutoConnect,
 		RconCheckInterval:            &defaultRconCheckInterval,
 		DisableWeatherControlButtons: &defaultDisableWeatherControlButtons,
+		DisableRandomButtons:         &defaultDisableRandomButtons,
 	}
 }
 

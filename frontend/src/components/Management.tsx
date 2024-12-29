@@ -7,6 +7,7 @@ import { useState } from "react";
 import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 import { StopDialog } from "./Dialogs/StopDialog";
 import { WeatherControl } from "./WeatherControl";
+import { RandomButtons } from "./RandomButtons";
 
 export function ManagementTab() {
   const [saving, setSaving] = useState(false);
@@ -41,6 +42,7 @@ export function ManagementTab() {
             </div>
             <div>
               <WeatherControl />
+              <RandomButtons />
             </div>
           </ScrollArea>
         </div>

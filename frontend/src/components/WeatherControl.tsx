@@ -100,23 +100,19 @@ export function WeatherControl() {
         </SettingsItem>
 
         <SettingsGroup className="flex">
-          <SettingsItem disabled={config?.disableWeatherControlButtons} className="flex-col justify-center">
+          <SettingsItem disabled={config?.disableWeatherControlButtons} className="flex-col justify-center border-none">
             <SettingContent>
-              <div className="flex gap-2 items-end">
-                <Button onClick={StopRain} className="w-32" variant="destructive">
-                  Stop rain
-                </Button>
-              </div>
+              <Button onClick={StopRain} className="w-32" variant="destructive">
+                Stop rain
+              </Button>
             </SettingContent>
           </SettingsItem>
 
-          <SettingsItem disabled={config?.disableWeatherControlButtons} className="flex-col justify-center">
+          <SettingsItem disabled={config?.disableWeatherControlButtons} className="flex-col justify-center border-none">
             <SettingContent>
-              <div className="flex gap-2 items-end">
-                <Button onClick={StopWeather} className="w-32" variant="destructive">
-                  Stop weather
-                </Button>
-              </div>
+              <Button onClick={StopWeather} className="w-32" variant="destructive">
+                Stop weather
+              </Button>
             </SettingContent>
           </SettingsItem>
         </SettingsGroup>

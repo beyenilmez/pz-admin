@@ -34,6 +34,10 @@ export function CheckModsNeedUpdate() {
   return window['go']['main']['App']['CheckModsNeedUpdate']();
 }
 
+export function Chopper() {
+  return window['go']['main']['App']['Chopper']();
+}
+
 export function ConnectRcon(arg1) {
   return window['go']['main']['App']['ConnectRcon'](arg1);
 }
@@ -74,6 +78,10 @@ export function GodMode(arg1, arg2) {
   return window['go']['main']['App']['GodMode'](arg1, arg2);
 }
 
+export function Gunshot() {
+  return window['go']['main']['App']['Gunshot']();
+}
+
 export function IsRconConnected() {
   return window['go']['main']['App']['IsRconConnected']();
 }
@@ -100,6 +108,14 @@ export function LoadMessageDialog() {
 
 export function OpenFileInExplorer(arg1) {
   return window['go']['main']['App']['OpenFileInExplorer'](arg1);
+}
+
+export function RandomLightning() {
+  return window['go']['main']['App']['RandomLightning']();
+}
+
+export function RandomThunder() {
+  return window['go']['main']['App']['RandomThunder']();
 }
 
 export function ReadConfig(arg1) {

@@ -20,6 +20,7 @@ import { ColorSchemeSetting } from "./SettingItems/ColorSchemeSetting";
 import { RCONCheckIntervalSetting } from "./SettingItems/RCONCheckIntervalSetting";
 import { ScrollArea } from "./ui/scroll-area";
 import { DisableWeatherControlsSetting } from "./SettingItems/DisableWeatherControlsSetting";
+import { DisableRandomButtonsSetting } from "./SettingItems/DisableRandomButtonsSetting";
 
 export default function Settings() {
   const { t } = useTranslation();
@@ -81,6 +82,7 @@ export default function Settings() {
           <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
             <RCONCheckIntervalSetting />
             <DisableWeatherControlsSetting />
+            <DisableRandomButtonsSetting />
           </SettingsGroup>
         </ScrollArea>
       </TabsContent>
