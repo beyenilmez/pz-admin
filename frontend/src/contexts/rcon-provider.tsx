@@ -8,7 +8,7 @@ import React, {
   SetStateAction,
   useEffect,
 } from "react";
-import { ConnectRcon, DisconnectRcon, SendRconCommand } from "@/wailsjs/go/main/App";
+import { ConnectRcon, DisconnectRcon, SendNotification, SendRconCommand, UpdatePzOptions } from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
 import { EventsOn } from "@/wailsjs/runtime/runtime";
 
@@ -22,6 +22,13 @@ interface RconContextType {
   ip: string;
   port: string;
   players: main.Player[];
+
+  options: main.PzOptions;
+  modifiedOptions: main.PzOptions;
+  modifyOption: (key: keyof main.PzOptions, value: main.PzOptions[keyof main.PzOptions]) => void;
+  optionsModified: boolean;
+  updateOptions: () => Promise<boolean>;
+  updatingOptions: boolean;
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
@@ -33,6 +40,11 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [port, setPort] = useState("");
   const [players, setPlayers] = useState<main.Player[]>([]);
 
+  const [options, setOptions] = useState<main.PzOptions>({} as main.PzOptions);
+  const [modifiedOptions, setModifiedOptions] = useState<main.PzOptions>({} as main.PzOptions);
+  const optionsModified = JSON.stringify(options) !== JSON.stringify(modifiedOptions);
+  const [updatingOptions, setUpdatingOptions] = useState(false);
+
   useEffect(() => {
     EventsOn("update-players", (players: main.Player[]) => {
       //let newPlayers = players.sort((a, b) =>
@@ -40,6 +52,21 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       //);
       //newPlayers.push({ name: "Online_player", online: true, accessLevel: "admin" } as main.Player);
       setPlayers(players);
+    });
+
+    EventsOn("update-options", (options: main.PzOptions) => {
+      setOptions(options);
+
+      if (JSON.stringify(modifiedOptions) === "{}") {
+        setModifiedOptions(options);
+      } else if (JSON.stringify(options) !== JSON.stringify(modifiedOptions)) {
+        SendNotification({
+          title: "Options reloaded",
+          message: "An option has been updated from somewhere else",
+          variant: "warning",
+        } as main.Notification);
+        setModifiedOptions(options);
+      }
     });
   }, []);
 
@@ -88,6 +115,21 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     [isConnected]
   );
 
+  const modifyOption = useCallback((key: keyof main.PzOptions, value: main.PzOptions[keyof main.PzOptions]) => {
+    setModifiedOptions((prevOptions) => ({ ...prevOptions, [key]: value }));
+  }, []);
+
+  const updateOptions = useCallback(async () => {
+    setUpdatingOptions(true);
+    const success = await UpdatePzOptions(modifiedOptions);
+    if (success) {
+      setOptions(modifiedOptions);
+    }
+    setUpdatingOptions(false);
+
+    return success;
+  }, [modifiedOptions]);
+
   useEffect(() => {
     if (!isConnected) {
       setIp("");
@@ -97,7 +139,23 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   return (
     <RconContext.Provider
-      value={{ isConnected, isConnecting, setIsConnected, connect, disconnect, sendCommand, ip, port, players }}
+      value={{
+        isConnected,
+        isConnecting,
+        setIsConnected,
+        connect,
+        disconnect,
+        sendCommand,
+        ip,
+        port,
+        players,
+        options,
+        modifiedOptions,
+        optionsModified,
+        modifyOption,
+        updateOptions,
+        updatingOptions,
+      }}
     >
       {children}
     </RconContext.Provider>

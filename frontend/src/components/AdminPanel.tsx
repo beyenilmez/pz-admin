@@ -16,6 +16,7 @@ import { useConfig } from "@/contexts/config-provider";
 import { LoaderCircle } from "lucide-react";
 import { PlayersTab } from "./Players";
 import { ManagementTab } from "./Management";
+import { OptionsTab } from "./Options";
 
 export default function AdminPanel() {
   const { isConnected, disconnect, ip, port } = useRcon();
@@ -25,12 +26,12 @@ export default function AdminPanel() {
 
   const [managementState, setManagementState] = useState<number>(0);
   const [playersState, setPlayersState] = useState<number>(0);
-  const [sandboxState, setSandboxState] = useState<number>(0);
+  const [optionsState, setOptionsState] = useState<number>(0);
   const [terminalState, setTerminalState] = useState<number>(0);
 
   useEffect(() => {
     if (isConnected && tab === "terminal") {
-      setSandboxState(sandboxState + 1);
+      setOptionsState(optionsState + 1);
     }
   }, [tab]);
 
@@ -38,14 +39,14 @@ export default function AdminPanel() {
     if (isConnected) {
       setManagementState(managementState + 1);
       setPlayersState(playersState + 1);
-      setSandboxState(sandboxState + 1);
+      setOptionsState(optionsState + 1);
       setTerminalState(terminalState + 1);
       setTab("management");
     } else {
       setTab("connection");
       setManagementState(managementState + 1);
       setPlayersState(playersState + 1);
-      setSandboxState(sandboxState + 1);
+      setOptionsState(optionsState + 1);
       setTerminalState(terminalState + 1);
     }
   }, [isConnected]);
@@ -79,6 +80,14 @@ export default function AdminPanel() {
               {t("Players")}
             </TabsTrigger>
             <TabsTrigger
+              value="options"
+              onClick={() => setTab("options")}
+              className="px-6 w-full"
+              disabled={!isConnected}
+            >
+              {t("Options")}
+            </TabsTrigger>
+            <TabsTrigger
               value="terminal"
               onClick={() => setTab("terminal")}
               className="px-6 w-full"
@@ -107,7 +116,10 @@ export default function AdminPanel() {
         <div className={tab === "players" ? "block" : "hidden"} key={"players" + playersState}>
           <PlayersTab />
         </div>
-        <div className={tab === "sandbox" ? "block" : "hidden"} key={"sandbox" + sandboxState}>
+        <div className={tab === "options" ? "block" : "hidden"} key={"options" + optionsState}>
+          <OptionsTab />
+        </div>
+        <div className={tab === "sandbox" ? "block" : "hidden"} key={"sandbox" + optionsState}>
           <div>Sandbox</div>
         </div>
         <div className={tab === "terminal" ? "block" : "hidden"} key={"terminal" + terminalState}>
