@@ -38,6 +38,8 @@ export function GetLoadConfigPath():Promise<string>;
 
 export function GetPlayers():Promise<Array<main.Player>>;
 
+export function GetPzOptions():Promise<main.PzOptions>;
+
 export function GetVersion():Promise<string>;
 
 export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;
@@ -109,3 +111,5 @@ export function Thunder(arg1:Array<string>):Promise<void>;
 export function UnbanUsers(arg1:Array<string>):Promise<void>;
 
 export function Update(arg1:string):Promise<void>;
+
+export function UpdatePzOptions(arg1:main.PzOptions):Promise<boolean>;

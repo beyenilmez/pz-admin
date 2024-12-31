@@ -301,6 +301,17 @@ func (app *App) watchConnection() {
 				isWatching = false
 				return
 			}
+			err = pzOptions_update()
+			if err != nil {
+				runtime.LogError(app.ctx, "Error updating options: "+err.Error())
+				runtime.LogError(app.ctx, "RCON connection lost: "+err.Error())
+				runtime.EventsEmit(app.ctx, "rconDisconnected", players)
+				conn.Close()
+				conn = nil
+				connMutex.Unlock()
+				isWatching = false
+				return
+			}
 			connMutex.Unlock()
 		}
 	}

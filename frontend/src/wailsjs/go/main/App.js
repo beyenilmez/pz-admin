@@ -74,6 +74,10 @@ export function GetPlayers() {
   return window['go']['main']['App']['GetPlayers']();
 }
 
+export function GetPzOptions() {
+  return window['go']['main']['App']['GetPzOptions']();
+}
+
 export function GetVersion() {
   return window['go']['main']['App']['GetVersion']();
 }
@@ -216,4 +220,8 @@ export function UnbanUsers(arg1) {
 
 export function Update(arg1) {
   return window['go']['main']['App']['Update'](arg1);
+}
+
+export function UpdatePzOptions(arg1) {
+  return window['go']['main']['App']['UpdatePzOptions'](arg1);
 }

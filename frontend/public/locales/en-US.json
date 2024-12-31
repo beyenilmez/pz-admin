@@ -506,10 +506,6 @@
       "display_name": "Install Workshop Items",
       "description": "Semi-colon separated list of IDs of workshop items to install."
     },
-    "server_browser_announced_ip": {
-      "display_name": "Server Browser Announced IP",
-      "description": "Sets the IP from which the server is broadcast. Useful for network configurations with multiple IP addresses such as server farms"
-    },
     "ServerWelcomeMessage": {
       "display_name": "Welcome Message",
       "description": "Sets the first welcome message visible in the chat panel, which is displayed immediately after player login."
