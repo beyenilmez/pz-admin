@@ -3,8 +3,15 @@ import { ScrollArea } from "./ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
+import { SettingContent, SettingDescription, SettingLabel, SettingsGroup, SettingsItem } from "./ui/settings-group";
+import { useTranslation } from "react-i18next";
+import { useRcon } from "@/contexts/rcon-provider";
+import { main } from "@/wailsjs/go/models";
 
 export function OptionsTab() {
+  const { t } = useTranslation();
+  const { modifiedOptions } = useRcon();
+
   const [tab, setTab] = useState("General");
   const [scrollAreaHeight, setScrollAreaHeight] = useState<string>("100%");
 
@@ -99,7 +106,7 @@ export function OptionsTab() {
         {optionsData.categories.map((category) => (
           <div key={category.name} className="mb-4">
             <a
-              className="text-2xl font-semibold mb-2"
+              className="text-3xl font-medium leading-none mb-2"
               href={`#${category.name}`}
               id={category.name + "-anchor"}
               onClick={(e) => {
@@ -110,12 +117,20 @@ export function OptionsTab() {
             >
               {category.name}
             </a>
-            {category.options.map((option) => (
-              <div key={option.FieldName} className="mb-2">
-                <div className="text-sm font-medium">{option.FieldName}</div>
-                <div className="text-sm">{option.Type}</div>
-              </div>
-            ))}
+            <SettingsGroup>
+              {category.options.map((option) => (
+                <SettingsItem key={option.FieldName}>
+                  <div>
+                    <SettingLabel>{t(`options.${option.FieldName}.display_name`)}</SettingLabel>
+                    <SettingDescription>{t(`options.${option.FieldName}.description`)}</SettingDescription>
+                  </div>
+
+                  <SettingContent>
+                    {option.FieldName}: {modifiedOptions[option.FieldName as keyof main.PzOptions].toString()}
+                  </SettingContent>
+                </SettingsItem>
+              ))}
+            </SettingsGroup>
           </div>
         ))}
       </ScrollArea>
