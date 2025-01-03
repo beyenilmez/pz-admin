@@ -8,10 +8,12 @@ import { useTranslation } from "react-i18next";
 import { useRcon } from "@/contexts/rcon-provider";
 import { main } from "@/wailsjs/go/models";
 import { Switch } from "./ui/switch";
+import { Input } from "./ui/input";
 
 export function OptionsTab() {
   const { t } = useTranslation();
-  const { optionsModified, cancelModifiedOptions, updateOptions, updatingOptions, modifiedOptions } = useRcon();
+  const { optionsModified, cancelModifiedOptions, updateOptions, updatingOptions, modifiedOptions, optionsInvalid } =
+    useRcon();
 
   const [tab, setTab] = useState("General");
   const [scrollAreaHeight, setScrollAreaHeight] = useState<string>("100%");
@@ -106,7 +108,7 @@ export function OptionsTab() {
       <ScrollArea className={`w-full pr-8`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
         {optionsData.categories.map((category, index) => (
           <div key={category.name} className="flex flex-col gap-2">
-            <div className={`mb-1 ${index === 0 ? "mt-2" : "mt-10"}`}>
+            <div className={`border-b pb-2 ${index === 0 ? "mt-2" : "mt-10"}`}>
               <a
                 className="text-3xl font-bold leading-none"
                 href={`#${category.name}`}
@@ -120,9 +122,10 @@ export function OptionsTab() {
                 {category.name}
               </a>
             </div>
-            <SettingsGroup>
+            <SettingsGroup className="space-y-0.5">
               {category.options.map((option) => (
                 <SettingsItem
+                  className="border-none"
                   key={option.FieldName}
                   disabled={
                     option.Requirements &&
@@ -143,7 +146,7 @@ export function OptionsTab() {
                     )}
                   </div>
 
-                  <SettingContent>
+                  <SettingContent className="mr-2">
                     <OptionContent option={option} />
                   </SettingContent>
                 </SettingsItem>
@@ -156,10 +159,14 @@ export function OptionsTab() {
       <div className="h-12 flex justify-between mr-5">
         <Button disabled={updatingOptions}>Apply Options</Button>
         <div className="flex gap-2">
-          <Button disabled={!optionsModified || updatingOptions} className="min-w-28">
+          <Button disabled={!optionsModified || updatingOptions || optionsInvalid} className="min-w-28">
             {updatingOptions ? "Saving..." : "Save & Apply"}
           </Button>
-          <Button disabled={!optionsModified || updatingOptions} onClick={updateOptions} className="min-w-20">
+          <Button
+            disabled={!optionsModified || updatingOptions || optionsInvalid}
+            onClick={updateOptions}
+            className="min-w-20"
+          >
             {updatingOptions ? "Saving..." : "Save"}
           </Button>
           <Button variant={"destructive"} onClick={cancelModifiedOptions} disabled={!optionsModified}>
@@ -174,6 +181,8 @@ export function OptionsTab() {
 function OptionContent({ option }: { option: Option }) {
   if (option.Type === "Boolean") {
     return <BoolOptionContent option={option} />;
+  } else if (option.Type === "Integer") {
+    return <IntOptionContent option={option} />;
   }
 }
 
@@ -181,13 +190,40 @@ function BoolOptionContent({ option }: { option: Option }) {
   const { modifiedOptions, modifyOption } = useRcon();
 
   return (
-    <div>
-      <Switch
-        checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
-        onCheckedChange={(value) => {
-          modifyOption(option.FieldName as keyof main.PzOptions, value);
-        }}
-      />
-    </div>
+    <Switch
+      checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
+      onCheckedChange={(value) => {
+        modifyOption(option.FieldName as keyof main.PzOptions, value);
+      }}
+    />
+  );
+}
+
+function IntOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption } = useRcon();
+
+  const value = modifiedOptions[option.FieldName as keyof main.PzOptions] as number;
+
+  return (
+    <Input
+      className={`w-20 ${
+        (isNaN(value) || value > (option.Range?.Max ?? 2147483647) || value < (option.Range?.Min ?? -2147483648)) &&
+        "ring-offset-destructive ring ring-destructive"
+      }`}
+      type="number"
+      value={modifiedOptions[option.FieldName as keyof main.PzOptions] as number}
+      onChange={(e) => {
+        let value = parseInt(e.target.value, 10);
+        if (e.target.value !== "" && isNaN(value)) {
+          return;
+        }
+        value = Math.min(value, option.Range?.Max ?? 2147483647);
+
+        modifyOption(option.FieldName as keyof main.PzOptions, value);
+      }}
+      min={option.Range?.Min ?? -2147483647}
+      max={option.Range?.Max ?? 2147483647}
+      onKeyDown={(e) => e.key.match(/[-+.,]/) && e.preventDefault()}
+    />
   );
 }

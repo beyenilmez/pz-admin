@@ -1110,3 +1110,6 @@ export const options: Options = {
     },
   ],
 };
+
+export const optionsFlat: Option[] = options.categories.flatMap((category) => category.options);
+export const optionsMap: Map<string, Option> = new Map(optionsFlat.map((option) => [option.FieldName, option]));

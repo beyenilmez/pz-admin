@@ -13,11 +13,12 @@ import { ConnectRcon, DisconnectRcon, SendNotification, SendRconCommand, UpdateP
 import { main } from "@/wailsjs/go/models";
 import { EventsOff, EventsOn, LogDebug } from "@/wailsjs/runtime/runtime";
 import { deepEqual } from "@/lib/utils";
+import { optionsMap } from "@/assets/options";
 
 interface RconContextType {
   isConnected: boolean;
   isConnecting: boolean;
-  setIsConnected: Dispatch<SetStateAction<boolean>>; // Explicit state setter for external control
+  setIsConnected: Dispatch<SetStateAction<boolean>>;
   connect: (credentials: main.Credentials) => Promise<boolean>;
   disconnect: () => Promise<boolean>;
   sendCommand: (command: string) => Promise<main.RconResponse>;
@@ -32,6 +33,7 @@ interface RconContextType {
   optionsModified: boolean;
   updateOptions: () => Promise<boolean>;
   updatingOptions: boolean;
+  optionsInvalid: boolean;
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
@@ -48,6 +50,17 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [updatingOptions, setUpdatingOptions] = useState(false);
 
   const optionsModified = useMemo(() => !deepEqual(options, modifiedOptions), [options, modifiedOptions]);
+  const optionsInvalid = useMemo(() => {
+    return Object.entries(modifiedOptions).some(
+      ([key, value]) =>
+        value === null ||
+        value === undefined ||
+        (typeof value === "number" &&
+          (isNaN(value) ||
+            value < (optionsMap.get(key)?.Range?.Min ?? -2147483648) ||
+            value > (optionsMap.get(key)?.Range?.Max ?? 2147483647)))
+    );
+  }, [modifiedOptions]);
 
   useEffect(() => {
     const handleUpdatePlayers = (players: main.Player[]) => {
@@ -173,6 +186,7 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         cancelModifiedOptions,
         updateOptions,
         updatingOptions,
+        optionsInvalid,
       }}
     >
       {children}
