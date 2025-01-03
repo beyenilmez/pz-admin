@@ -1,4 +1,4 @@
-import { options as optionsData } from "@/assets/options";
+import { Option, options as optionsData } from "@/assets/options";
 import { ScrollArea } from "./ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { useEffect, useRef, useState } from "react";
@@ -7,10 +7,11 @@ import { SettingContent, SettingDescription, SettingLabel, SettingsGroup, Settin
 import { useTranslation } from "react-i18next";
 import { useRcon } from "@/contexts/rcon-provider";
 import { main } from "@/wailsjs/go/models";
+import { Switch } from "./ui/switch";
 
 export function OptionsTab() {
   const { t } = useTranslation();
-  const { modifiedOptions } = useRcon();
+  const { optionsModified, cancelModifiedOptions, updateOptions, updatingOptions, modifiedOptions } = useRcon();
 
   const [tab, setTab] = useState("General");
   const [scrollAreaHeight, setScrollAreaHeight] = useState<string>("100%");
@@ -102,31 +103,48 @@ export function OptionsTab() {
         </TabsList>
       </Tabs>
 
-      <ScrollArea className={`w-full pr-4`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
-        {optionsData.categories.map((category) => (
-          <div key={category.name} className="mb-4">
-            <a
-              className="text-3xl font-medium leading-none mb-2"
-              href={`#${category.name}`}
-              id={category.name + "-anchor"}
-              onClick={(e) => {
-                e.preventDefault();
-                scrollToItem(category.name + "-anchor");
-                setTab(category.name);
-              }}
-            >
-              {category.name}
-            </a>
+      <ScrollArea className={`w-full pr-8`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
+        {optionsData.categories.map((category, index) => (
+          <div key={category.name} className="flex flex-col gap-2">
+            <div className={`mb-1 ${index === 0 ? "mt-2" : "mt-10"}`}>
+              <a
+                className="text-3xl font-bold leading-none"
+                href={`#${category.name}`}
+                id={category.name + "-anchor"}
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToItem(category.name + "-anchor");
+                  setTab(category.name);
+                }}
+              >
+                {category.name}
+              </a>
+            </div>
             <SettingsGroup>
               {category.options.map((option) => (
-                <SettingsItem key={option.FieldName}>
+                <SettingsItem
+                  key={option.FieldName}
+                  disabled={
+                    option.Requirements &&
+                    modifiedOptions[option.Requirements?.FieldName as keyof main.PzOptions] !==
+                      option.Requirements?.FieldValue
+                  }
+                >
                   <div>
                     <SettingLabel>{t(`options.${option.FieldName}.display_name`)}</SettingLabel>
                     <SettingDescription>{t(`options.${option.FieldName}.description`)}</SettingDescription>
+                    {option.Requirements && (
+                      <div className="flex items-center gap-2 opacity-50">
+                        <span className="text-xs text-muted-foreground">
+                          Requires: {t(`options.${option.Requirements.FieldName}.display_name`)} to be{" "}
+                          {option.Requirements.FieldValue.toString()}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   <SettingContent>
-                    {option.FieldName}: {modifiedOptions[option.FieldName as keyof main.PzOptions].toString()}
+                    <OptionContent option={option} />
                   </SettingContent>
                 </SettingsItem>
               ))}
@@ -136,13 +154,40 @@ export function OptionsTab() {
       </ScrollArea>
 
       <div className="h-12 flex justify-between mr-5">
-        <Button>Reload Options</Button>
+        <Button disabled={updatingOptions}>Apply Options</Button>
         <div className="flex gap-2">
-          <Button>Save & Reload</Button>
-          <Button>Save</Button>
-          <Button variant={"destructive"}>Cancel</Button>
+          <Button disabled={!optionsModified || updatingOptions} className="min-w-28">
+            {updatingOptions ? "Saving..." : "Save & Apply"}
+          </Button>
+          <Button disabled={!optionsModified || updatingOptions} onClick={updateOptions} className="min-w-20">
+            {updatingOptions ? "Saving..." : "Save"}
+          </Button>
+          <Button variant={"destructive"} onClick={cancelModifiedOptions} disabled={!optionsModified}>
+            Cancel
+          </Button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function OptionContent({ option }: { option: Option }) {
+  if (option.Type === "Boolean") {
+    return <BoolOptionContent option={option} />;
+  }
+}
+
+function BoolOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption } = useRcon();
+
+  return (
+    <div>
+      <Switch
+        checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
+        onCheckedChange={(value) => {
+          modifyOption(option.FieldName as keyof main.PzOptions, value);
+        }}
+      />
     </div>
   );
 }

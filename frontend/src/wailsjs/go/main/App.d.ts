@@ -38,8 +38,6 @@ export function GetLoadConfigPath():Promise<string>;
 
 export function GetPlayers():Promise<Array<main.Player>>;
 
-export function GetPzOptions():Promise<main.PzOptions>;
-
 export function GetVersion():Promise<string>;
 
 export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;

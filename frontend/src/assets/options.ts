@@ -1,4 +1,4 @@
-type Option = {
+export type Option = {
   FieldName: string;
   Type: string;
   Default?: boolean | number | string;
@@ -14,12 +14,12 @@ type Option = {
   Keywords?: string;
 };
 
-type Category = {
+export type Category = {
   name: string;
   options: Option[];
 };
 
-type Options = {
+export type Options = {
   categories: Category[];
 };
 

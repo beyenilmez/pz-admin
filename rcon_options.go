@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
+	"fmt"
 	"reflect"
 	"strconv"
 	"strings"
@@ -149,6 +150,11 @@ type PzOptions struct {
 	ServerWelcomeMessage                         string  `json:"ServerWelcomeMessage"`
 }
 
+type OptionPair struct {
+	Name  string
+	Value string
+}
+
 var (
 	pzOptions       PzOptions
 	lastOptionsHash string
@@ -186,26 +192,32 @@ func hashString(input string) string {
 func pzOptions_update() error {
 	res, err := conn.Execute("showoptions")
 	if err != nil {
-		return errors.New("Error getting options: " + err.Error())
+		return fmt.Errorf("error getting options: %v", err)
 	}
 
-	// Compute hash of the result
 	currentHash := hashString(res)
 	if currentHash == lastOptionsHash {
-		runtime.LogDebugf(app.ctx, "Options unchanged, skipping parsing")
+		runtime.LogTracef(app.ctx, "Options unchanged, skipping sync")
 		return nil
 	}
 
 	lastOptionsHash = currentHash
-
 	lines := strings.Split(res, "\n")
-	if len(lines) < 1 {
-		return nil
+	updatedOptions := PzOptions{}
+
+	if err := parseOptions(lines, &updatedOptions); err != nil {
+		return fmt.Errorf("error parsing options: %v", err)
 	}
 
-	updatedOptions := PzOptions{}
-	updatedValue := reflect.ValueOf(&updatedOptions).Elem()
-	updatedType := updatedValue.Type()
+	pzOptions = updatedOptions
+	runtime.EventsEmit(app.ctx, "update-options", pzOptions)
+	runtime.LogDebugf(app.ctx, "Options synced: %v", pzOptions)
+
+	return nil
+}
+
+func parseOptions(lines []string, target *PzOptions) error {
+	v := reflect.ValueOf(target).Elem()
 
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
@@ -213,38 +225,119 @@ func pzOptions_update() error {
 			continue
 		}
 
-		line = strings.TrimPrefix(line, "* ")
-		parts := strings.SplitN(line, "=", 2)
+		parts := strings.SplitN(strings.TrimPrefix(line, "* "), "=", 2)
 		if len(parts) != 2 {
+			runtime.LogDebugf(app.ctx, "Invalid option: %s", line)
 			continue
 		}
 
-		key := strings.TrimSpace(parts[0])
-		value := strings.TrimSpace(parts[1])
+		fieldName, fieldValue := strings.TrimSpace(parts[0]), strings.TrimSpace(parts[1])
+		field := v.FieldByName(fieldName)
 
-		for i := 0; i < updatedType.NumField(); i++ {
-			field := updatedType.Field(i)
-			if field.Name == key {
-				err := setFieldValue(updatedValue.Field(i), value)
-				if err != nil {
-					runtime.LogErrorf(app.ctx, "Failed to set field %s: %v", field.Name, err)
-				}
-				break
-			}
+		if !field.IsValid() {
+			runtime.LogDebugf(app.ctx, "Unknown option: %s", fieldName)
+			continue
+		}
+
+		if err := setFieldValue(field, fieldValue); err != nil {
+			return fmt.Errorf("failed to set field %s: %v", fieldName, err)
 		}
 	}
-
-	pzOptions = updatedOptions
-	runtime.EventsEmit(app.ctx, "update-options", pzOptions)
-	runtime.LogDebugf(app.ctx, "Options updated: %v", pzOptions)
 
 	return nil
 }
 
-func (app *App) GetPzOptions() PzOptions {
-	return pzOptions
+func (app *App) UpdatePzOptions(newOptions PzOptions) bool {
+	optionsToUpdate := app.diffOptions(newOptions)
+
+	if len(optionsToUpdate) == 0 {
+		app.SendNotification(Notification{Title: "No options to update", Variant: "warning"})
+		return false
+	}
+
+	successCount := app.applyOptions(optionsToUpdate)
+
+	if successCount != len(optionsToUpdate) {
+		app.SendNotification(Notification{Title: fmt.Sprintf("Failed to update %d options", len(optionsToUpdate)-successCount), Variant: "error"})
+		return false
+	}
+
+	if err := pzOptions_update(); err != nil {
+		runtime.LogErrorf(app.ctx, "Error syncing options after update: %v", err)
+		app.SendNotification(Notification{Title: "Options updated but sync failed", Variant: "error"})
+		return false
+	}
+
+	app.SendNotification(Notification{Title: "Options updated successfully", Variant: "success"})
+	return true
 }
 
-func (app *App) UpdatePzOptions(newOptions PzOptions) bool {
-	return true
+func (app *App) diffOptions(newOptions PzOptions) []OptionPair {
+	var optionsToUpdate []OptionPair
+
+	newVal := reflect.ValueOf(newOptions)
+	oldVal := reflect.ValueOf(pzOptions)
+
+	for i := 0; i < newVal.NumField(); i++ {
+		fieldName := newVal.Type().Field(i).Name
+		newField := newVal.Field(i).Interface()
+		oldField := oldVal.FieldByName(fieldName).Interface()
+
+		if newField != oldField {
+			runtime.LogDebugf(app.ctx, "Updating %s from %v to %v", fieldName, oldField, newField)
+			optionsToUpdate = append(optionsToUpdate, OptionPair{
+				Name:  fieldName,
+				Value: fmt.Sprintf("%v", newField),
+			})
+		}
+	}
+
+	return optionsToUpdate
+}
+
+func (app *App) applyOptions(options []OptionPair) int {
+	successCount := 0
+
+	for _, option := range options {
+		command := fmt.Sprintf("changeoption %s %s", option.Name, option.Value)
+		res, err := conn.Execute(command)
+
+		if err == nil && isOptionUpdateSuccessful(option, res) {
+			successCount++
+		} else {
+			runtime.LogErrorf(app.ctx, "Failed to update %s: %v", option.Name, err)
+		}
+	}
+
+	return successCount
+}
+
+func isOptionUpdateSuccessful(option OptionPair, res string) bool {
+	// Extract the server response value for the given option
+	expectedResponse := fmt.Sprintf("Option : %s is now : %s", option.Name, option.Value)
+
+	if res == expectedResponse {
+		return true
+	}
+
+	// For floats, handle formatting differences
+	field := reflect.ValueOf(pzOptions).FieldByName(option.Name)
+	if !field.IsValid() {
+		runtime.LogErrorf(nil, "Invalid field name: %s", option.Name)
+		return false
+	}
+
+	switch field.Kind() {
+	case reflect.Float64:
+		value, err := strconv.ParseFloat(option.Value, 64)
+		if err != nil {
+			runtime.LogErrorf(nil, "Failed to parse float: %s", option.Value)
+			return false
+		}
+
+		normalized := fmt.Sprintf("Option : %s is now : %.1f", option.Name, value)
+		return res == normalized
+	default:
+		return false
+	}
 }

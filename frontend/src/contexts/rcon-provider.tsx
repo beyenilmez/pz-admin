@@ -7,10 +7,12 @@ import React, {
   Dispatch,
   SetStateAction,
   useEffect,
+  useMemo,
 } from "react";
 import { ConnectRcon, DisconnectRcon, SendNotification, SendRconCommand, UpdatePzOptions } from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
-import { EventsOn } from "@/wailsjs/runtime/runtime";
+import { EventsOff, EventsOn, LogDebug } from "@/wailsjs/runtime/runtime";
+import { deepEqual } from "@/lib/utils";
 
 interface RconContextType {
   isConnected: boolean;
@@ -26,6 +28,7 @@ interface RconContextType {
   options: main.PzOptions;
   modifiedOptions: main.PzOptions;
   modifyOption: (key: keyof main.PzOptions, value: main.PzOptions[keyof main.PzOptions]) => void;
+  cancelModifiedOptions: () => void;
   optionsModified: boolean;
   updateOptions: () => Promise<boolean>;
   updatingOptions: boolean;
@@ -42,33 +45,36 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   const [options, setOptions] = useState<main.PzOptions>({} as main.PzOptions);
   const [modifiedOptions, setModifiedOptions] = useState<main.PzOptions>({} as main.PzOptions);
-  const optionsModified = JSON.stringify(options) !== JSON.stringify(modifiedOptions);
   const [updatingOptions, setUpdatingOptions] = useState(false);
 
+  const optionsModified = useMemo(() => !deepEqual(options, modifiedOptions), [options, modifiedOptions]);
+
   useEffect(() => {
-    EventsOn("update-players", (players: main.Player[]) => {
-      //let newPlayers = players.sort((a, b) =>
-      //  a.online === b.online ? a.name.localeCompare(b.name) : a.online ? -1 : 1
-      //);
-      //newPlayers.push({ name: "Online_player", online: true, accessLevel: "admin" } as main.Player);
+    const handleUpdatePlayers = (players: main.Player[]) => {
       setPlayers(players);
-    });
+    };
 
-    EventsOn("update-options", (options: main.PzOptions) => {
-      setOptions(options);
-
-      if (JSON.stringify(modifiedOptions) === "{}") {
-        setModifiedOptions(options);
-      } else if (JSON.stringify(options) !== JSON.stringify(modifiedOptions)) {
+    const handleUpdateOptions = (newOptions: main.PzOptions) => {
+      if (optionsModified && !deepEqual(modifiedOptions, newOptions)) {
         SendNotification({
           title: "Options reloaded",
           message: "An option has been updated from somewhere else",
           variant: "warning",
         } as main.Notification);
-        setModifiedOptions(options);
       }
-    });
-  }, []);
+
+      setModifiedOptions(newOptions);
+      setOptions(newOptions);
+    };
+
+    EventsOn("update-players", handleUpdatePlayers);
+    EventsOn("update-options", handleUpdateOptions);
+
+    return () => {
+      EventsOff("update-players");
+      EventsOff("update-options");
+    };
+  }, [modifiedOptions]);
 
   const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {
@@ -92,6 +98,12 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     try {
       const result = await DisconnectRcon();
       setIsConnected(!result);
+      setPlayers([]);
+      setOptions({} as main.PzOptions);
+      setModifiedOptions({} as main.PzOptions);
+      setIp("");
+      setPort("");
+      setUpdatingOptions(false);
       return result;
     } catch (error) {
       console.error("Error disconnecting from RCON:", error);
@@ -123,12 +135,17 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUpdatingOptions(true);
     const success = await UpdatePzOptions(modifiedOptions);
     if (success) {
+      LogDebug("Frontend: Options updated successfully");
       setOptions(modifiedOptions);
     }
     setUpdatingOptions(false);
 
     return success;
   }, [modifiedOptions]);
+
+  const cancelModifiedOptions = useCallback(() => {
+    setModifiedOptions(options as main.PzOptions);
+  }, [options]);
 
   useEffect(() => {
     if (!isConnected) {
@@ -153,6 +170,7 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         modifiedOptions,
         optionsModified,
         modifyOption,
+        cancelModifiedOptions,
         updateOptions,
         updatingOptions,
       }}

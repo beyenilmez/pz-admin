@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import { OpenFileInExplorer, SendNotification, SendWindowsNotification } from "@/wailsjs/go/main/App";
 import React from "react";
 import { useConfig } from "./contexts/config-provider";
-import { EventsOn, LogDebug } from "@/wailsjs/runtime/runtime";
+import { EventsOff, EventsOn, LogDebug } from "@/wailsjs/runtime/runtime";
 import AdminPanel from "./components/AdminPanel";
 import { Progress } from "./components/ui/progress";
 import { useProgress } from "./contexts/progress-provider";
@@ -93,6 +93,12 @@ function App() {
       setIsConnected(false);
       setProgress(0);
     });
+
+    return () => {
+      EventsOff("toast");
+      EventsOff("sendNotification");
+      EventsOff("rconDisconnected");
+    };
   }, []);
 
   const handleToastGotoPath = (path: string) => {

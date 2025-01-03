@@ -94,6 +94,10 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	if err != nil {
 		runtime.LogError(app.ctx, "Error updating players: "+err.Error())
 	}
+	err = pzOptions_update()
+	if err != nil {
+		runtime.LogError(app.ctx, "Error updating pzOptions: "+err.Error())
+	}
 
 	app.SendNotification(Notification{
 		Title:   "RCON connection established",
@@ -278,6 +282,9 @@ func (app *App) watchConnection() {
 			if err != nil {
 				runtime.LogError(app.ctx, "Error saving players: "+err.Error())
 			}
+			players = nil
+			pzOptions = PzOptions{}
+			lastOptionsHash = ""
 			return
 		case <-time.After(time.Duration(*config.RconCheckInterval) * time.Second):
 			connMutex.Lock()
@@ -474,7 +481,7 @@ func players_update() error {
 	}
 
 	if !playersChanged {
-		runtime.LogDebugf(app.ctx, "No changes in players, skipping event emission")
+		runtime.LogTracef(app.ctx, "No changes in players, skipping event emission")
 		return nil
 	}
 
