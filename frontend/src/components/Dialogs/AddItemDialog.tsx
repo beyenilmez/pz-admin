@@ -34,6 +34,12 @@ type Category = {
 
 export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "add", onSaveEdit }: AddItemDialogProps) {
   const { t } = useTranslation("items");
+  const { t: tc } = useTranslation();
+
+  const sortedItemsData = useMemo(
+    () => itemsData.sort((a, b) => tc(`item_categories.${a.name}`).localeCompare(tc(`item_categories.${b.name}`))),
+    []
+  );
 
   const translateWithFallback = (key: string, fallback = key) => {
     const translation = t(key);
@@ -50,18 +56,20 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
 
   const filteredCategories: Category[] = useMemo(() => {
     if (!searchQuery && selectedFilters.length === 0) {
-      return itemsData;
+      return sortedItemsData;
     }
 
     const filterItems = (category: Category): Item[] => {
       if (!searchQuery) return category.items;
       const query = searchQuery.toLowerCase();
-      return category.items.filter((item) =>
-        translateWithFallback(item.itemId, item.name).toLowerCase().includes(query)
+      return category.items.filter(
+        (item) =>
+          tc(`item_categories.${category.name}`).toLowerCase().includes(query) ||
+          translateWithFallback(item.itemId, item.name).toLowerCase().includes(query)
       );
     };
 
-    const filtered = itemsData.map((category: Category) => ({
+    const filtered = sortedItemsData.map((category: Category) => ({
       ...category,
       items: filterItems(category),
     }));
@@ -70,7 +78,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
       return filtered;
     }
 
-    return filtered.filter((category) => selectedFilters.includes(category.name));
+    return filtered.filter((category) => selectedFilters.includes(tc(`item_categories.${category.name}`)));
   }, [searchQuery, selectedFilters]);
 
   const handleAddItems = () => {
@@ -173,7 +181,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
 
   const renderSelectedItems = () => {
     return Object.entries(selectedItems).map(([itemId, count]) => {
-      const item = itemsData.flatMap((category: Category) => category.items).find((i) => i.itemId === itemId);
+      const item = sortedItemsData.flatMap((category: Category) => category.items).find((i) => i.itemId === itemId);
 
       if (!item) return null;
 
@@ -257,9 +265,9 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
                 className="flex-grow"
               />
               <Combobox
-                elements={itemsData.map((category: Category) => ({
+                elements={sortedItemsData.map((category: Category) => ({
                   value: category.name,
-                  label: category.name,
+                  label: tc(`item_categories.${category.name}`),
                 }))}
                 multiSelect
                 placeholder="Select Category..."
@@ -278,7 +286,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
                   (category) =>
                     category.items.length > 0 && (
                       <AccordionItem key={category.name} value={category.name}>
-                        <AccordionTrigger className="h-8">{category.name}</AccordionTrigger>
+                        <AccordionTrigger className="h-8">{tc(`item_categories.${category.name}`)}</AccordionTrigger>
                         <AccordionContent className="flex flex-col items-start ml-2">
                           {category.items.map((item) => (
                             <Button
