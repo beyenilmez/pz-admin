@@ -11,7 +11,7 @@ export type Option = {
     FieldName: string;
     FieldValue: boolean | number | string;
   };
-  Keywords?: string;
+  Keywords: string;
 };
 
 export type Category = {
@@ -1101,10 +1101,12 @@ export const options: Options = {
         {
           FieldName: "ResetID",
           Type: "Information",
+          Keywords: "reset,id,ResetID,miscellaneous",
         },
         {
           FieldName: "ServerPlayerID",
           Type: "Information",
+          Keywords: "player,id,ServerPlayerID,miscellaneous",
         },
       ],
     },

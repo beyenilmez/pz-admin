@@ -10,6 +10,7 @@ import { main } from "@/wailsjs/go/models";
 import { Switch } from "./ui/switch";
 import { Input } from "./ui/input";
 import { formatWithMinimumOneDecimal } from "@/lib/utils";
+import { Search } from "lucide-react";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -18,6 +19,8 @@ export function OptionsTab() {
 
   const [tab, setTab] = useState("General");
   const [scrollAreaHeight, setScrollAreaHeight] = useState<string>("100%");
+
+  const [searchText, setSearchText] = useState("");
 
   const tabsRef = useRef<HTMLDivElement>(null);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
@@ -87,11 +90,26 @@ export function OptionsTab() {
     };
   }, []);
 
+  const filteredCategories = optionsData.categories
+    .map((category) => {
+      return {
+        ...category,
+        options: category.options.filter(
+          (option) =>
+            option.FieldName.toLowerCase().includes(searchText.toLowerCase()) ||
+            option.Keywords?.toLowerCase().includes(searchText.toLowerCase()) ||
+            option.Type.toLowerCase() === searchText.toLowerCase() ||
+            category.name.toLowerCase().includes(searchText.toLowerCase())
+        ),
+      };
+    })
+    .filter((category) => category.options.length > 0);
+
   return (
     <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2 space-y-2">
       <Tabs value={tab}>
         <TabsList defaultValue={"General"} className="flex flex-wrap h-fit" ref={tabsRef}>
-          {optionsData.categories.map((category) => (
+          {filteredCategories.map((category) => (
             <TabsTrigger
               key={category.name}
               value={category.name}
@@ -107,7 +125,19 @@ export function OptionsTab() {
       </Tabs>
 
       <ScrollArea className={`w-full pr-6`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
-        {optionsData.categories.map((category, index) => (
+        <div className="relative m-1">
+          <Input
+            className="peer ps-9"
+            placeholder="Search option..."
+            type="search"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+          <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
+            <Search className="w-4 h-4" strokeWidth={2} />
+          </div>
+        </div>
+        {filteredCategories.map((category, index) => (
           <div key={category.name} className="flex flex-col gap-2">
             <div className={`border-b pb-2 ${index === 0 ? "mt-2" : "mt-10"}`}>
               <a
