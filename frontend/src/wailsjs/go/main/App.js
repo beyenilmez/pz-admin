@@ -58,6 +58,10 @@ export function DisconnectRcon() {
   return window['go']['main']['App']['DisconnectRcon']();
 }
 
+export function Format(arg1, arg2) {
+  return window['go']['main']['App']['Format'](arg1, arg2);
+}
+
 export function GetConfig() {
   return window['go']['main']['App']['GetConfig']();
 }

@@ -1,6 +1,6 @@
 export type Option = {
   FieldName: string;
-  Type: "String" | "Text" | "Integer" | "Double" | "Boolean" | "Information" | "ServerWelcomeMessage";
+  Type: "String" | "Text" | "Integer" | "Double" | "Boolean" | "Information" | "ServerWelcomeMessage" | "Choice";
   Default?: boolean | number | string;
   Range?: {
     Min: number;
@@ -11,6 +11,10 @@ export type Option = {
     FieldName: string;
     FieldValue: boolean | number | string;
   };
+  Choices?: {
+    Name: string;
+    Value: boolean | number | string;
+  }[];
   Keywords: string;
 };
 
@@ -88,13 +92,23 @@ export const options: Options = {
         },
         {
           FieldName: "MapRemotePlayerVisibility",
-          Type: "Integer",
+          Type: "Choice",
           Default: 1,
           Keywords: "map,remote,player,visibility,MapRemotePlayerVisibility",
-          Range: {
-            Min: 1,
-            Max: 3,
-          },
+          Choices: [
+            {
+              Name: "Hidden",
+              Value: 1,
+            },
+            {
+              Name: "Friends",
+              Value: 2,
+            },
+            {
+              Name: "Everyone",
+              Value: 3,
+            },
+          ],
         },
         {
           FieldName: "MaxPlayers",

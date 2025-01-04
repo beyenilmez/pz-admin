@@ -393,7 +393,7 @@
     },
     "SledgehammerOnlyInSafehouse": {
       "display_name": "Allow Only Safehouse Sledgehammers",
-      "description": "If enabled, players can destroy world objects with sledgehammers only in their safehouse. Requires \"Allow Sledgehammer Destruction\" to be enabled"
+      "description": "If enabled, players can destroy world objects with sledgehammers only in their safehouse"
     },
     "SleepAllowed": {
       "display_name": "Allow Sleep",
@@ -401,7 +401,7 @@
     },
     "SleepNeeded": {
       "display_name": "Require Sleep",
-      "description": "If enabled, players become tired and need to sleep. Requires \"Allow Sleep\" to be enabled"
+      "description": "If enabled, players become tired and need to sleep"
     },
     "SneakModeHideFromOtherPlayers": {
       "display_name": "Hide From Other Players In Sneak Mode",
@@ -453,7 +453,12 @@
     },
     "MapRemotePlayerVisibility": {
       "display_name": "Remote Player Map Visibility",
-      "description": "Controls the display of remote players on the in-game map"
+      "description": "Controls the display of remote players on the in-game map",
+      "choices": {
+        "Hidden": "Hidden",
+        "Friends": "Friends",
+        "Everyone": "Everyone"
+      }
     },
     "MaxPlayers": {
       "display_name": "Max Players",
@@ -498,7 +503,7 @@
     },
     "SpawnPoint": {
       "display_name": "Set Spawn Point",
-      "description": "Sets the spawn point for every new player. Default is 0,0,0. [Find desired coordinates](https://map.projectzomboid.com/)",
+      "description": "Sets the spawn point for every new player. See https://map.projectzomboid.com for coordinates",
       "disabled": "0,0,0"
     },
     "UDPPort": {

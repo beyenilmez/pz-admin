@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 
@@ -106,4 +107,8 @@ func Decrypt(encryptedText, key string) (string, error) {
 	stream.XORKeyStream(ciphertext, ciphertext)
 
 	return string(ciphertext), nil
+}
+
+func (app *App) Format(t string, args ...interface{}) string {
+	return fmt.Sprintf(t, args...)
 }

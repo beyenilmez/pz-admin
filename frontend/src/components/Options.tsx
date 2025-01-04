@@ -15,6 +15,7 @@ import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 import { Tooltip, TooltipContent } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Textarea } from "./ui/textarea";
+import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -257,6 +258,8 @@ function OptionContent({ option }: { option: Option }) {
     return <InformationOptionContent option={option} />;
   } else if (option.Type === "ServerWelcomeMessage") {
     return <ServerWelcomeMessageOptionContent option={option} />;
+  } else if (option.Type === "Choice") {
+    return <ChoiceOptionContent option={option} />;
   }
 }
 
@@ -524,6 +527,7 @@ function TextOptionContent({ option }: { option: Option }) {
         }}
         onKeyDown={(e) => e.key.match(/[\\"]/g) && e.preventDefault()}
         disabled={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+        maxLength={965}
       />
     </div>
   );
@@ -584,5 +588,28 @@ function ServerWelcomeMessageOptionContent({ option }: { option: Option }) {
         onClose={() => setIsDialogOpen(false)}
       />
     </>
+  );
+}
+
+function ChoiceOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption } = useRcon();
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <ToggleGroup type="single" value={modifiedOptions[option.FieldName as keyof main.PzOptions] as any}>
+        {option.Choices?.map(({ Name, Value }) => (
+          <ToggleGroupItem
+            key={Value as any}
+            value={Value as any}
+            onClick={() => {
+              modifyOption(option.FieldName as keyof main.PzOptions, Value);
+            }}
+          >
+            {t(`options.${option.FieldName}.choices.${Name}`)}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+    </div>
   );
 }

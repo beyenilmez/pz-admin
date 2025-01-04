@@ -30,6 +30,8 @@ export function DeleteCredentials():Promise<boolean>;
 
 export function DisconnectRcon():Promise<boolean>;
 
+export function Format(arg1:string,arg2:Array<any>):Promise<string>;
+
 export function GetConfig():Promise<main.Config>;
 
 export function GetConfigField(arg1:string):Promise<any>;

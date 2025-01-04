@@ -50,3 +50,12 @@ export function formatWithMinimumOneDecimal(value: any): string {
   }
   return numericValue % 1 === 0 ? `${numericValue}.0` : String(numericValue).replace(",", ".");
 }
+
+export function formatString(string: string, ...args: any[]): string {
+  string = string.replace(new RegExp("%%", "g"), "<<percent>>");
+  for (let i = 0; i < args.length; i++) {
+    string = string.replace(/%[a-z]/, args[i]);
+  }
+  string = string.replace(new RegExp("<<percent>>", "g"), "%");
+  return string;
+}
