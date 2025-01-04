@@ -17,15 +17,18 @@ const initializeI18n = async () => {
     .init({
       load: "currentOnly",
       lng: language,
-      supportedLngs: supportedLngs, // Add supported languages here
+      supportedLngs: supportedLngs,
       fallbackLng: "en-US",
       debug: false,
       interpolation: {
-        escapeValue: false, // React already safes from XSS
+        escapeValue: false, // React already handles XSS
       },
       backend: {
-        loadPath: "/locales/{{lng}}.json", // Path to translation files
+        // Updated to support modular translation files
+        loadPath: "/locales/{{lng}}/{{ns}}.json", // Path to namespace-based files
       },
+      ns: ["common", "items"], // Namespaces to load
+      defaultNS: "common", // Default namespace
     });
 
   return i18n;

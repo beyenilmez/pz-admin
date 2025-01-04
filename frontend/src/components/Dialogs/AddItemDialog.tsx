@@ -10,6 +10,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip
 import itemsData from "@/assets/items.json";
 import { main } from "@/wailsjs/go/models";
 import { AddItems, LoadItemsDialog, SaveItemsDialog } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 interface AddItemDialogProps {
   isOpen: boolean;
@@ -32,6 +33,13 @@ type Category = {
 };
 
 export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "add", onSaveEdit }: AddItemDialogProps) {
+  const { t } = useTranslation("items");
+
+  const translateWithFallback = (key: string, fallback = key) => {
+    const translation = t(key);
+    return translation === key ? fallback : translation;
+  };
+
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<Record<string, number>>({});
@@ -48,7 +56,9 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
     const filterItems = (category: Category): Item[] => {
       if (!searchQuery) return category.items;
       const query = searchQuery.toLowerCase();
-      return category.items.filter((item) => item.name.toLowerCase().includes(query));
+      return category.items.filter((item) =>
+        translateWithFallback(item.itemId, item.name).toLowerCase().includes(query)
+      );
     };
 
     const filtered = itemsData.map((category: Category) => ({
@@ -173,7 +183,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
             <TooltipTrigger>
               <ImageSlide
                 images={item.images}
-                name={item.name}
+                name={translateWithFallback(item.itemId, item.name)}
                 className="h-8 w-8 object-contain cursor-default select-none"
               />
             </TooltipTrigger>
@@ -181,7 +191,8 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
           </Tooltip>
 
           <span className="flex-grow text-xs w-2 text-ellipsis overflow-clip">
-            {item.name} {item.name === "Map" || (item.name === "Map (item)" && `(${item.itemId})`)}
+            {translateWithFallback(item.itemId, item.name)}{" "}
+            {item.name === "Map" || (item.name === "Map (item)" && `(${item.itemId})`)}
           </span>
           {mode === "add" ? (
             <>
@@ -278,10 +289,14 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
                               }`}
                               onClick={() => handleAddItem(item.itemId)}
                             >
-                              <ImageSlide images={item.images} name={item.name} className="h-6 w-6 object-contain" />
+                              <ImageSlide
+                                images={item.images}
+                                name={translateWithFallback(item.itemId, item.name)}
+                                className="h-6 w-6 object-contain"
+                              />
 
                               <span className="text-sm w-64 text-ellipsis text-start overflow-clip group-hover:underline underline-offset-auto">
-                                {item.name}
+                                {translateWithFallback(item.itemId, item.name)}
                                 {category.name === "Cartography" ? ` (${item.itemId})` : ""}
                               </span>
 
