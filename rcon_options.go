@@ -247,7 +247,7 @@ func parseOptions(lines []string, target *PzOptions) error {
 	return nil
 }
 
-func (app *App) UpdatePzOptions(newOptions PzOptions) bool {
+func (app *App) UpdatePzOptions(newOptions PzOptions, reloadOptions bool) bool {
 	optionsToUpdate := app.diffOptions(newOptions)
 
 	if len(optionsToUpdate) == 0 {
@@ -266,6 +266,24 @@ func (app *App) UpdatePzOptions(newOptions PzOptions) bool {
 		runtime.LogErrorf(app.ctx, "Error syncing options after update: %v", err)
 		app.SendNotification(Notification{Title: "Options updated but sync failed", Variant: "error"})
 		return false
+	}
+
+	if reloadOptions {
+		command := RCONCommand{
+			CommandTemplate: "reloadoptions",
+			SuccessCheck: func(name string, response string) bool {
+				return response == "Options reloaded"
+			},
+		}
+
+		success := command.execute() == 1
+		if !success {
+			app.SendNotification(Notification{Title: "Failed to reload options", Variant: "error"})
+			return false
+		} else {
+			app.SendNotification(Notification{Title: "Options saved and applied successfully", Variant: "success"})
+			return true
+		}
 	}
 
 	app.SendNotification(Notification{Title: "Options updated successfully", Variant: "success"})

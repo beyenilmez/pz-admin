@@ -18,6 +18,7 @@ import { Textarea } from "./ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { AddItemDialog } from "./Dialogs/AddItemDialog";
 import { Slider } from "./ui/my-slider";
+import { ReloadOptions } from "@/wailsjs/go/main/App";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -224,14 +225,29 @@ export function OptionsTab() {
       </ScrollArea>
 
       <div className="h-12 flex justify-between mr-5">
-        <Button disabled={updatingOptions}>Apply Options</Button>
+        <Button
+          disabled={updatingOptions}
+          onClick={() => {
+            ReloadOptions();
+          }}
+        >
+          Apply Options
+        </Button>
         <div className="flex gap-2">
-          <Button disabled={!optionsModified || updatingOptions || optionsInvalid} className="min-w-28">
+          <Button
+            onClick={() => {
+              updateOptions(true);
+            }}
+            disabled={!optionsModified || updatingOptions || optionsInvalid}
+            className="min-w-28"
+          >
             {updatingOptions ? "Saving..." : "Save & Apply"}
           </Button>
           <Button
             disabled={!optionsModified || updatingOptions || optionsInvalid}
-            onClick={updateOptions}
+            onClick={() => {
+              updateOptions();
+            }}
             className="min-w-20"
           >
             {updatingOptions ? "Saving..." : "Save"}

@@ -1539,3 +1539,18 @@ func (app *App) Alarm() {
 
 	command.execute()
 }
+
+func (app *App) ReloadOptions() {
+	command := RCONCommand{
+		CommandTemplate: "reloadoptions",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Options reloaded"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully reloaded options",
+			SingleFail:    "Failed to reload options",
+		},
+	}
+
+	command.execute()
+}

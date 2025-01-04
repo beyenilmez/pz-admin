@@ -66,6 +66,8 @@ export function RandomThunder():Promise<void>;
 
 export function ReadConfig(arg1:string):Promise<void>;
 
+export function ReloadOptions():Promise<void>;
+
 export function RemovePlayersFromWhitelist(arg1:Array<string>,arg2:boolean):Promise<number>;
 
 export function RestartApplication(arg1:Array<string>):Promise<void>;
@@ -112,4 +114,4 @@ export function UnbanUsers(arg1:Array<string>):Promise<void>;
 
 export function Update(arg1:string):Promise<void>;
 
-export function UpdatePzOptions(arg1:main.PzOptions):Promise<boolean>;
+export function UpdatePzOptions(arg1:main.PzOptions,arg2:boolean):Promise<boolean>;

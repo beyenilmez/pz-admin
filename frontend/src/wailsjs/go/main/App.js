@@ -130,6 +130,10 @@ export function ReadConfig(arg1) {
   return window['go']['main']['App']['ReadConfig'](arg1);
 }
 
+export function ReloadOptions() {
+  return window['go']['main']['App']['ReloadOptions']();
+}
+
 export function RemovePlayersFromWhitelist(arg1, arg2) {
   return window['go']['main']['App']['RemovePlayersFromWhitelist'](arg1, arg2);
 }
@@ -222,6 +226,6 @@ export function Update(arg1) {
   return window['go']['main']['App']['Update'](arg1);
 }
 
-export function UpdatePzOptions(arg1) {
-  return window['go']['main']['App']['UpdatePzOptions'](arg1);
+export function UpdatePzOptions(arg1, arg2) {
+  return window['go']['main']['App']['UpdatePzOptions'](arg1, arg2);
 }

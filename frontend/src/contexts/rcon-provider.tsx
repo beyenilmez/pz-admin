@@ -31,7 +31,7 @@ interface RconContextType {
   modifyOption: (key: keyof main.PzOptions, value: main.PzOptions[keyof main.PzOptions]) => void;
   cancelModifiedOptions: () => void;
   optionsModified: boolean;
-  updateOptions: () => Promise<boolean>;
+  updateOptions: (reload?: boolean) => Promise<boolean>;
   updatingOptions: boolean;
   optionsInvalid: boolean;
 
@@ -153,17 +153,20 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setModifiedOptions((prevOptions) => ({ ...prevOptions, [key]: value }));
   }, []);
 
-  const updateOptions = useCallback(async () => {
-    setUpdatingOptions(true);
-    const success = await UpdatePzOptions(modifiedOptions);
-    if (success) {
-      LogDebug("Frontend: Options updated successfully");
-      setOptions(modifiedOptions);
-    }
-    setUpdatingOptions(false);
+  const updateOptions: RconContextType["updateOptions"] = useCallback(
+    async (reload) => {
+      setUpdatingOptions(true);
+      const success = await UpdatePzOptions(modifiedOptions, reload ?? false);
+      if (success) {
+        LogDebug("Frontend: Options updated successfully");
+        setOptions(modifiedOptions);
+      }
+      setUpdatingOptions(false);
 
-    return success;
-  }, [modifiedOptions]);
+      return success;
+    },
+    [modifiedOptions]
+  );
 
   const cancelModifiedOptions = useCallback(() => {
     setModifiedOptions(options as main.PzOptions);
