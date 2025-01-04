@@ -193,7 +193,7 @@ function BoolOptionContent({ option }: { option: Option }) {
   const { modifiedOptions, modifyOption } = useRcon();
 
   return (
-    <div className="w-20 flex justify-center">
+    <div className="w-[5.5rem] flex justify-center">
       <Switch
         checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
         onCheckedChange={(value) => {
@@ -205,50 +205,84 @@ function BoolOptionContent({ option }: { option: Option }) {
 }
 
 function IntOptionContent({ option }: { option: Option }) {
-  const { modifiedOptions, modifyOption } = useRcon();
+  const { modifiedOptions, modifyOption, options } = useRcon();
 
   const value = modifiedOptions[option.FieldName as keyof main.PzOptions] as number;
 
-  return (
-    <>
-      <Input
-        className={`w-20 ${
-          (isNaN(value) || value > (option.Range?.Max ?? 2147483647) || value < (option.Range?.Min ?? -2147483648)) &&
-          "ring-offset-destructive ring ring-destructive"
-        }`}
-        type="number"
-        lang="en"
-        inputMode="numeric"
-        value={modifiedOptions[option.FieldName as keyof main.PzOptions] as number}
-        onChange={(e) => {
-          let value = parseInt(e.target.value, 10);
-          if (e.target.value !== "" && isNaN(value)) {
-            return;
-          }
-          value = Math.min(value, option.Range?.Max ?? 2147483647);
+  const { t } = useTranslation();
 
-          modifyOption(option.FieldName as keyof main.PzOptions, value);
-        }}
-        min={option.Range?.Min ?? -2147483647}
-        max={option.Range?.Max ?? 2147483647}
-        onKeyDown={(e) => e.key.match(/[-+.,]/) && e.preventDefault()}
-      />
-      {option.Range && (
-        <div className="text-[0.6rem] w-20 h-0 text-center">
-          {option.Range?.Min} - {option.Range?.Max}
+  return (
+    <div className="flex items-center">
+      {option.DisabledValue !== undefined && (
+        <div className="flex flex-col items-center min-w-24">
+          <Switch
+            checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+            onCheckedChange={(value) => {
+              modifyOption(
+                option.FieldName as keyof main.PzOptions,
+                value
+                  ? (option.DisabledValue as number)
+                  : options[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+                  ? NaN
+                  : options[option.FieldName as keyof main.PzOptions]
+              );
+            }}
+          />
+          <div className="text-xs text-muted-foreground h-0">{t(`options.${option.FieldName}.disabled`)}</div>
         </div>
       )}
-    </>
+      <div>
+        <Input
+          className={`w-[5.5rem] ${
+            (isNaN(value) || value > (option.Range?.Max ?? 2147483647) || value < (option.Range?.Min ?? -2147483648)) &&
+            "ring-offset-destructive ring ring-destructive"
+          }`}
+          type="number"
+          lang="en"
+          inputMode="numeric"
+          placeholder={
+            modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+              ? t(`options.${option.FieldName}.disabled`)
+              : ""
+          }
+          value={
+            modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+              ? ""
+              : (modifiedOptions[option.FieldName as keyof main.PzOptions] as number)
+          }
+          onChange={(e) => {
+            let value = parseInt(e.target.value, 10);
+            if (e.target.value !== "" && isNaN(value)) {
+              return;
+            }
+            value = Math.min(value, option.Range?.Max ?? 2147483647);
+
+            modifyOption(option.FieldName as keyof main.PzOptions, value);
+          }}
+          min={option.Range?.Min ?? -2147483647}
+          max={option.Range?.Max ?? 2147483647}
+          onKeyDown={(e) => e.key.match(/[-+.,]/) && e.preventDefault()}
+          disabled={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+        />
+        {option.Range && (
+          <div className="text-[0.6rem] w-[5.5rem] h-0 text-center text-muted-foreground">
+            {option.Range?.Min} - {option.Range?.Max}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }
 
 function DoubleOptionContent({ option }: { option: Option }) {
-  const { modifiedOptions, modifyOption, optionsModified } = useRcon();
+  const { modifiedOptions, modifyOption, optionsModified, options } = useRcon();
 
   const [inputValue, setInputValue] = useState(
     formatWithMinimumOneDecimal(modifiedOptions[option.FieldName as keyof main.PzOptions])
   );
   const floatInputValue = parseFloat(inputValue);
+
+  const { t } = useTranslation();
 
   const handleInputValueChange = (newValue: string) => {
     newValue = newValue
@@ -280,27 +314,46 @@ function DoubleOptionContent({ option }: { option: Option }) {
   }, [optionsModified]);
 
   return (
-    <>
-      <Input
-        className={`w-20 ${
-          (isNaN(floatInputValue) ||
-            floatInputValue > (option.Range?.Max ?? 2147483647) ||
-            floatInputValue < (option.Range?.Min ?? -2147483648)) &&
-          "ring-offset-destructive ring ring-destructive"
-        }`}
-        type="text"
-        inputMode="decimal"
-        value={inputValue}
-        onChange={(e) => handleInputValueChange(e.target.value)}
-        min={option.Range?.Min ?? -2147483647}
-        max={option.Range?.Max ?? 2147483647}
-        onKeyDown={(e) => e.key.match(/[-+]/) && e.preventDefault()}
-      />
-      {option.Range && (
-        <div className="text-[0.6rem] w-20 h-0 text-center">
-          {option.Range?.Min} - {option.Range?.Max}
+    <div className="flex items-center">
+      {option.DisabledValue !== undefined && (
+        <div className="flex flex-col items-center min-w-24">
+          <Switch
+            checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+            onCheckedChange={(value) => {
+              console.log(option.DisabledValue as number);
+              modifyOption(
+                option.FieldName as keyof main.PzOptions,
+                value ? (option.DisabledValue as number) : options[option.FieldName as keyof main.PzOptions]
+              );
+            }}
+          />
+          <div className="text-xs text-muted-foreground h-0">{t(`options.${option.FieldName}.disabled`)}</div>
         </div>
       )}
-    </>
+      <div>
+        <div>
+          <Input
+            className={`w-[5.5rem] ${
+              (isNaN(floatInputValue) ||
+                floatInputValue > (option.Range?.Max ?? 2147483647) ||
+                floatInputValue < (option.Range?.Min ?? -2147483648)) &&
+              "ring-offset-destructive ring ring-destructive"
+            }`}
+            type="text"
+            inputMode="decimal"
+            value={inputValue}
+            onChange={(e) => handleInputValueChange(e.target.value)}
+            min={option.Range?.Min ?? -2147483647}
+            max={option.Range?.Max ?? 2147483647}
+            onKeyDown={(e) => e.key.match(/[-+]/) && e.preventDefault()}
+          />
+          {option.Range && (
+            <div className="text-[0.6rem] w-[5.5rem] h-0 text-center text-muted-foreground">
+              {option.Range?.Min} - {option.Range?.Max}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

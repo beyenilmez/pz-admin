@@ -292,11 +292,13 @@
     },
     "BackupsPeriod": {
       "display_name": "Backup Period",
-      "description": "Sets the period between backups. 0 = disabled"
+      "description": "Sets the period between backups",
+      "disabled": "Disabled"
     },
     "DiscordEnable": {
       "display_name": "Enable Discord Integration",
-      "description": "If enabled, allows global text chat integration with a Discord channel. Requires a valid bot token to be set under \"Discord Token\""
+      "description": "If enabled, allows global text chat integration with a Discord channel. Requires a valid bot token to be set under \"Discord Token\"",
+      "disabled": "Disable"
     },
     "DiscordToken": {
       "display_name": "Discord Token",
@@ -328,7 +330,8 @@
     },
     "BloodSplatLifespanDays": {
       "display_name": "Blood Splats Lifespan Days",
-      "description": "Sets the number of days before old blood splats are removed. Removal happens when map chunks are loaded. 0 = splats never disappear"
+      "description": "Sets the number of days before old blood splats are removed. Removal happens when map chunks are loaded.",
+      "disabled": "Never"
     },
     "CarEngineAttractionModifier": {
       "display_name": "Car Engine Attraction Modifier",
@@ -348,11 +351,13 @@
     },
     "HoursForLootRespawn": {
       "display_name": "Minimum Period for Loot Respawn",
-      "description": "Sets the in-game hours after which all containers that have been looted at least once will respawn loot. 0 = never. Loot respawn is not impacted by visibility or subsequent looting"
+      "description": "Sets the in-game hours after which all containers that have been looted at least once will respawn loot. Loot respawn is not impacted by visibility or subsequent looting",
+      "disabled": "Never"
     },
     "ItemNumbersLimitPerContainer": {
       "display_name": "Item Limit Per Container",
-      "description": "Sets the maximum number of items that can be placed in a container. Includes individual small items like nails. 0 = no limit"
+      "description": "Sets the maximum number of items that can be placed in a container. Includes individual small items like nails",
+      "disabled": "Unlimited"
     },
     "KnockedDownAllowed": {
       "display_name": "Allow Knock Down",
@@ -484,7 +489,8 @@
     },
     "SaveWorldEveryMinutes": {
       "display_name": "Auto World Save Interval",
-      "description": "Sets the real-world time between each automatic save of loaded parts of the map. 0 = never. (The map is usually saved only after clients leave a loaded area)"
+      "description": "Sets the real-world time between each automatic save of loaded parts of the map. (The map is usually saved only after clients leave a loaded area)",
+      "disabled": "Never"
     },
     "SpawnItems": {
       "display_name": "Spawn Items",
@@ -492,7 +498,8 @@
     },
     "SpawnPoint": {
       "display_name": "Set Spawn Point",
-      "description": "Sets the spawn point for every new player. Default is 0,0,0. [Find desired coordinates](https://map.projectzomboid.com/)"
+      "description": "Sets the spawn point for every new player. Default is 0,0,0. [Find desired coordinates](https://map.projectzomboid.com/)",
+      "disabled": "0,0,0"
     },
     "UDPPort": {
       "display_name": "UDP Port",
@@ -572,7 +579,8 @@
     },
     "MaxAccountsPerUser": {
       "display_name": "Maximum Accounts Per User",
-      "description": "Sets the limit on the number of different accounts a single Steam user may create on the server"
+      "description": "Sets the limit on the number of different accounts a single Steam user may create on the server",
+      "disabled": "Unlimited"
     },
     "MouseOverToSeeDisplayName": {
       "display_name": "Require Mouse Over To See Display Name",
@@ -580,7 +588,8 @@
     },
     "PingLimit": {
       "display_name": "Ping Limit",
-      "description": "Sets the ping limit before a player is kicked from the server. 100 = disabled"
+      "description": "Sets the ping limit before a player is kicked from the server",
+      "disabled": "Unlimited"
     },
     "ShowFirstAndLastName": {
       "display_name": "Display Player Character Names",
