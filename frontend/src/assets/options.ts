@@ -61,7 +61,7 @@ export const options: Options = {
         {
           FieldName: "ClientCommandFilter",
           Type: "String",
-          Default: "vehicle.*;+vehicle.damageWindow;+vehicle.fixPart;+vehicle.installPart;+vehicle.uninstallPart",
+          Default: "-vehicle.*;+vehicle.damageWindow;+vehicle.fixPart;+vehicle.installPart;+vehicle.uninstallPart",
           Keywords: "command,filter,ClientCommandFilter",
         },
         {

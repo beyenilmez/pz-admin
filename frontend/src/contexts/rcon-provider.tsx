@@ -34,6 +34,9 @@ interface RconContextType {
   updateOptions: () => Promise<boolean>;
   updatingOptions: boolean;
   optionsInvalid: boolean;
+
+  reloadDoubleptions: () => void;
+  reloadDoubleOptionsKey: number;
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
@@ -48,6 +51,8 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [options, setOptions] = useState<main.PzOptions>({} as main.PzOptions);
   const [modifiedOptions, setModifiedOptions] = useState<main.PzOptions>({} as main.PzOptions);
   const [updatingOptions, setUpdatingOptions] = useState(false);
+
+  const [reloadDoubleOptionsKey, setReloadDoubleOptionsKey] = useState(0);
 
   const optionsModified = useMemo(() => !deepEqual(options, modifiedOptions), [options, modifiedOptions]);
   const optionsInvalid = useMemo(() => {
@@ -167,6 +172,10 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     }
   }, [isConnected]);
 
+  const reloadDoubleptions = useCallback(() => {
+    setReloadDoubleOptionsKey((prevKey) => prevKey + 1);
+  }, [modifiedOptions]);
+
   return (
     <RconContext.Provider
       value={{
@@ -187,6 +196,8 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         updateOptions,
         updatingOptions,
         optionsInvalid,
+        reloadDoubleptions,
+        reloadDoubleOptionsKey,
       }}
     >
       {children}

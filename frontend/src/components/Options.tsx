@@ -10,13 +10,23 @@ import { main } from "@/wailsjs/go/models";
 import { Switch } from "./ui/switch";
 import { Input } from "./ui/input";
 import { formatWithMinimumOneDecimal } from "@/lib/utils";
-import { Edit, Search } from "lucide-react";
+import { Edit, RotateCw, Search } from "lucide-react";
 import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
+import { Tooltip, TooltipContent } from "./ui/tooltip";
+import { TooltipTrigger } from "@radix-ui/react-tooltip";
 
 export function OptionsTab() {
   const { t } = useTranslation();
-  const { optionsModified, cancelModifiedOptions, updateOptions, updatingOptions, modifiedOptions, optionsInvalid } =
-    useRcon();
+  const {
+    optionsModified,
+    cancelModifiedOptions,
+    updateOptions,
+    updatingOptions,
+    modifiedOptions,
+    optionsInvalid,
+    modifyOption,
+    reloadDoubleptions,
+  } = useRcon();
 
   const [tab, setTab] = useState("General");
   const [scrollAreaHeight, setScrollAreaHeight] = useState<string>("100%");
@@ -166,7 +176,28 @@ export function OptionsTab() {
                   }
                 >
                   <div>
-                    <SettingLabel>{t(`options.${option.FieldName}.display_name`)}</SettingLabel>
+                    <SettingLabel className="flex gap-1.5">
+                      {t(`options.${option.FieldName}.display_name`)}
+                      {option.Default !== undefined &&
+                        option.Default !== modifiedOptions[option.FieldName as keyof main.PzOptions] && (
+                          <Tooltip>
+                            <TooltipTrigger asChild>
+                              <div
+                                className="cursor-pointer mt-0.5"
+                                onClick={() => {
+                                  modifyOption(option.FieldName as keyof main.PzOptions, option.Default!);
+                                  reloadDoubleptions();
+                                }}
+                              >
+                                <RotateCw className="w-2.5 h-2.5 opacity-70" strokeWidth={2} />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>Reset to default</p>
+                            </TooltipContent>
+                          </Tooltip>
+                        )}
+                    </SettingLabel>
                     <SettingDescription>{t(`options.${option.FieldName}.description`)}</SettingDescription>
                     {option.Requirements && (
                       <div className="flex items-center gap-2 opacity-50">
@@ -312,7 +343,7 @@ function IntOptionContent({ option }: { option: Option }) {
 }
 
 function DoubleOptionContent({ option }: { option: Option }) {
-  const { modifiedOptions, modifyOption, optionsModified, options } = useRcon();
+  const { modifiedOptions, modifyOption, optionsModified, options, reloadDoubleOptionsKey } = useRcon();
 
   const [inputValue, setInputValue] = useState(
     formatWithMinimumOneDecimal(modifiedOptions[option.FieldName as keyof main.PzOptions])
@@ -349,6 +380,10 @@ function DoubleOptionContent({ option }: { option: Option }) {
       setInputValue(formatWithMinimumOneDecimal(modifiedOptions[option.FieldName as keyof main.PzOptions]));
     }
   }, [optionsModified]);
+
+  useEffect(() => {
+    setInputValue(formatWithMinimumOneDecimal(modifiedOptions[option.FieldName as keyof main.PzOptions]));
+  }, [reloadDoubleOptionsKey]);
 
   return (
     <div className="flex items-center">
