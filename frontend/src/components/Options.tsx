@@ -1,5 +1,5 @@
 import { Option, options as optionsData } from "@/assets/options";
-import { ScrollArea } from "./ui/scroll-area";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "./ui/button";
@@ -16,6 +16,7 @@ import { Tooltip, TooltipContent } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Textarea } from "./ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
+import { AddItemDialog } from "./Dialogs/AddItemDialog";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -258,6 +259,8 @@ function OptionContent({ option }: { option: Option }) {
     return <InformationOptionContent option={option} />;
   } else if (option.Type === "ServerWelcomeMessage") {
     return <ServerWelcomeMessageOptionContent option={option} />;
+  } else if (option.Type === "SpawnItems") {
+    return <SpawnItemsOptionContent option={option} />;
   } else if (option.Type === "Choice") {
     return <ChoiceOptionContent option={option} />;
   }
@@ -583,6 +586,43 @@ function ServerWelcomeMessageOptionContent({ option }: { option: Option }) {
       <SendMessageDialog
         onSaveEdit={(message) => modifyOption(option.FieldName as keyof main.PzOptions, message)}
         initialMessage={modifiedOptions[option.FieldName as keyof main.PzOptions] as string}
+        mode="settings"
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+      />
+    </>
+  );
+}
+
+function SpawnItemsOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption } = useRcon();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const items = ((modifiedOptions[option.FieldName as keyof main.PzOptions] as string) || "").split(",");
+
+  return (
+    <>
+      <div className="flex w-[20rem] gap-2">
+        <ScrollArea className="w-full whitespace-nowrap mr-0">
+          <div className="flex w-max space-x-0.5">
+            {items.length > 0 && items[0] !== "" ? (
+              items.map((item) => <img key={item} src={`items/${item}_0.png`} alt={item} className="w-6 h-6 select-none" />)
+            ) : (
+              <div className="items-center flex h-10 text-muted-foreground text-sm opacity-80 select-none">No items selected</div>
+            )}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+
+        <Button size={"icon"} className="shrink-0" onClick={() => setIsDialogOpen(true)}>
+          <Edit className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <AddItemDialog
+        onSaveEdit={(items) => modifyOption(option.FieldName as keyof main.PzOptions, items)}
+        initialItems={modifiedOptions[option.FieldName as keyof main.PzOptions] as string}
         mode="settings"
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}

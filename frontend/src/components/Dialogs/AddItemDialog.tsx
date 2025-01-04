@@ -4,7 +4,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Input } from "@/components/ui/input";
 import { useState, useEffect, ImgHTMLAttributes, useMemo, useRef } from "react";
 import { Combobox } from "../ui/combobox";
-import { ListFilter, MinusCircle, PlusCircle } from "lucide-react";
+import { ListFilter, MinusCircle, PlusCircle, XCircle } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import itemsData from "@/assets/items.json";
@@ -14,7 +14,10 @@ import { AddItems, LoadItemsDialog, SaveItemsDialog } from "@/wailsjs/go/main/Ap
 interface AddItemDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  names: string[];
+  names?: string[];
+  mode?: "add" | "settings";
+  initialItems?: string;
+  onSaveEdit?: (items: string) => void;
 }
 
 type Item = {
@@ -28,10 +31,12 @@ type Category = {
   items: Item[];
 };
 
-export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
+export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "add", onSaveEdit }: AddItemDialogProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
   const [selectedItems, setSelectedItems] = useState<Record<string, number>>({});
+
+  const [resetNum, setResetNum] = useState(0);
 
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -59,6 +64,8 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
   }, [searchQuery, selectedFilters]);
 
   const handleAddItems = () => {
+    if (!names) return;
+
     const itemRecords: main.ItemRecord[] = Object.entries(selectedItems).map(([itemId, count]) =>
       main.ItemRecord.createFrom({ itemId, count })
     );
@@ -84,6 +91,14 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
   };
 
   const handleRemoveItem = (itemId: string) => {
+    if (mode === "settings") {
+      setSelectedItems((prev) => {
+        const updated = { ...prev };
+        delete updated[itemId];
+        return updated;
+      });
+    }
+
     setSelectedItems((prev) => {
       const updated = { ...prev };
       if (updated[itemId] > 1) {
@@ -124,7 +139,27 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
     setSearchQuery("");
     setSelectedFilters([]);
     setSelectedItems({});
+    setResetNum((prev) => prev + 1);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!initialItems) return;
+
+    setSelectedItems(initialItems.split(",").reduce((acc, item) => ({ ...acc, [item]: 1 }), {}));
+  }, [initialItems, resetNum]);
+
+  const handleSaveEdit = () => {
+    onSaveEdit?.(
+      Object.entries(selectedItems)
+        .map(([itemId, _]) => `${itemId}`)
+        .join(",")
+    );
+    onClose();
+  };
+
+  const handleResetEdit = () => {
+    setResetNum((prev) => prev + 1);
+  };
 
   const renderSelectedItems = () => {
     return Object.entries(selectedItems).map(([itemId, count]) => {
@@ -148,30 +183,44 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
           <span className="flex-grow text-xs w-2 text-ellipsis overflow-clip">
             {item.name} {item.name === "Map" || (item.name === "Map (item)" && `(${item.itemId})`)}
           </span>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full shrink-0"
-            onClick={() => handleRemoveItem(itemId)}
-            asChild
-          >
-            <MinusCircle className="h-4 w-4" />
-          </Button>
-          <Input
-            value={count.toString()}
-            type="number"
-            className="w-12 text-xs text-center px-1"
-            onChange={(e) => handleSetItem(itemId, parseInt(e.target.value))}
-          />
-          <Button
-            variant="ghost"
-            size="icon"
-            className="rounded-full shrink-0"
-            onClick={() => handleAddItem(itemId)}
-            asChild
-          >
-            <PlusCircle className="h-4 w-4" />
-          </Button>
+          {mode === "add" ? (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full shrink-0"
+                onClick={() => handleRemoveItem(itemId)}
+                asChild
+              >
+                <MinusCircle className="h-4 w-4" />
+              </Button>
+              <Input
+                value={count.toString()}
+                type="number"
+                className="w-12 text-xs text-center px-1"
+                onChange={(e) => handleSetItem(itemId, parseInt(e.target.value))}
+              />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full shrink-0"
+                onClick={() => handleAddItem(itemId)}
+                asChild
+              >
+                <PlusCircle className="h-4 w-4" />
+              </Button>
+            </>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon"
+              className="rounded-full shrink-0"
+              onClick={() => handleRemoveItem(itemId)}
+              asChild
+            >
+              <XCircle className="h-4 w-4" />
+            </Button>
+          )}
         </div>
       );
     });
@@ -181,9 +230,9 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[80vw] max-h-full">
         <DialogHeader>
-          <DialogTitle className="text-2xl">Add Items</DialogTitle>
+          <DialogTitle className="text-2xl">{mode === "add" ? "Add Items" : "Edit Items"}</DialogTitle>
           <DialogDescription>
-            <p>{"You will add items to " + names.join(", ") + "."}</p>
+            {mode === "add" && <p>{"You will add items to " + names?.join(", ") + "."}</p>}
           </DialogDescription>
         </DialogHeader>
         <div className="flex gap-10">
@@ -236,7 +285,9 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
                                 {category.name === "Cartography" ? ` (${item.itemId})` : ""}
                               </span>
 
-                              {selectedItems[item.itemId] > 0 && <span>{selectedItems[item.itemId]}</span>}
+                              {selectedItems[item.itemId] > 0 && mode === "add" && (
+                                <span>{selectedItems[item.itemId]}</span>
+                              )}
                             </Button>
                           ))}
                         </AccordionContent>
@@ -254,14 +305,27 @@ export function AddItemDialog({ isOpen, onClose, names }: AddItemDialogProps) {
             </ScrollArea>
             <div className="flex justify-between">
               <div className="flex gap-2">
-                <Button onClick={handleSaveItems} disabled={Object.entries(selectedItems).length === 0}>
+                <Button
+                  variant={"outline"}
+                  onClick={handleSaveItems}
+                  disabled={Object.entries(selectedItems).length === 0}
+                >
                   Save Items
                 </Button>
-                <Button onClick={handleLoadItems}>Load Items</Button>
+                <Button variant={"outline"} onClick={handleLoadItems}>
+                  Load Items
+                </Button>
               </div>
-              <Button onClick={handleAddItems} disabled={Object.entries(selectedItems).length === 0}>
-                Add Selected Items
-              </Button>
+              {mode === "add" ? (
+                <Button onClick={handleAddItems} disabled={Object.entries(selectedItems).length === 0}>
+                  Add Selected Items
+                </Button>
+              ) : (
+                <div className="space-x-2">
+                  <Button onClick={handleResetEdit}>Reset</Button>
+                  <Button onClick={handleSaveEdit}>Save Edit</Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

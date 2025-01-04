@@ -1,6 +1,15 @@
 export type Option = {
   FieldName: string;
-  Type: "String" | "Text" | "Integer" | "Double" | "Boolean" | "Information" | "ServerWelcomeMessage" | "Choice";
+  Type:
+    | "String"
+    | "Text"
+    | "Integer"
+    | "Double"
+    | "Boolean"
+    | "Information"
+    | "ServerWelcomeMessage"
+    | "Choice"
+    | "SpawnItems";
   Default?: boolean | number | string;
   Range?: {
     Min: number;
@@ -172,7 +181,7 @@ export const options: Options = {
         },
         {
           FieldName: "SpawnItems",
-          Type: "String",
+          Type: "SpawnItems",
           Keywords: "spawn,items,SpawnItems",
         },
         {
