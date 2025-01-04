@@ -19,14 +19,25 @@ import { useConfig } from "@/contexts/config-provider";
 interface SendMessageDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  mode?: "message" | "settings";
+  initialMessage?: string;
+  onSaveEdit?: (message: string) => void;
 }
 
-const maxBytes = 988;
-
-export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
+export function SendMessageDialog({
+  isOpen,
+  onClose,
+  mode = "message",
+  initialMessage,
+  onSaveEdit,
+}: SendMessageDialogProps) {
   const [message, setMessage] = useState("");
   const [lineColors, setLineColors] = useState<Record<number, string>>({});
   const [lineColorsFloat, setLineColorsFloat] = useState<Record<number, string>>({});
+
+  const [resetNum, setResetNum] = useState(0);
+
+  const maxBytes = 988 - (mode === "settings" ? 24 : 0);
 
   const handleSendMessage = () => {
     ServerMsg(formattedMessage);
@@ -38,6 +49,7 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
     setMessage("");
     setLineColors({});
     setLineColorsFloat({});
+    setResetNum((prev) => prev + 1);
   }, [isOpen]);
 
   const handleColorChange = (index: number, color: string) => {
@@ -110,6 +122,44 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
       setLineColors(serverMessage.lineColors);
       setLineColorsFloat(serverMessage.lineColorsFloat);
     });
+  };
+
+  useEffect(() => {
+    if (initialMessage) {
+      let constructedMessage = "";
+
+      initialMessage.split("<LINE>").forEach((line, index) => {
+        let trimmedLine = line.trim();
+
+        if (trimmedLine.startsWith("<RGB:")) {
+          const color = trimmedLine.split("<RGB:")[1].split(">")[0];
+          setLineColorsFloat((prev) => ({ ...prev, [index]: color }));
+          const [x, y, z] = color.split(",");
+          setLineColors((prev) => ({
+            ...prev,
+            [index]: `
+            ${(parseFloat(x) * 255).toFixed(0)},
+              ${(parseFloat(y) * 255).toFixed(0)},
+              ${(parseFloat(z) * 255).toFixed(0)}`,
+          }));
+
+          trimmedLine = trimmedLine.split(">")[1];
+        }
+
+        constructedMessage += trimmedLine + "\n";
+      });
+
+      setMessage(constructedMessage);
+    }
+  }, [initialMessage, resetNum]);
+
+  const handleSaveEdit = () => {
+    onSaveEdit?.(formattedMessage);
+    onClose();
+  };
+
+  const handleResetEdit = () => {
+    setResetNum((prev) => prev + 1);
   };
 
   const renderTextareaWithColors = () => {
@@ -198,9 +248,9 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[80vw] w-fit h-max-screen overflow-clip">
         <DialogHeader>
-          <DialogTitle>Send Message</DialogTitle>
+          <DialogTitle>{mode === "message" ? "Send Message" : "Edit message"}</DialogTitle>
           <DialogDescription>
-            <p>You will send this message to everyone in the server.</p>
+            <p>{mode === "message" ? "You will send this message to everyone in the server." : ""}</p>
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1">
@@ -229,14 +279,27 @@ export function SendMessageDialog({ isOpen, onClose }: SendMessageDialogProps) {
         </div>
         <DialogFooter className="w-full flex flex-row sm:flex-row sm:justify-between justify-between">
           <div className="flex gap-2">
-            <Button onClick={handleSaveMessage} disabled={!message}>
+            <Button onClick={handleSaveMessage} disabled={!message} variant={"outline"}>
               Save Message
             </Button>
-            <Button onClick={handleLoadMessage}>Load Message</Button>
+            <Button onClick={handleLoadMessage} variant={"outline"}>
+              Load Message
+            </Button>
           </div>
-          <Button type="submit" onClick={handleSendMessage} disabled={!formattedMessage}>
-            Send
-          </Button>
+          {mode === "settings" ? (
+            <div className="space-x-2">
+              <Button type="submit" variant={"secondary"} onClick={handleResetEdit}>
+                Reset
+              </Button>
+              <Button type="submit" onClick={handleSaveEdit}>
+                Save Edit
+              </Button>
+            </div>
+          ) : (
+            <Button type="submit" onClick={handleSendMessage} disabled={!formattedMessage}>
+              Send
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

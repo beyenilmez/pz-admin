@@ -1,6 +1,6 @@
 export type Option = {
   FieldName: string;
-  Type: "String" | "Integer" | "Double" | "Boolean" | "Information";
+  Type: "String" | "Integer" | "Double" | "Boolean" | "Information" | "ServerWelcomeMessage";
   Default?: boolean | number | string;
   Range?: {
     Min: number;
@@ -191,7 +191,7 @@ export const options: Options = {
         },
         {
           FieldName: "ServerWelcomeMessage",
-          Type: "String",
+          Type: "ServerWelcomeMessage",
           Default:
             "Welcome to Project Zomboid Multiplayer! <LINE> <LINE> To interact with the Chat panel: press Tab, T, or Enter. <LINE> <LINE> The Tab key will change the target stream of the message. <LINE> <LINE> Global Streams: /all <LINE> Local Streams: /say, /yell <LINE> Special Steams: /whisper, /safehouse, /faction. <LINE> <LINE> Press the Up arrow to cycle through your message history. Click the Gear icon to customize chat. <LINE> <LINE> Happy surviving!",
           Keywords: "welcome,message,motd,ServerWelcomeMessage",

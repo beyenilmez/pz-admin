@@ -10,7 +10,8 @@ import { main } from "@/wailsjs/go/models";
 import { Switch } from "./ui/switch";
 import { Input } from "./ui/input";
 import { formatWithMinimumOneDecimal } from "@/lib/utils";
-import { Search } from "lucide-react";
+import { Edit, Search } from "lucide-react";
+import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -220,6 +221,8 @@ function OptionContent({ option }: { option: Option }) {
     return <StringOptionContent option={option} />;
   } else if (option.Type === "Information") {
     return <InformationOptionContent option={option} />;
+  } else if (option.Type === "ServerWelcomeMessage") {
+    return <ServerWelcomeMessageOptionContent option={option} />;
   }
 }
 
@@ -452,5 +455,49 @@ function InformationOptionContent({ option }: { option: Option }) {
       readOnly={true}
       value={modifiedOptions[option.FieldName as keyof main.PzOptions] as string}
     />
+  );
+}
+
+function ServerWelcomeMessageOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption } = useRcon();
+  const { t } = useTranslation();
+
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  return (
+    <>
+      <div className="flex gap-1.5 w-[20rem]">
+        <Input
+          type="text"
+          inputMode="text"
+          placeholder={
+            modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+              ? t(`options.${option.FieldName}.disabled`)
+              : ""
+          }
+          value={
+            modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+              ? ""
+              : (modifiedOptions[option.FieldName as keyof main.PzOptions] as string)
+          }
+          onChange={(e) => {
+            modifyOption(option.FieldName as keyof main.PzOptions, e.target.value);
+          }}
+          onKeyDown={(e) => e.key.match(/[\\"]/g) && e.preventDefault()}
+          disabled={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+        />
+        <Button size={"icon"} className="shrink-0" onClick={() => setIsDialogOpen(true)}>
+          <Edit className="h-4 w-4" />
+        </Button>
+      </div>
+
+      <SendMessageDialog
+        onSaveEdit={(message) => modifyOption(option.FieldName as keyof main.PzOptions, message)}
+        initialMessage={modifiedOptions[option.FieldName as keyof main.PzOptions] as string}
+        mode="settings"
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+      />
+    </>
   );
 }
