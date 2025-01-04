@@ -17,6 +17,7 @@ import { TooltipTrigger } from "@radix-ui/react-tooltip";
 import { Textarea } from "./ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { AddItemDialog } from "./Dialogs/AddItemDialog";
+import { Slider } from "./ui/my-slider";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -359,6 +360,8 @@ function DoubleOptionContent({ option }: { option: Option }) {
   );
   const floatInputValue = parseFloat(inputValue);
 
+  const step = (option.Range?.Max ?? 2147483647) >= 100 ? 1 : 0.1;
+
   const { t } = useTranslation();
 
   const handleInputValueChange = (newValue: string) => {
@@ -401,7 +404,6 @@ function DoubleOptionContent({ option }: { option: Option }) {
           <Switch
             checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
             onCheckedChange={(value) => {
-              console.log(option.DisabledValue as number);
               modifyOption(
                 option.FieldName as keyof main.PzOptions,
                 value ? (option.DisabledValue as number) : options[option.FieldName as keyof main.PzOptions]
@@ -412,27 +414,39 @@ function DoubleOptionContent({ option }: { option: Option }) {
         </div>
       )}
       <div>
-        <div>
-          <Input
-            className={`w-[5.5rem] ${
-              (isNaN(floatInputValue) ||
-                floatInputValue > (option.Range?.Max ?? 2147483647) ||
-                floatInputValue < (option.Range?.Min ?? -2147483648)) &&
-              "ring-offset-destructive ring ring-destructive"
-            }`}
-            type="text"
-            inputMode="decimal"
-            value={inputValue}
-            onChange={(e) => handleInputValueChange(e.target.value)}
-            min={option.Range?.Min ?? -2147483647}
+        <div className="w-[20rem] gap-4 flex">
+          <Slider
+            value={[modifiedOptions[option.FieldName as keyof main.PzOptions] as number]}
+            onValueChange={(value) => {
+              setInputValue(formatWithMinimumOneDecimal(value[0]));
+              modifyOption(option.FieldName as keyof main.PzOptions, value[0]);
+            }}
+            step={step}
             max={option.Range?.Max ?? 2147483647}
-            onKeyDown={(e) => e.key.match(/[-+]/) && e.preventDefault()}
+            min={option.Range?.Min ?? -2147483648}
           />
-          {option.Range && (
-            <div className="text-[0.6rem] w-[5.5rem] h-0 text-center text-muted-foreground">
-              {option.Range?.Min} - {option.Range?.Max}
-            </div>
-          )}
+          <div>
+            <Input
+              className={`w-[5.5rem] ${
+                (isNaN(floatInputValue) ||
+                  floatInputValue > (option.Range?.Max ?? 2147483647) ||
+                  floatInputValue < (option.Range?.Min ?? -2147483648)) &&
+                "ring-offset-destructive ring ring-destructive"
+              }`}
+              type="text"
+              inputMode="decimal"
+              value={inputValue}
+              onChange={(e) => handleInputValueChange(e.target.value)}
+              min={option.Range?.Min ?? -2147483647}
+              max={option.Range?.Max ?? 2147483647}
+              onKeyDown={(e) => e.key.match(/[-+]/) && e.preventDefault()}
+            />
+            {option.Range && (
+              <div className="text-[0.6rem] w-[5.5rem] h-0 text-center text-muted-foreground">
+                {option.Range?.Min} - {option.Range?.Max}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -607,9 +621,13 @@ function SpawnItemsOptionContent({ option }: { option: Option }) {
         <ScrollArea className="w-full whitespace-nowrap mr-0">
           <div className="flex w-max space-x-0.5">
             {items.length > 0 && items[0] !== "" ? (
-              items.map((item) => <img key={item} src={`items/${item}_0.png`} alt={item} className="w-6 h-6 select-none" />)
+              items.map((item) => (
+                <img key={item} src={`items/${item}_0.png`} alt={item} className="w-6 h-6 select-none" />
+              ))
             ) : (
-              <div className="items-center flex h-10 text-muted-foreground text-sm opacity-80 select-none">No items selected</div>
+              <div className="items-center flex h-10 text-muted-foreground text-sm opacity-80 select-none">
+                No items selected
+              </div>
             )}
           </div>
           <ScrollBar orientation="horizontal" />
