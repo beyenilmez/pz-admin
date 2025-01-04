@@ -9,6 +9,7 @@ import { useRcon } from "@/contexts/rcon-provider";
 import { main } from "@/wailsjs/go/models";
 import { Switch } from "./ui/switch";
 import { Input } from "./ui/input";
+import { formatWithMinimumOneDecimal } from "@/lib/utils";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -105,7 +106,7 @@ export function OptionsTab() {
         </TabsList>
       </Tabs>
 
-      <ScrollArea className={`w-full pr-8`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
+      <ScrollArea className={`w-full pr-6`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
         {optionsData.categories.map((category, index) => (
           <div key={category.name} className="flex flex-col gap-2">
             <div className={`border-b pb-2 ${index === 0 ? "mt-2" : "mt-10"}`}>
@@ -183,6 +184,8 @@ function OptionContent({ option }: { option: Option }) {
     return <BoolOptionContent option={option} />;
   } else if (option.Type === "Integer") {
     return <IntOptionContent option={option} />;
+  } else if (option.Type === "Double") {
+    return <DoubleOptionContent option={option} />;
   }
 }
 
@@ -190,12 +193,14 @@ function BoolOptionContent({ option }: { option: Option }) {
   const { modifiedOptions, modifyOption } = useRcon();
 
   return (
-    <Switch
-      checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
-      onCheckedChange={(value) => {
-        modifyOption(option.FieldName as keyof main.PzOptions, value);
-      }}
-    />
+    <div className="w-20 flex justify-center">
+      <Switch
+        checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
+        onCheckedChange={(value) => {
+          modifyOption(option.FieldName as keyof main.PzOptions, value);
+        }}
+      />
+    </div>
   );
 }
 
@@ -205,25 +210,97 @@ function IntOptionContent({ option }: { option: Option }) {
   const value = modifiedOptions[option.FieldName as keyof main.PzOptions] as number;
 
   return (
-    <Input
-      className={`w-20 ${
-        (isNaN(value) || value > (option.Range?.Max ?? 2147483647) || value < (option.Range?.Min ?? -2147483648)) &&
-        "ring-offset-destructive ring ring-destructive"
-      }`}
-      type="number"
-      value={modifiedOptions[option.FieldName as keyof main.PzOptions] as number}
-      onChange={(e) => {
-        let value = parseInt(e.target.value, 10);
-        if (e.target.value !== "" && isNaN(value)) {
-          return;
-        }
-        value = Math.min(value, option.Range?.Max ?? 2147483647);
+    <>
+      <Input
+        className={`w-20 ${
+          (isNaN(value) || value > (option.Range?.Max ?? 2147483647) || value < (option.Range?.Min ?? -2147483648)) &&
+          "ring-offset-destructive ring ring-destructive"
+        }`}
+        type="number"
+        lang="en"
+        inputMode="numeric"
+        value={modifiedOptions[option.FieldName as keyof main.PzOptions] as number}
+        onChange={(e) => {
+          let value = parseInt(e.target.value, 10);
+          if (e.target.value !== "" && isNaN(value)) {
+            return;
+          }
+          value = Math.min(value, option.Range?.Max ?? 2147483647);
 
-        modifyOption(option.FieldName as keyof main.PzOptions, value);
-      }}
-      min={option.Range?.Min ?? -2147483647}
-      max={option.Range?.Max ?? 2147483647}
-      onKeyDown={(e) => e.key.match(/[-+.,]/) && e.preventDefault()}
-    />
+          modifyOption(option.FieldName as keyof main.PzOptions, value);
+        }}
+        min={option.Range?.Min ?? -2147483647}
+        max={option.Range?.Max ?? 2147483647}
+        onKeyDown={(e) => e.key.match(/[-+.,]/) && e.preventDefault()}
+      />
+      {option.Range && (
+        <div className="text-[0.6rem] w-20 h-0 text-center">
+          {option.Range?.Min} - {option.Range?.Max}
+        </div>
+      )}
+    </>
+  );
+}
+
+function DoubleOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption, optionsModified } = useRcon();
+
+  const [inputValue, setInputValue] = useState(
+    formatWithMinimumOneDecimal(modifiedOptions[option.FieldName as keyof main.PzOptions])
+  );
+  const floatInputValue = parseFloat(inputValue);
+
+  const handleInputValueChange = (newValue: string) => {
+    newValue = newValue
+      .replace(/[^0-9.,]/g, "")
+      .replace(",", ".")
+      .replace(/(\..*?)\./g, "$1");
+    if (newValue === ".") {
+      setInputValue("");
+      return;
+    }
+
+    const floatNewValue = parseFloat(newValue);
+
+    if (!newValue.endsWith(".") && !isNaN(floatNewValue) && floatNewValue > (option.Range?.Max ?? 2147483647)) {
+      setInputValue((option.Range?.Max ?? 2147483647).toString());
+    } else {
+      setInputValue(newValue);
+    }
+  };
+
+  useEffect(() => {
+    modifyOption(option.FieldName as keyof main.PzOptions, floatInputValue);
+  }, [inputValue]);
+
+  useEffect(() => {
+    if (!optionsModified) {
+      setInputValue(formatWithMinimumOneDecimal(modifiedOptions[option.FieldName as keyof main.PzOptions]));
+    }
+  }, [optionsModified]);
+
+  return (
+    <>
+      <Input
+        className={`w-20 ${
+          (isNaN(floatInputValue) ||
+            floatInputValue > (option.Range?.Max ?? 2147483647) ||
+            floatInputValue < (option.Range?.Min ?? -2147483648)) &&
+          "ring-offset-destructive ring ring-destructive"
+        }`}
+        type="text"
+        inputMode="decimal"
+        value={inputValue}
+        onChange={(e) => handleInputValueChange(e.target.value)}
+        min={option.Range?.Min ?? -2147483647}
+        max={option.Range?.Max ?? 2147483647}
+        onKeyDown={(e) => e.key.match(/[-+]/) && e.preventDefault()}
+      />
+      {option.Range && (
+        <div className="text-[0.6rem] w-20 h-0 text-center">
+          {option.Range?.Min} - {option.Range?.Max}
+        </div>
+      )}
+    </>
   );
 }

@@ -1,6 +1,6 @@
 export type Option = {
   FieldName: string;
-  Type: string;
+  Type: "String" | "Integer" | "Double" | "Boolean" | "Information";
   Default?: boolean | number | string;
   Range?: {
     Min: number;

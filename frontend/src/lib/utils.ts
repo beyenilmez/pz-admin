@@ -35,3 +35,18 @@ export function deepEqual(obj1: any, obj2: any): boolean {
 export function isEmpty(obj: any): boolean {
   return Object.keys(obj).length === 0;
 }
+
+/**
+ * Ensures a number has at least one decimal place.
+ * Converts non-numeric values gracefully.
+ *
+ * @param value - The input value to format.
+ * @returns A string representation of the value with at least one decimal place.
+ */
+export function formatWithMinimumOneDecimal(value: any): string {
+  const numericValue = Number(value);
+  if (isNaN(numericValue)) {
+    return "";
+  }
+  return numericValue % 1 === 0 ? `${numericValue}.0` : String(numericValue).replace(",", ".");
+}
