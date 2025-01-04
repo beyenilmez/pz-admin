@@ -73,7 +73,11 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const handleUpdateOptions = (newOptions: main.PzOptions) => {
-      if (optionsModified && !deepEqual(modifiedOptions, newOptions)) {
+      LogDebug(optionsModified + ", " + deepEqual(modifiedOptions, newOptions));
+      console.log(modifiedOptions);
+      console.log(newOptions);
+      console.log(deepEqual(modifiedOptions, newOptions));
+      if (optionsModified && modifiedOptions.Open !== undefined && !deepEqual(modifiedOptions, newOptions)) {
         SendNotification({
           title: "Options reloaded",
           message: "An option has been updated from somewhere else",
@@ -92,7 +96,7 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       EventsOff("update-players");
       EventsOff("update-options");
     };
-  }, [modifiedOptions]);
+  }, [modifiedOptions, options]);
 
   const connect = useCallback(async (credentials: main.Credentials): Promise<boolean> => {
     try {

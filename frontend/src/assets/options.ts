@@ -1,6 +1,6 @@
 export type Option = {
   FieldName: string;
-  Type: "String" | "Integer" | "Double" | "Boolean" | "Information" | "ServerWelcomeMessage";
+  Type: "String" | "Text" | "Integer" | "Double" | "Boolean" | "Information" | "ServerWelcomeMessage";
   Default?: boolean | number | string;
   Range?: {
     Min: number;
@@ -137,7 +137,7 @@ export const options: Options = {
         },
         {
           FieldName: "PublicDescription",
-          Type: "String",
+          Type: "Text",
           Keywords: "public,description,PublicDescription",
         },
         {

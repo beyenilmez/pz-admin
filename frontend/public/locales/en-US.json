@@ -481,7 +481,7 @@
     },
     "PublicDescription": {
       "display_name": "Server Public Description",
-      "description": "Sets the description displayed in the in-game browser. Use \"\\n\" to create a new line in the description"
+      "description": "Sets the description displayed in the in-game browser"
     },
     "PublicName": {
       "display_name": "Server Public Name",

@@ -299,7 +299,7 @@ func (app *App) applyOptions(options []OptionPair) int {
 	successCount := 0
 
 	for _, option := range options {
-		command := fmt.Sprintf("changeoption %s %s", option.Name, option.Value)
+		command := fmt.Sprintf("changeoption %s \"%s\"", option.Name, option.Value)
 		res, err := conn.Execute(command)
 
 		if err == nil && isOptionUpdateSuccessful(option, res) {

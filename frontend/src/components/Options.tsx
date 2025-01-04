@@ -14,6 +14,7 @@ import { Edit, RotateCw, Search } from "lucide-react";
 import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 import { Tooltip, TooltipContent } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
+import { Textarea } from "./ui/textarea";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -250,6 +251,8 @@ function OptionContent({ option }: { option: Option }) {
     return <DoubleOptionContent option={option} />;
   } else if (option.Type === "String") {
     return <StringOptionContent option={option} />;
+  } else if (option.Type === "Text") {
+    return <TextOptionContent option={option} />;
   } else if (option.Type === "Information") {
     return <InformationOptionContent option={option} />;
   } else if (option.Type === "ServerWelcomeMessage") {
@@ -471,6 +474,53 @@ function StringOptionContent({ option }: { option: Option }) {
         }
         onChange={(e) => {
           modifyOption(option.FieldName as keyof main.PzOptions, e.target.value);
+        }}
+        onKeyDown={(e) => e.key.match(/[\\"]/g) && e.preventDefault()}
+        disabled={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+      />
+    </div>
+  );
+}
+
+function TextOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption, options } = useRcon();
+
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex items-center">
+      {option.DisabledValue !== undefined && (
+        <div className="flex flex-col items-center min-w-24">
+          <Switch
+            checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+            onCheckedChange={(value) => {
+              modifyOption(
+                option.FieldName as keyof main.PzOptions,
+                value
+                  ? (option.DisabledValue as string)
+                  : options[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+                  ? ""
+                  : (options[option.FieldName as keyof main.PzOptions] as string)
+              );
+            }}
+          />
+          <div className="text-xs text-muted-foreground h-0">{t(`options.${option.FieldName}.disabled`)}</div>
+        </div>
+      )}
+      <Textarea
+        className="w-[20rem] max-h-40"
+        inputMode="text"
+        placeholder={
+          modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+            ? t(`options.${option.FieldName}.disabled`)
+            : ""
+        }
+        value={(modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+          ? ""
+          : (modifiedOptions[option.FieldName as keyof main.PzOptions] as string)
+        ).replace(/\\n/g, "\n")}
+        onChange={(e) => {
+          modifyOption(option.FieldName as keyof main.PzOptions, e.target.value.replace(/\n/g, "\\n"));
         }}
         onKeyDown={(e) => e.key.match(/[\\"]/g) && e.preventDefault()}
         disabled={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
