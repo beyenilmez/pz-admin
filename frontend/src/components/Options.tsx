@@ -186,6 +186,10 @@ function OptionContent({ option }: { option: Option }) {
     return <IntOptionContent option={option} />;
   } else if (option.Type === "Double") {
     return <DoubleOptionContent option={option} />;
+  } else if (option.Type === "String") {
+    return <StringOptionContent option={option} />;
+  } else if (option.Type === "Information") {
+    return <InformationOptionContent option={option} />;
   }
 }
 
@@ -355,5 +359,68 @@ function DoubleOptionContent({ option }: { option: Option }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function StringOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption, options } = useRcon();
+
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex items-center">
+      {option.DisabledValue !== undefined && (
+        <div className="flex flex-col items-center min-w-24">
+          <Switch
+            checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+            onCheckedChange={(value) => {
+              modifyOption(
+                option.FieldName as keyof main.PzOptions,
+                value
+                  ? (option.DisabledValue as string)
+                  : options[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+                  ? ""
+                  : options[option.FieldName as keyof main.PzOptions]
+              );
+            }}
+          />
+          <div className="text-xs text-muted-foreground h-0">{t(`options.${option.FieldName}.disabled`)}</div>
+        </div>
+      )}
+      <Input
+        className="w-[20rem]"
+        type="text"
+        inputMode="text"
+        placeholder={
+          modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+            ? t(`options.${option.FieldName}.disabled`)
+            : ""
+        }
+        value={
+          modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue
+            ? ""
+            : (modifiedOptions[option.FieldName as keyof main.PzOptions] as string)
+        }
+        onChange={(e) => {
+          modifyOption(option.FieldName as keyof main.PzOptions, e.target.value);
+        }}
+        onKeyDown={(e) => e.key.match(/[\\"]/g) && e.preventDefault()}
+        disabled={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
+      />
+    </div>
+  );
+}
+
+function InformationOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions } = useRcon();
+
+  return (
+    <Input
+      className="w-28 text-center"
+      type="text"
+      inputMode="none"
+      readOnly={true}
+      value={modifiedOptions[option.FieldName as keyof main.PzOptions] as string}
+    />
   );
 }
