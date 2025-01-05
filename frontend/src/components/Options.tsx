@@ -19,6 +19,7 @@ import { ToggleGroup, ToggleGroupItem } from "./ui/toggle-group";
 import { AddItemDialog } from "./Dialogs/AddItemDialog";
 import { Slider } from "./ui/my-slider";
 import { ReloadOptions } from "@/wailsjs/go/main/App";
+import { Label } from "./ui/label";
 
 export function OptionsTab() {
   const { t } = useTranslation();
@@ -113,7 +114,7 @@ export function OptionsTab() {
         options: category.options.filter(
           (option) =>
             option.FieldName.toLowerCase().includes(searchText.toLowerCase()) ||
-            option.Keywords?.toLowerCase().includes(searchText.toLowerCase()) ||
+            t(`options.${option.FieldName}.keywords`).toLowerCase().includes(searchText.toLowerCase()) ||
             option.Type.toLowerCase() === searchText.toLowerCase() ||
             category.name.toLowerCase().includes(searchText.toLowerCase())
         ),
@@ -124,7 +125,7 @@ export function OptionsTab() {
   return (
     <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2 space-y-2">
       <Tabs value={tab}>
-        <TabsList defaultValue={"General"} className="flex flex-wrap h-fit" ref={tabsRef}>
+        <TabsList defaultValue={"General"} className="flex flex-wrap h-fit min-h-10" ref={tabsRef}>
           {filteredCategories.map((category) => (
             <TabsTrigger
               key={category.name}
@@ -176,8 +177,10 @@ export function OptionsTab() {
                   key={option.FieldName}
                   disabled={
                     option.Requirements &&
-                    modifiedOptions[option.Requirements?.FieldName as keyof main.PzOptions] !==
-                      option.Requirements?.FieldValue
+                    option.Requirements.some(
+                      (requirement) =>
+                        modifiedOptions[requirement.FieldName as keyof main.PzOptions] !== requirement.FieldValue
+                    )
                   }
                 >
                   <div>
@@ -207,8 +210,13 @@ export function OptionsTab() {
                     {option.Requirements && (
                       <div className="flex items-center gap-2 opacity-50">
                         <span className="text-xs text-muted-foreground">
-                          Requires: {t(`options.${option.Requirements.FieldName}.display_name`)} to be{" "}
-                          {option.Requirements.FieldValue.toString()}
+                          Requires:{" "}
+                          {option.Requirements.map(
+                            (requirement) =>
+                              t(`options.${requirement.FieldName}.display_name`) +
+                              " to be " +
+                              (requirement.FieldValue ? "enabled" : "disabled")
+                          ).join(", ")}
                         </span>
                       </div>
                     )}
@@ -287,7 +295,7 @@ function BoolOptionContent({ option }: { option: Option }) {
   const { modifiedOptions, modifyOption } = useRcon();
 
   return (
-    <div className="w-[5.5rem] flex justify-center">
+    <div className="w-[5.5rem] flex justify-end">
       <Switch
         checked={modifiedOptions[option.FieldName as keyof main.PzOptions] as boolean}
         onCheckedChange={(value) => {
@@ -310,6 +318,7 @@ function IntOptionContent({ option }: { option: Option }) {
       {option.DisabledValue !== undefined && (
         <div className="flex flex-col items-center min-w-24">
           <Switch
+            id={option.FieldName + "-disabled"}
             checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
             onCheckedChange={(value) => {
               modifyOption(
@@ -322,7 +331,9 @@ function IntOptionContent({ option }: { option: Option }) {
               );
             }}
           />
-          <div className="text-xs text-muted-foreground h-0">{t(`options.${option.FieldName}.disabled`)}</div>
+          <Label htmlFor={option.FieldName + "-disabled"} className="text-[0.65rem] text-muted-foreground h-0">
+            {t(`options.${option.FieldName}.disabled`)}
+          </Label>
         </div>
       )}
       <div>
@@ -432,10 +443,9 @@ function DoubleOptionContent({ option }: { option: Option }) {
       <div>
         <div className="w-[20rem] gap-4 flex">
           <Slider
-            value={[modifiedOptions[option.FieldName as keyof main.PzOptions] as number]}
+            value={[parseFloat(inputValue)]}
             onValueChange={(value) => {
               setInputValue(formatWithMinimumOneDecimal(value[0]));
-              modifyOption(option.FieldName as keyof main.PzOptions, value[0]);
             }}
             step={step}
             max={option.Range?.Max ?? 2147483647}
@@ -479,6 +489,7 @@ function StringOptionContent({ option }: { option: Option }) {
       {option.DisabledValue !== undefined && (
         <div className="flex flex-col items-center min-w-24">
           <Switch
+            id={option.FieldName + "-disabled"}
             checked={modifiedOptions[option.FieldName as keyof main.PzOptions] === option.DisabledValue}
             onCheckedChange={(value) => {
               modifyOption(
@@ -491,7 +502,9 @@ function StringOptionContent({ option }: { option: Option }) {
               );
             }}
           />
-          <div className="text-xs text-muted-foreground h-0">{t(`options.${option.FieldName}.disabled`)}</div>
+          <Label htmlFor={option.FieldName + "-disabled"} className="text-[0.65rem] text-muted-foreground h-0">
+            {t(`options.${option.FieldName}.disabled`)}
+          </Label>
         </div>
       )}
       <Input
@@ -638,7 +651,12 @@ function SpawnItemsOptionContent({ option }: { option: Option }) {
           <div className="flex w-max space-x-0.5">
             {items.length > 0 && items[0] !== "" ? (
               items.map((item) => (
-                <img key={item} src={`items/${item}_0.png`} alt={item} className="w-6 h-6 select-none" />
+                <Tooltip>
+                  <TooltipTrigger className="cursor-default">
+                    <img key={item} src={`items/${item}_0.png`} alt={item} className="w-6 h-6 select-none" />
+                  </TooltipTrigger>
+                  <TooltipContent>{item}</TooltipContent>
+                </Tooltip>
               ))
             ) : (
               <div className="items-center flex h-10 text-muted-foreground text-sm opacity-80 select-none">

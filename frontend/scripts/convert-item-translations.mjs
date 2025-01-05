@@ -12,7 +12,7 @@ async function parseTranslationFile(sourcePath, targetPath, encoding = "UTF-8") 
     const fileBuffer = await readFile(sourcePath);
     const fileContent = iconv.decode(fileBuffer, encoding);
 
-    const regex = /ItemName_(Base\.[\w.]+)\s*=\s*"(.*)"/g;
+    const regex = /ItemName_([\w.]+\.[\w.]+)\s*=\s*"(.*)"/g;
     const translations = {};
 
     let match;
