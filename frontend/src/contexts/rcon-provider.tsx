@@ -178,9 +178,9 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   }, [modifiedOptions]);
 
   const importOptions = () => {
-    ImportOptionsDialog().then((options) => {
-      if (options) {
-        setModifiedOptions(options);
+    ImportOptionsDialog().then((response) => {
+      if (response.success) {
+        setModifiedOptions(response.options);
       }
     });
   };

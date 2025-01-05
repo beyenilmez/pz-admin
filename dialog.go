@@ -12,6 +12,11 @@ type ServerMessage struct {
 	LineColorsFloat map[int]string `json:"lineColorsFloat"`
 }
 
+type ImportOptionsResponse struct {
+	Options PzOptions `json:"options"`
+	Success bool      `json:"success"`
+}
+
 func (a *App) SaveConfigDialog() {
 	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
 		Title:                "Save configuration",
@@ -283,7 +288,7 @@ func (a *App) ExportOptionsDialog(options PzOptions) {
 	})
 }
 
-func (a *App) ImportOptionsDialog() PzOptions {
+func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
 		Title:                "Import options",
 		DefaultDirectory:     savedOptionsFolder,
@@ -298,7 +303,7 @@ func (a *App) ImportOptionsDialog() PzOptions {
 
 	if path == "" {
 		runtime.LogInfo(a.ctx, "No path given, not loading the options")
-		return PzOptions{}
+		return ImportOptionsResponse{Success: false}
 	}
 
 	if err != nil {
@@ -307,7 +312,8 @@ func (a *App) ImportOptionsDialog() PzOptions {
 			Message: "There was an error importing the options",
 			Variant: "error",
 		})
-		return PzOptions{}
+		return ImportOptionsResponse{Success: false}
+
 	}
 
 	var options PzOptions
@@ -318,10 +324,10 @@ func (a *App) ImportOptionsDialog() PzOptions {
 			Message: "There was an error importing the options",
 			Variant: "error",
 		})
-		return PzOptions{}
+		return ImportOptionsResponse{Success: false}
 	}
 
-	return options
+	return ImportOptionsResponse{Options: options, Success: true}
 }
 
 func (a *App) OpenFileInExplorer(path string) {

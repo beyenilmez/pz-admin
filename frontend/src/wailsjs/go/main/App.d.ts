@@ -48,7 +48,7 @@ export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;
 
 export function Gunshot():Promise<void>;
 
-export function ImportOptionsDialog():Promise<main.PzOptions>;
+export function ImportOptionsDialog():Promise<main.ImportOptionsResponse>;
 
 export function IsRconConnected():Promise<boolean>;
 
