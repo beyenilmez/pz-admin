@@ -158,8 +158,8 @@ export function OptionsTab() {
             </div>
           </div>
 
-          <Button onClick={importOptions}>{t("import")}</Button>
-          <Button onClick={exportOptions}>{t("export")}</Button>
+          <Button onClick={importOptions} variant={"outline"}>{t("import")}</Button>
+          <Button onClick={exportOptions} variant={"outline"}>{t("export")}</Button>
         </div>
 
         {filteredCategories.map((category, index) => (
