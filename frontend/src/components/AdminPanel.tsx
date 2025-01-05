@@ -111,23 +111,18 @@ export default function AdminPanel() {
       {/* Tab Content */}
       <div className="w-full h-full relative">
         <div className={tab === "management" ? "block" : "hidden"} key={"management" + managementState}>
-          <ManagementTab />
+          {tab === "management" && <ManagementTab />}
         </div>
         <div className={tab === "players" ? "block" : "hidden"} key={"players" + playersState}>
           <PlayersTab />
         </div>
         <div className={tab === "options" ? "block" : "hidden"} key={"options" + optionsState}>
-          <OptionsTab />
-        </div>
-        <div className={tab === "sandbox" ? "block" : "hidden"} key={"sandbox" + optionsState}>
-          <div>Sandbox</div>
+          {tab === "options" && <OptionsTab />}
         </div>
         <div className={tab === "terminal" ? "block" : "hidden"} key={"terminal" + terminalState}>
           <TerminalPage />
         </div>
-        <div className={tab === "connection" ? "block" : "hidden"}>
-          <ConnectionForm />
-        </div>
+        <div className={tab === "connection" ? "block" : "hidden"}>{tab === "connection" && <ConnectionForm />}</div>
       </div>
     </Tabs>
   );
