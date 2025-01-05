@@ -263,6 +263,11 @@ func (app *App) SendRconCommand(command string) RconResponse {
 		if nameExists {
 			runtime.EventsEmit(app.ctx, "update-players", players)
 		}
+	} else if strings.Contains(command, "changeoption ") {
+		err = pzOptions_update()
+		if err != nil {
+			runtime.LogError(app.ctx, "Error updating PZ options: "+err.Error())
+		}
 	}
 
 	return RconResponse{
@@ -300,17 +305,6 @@ func (app *App) watchConnection() {
 			err := players_update()
 			if err != nil {
 				runtime.LogError(app.ctx, "Error updating players: "+err.Error())
-				runtime.LogError(app.ctx, "RCON connection lost: "+err.Error())
-				runtime.EventsEmit(app.ctx, "rconDisconnected", players)
-				conn.Close()
-				conn = nil
-				connMutex.Unlock()
-				isWatching = false
-				return
-			}
-			err = pzOptions_update()
-			if err != nil {
-				runtime.LogError(app.ctx, "Error updating options: "+err.Error())
 				runtime.LogError(app.ctx, "RCON connection lost: "+err.Error())
 				runtime.EventsEmit(app.ctx, "rconDisconnected", players)
 				conn.Close()

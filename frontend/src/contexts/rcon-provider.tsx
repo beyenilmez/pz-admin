@@ -9,9 +9,9 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { ConnectRcon, DisconnectRcon, SendNotification, SendRconCommand, UpdatePzOptions } from "@/wailsjs/go/main/App";
+import { ConnectRcon, DisconnectRcon, SendRconCommand, UpdatePzOptions } from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
-import { EventsOff, EventsOn, LogDebug } from "@/wailsjs/runtime/runtime";
+import { EventsOff, EventsOn } from "@/wailsjs/runtime/runtime";
 import { deepEqual } from "@/lib/utils";
 import { optionsMap } from "@/assets/options";
 
@@ -73,18 +73,6 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const handleUpdateOptions = (newOptions: main.PzOptions) => {
-      LogDebug(optionsModified + ", " + deepEqual(modifiedOptions, newOptions));
-      console.log(modifiedOptions);
-      console.log(newOptions);
-      console.log(deepEqual(modifiedOptions, newOptions));
-      if (optionsModified && modifiedOptions.Open !== undefined && !deepEqual(modifiedOptions, newOptions)) {
-        SendNotification({
-          title: "Options reloaded",
-          message: "An option has been updated from somewhere else",
-          variant: "warning",
-        } as main.Notification);
-      }
-
       setModifiedOptions(newOptions);
       setOptions(newOptions);
     };
@@ -157,10 +145,6 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     async (reload) => {
       setUpdatingOptions(true);
       const success = await UpdatePzOptions(modifiedOptions, reload ?? false);
-      if (success) {
-        LogDebug("Frontend: Options updated successfully");
-        setOptions(modifiedOptions);
-      }
       setUpdatingOptions(false);
 
       return success;

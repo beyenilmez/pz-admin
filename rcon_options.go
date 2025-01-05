@@ -248,6 +248,8 @@ func parseOptions(lines []string, target *PzOptions) error {
 }
 
 func (app *App) UpdatePzOptions(newOptions PzOptions, reloadOptions bool) bool {
+	defer pzOptions_update()
+
 	optionsToUpdate := app.diffOptions(newOptions)
 
 	if len(optionsToUpdate) == 0 {
