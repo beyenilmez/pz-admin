@@ -16,6 +16,7 @@ import { Progress } from "./components/ui/progress";
 import { useProgress } from "./contexts/progress-provider";
 import { useRcon } from "./contexts/rcon-provider";
 import { main } from "./wailsjs/go/models";
+import Tools from "./components/Tools";
 
 function App() {
   const { config, initialConfig } = useConfig();
@@ -139,6 +140,9 @@ function App() {
                 <TabsTrigger value="admin-panel" onClick={() => setTab("admin-panel")} className="px-6">
                   {t("Admin Panel")}
                 </TabsTrigger>
+                <TabsTrigger value="tools" onClick={() => setTab("tools")} className="px-6">
+                  {t("Tools")}
+                </TabsTrigger>
                 <TabsTrigger value="settings" onClick={() => setTab("settings")} className="px-6">
                   {t("nav.settings")}
                 </TabsTrigger>
@@ -155,6 +159,7 @@ function App() {
             <div className={tab === "admin-panel" ? "block h-full" : "hidden"}>
               <AdminPanel />
             </div>
+            <div className={tab === "tools" ? "block h-full" : "hidden"}>{tab === "tools" && <Tools />}</div>
             <div className={tab === "settings" ? "block h-full" : "hidden"}>
               <Settings />
             </div>

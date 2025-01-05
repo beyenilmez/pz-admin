@@ -46,6 +46,10 @@ export function ConnectRcon(arg1) {
   return window['go']['main']['App']['ConnectRcon'](arg1);
 }
 
+export function CopyToClipboard(arg1, arg2) {
+  return window['go']['main']['App']['CopyToClipboard'](arg1, arg2);
+}
+
 export function CreateHorde(arg1, arg2) {
   return window['go']['main']['App']['CreateHorde'](arg1, arg2);
 }

@@ -4,21 +4,24 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Input } from "@/components/ui/input";
 import { useState, useEffect, ImgHTMLAttributes, useMemo, useRef } from "react";
 import { Combobox } from "../ui/combobox";
-import { ListFilter, MinusCircle, PlusCircle, XCircle } from "lucide-react";
+import { Copy, ListFilter, MinusCircle, PlusCircle, Search, XCircle } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import itemsData from "@/assets/items.json";
 import { main } from "@/wailsjs/go/models";
-import { AddItems, LoadItemsDialog, SaveItemsDialog } from "@/wailsjs/go/main/App";
+import { AddItems, CopyToClipboard, LoadItemsDialog, SaveItemsDialog } from "@/wailsjs/go/main/App";
 import { useTranslation } from "react-i18next";
+import { Checkbox } from "../ui/checkbox";
+import { Label } from "../ui/label";
 
 interface AddItemDialogProps {
   isOpen: boolean;
   onClose: () => void;
   names?: string[];
-  mode?: "add" | "settings";
+  mode?: "add" | "settings" | "tool";
   initialItems?: string;
   onSaveEdit?: (items: string) => void;
+  height?: string;
 }
 
 type Item = {
@@ -32,9 +35,19 @@ type Category = {
   items: Item[];
 };
 
-export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "add", onSaveEdit }: AddItemDialogProps) {
+export function AddItemDialog({
+  isOpen,
+  onClose,
+  names,
+  initialItems,
+  mode = "add",
+  onSaveEdit,
+  height,
+}: AddItemDialogProps) {
   const { t } = useTranslation("items");
   const { t: tc } = useTranslation();
+
+  const [showIds, setShowIds] = useState(false);
 
   const sortedItemsData = useMemo(
     () => itemsData.sort((a, b) => tc(`item_categories.${a.name}`).localeCompare(tc(`item_categories.${b.name}`))),
@@ -78,7 +91,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
       return filtered;
     }
 
-    return filtered.filter((category) => selectedFilters.includes(tc(`item_categories.${category.name}`)));
+    return filtered.filter((category) => selectedFilters.includes(category.name));
   }, [searchQuery, selectedFilters]);
 
   const handleAddItems = () => {
@@ -158,6 +171,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
     setSelectedFilters([]);
     setSelectedItems({});
     setResetNum((prev) => prev + 1);
+    setShowIds(false);
   }, [isOpen]);
 
   useEffect(() => {
@@ -197,12 +211,18 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
             </TooltipTrigger>
             <TooltipContent>{item.itemId}</TooltipContent>
           </Tooltip>
-
           <span className="flex-grow text-xs w-2 text-ellipsis overflow-clip">
-            {translateWithFallback(item.itemId, item.name)}{" "}
-            {item.name === "Map" || (item.name === "Map (item)" && `(${item.itemId})`)}
+            {showIds ? (
+              <>{item.itemId}</>
+            ) : (
+              <>
+                {translateWithFallback(item.itemId, item.name)}{" "}
+                {item.name === "Map" || (item.name === "Map (item)" && `(${item.itemId})`)}
+              </>
+            )}{" "}
           </span>
-          {mode === "add" ? (
+
+          {mode !== "settings" ? (
             <>
               <Button
                 variant="ghost"
@@ -245,6 +265,153 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
     });
   };
 
+  const dialogContent = (
+    <div className={`flex gap-10 ${mode === "tool" && "w-full"}`} style={{ height: height }}>
+      <div>
+        <div className="flex gap-2 mb-4">
+          <div className="relative w-full">
+            <Input
+              className="peer ps-9"
+              placeholder="Search items..."
+              type="search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
+              <Search className="w-4 h-4" strokeWidth={2} />
+            </div>
+          </div>
+          <Combobox
+            elements={sortedItemsData.map((category: Category) => ({
+              value: category.name,
+              label: tc(`item_categories.${category.name}`),
+            }))}
+            multiSelect
+            placeholder="Select Category..."
+            searchPlaceholder="Search Category..."
+            nothingFoundMessage="No categories found"
+            unselectAllButton
+            unselectAllButtonText="Unselect All"
+            hideDisplayText
+            icon={<ListFilter className="w-4 h-4 opacity-80" />}
+            onChange={setSelectedFilters}
+            disableSearch
+          />
+        </div>
+        <ScrollArea
+          className="w-80 pr-4"
+          style={{
+            height: height ?? "30rem",
+          }}
+        >
+          <Accordion type="multiple">
+            {filteredCategories.map(
+              (category) =>
+                category.items.length > 0 && (
+                  <AccordionItem key={category.name} value={category.name}>
+                    <AccordionTrigger className="h-8">{tc(`item_categories.${category.name}`)}</AccordionTrigger>
+                    <AccordionContent className="flex flex-col items-start ml-2">
+                      {category.items.map((item) => (
+                        <Button
+                          variant="link"
+                          key={item.itemId}
+                          className={`group p-0 flex gap-1 h-fit w-full justify-start ${
+                            selectedItems[item.itemId] > 0 ? "text-foreground" : "opacity-80"
+                          }`}
+                          onClick={() => handleAddItem(item.itemId)}
+                        >
+                          <ImageSlide
+                            images={item.images}
+                            name={translateWithFallback(item.itemId, item.name)}
+                            className="h-6 w-6 object-contain"
+                          />
+
+                          <span className="text-sm w-64 text-ellipsis text-start overflow-clip group-hover:underline underline-offset-auto">
+                            {translateWithFallback(item.itemId, item.name)}
+                            {category.name === "Cartography" ? ` (${item.itemId})` : ""}
+                          </span>
+
+                          {selectedItems[item.itemId] > 0 && mode !== "settings" && (
+                            <span>{selectedItems[item.itemId]}</span>
+                          )}
+                        </Button>
+                      ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                )
+            )}
+          </Accordion>
+        </ScrollArea>
+      </div>
+      <div className="w-full">
+        <div className="w-full flex justify-between pr-4 mb-4">
+          <div className="flex gap-6">
+            <h3 className="text-lg font-semibold">Selected Items</h3>
+            <div className="flex gap-2 items-center h-8">
+              <Checkbox id="show-ids" checked={showIds} onCheckedChange={(checked) => setShowIds(checked as boolean)} />
+              <Label htmlFor="show-ids">Show Ids</Label>
+            </div>
+          </div>
+          <Button
+            className="cursor-pointer select-none"
+            variant="outline"
+            size="sm"
+            onClick={() => setSelectedItems({})}
+            disabled={Object.entries(selectedItems).length === 0}
+          >
+            <div className="flex gap-1 items-center">
+              <XCircle className="h-4 w-4 shrink-0 mt-0.5" /> Clear
+            </div>
+          </Button>
+        </div>
+        <ScrollArea className="pr-4 mb-4" style={{ height: height ? `calc(${height} - 2.5rem)` : "31rem" }}>
+          <div className="grid grid-cols-2 2xl:grid-cols-3">{renderSelectedItems()}</div>
+          <div ref={scrollRef} />
+        </ScrollArea>
+        <div className="flex justify-between">
+          <div className={`flex gap-2 ${mode === "tool" && "w-full"}`}>
+            <Button variant={"outline"} onClick={handleSaveItems} disabled={Object.entries(selectedItems).length === 0}>
+              Save Items
+            </Button>
+            <Button variant={"outline"} onClick={handleLoadItems}>
+              Load Items
+            </Button>
+
+            {mode === "tool" && (
+              <div className="relative w-full">
+                <Input className="w-full pr-9" readOnly value={Object.keys(selectedItems).join(",")} />
+                {Object.keys(selectedItems).length > 0 && (
+                  <Button
+                    className="bg-transparent absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground transition-colors hover:text-foreground"
+                    tooltip="Copy"
+                    onClick={() => CopyToClipboard(Object.keys(selectedItems).join(","), true)}
+                  >
+                    <Copy strokeWidth={2} aria-hidden="true" className="w-5 h-5 shrink-0" />
+                  </Button>
+                )}
+              </div>
+            )}
+          </div>
+          {mode === "add" && (
+            <Button onClick={handleAddItems} disabled={Object.entries(selectedItems).length === 0}>
+              Add Selected Items
+            </Button>
+          )}
+          {mode === "settings" && (
+            <div className="space-x-2">
+              <Button onClick={handleResetEdit}>Reset</Button>
+              <Button onClick={handleSaveEdit}>Save Edit</Button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  if (mode === "tool") {
+    return dialogContent;
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[80vw] max-h-full">
@@ -254,104 +421,7 @@ export function AddItemDialog({ isOpen, onClose, names, initialItems, mode = "ad
             {mode === "add" && <p>{"You will add items to " + names?.join(", ") + "."}</p>}
           </DialogDescription>
         </DialogHeader>
-        <div className="flex gap-10">
-          <div>
-            <div className="flex gap-2 mb-4">
-              <Input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search items..."
-                className="flex-grow"
-              />
-              <Combobox
-                elements={sortedItemsData.map((category: Category) => ({
-                  value: category.name,
-                  label: tc(`item_categories.${category.name}`),
-                }))}
-                multiSelect
-                placeholder="Select Category..."
-                searchPlaceholder="Search Category..."
-                nothingFoundMessage="No categories found"
-                unselectAllButton
-                unselectAllButtonText="Unselect All"
-                hideDisplayText
-                icon={<ListFilter className="w-4 h-4 opacity-80" />}
-                onChange={setSelectedFilters}
-              />
-            </div>
-            <ScrollArea className="w-80 pr-4 h-[30rem]">
-              <Accordion type="multiple">
-                {filteredCategories.map(
-                  (category) =>
-                    category.items.length > 0 && (
-                      <AccordionItem key={category.name} value={category.name}>
-                        <AccordionTrigger className="h-8">{tc(`item_categories.${category.name}`)}</AccordionTrigger>
-                        <AccordionContent className="flex flex-col items-start ml-2">
-                          {category.items.map((item) => (
-                            <Button
-                              variant="link"
-                              key={item.itemId}
-                              className={`group p-0 flex gap-1 h-fit w-full justify-start ${
-                                selectedItems[item.itemId] > 0 ? "text-foreground" : "opacity-80"
-                              }`}
-                              onClick={() => handleAddItem(item.itemId)}
-                            >
-                              <ImageSlide
-                                images={item.images}
-                                name={translateWithFallback(item.itemId, item.name)}
-                                className="h-6 w-6 object-contain"
-                              />
-
-                              <span className="text-sm w-64 text-ellipsis text-start overflow-clip group-hover:underline underline-offset-auto">
-                                {translateWithFallback(item.itemId, item.name)}
-                                {category.name === "Cartography" ? ` (${item.itemId})` : ""}
-                              </span>
-
-                              {selectedItems[item.itemId] > 0 && mode === "add" && (
-                                <span>{selectedItems[item.itemId]}</span>
-                              )}
-                            </Button>
-                          ))}
-                        </AccordionContent>
-                      </AccordionItem>
-                    )
-                )}
-              </Accordion>
-            </ScrollArea>
-          </div>
-          <div className="w-full">
-            <h3 className="text-lg font-semibold mb-4">Selected Items</h3>
-            <ScrollArea className="h-[31rem] pr-4 mb-4">
-              <div className="grid grid-cols-2 2xl:grid-cols-3">{renderSelectedItems()}</div>
-              <div ref={scrollRef} />
-            </ScrollArea>
-            <div className="flex justify-between">
-              <div className="flex gap-2">
-                <Button
-                  variant={"outline"}
-                  onClick={handleSaveItems}
-                  disabled={Object.entries(selectedItems).length === 0}
-                >
-                  Save Items
-                </Button>
-                <Button variant={"outline"} onClick={handleLoadItems}>
-                  Load Items
-                </Button>
-              </div>
-              {mode === "add" ? (
-                <Button onClick={handleAddItems} disabled={Object.entries(selectedItems).length === 0}>
-                  Add Selected Items
-                </Button>
-              ) : (
-                <div className="space-x-2">
-                  <Button onClick={handleResetEdit}>Reset</Button>
-                  <Button onClick={handleSaveEdit}>Save Edit</Button>
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
+        {dialogContent}
       </DialogContent>
     </Dialog>
   );

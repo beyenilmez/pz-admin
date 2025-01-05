@@ -158,8 +158,12 @@ export function OptionsTab() {
             </div>
           </div>
 
-          <Button onClick={importOptions} variant={"outline"}>{t("import")}</Button>
-          <Button onClick={exportOptions} variant={"outline"}>{t("export")}</Button>
+          <Button onClick={importOptions} variant={"outline"}>
+            {t("import")}
+          </Button>
+          <Button onClick={exportOptions} variant={"outline"}>
+            {t("export")}
+          </Button>
         </div>
 
         {filteredCategories.map((category, index) => (
@@ -242,7 +246,7 @@ export function OptionsTab() {
 
       <div className="h-12 flex justify-between mr-5">
         <Button
-          disabled={updatingOptions}
+          disabled={updatingOptions || optionsModified}
           onClick={() => {
             ReloadOptions();
           }}

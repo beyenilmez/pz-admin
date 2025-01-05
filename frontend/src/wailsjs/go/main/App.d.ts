@@ -24,6 +24,8 @@ export function Chopper():Promise<void>;
 
 export function ConnectRcon(arg1:main.Credentials):Promise<boolean>;
 
+export function CopyToClipboard(arg1:string,arg2:boolean):Promise<void>;
+
 export function CreateHorde(arg1:Array<string>,arg2:number):Promise<void>;
 
 export function DeleteCredentials():Promise<boolean>;
