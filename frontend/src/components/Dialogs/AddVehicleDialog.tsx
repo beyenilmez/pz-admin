@@ -58,6 +58,8 @@ interface AddVehicleDialogProps {
   onClose: () => void;
   initialNames?: string[];
   initialTab?: string;
+  mode?: "add" | "tool";
+  height?: string;
 }
 
 export function AddVehicleDialog({
@@ -65,6 +67,8 @@ export function AddVehicleDialog({
   onClose,
   initialNames = [],
   initialTab = "coordinates",
+  mode = "add",
+  height = "24rem",
 }: AddVehicleDialogProps) {
   const { players } = useRcon();
   const onlinePlayers = players.filter((player) => player.online);
@@ -126,6 +130,8 @@ export function AddVehicleDialog({
     selectedId && path.length > 1 && path[path.length - 2].type === "model" ? path[path.length - 2] : null;
 
   if (loading || error) {
+    if (mode === "tool") return <div>{loading ? "Loading..." : "Error"}</div>;
+
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-[80vw] h-[40vh] flex items-center justify-center">
@@ -138,41 +144,31 @@ export function AddVehicleDialog({
     );
   }
 
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
-      <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />
-      <DialogContent className="max-w-[80vw] max-h-full gap-0">
-        <DialogHeader className="pb-4">
-          <DialogTitle>Add Vehicle</DialogTitle>
-        </DialogHeader>
-
-        <BreadcrumbNavigation path={path} setPath={setPath} vehicles={vehicles} />
-
-        <ScrollArea className="w-full h-96">
-          {selectedCar ? (
-            <>
-              <h1 className="text-2xl font-semibold leading-none tracking-tight mb-2.5">
-                {selectedModel ? selectedModel.name + " - " : ""} {selectedCar.name}
-              </h1>
-              <div className="flex gap-3">
-                <div>
-                  <div className="aspect-[3/2] h-60 rounded overflow-clip">
-                    {selectedCar.images && selectedCar.images.length > 1 ? (
-                      <ItemImage
-                        images={selectedCar.images}
-                        name={selectedCar.name}
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <img
-                        src={selectedCar.images?.[0]}
-                        alt={selectedCar.name}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground">{selectedId}</p>
+  const dialogContent = (
+    <>
+      <BreadcrumbNavigation path={path} setPath={setPath} vehicles={vehicles} />
+      <ScrollArea className="w-full mb-4" style={{ height: height }}>
+        {selectedCar ? (
+          <>
+            <h1 className="text-2xl font-semibold leading-none tracking-tight mb-2.5">
+              {selectedModel ? selectedModel.name + " - " : ""} {selectedCar.name}
+            </h1>
+            <div className="flex gap-3">
+              <div>
+                <div className="aspect-[3/2] h-60 rounded overflow-clip">
+                  {selectedCar.images && selectedCar.images.length > 1 ? (
+                    <ItemImage
+                      images={selectedCar.images}
+                      name={selectedCar.name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img src={selectedCar.images?.[0]} alt={selectedCar.name} className="w-full h-full object-cover" />
+                  )}
                 </div>
+                <p className="text-sm text-muted-foreground">{selectedId}</p>
+              </div>
+              {mode === "add" && (
                 <div className="w-full flex justify-center">
                   <Tabs value={tab} className="w-3/4 max-w-full">
                     <TabsList className="grid w-full grid-cols-2">
@@ -243,18 +239,35 @@ export function AddVehicleDialog({
                     </TabsContent>
                   </Tabs>
                 </div>
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 mr-4">
-                {currentLevel.map((item, index) => (
-                  <VehicleCard key={index} vehicle={item} onClick={() => setPath([...path, item])} />
-                ))}
-              </div>
-            </>
-          )}
-        </ScrollArea>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-4 mr-4">
+              {currentLevel.map((item, index) => (
+                <VehicleCard key={index} vehicle={item} onClick={() => setPath([...path, item])} />
+              ))}
+            </div>
+          </>
+        )}
+      </ScrollArea>
+    </>
+  );
+
+  if (mode === "tool") {
+    return dialogContent;
+  }
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose} modal={false}>
+      <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />
+      <DialogContent className="max-w-[80vw] max-h-full gap-0">
+        <DialogHeader className="pb-4">
+          <DialogTitle>Add Vehicle</DialogTitle>
+        </DialogHeader>
+
+        {dialogContent}
 
         <DialogFooter>
           <Button

@@ -90,7 +90,7 @@ func main() {
 		Title:             "PZ Admin",
 		Width:             1280,
 		Height:            800,
-		MinWidth:          1024,
+		MinWidth:          1023,
 		MinHeight:         768,
 		DisableResize:     false,
 		Frameless:         !*config.UseSystemTitleBar,
