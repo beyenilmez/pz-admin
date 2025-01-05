@@ -42,8 +42,6 @@ export function GetConfigField(arg1:string):Promise<any>;
 
 export function GetLoadConfigPath():Promise<string>;
 
-export function GetPlayers():Promise<Array<main.Player>>;
-
 export function GetVersion():Promise<string>;
 
 export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;
@@ -65,6 +63,8 @@ export function LoadItemsDialog():Promise<Array<main.ItemRecord>>;
 export function LoadMessageDialog():Promise<main.ServerMessage>;
 
 export function OpenFileInExplorer(arg1:string):Promise<void>;
+
+export function Players():Promise<Array<main.Player>>;
 
 export function RandomLightning():Promise<void>;
 

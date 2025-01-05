@@ -55,6 +55,10 @@ type RconResponse struct {
 var connectionCredentials Credentials
 var players []Player
 
+func (app *App) Players() []Player {
+	return players
+}
+
 func (app *App) ConnectRcon(credentials Credentials) bool {
 	if credentials.IP == "" || credentials.Port == "" || credentials.Password == "" {
 		return false
@@ -136,6 +140,9 @@ func (app *App) SendRconCommand(command string) RconResponse {
 	connMutex.Lock()
 	defer connMutex.Unlock()
 
+	runtime.EventsEmit(app.ctx, "setProgress", 50)
+	defer runtime.EventsEmit(app.ctx, "setProgress", 0)
+
 	if conn == nil {
 		runtime.LogError(app.ctx, "RCON is not connected")
 		return RconResponse{
@@ -153,6 +160,9 @@ func (app *App) SendRconCommand(command string) RconResponse {
 	}
 
 	res, err := conn.Execute(command)
+
+	runtime.EventsEmit(app.ctx, "setProgress", 100)
+
 	if err != nil {
 		runtime.LogError(app.ctx, "Error executing RCON command: "+err.Error())
 		return RconResponse{
@@ -375,10 +385,6 @@ func (app *App) DeleteCredentials() bool {
 	}
 
 	return true
-}
-
-func (app *App) GetPlayers() []Player {
-	return players
 }
 
 func players_init() error {
@@ -661,6 +667,9 @@ func (params *RCONCommand) execute() int {
 	connMutex.Lock()
 	defer connMutex.Unlock()
 
+	defer runtime.EventsEmit(app.ctx, "setProgress", 0)
+	runtime.EventsEmit(app.ctx, "setProgress", 10)
+
 	names := params.PlayerNames
 	successCount := 0
 	total := 1 // Default to 1 for commands without names
@@ -695,6 +704,8 @@ func (params *RCONCommand) execute() int {
 	var lastErrRes string
 
 	for i := 0; i < total; i++ {
+		runtime.EventsEmit(app.ctx, "setProgress", int(float64(i+1)/float64(total)*100))
+
 		var command string
 		if names == nil {
 			command = baseCommand
@@ -757,6 +768,8 @@ func (params *RCONCommand) execute() int {
 			}
 		}
 	}
+
+	runtime.EventsEmit(app.ctx, "setProgress", 100)
 
 	if params.Notifications != (RCONCommandNotifications{}) {
 		if total > 1 {

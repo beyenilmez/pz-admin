@@ -316,9 +316,15 @@ func (app *App) diffOptions(newOptions PzOptions) []OptionPair {
 }
 
 func (app *App) applyOptions(options []OptionPair) int {
+	defer runtime.EventsEmit(app.ctx, "setProgress", 0)
+	runtime.EventsEmit(app.ctx, "setProgress", 10)
+
 	successCount := 0
+	optionCount := len(options)
 
 	for _, option := range options {
+		runtime.EventsEmit(app.ctx, "setProgress", float64(successCount)/float64(optionCount)*100)
+
 		command := fmt.Sprintf("changeoption %s \"%s\"", option.Name, option.Value)
 		res, err := conn.Execute(command)
 

@@ -82,10 +82,6 @@ export function GetLoadConfigPath() {
   return window['go']['main']['App']['GetLoadConfigPath']();
 }
 
-export function GetPlayers() {
-  return window['go']['main']['App']['GetPlayers']();
-}
-
 export function GetVersion() {
   return window['go']['main']['App']['GetVersion']();
 }
@@ -128,6 +124,10 @@ export function LoadMessageDialog() {
 
 export function OpenFileInExplorer(arg1) {
   return window['go']['main']['App']['OpenFileInExplorer'](arg1);
+}
+
+export function Players() {
+  return window['go']['main']['App']['Players']();
 }
 
 export function RandomLightning() {

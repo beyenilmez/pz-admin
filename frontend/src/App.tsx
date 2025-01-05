@@ -95,10 +95,15 @@ function App() {
       setProgress(0);
     });
 
+    EventsOn("setProgress", (value: number) => {
+      setProgress(value);
+    });
+
     return () => {
       EventsOff("toast");
       EventsOff("sendNotification");
       EventsOff("rconDisconnected");
+      EventsOff("setProgress");
     };
   }, []);
 
@@ -124,10 +129,6 @@ function App() {
   useEffect(() => {
     setValue("path1", tab);
   }, [tab]);
-
-  window.setProgress = (value: number) => {
-    setProgress(value);
-  };
 
   return (
     <React.Fragment>
