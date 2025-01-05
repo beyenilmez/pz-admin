@@ -13,15 +13,18 @@ import { useEffect, useState, useRef, useMemo } from "react";
 import { ColorPicker } from "@/components/ui/color-picker";
 import { ScrollArea } from "../ui/scroll-area";
 import { main } from "@/wailsjs/go/models";
-import { LoadMessageDialog, SaveMessagesDialog, ServerMsg } from "@/wailsjs/go/main/App";
+import { CopyToClipboard, LoadMessageDialog, SaveMessagesDialog, ServerMsg } from "@/wailsjs/go/main/App";
 import { useConfig } from "@/contexts/config-provider";
+import { Copy } from "lucide-react";
 
 interface SendMessageDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  mode?: "message" | "settings";
+  mode?: "message" | "settings" | "tool";
   initialMessage?: string;
   onSaveEdit?: (message: string) => void;
+  textareaHeight?: string;
+  previewHeight?: string;
 }
 
 export function SendMessageDialog({
@@ -30,6 +33,8 @@ export function SendMessageDialog({
   mode = "message",
   initialMessage,
   onSaveEdit,
+  textareaHeight = "20rem",
+  previewHeight = "8rem",
 }: SendMessageDialogProps) {
   const [message, setMessage] = useState("");
   const [lineColors, setLineColors] = useState<Record<number, string>>({});
@@ -37,7 +42,7 @@ export function SendMessageDialog({
 
   const [resetNum, setResetNum] = useState(0);
 
-  const maxBytes = 988 - (mode === "settings" ? 24 : 0);
+  const maxBytes = mode === "tool" ? Infinity : 988 - (mode === "settings" ? 24 : 0);
 
   const handleSendMessage = () => {
     ServerMsg(formattedMessage);
@@ -190,7 +195,7 @@ export function SendMessageDialog({
     };
 
     return (
-      <ScrollArea className="h-80 rounded-md">
+      <ScrollArea className="rounded-md" style={{ height: textareaHeight }}>
         <div className="relative">
           <Textarea
             spellCheck={false}
@@ -198,7 +203,8 @@ export function SendMessageDialog({
             value={message}
             onChange={handleInputChange}
             placeholder="Your message"
-            className="pt-3 break-words whitespace-pre-wrap bg-black/40 w-[45rem] min-h-80 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
+            style={{ minHeight: textareaHeight, width: mode === "tool" ? "100%" : "45rem" }}
+            className="pt-3 break-words whitespace-pre-wrap bg-black/40 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
           />
           <div className="absolute top-3 left-0 w-full pointer-events-none">
             {lines.map((line, index) => (
@@ -244,6 +250,66 @@ export function SendMessageDialog({
     );
   };
 
+  const dialogContent = (
+    <div className="space-y-1">
+      <Label htmlFor="server-message" className="text-right">
+        Message
+      </Label>
+      {renderTextareaWithColors()}
+      <div className="space-y-0.5">
+        <div className="space-y-1 mt-4">
+          <div className="flex w-full justify-between">
+            <Label className="font-bold">{mode === "tool" ? "Formatted Message" : "Preview"}</Label>
+            {mode !== "tool" && (
+              <p className="text-right text-xs text-muted-foreground" role="status">
+                <span className="tabular-nums">
+                  {remainingBytes}/{maxBytes}
+                </span>{" "}
+                characters left
+              </p>
+            )}
+          </div>
+          <ScrollArea
+            className="p-2 py-0.5 pr-5 border rounded"
+            style={{ width: mode === "tool" ? "100%" : "45rem", height: previewHeight }}
+          >
+            <div>
+              <code className="text-sm break-words whitespace-pre-wrap">{formattedMessage}</code>
+            </div>
+          </ScrollArea>
+        </div>
+      </div>
+    </div>
+  );
+
+  if (mode === "tool") {
+    return (
+      <>
+        {dialogContent}
+        <div className="flex justify-between gap-2 py-2">
+          <Button
+            onClick={() => {
+              CopyToClipboard(formattedMessage, true);
+            }}
+            disabled={!formattedMessage}
+            variant={"outline"}
+            className="gap-2"
+          >
+            <Copy /> Copy Formatted Message
+          </Button>
+          <div>
+            <Button onClick={handleSaveMessage} disabled={!message} variant={"outline"}>
+              Save Message
+            </Button>
+            <Button onClick={handleLoadMessage} variant={"outline"}>
+              Load Message
+            </Button>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[80vw] w-fit h-max-screen overflow-clip">
@@ -253,30 +319,7 @@ export function SendMessageDialog({
             <p>{mode === "message" ? "You will send this message to everyone in the server." : ""}</p>
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-1">
-          <Label htmlFor="server-message" className="text-right">
-            Message
-          </Label>
-          {renderTextareaWithColors()}
-          <div className="space-y-0.5">
-            <div className="space-y-1 mt-4">
-              <div className="flex w-full justify-between">
-                <Label className="font-bold">Preview:</Label>
-                <p className="text-right text-xs text-muted-foreground" role="status">
-                  <span className="tabular-nums">
-                    {remainingBytes}/{maxBytes}
-                  </span>{" "}
-                  characters left
-                </p>
-              </div>
-              <ScrollArea className="p-2 py-0.5 pr-5 border rounded h-32 w-[45rem]">
-                <div className="w-[43rem]">
-                  <code className="text-sm break-words whitespace-pre-wrap">{formattedMessage}</code>
-                </div>
-              </ScrollArea>
-            </div>
-          </div>
-        </div>
+        {dialogContent}
         <DialogFooter className="w-full flex flex-row sm:flex-row sm:justify-between justify-between">
           <div className="flex gap-2">
             <Button onClick={handleSaveMessage} disabled={!message} variant={"outline"}>
