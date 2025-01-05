@@ -201,7 +201,7 @@ export function OptionsTab() {
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Reset to default</p>
+                              <p>Restore to default</p>
                             </TooltipContent>
                           </Tooltip>
                         )}
@@ -288,6 +288,8 @@ function OptionContent({ option }: { option: Option }) {
     return <SpawnItemsOptionContent option={option} />;
   } else if (option.Type === "Choice") {
     return <ChoiceOptionContent option={option} />;
+  } else if (option.Type === "MultipleChoice") {
+    return <MultipleChoiceOptionContent option={option} />;
   }
 }
 
@@ -697,6 +699,51 @@ function ChoiceOptionContent({ option }: { option: Option }) {
             onClick={() => {
               modifyOption(option.FieldName as keyof main.PzOptions, Value);
             }}
+          >
+            {t(`options.${option.FieldName}.choices.${Name}`)}
+          </ToggleGroupItem>
+        ))}
+      </ToggleGroup>
+    </div>
+  );
+}
+
+function MultipleChoiceOptionContent({ option }: { option: Option }) {
+  const { modifiedOptions, modifyOption } = useRcon();
+  const { t } = useTranslation();
+
+  // Helper to handle multiple selections as a comma-separated string
+  const handleModifyOption = (fieldName: keyof main.PzOptions, value: any) => {
+    const currentValue = (modifiedOptions[fieldName] as string) || "";
+    const currentValues = currentValue.split(",").filter((v) => v); // Split and filter empty strings
+
+    let newValues;
+    if (currentValues.includes(value)) {
+      // Remove the value if already selected
+      newValues = currentValues.filter((v) => v !== value);
+    } else {
+      // Add the value if not already selected
+      newValues = [...currentValues, value];
+    }
+
+    // Ensure newValues follows the original order of option.Choices
+    const orderedValues = option.Choices?.map((choice) => choice.Value) // Map to original order
+      .filter((v) => newValues.includes(v)); // Filter selected values
+
+    modifyOption(fieldName, orderedValues!.join(","));
+  };
+
+  return (
+    <div>
+      <ToggleGroup
+        type="multiple"
+        value={((modifiedOptions[option.FieldName as keyof main.PzOptions] as string) || "").split(",")}
+      >
+        {option.Choices?.map(({ Name, Value }) => (
+          <ToggleGroupItem
+            key={Value as any}
+            value={Value as any}
+            onClick={() => handleModifyOption(option.FieldName as keyof main.PzOptions, Value)}
           >
             {t(`options.${option.FieldName}.choices.${Name}`)}
           </ToggleGroupItem>

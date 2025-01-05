@@ -765,7 +765,16 @@
     },
     "ChatStreams": {
       "display_name": "Chat Streams",
-      "description": "Sets the enabled chat streams for different message targets. Options: s (say), r (radio), a (all), w (whisper), y (yell), sh (safehouse), f (faction), all",
+      "description": "Sets the enabled chat streams for different message targets",
+      "choices": {
+        "Say": "Say",
+        "Radio": "Radio",
+        "Whisper": "Whisper",
+        "Yell": "Yell",
+        "Safehouse": "Safehouse",
+        "Faction": "Faction",
+        "All": "All"
+      },
       "keywords": "chat,streams,ChatStreams"
     },
     "DisableRadioAdmin": {

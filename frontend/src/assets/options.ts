@@ -9,6 +9,7 @@ export type Option = {
     | "Information"
     | "ServerWelcomeMessage"
     | "Choice"
+    | "MultipleChoice"
     | "SpawnItems";
   Default?: boolean | number | string;
   Range?: {
@@ -729,8 +730,38 @@ export const options: Options = {
         },
         {
           FieldName: "ChatStreams",
-          Type: "String",
-          Default: "s,r,a,w,y,sh,f,all",
+          Type: "MultipleChoice",
+          Default: "s,r,w,y,sh,f,all",
+          Choices: [
+            {
+              Name: "Say",
+              Value: "s",
+            },
+            {
+              Name: "Radio",
+              Value: "r",
+            },
+            {
+              Name: "Whisper",
+              Value: "w",
+            },
+            {
+              Name: "Yell",
+              Value: "y",
+            },
+            {
+              Name: "Safehouse",
+              Value: "sh",
+            },
+            {
+              Name: "Faction",
+              Value: "f",
+            },
+            {
+              Name: "All",
+              Value: "all",
+            },
+          ],
         },
 
         // Radio
