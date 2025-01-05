@@ -144,7 +144,7 @@ export function OptionsTab() {
       </Tabs>
 
       <ScrollArea className={`w-full pr-6`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
-        <div className="flex items-center gap-2 m-1">
+        <div className="flex items-center gap-2 m-1 sticky top-0">
           <div className="relative w-full">
             <Input
               className="peer ps-9"
