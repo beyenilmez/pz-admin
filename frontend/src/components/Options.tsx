@@ -32,6 +32,8 @@ export function OptionsTab() {
     optionsInvalid,
     modifyOption,
     reloadDoubleptions,
+    importOptions,
+    exportOptions,
   } = useRcon();
 
   const [tab, setTab] = useState("General");
@@ -142,18 +144,24 @@ export function OptionsTab() {
       </Tabs>
 
       <ScrollArea className={`w-full pr-6`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
-        <div className="relative m-1">
-          <Input
-            className="peer ps-9"
-            placeholder="Search option..."
-            type="search"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
-          <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
-            <Search className="w-4 h-4" strokeWidth={2} />
+        <div className="flex items-center gap-2 m-1">
+          <div className="relative w-full">
+            <Input
+              className="peer ps-9"
+              placeholder="Search option..."
+              type="search"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+            <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
+              <Search className="w-4 h-4" strokeWidth={2} />
+            </div>
           </div>
+
+          <Button onClick={importOptions}>{t("import")}</Button>
+          <Button onClick={exportOptions}>{t("export")}</Button>
         </div>
+
         {filteredCategories.map((category, index) => (
           <div key={category.name} className="flex flex-col gap-2">
             <div className={`border-b pb-2 ${index === 0 ? "mt-2" : "mt-10"}`}>

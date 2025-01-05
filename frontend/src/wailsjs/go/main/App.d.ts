@@ -30,6 +30,8 @@ export function DeleteCredentials():Promise<boolean>;
 
 export function DisconnectRcon():Promise<boolean>;
 
+export function ExportOptionsDialog(arg1:main.PzOptions):Promise<void>;
+
 export function Format(arg1:string,arg2:Array<any>):Promise<string>;
 
 export function GetConfig():Promise<main.Config>;
@@ -45,6 +47,8 @@ export function GetVersion():Promise<string>;
 export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;
 
 export function Gunshot():Promise<void>;
+
+export function ImportOptionsDialog():Promise<main.PzOptions>;
 
 export function IsRconConnected():Promise<boolean>;
 

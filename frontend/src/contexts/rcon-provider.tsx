@@ -9,7 +9,14 @@ import React, {
   useEffect,
   useMemo,
 } from "react";
-import { ConnectRcon, DisconnectRcon, SendRconCommand, UpdatePzOptions } from "@/wailsjs/go/main/App";
+import {
+  ConnectRcon,
+  DisconnectRcon,
+  ExportOptionsDialog,
+  ImportOptionsDialog,
+  SendRconCommand,
+  UpdatePzOptions,
+} from "@/wailsjs/go/main/App";
 import { main } from "@/wailsjs/go/models";
 import { EventsOff, EventsOn } from "@/wailsjs/runtime/runtime";
 import { deepEqual } from "@/lib/utils";
@@ -37,6 +44,9 @@ interface RconContextType {
 
   reloadDoubleptions: () => void;
   reloadDoubleOptionsKey: number;
+
+  importOptions: () => void;
+  exportOptions: () => void;
 }
 
 const RconContext = createContext<RconContextType | undefined>(undefined);
@@ -167,6 +177,18 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setReloadDoubleOptionsKey((prevKey) => prevKey + 1);
   }, [modifiedOptions]);
 
+  const importOptions = () => {
+    ImportOptionsDialog().then((options) => {
+      if (options) {
+        setModifiedOptions(options);
+      }
+    });
+  };
+
+  const exportOptions = () => {
+    ExportOptionsDialog(modifiedOptions);
+  };
+
   return (
     <RconContext.Provider
       value={{
@@ -189,6 +211,8 @@ export const RconProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         optionsInvalid,
         reloadDoubleptions,
         reloadDoubleOptionsKey,
+        importOptions,
+        exportOptions,
       }}
     >
       {children}

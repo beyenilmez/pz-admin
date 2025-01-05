@@ -58,6 +58,10 @@ export function DisconnectRcon() {
   return window['go']['main']['App']['DisconnectRcon']();
 }
 
+export function ExportOptionsDialog(arg1) {
+  return window['go']['main']['App']['ExportOptionsDialog'](arg1);
+}
+
 export function Format(arg1, arg2) {
   return window['go']['main']['App']['Format'](arg1, arg2);
 }
@@ -88,6 +92,10 @@ export function GodMode(arg1, arg2) {
 
 export function Gunshot() {
   return window['go']['main']['App']['Gunshot']();
+}
+
+export function ImportOptionsDialog() {
+  return window['go']['main']['App']['ImportOptionsDialog']();
 }
 
 export function IsRconConnected() {

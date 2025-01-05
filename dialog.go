@@ -130,6 +130,11 @@ func (a *App) LoadItemsDialog() []ItemRecord {
 		},
 	})
 
+	if path == "" {
+		runtime.LogInfo(a.ctx, "No path given, not loading the items")
+		return nil
+	}
+
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
@@ -208,6 +213,11 @@ func (a *App) LoadMessageDialog() ServerMessage {
 		},
 	})
 
+	if path == "" {
+		runtime.LogInfo(a.ctx, "No path given, not loading the message")
+		return ServerMessage{}
+	}
+
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
@@ -229,6 +239,89 @@ func (a *App) LoadMessageDialog() ServerMessage {
 	}
 
 	return message
+}
+
+func (a *App) ExportOptionsDialog(options PzOptions) {
+	path, err := runtime.SaveFileDialog(a.ctx, runtime.SaveDialogOptions{
+		Title:                "Export options",
+		DefaultDirectory:     savedOptionsFolder,
+		DefaultFilename:      "options.json",
+		CanCreateDirectories: true,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "JSON",
+				Pattern:     "*.json",
+			},
+		},
+	})
+
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		return
+	}
+
+	err = writeJSON(path, options)
+
+	if err != nil {
+		if path == "" {
+			runtime.LogInfo(a.ctx, "No path given, not saving the options")
+			return
+		}
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error exporting the options",
+			Variant: "error",
+		})
+		return
+	}
+
+	runtime.LogInfo(a.ctx, "Options saved to "+path)
+	app.SendNotification(Notification{
+		Message: "Options exported",
+		Path:    path,
+		Variant: "success",
+	})
+}
+
+func (a *App) ImportOptionsDialog() PzOptions {
+	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title:                "Import options",
+		DefaultDirectory:     savedOptionsFolder,
+		CanCreateDirectories: true,
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "JSON",
+				Pattern:     "*.json",
+			},
+		},
+	})
+
+	if path == "" {
+		runtime.LogInfo(a.ctx, "No path given, not loading the options")
+		return PzOptions{}
+	}
+
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error importing the options",
+			Variant: "error",
+		})
+		return PzOptions{}
+	}
+
+	var options PzOptions
+	err = readJSON(path, &options)
+	if err != nil {
+		runtime.LogWarning(a.ctx, err.Error())
+		app.SendNotification(Notification{
+			Message: "There was an error importing the options",
+			Variant: "error",
+		})
+		return PzOptions{}
+	}
+
+	return options
 }
 
 func (a *App) OpenFileInExplorer(path string) {
