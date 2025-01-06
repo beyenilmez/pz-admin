@@ -34,8 +34,8 @@ export function RCONCheckIntervalSetting() {
   return (
     <SettingsItem loading={isLoading} configKey="rconCheckInterval">
       <div>
-        <SettingLabel>{t("RCON Check Interval")}</SettingLabel>
-        <SettingDescription>{`${t("Controls how often to check for players in seconds")}`}</SettingDescription>
+        <SettingLabel>{t("settings.setting.rcon_check_interval.label")}</SettingLabel>
+        <SettingDescription>{`${t("settings.setting.rcon_check_interval.description")}`}</SettingDescription>
       </div>
       <SettingContent>
         <Input

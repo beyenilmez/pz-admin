@@ -16,6 +16,7 @@ import { main } from "@/wailsjs/go/models";
 import { CopyToClipboard, LoadMessageDialog, SaveMessagesDialog, ServerMsg } from "@/wailsjs/go/main/App";
 import { useConfig } from "@/contexts/config-provider";
 import { Copy } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface SendMessageDialogProps {
   isOpen: boolean;
@@ -36,6 +37,7 @@ export function SendMessageDialog({
   textareaHeight = "20rem",
   previewHeight = "8rem",
 }: SendMessageDialogProps) {
+  const { t } = useTranslation();
   const [message, setMessage] = useState("");
   const [lineColors, setLineColors] = useState<Record<number, string>>({});
 
@@ -210,7 +212,7 @@ export function SendMessageDialog({
             ref={textareaRef}
             value={message}
             onChange={handleInputChange}
-            placeholder="Your message"
+            placeholder={t("tools.message_editor.message_placeholder")}
             style={{ minHeight: textareaHeight, width: mode === "tool" ? "100%" : "45rem" }}
             className="pt-3 break-words whitespace-pre-wrap dark:bg-black/40 bg-black/80 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
           />
@@ -264,18 +266,18 @@ export function SendMessageDialog({
       <div className="space-y-0.5">
         <div className="space-y-1 mt-4">
           <div className="flex w-full justify-between">
-            <Label className="font-bold">{mode === "tool" ? "Formatted Message" : "Preview"}</Label>
+            <Label className="font-bold">{t("tools.message_editor.formatted_message")}</Label>
             {mode !== "tool" && (
               <p className="text-right text-xs text-muted-foreground" role="status">
                 <span className="tabular-nums">
-                  {remainingBytes}/{maxBytes}
+                  {maxBytes - remainingBytes}/{maxBytes}
                 </span>{" "}
-                bytes left
+                {t("tools.message_editor.bytes")}
               </p>
             )}
             {mode === "tool" && (
               <p className="text-right text-xs text-muted-foreground" role="status">
-                <span className="tabular-nums">{maxBytes - remainingBytes}</span> bytes
+                <span className="tabular-nums">{maxBytes - remainingBytes}</span> {t("tools.message_editor.bytes")}
               </p>
             )}
           </div>
@@ -313,14 +315,14 @@ export function SendMessageDialog({
             variant={"outline"}
             className="gap-2"
           >
-            <Copy /> Copy Formatted Message
+            <Copy /> {t("tools.message_editor.mode.tool.copy_formatted_message")}
           </Button>
           <div>
             <Button onClick={handleSaveMessage} disabled={!message} variant={"outline"}>
-              Save Message
+              {t("tools.message_editor.save_message")}
             </Button>
             <Button onClick={handleLoadMessage} variant={"outline"}>
-              Load Message
+              {t("tools.message_editor.load_message")}
             </Button>
           </div>
         </div>
@@ -332,33 +334,37 @@ export function SendMessageDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[80vw] w-fit h-max-screen overflow-clip">
         <DialogHeader>
-          <DialogTitle>{mode === "message" ? "Send Message" : "Edit message"}</DialogTitle>
+          <DialogTitle>
+            {mode === "message"
+              ? t("tools.message_editor.mode.message.name")
+              : t("tools.message_editor.mode.edit.name")}
+          </DialogTitle>
           <DialogDescription>
-            <p>{mode === "message" ? "You will send this message to everyone in the server." : ""}</p>
+            <p>{mode === "message" ? t("tools.message_editor.mode.message.description") : ""}</p>
           </DialogDescription>
         </DialogHeader>
         {dialogContent}
         <DialogFooter className="w-full flex flex-row sm:flex-row sm:justify-between justify-between">
           <div className="flex gap-2">
             <Button onClick={handleSaveMessage} disabled={!message} variant={"outline"}>
-              Save Message
+              {t("tools.message_editor.save_message")}
             </Button>
             <Button onClick={handleLoadMessage} variant={"outline"}>
-              Load Message
+              {t("tools.message_editor.load_message")}
             </Button>
           </div>
           {mode === "settings" ? (
             <div className="space-x-2">
               <Button type="submit" variant={"secondary"} onClick={handleResetEdit}>
-                Reset
+                {t("tools.message_editor.mode.edit.reset")}
               </Button>
               <Button type="submit" onClick={handleSaveEdit}>
-                Save Edit
+                {t("tools.message_editor.mode.edit.save_edit")}
               </Button>
             </div>
           ) : (
             <Button type="submit" onClick={handleSendMessage} disabled={!formattedMessage}>
-              Send
+              {t("tools.message_editor.mode.message.send")}
             </Button>
           )}
         </DialogFooter>

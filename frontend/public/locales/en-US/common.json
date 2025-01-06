@@ -15,7 +15,8 @@
   "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
 
   "nav": {
-    "my_packs": "My Packs",
+    "admin_panel": "Admin Panel",
+    "tools": "Tools",
     "settings": "Settings"
   },
 
@@ -30,7 +31,8 @@
       "general": "General",
       "application": "Application",
       "advanced": "Advanced",
-      "update": "Update"
+      "update": "Update",
+      "rcon": "RCON"
     },
 
     "setting": {
@@ -133,6 +135,69 @@
         "restarting": "Restarting...",
         "need_admin_privileges": "Administration privileges are needed to update the application.",
         "update_successful": "Update was successfully applied."
+      },
+
+      "rcon_check_interval": {
+        "label": "RCON Check Interval",
+        "description": "Set the frequency (in seconds) for checking the connection and active players."
+      },
+
+      "disable_weather_control_buttons": {
+        "label": "Disable Weather Control Buttons",
+        "description": "Disables the weather control buttons at server management panel to prevent misclicks."
+      },
+
+      "disable_random_event_buttons": {
+        "label": "Disable Random Event Buttons",
+        "description": "Disables the random event buttons at server management panel to prevent misclicks."
+      },
+
+      "disable_other_management_buttons": {
+        "label": "Disable Other Management Buttons",
+        "description": "Disables the buttons in the 'Other' category of the server management panel to prevent clicks."
+      },
+
+      "debug_mode": {
+        "label": "Debug Mode",
+        "description": "Enable debug mode."
+      }
+    }
+  },
+
+  "tools": {
+    "message_editor": {
+      "mode": {
+        "tool": {
+          "name": "Message Editor",
+          "copy_formatted_message": "Copy Formatted Message"
+        },
+        "message": {
+          "name": "Send Message",
+          "description": "Send a message to the server.",
+          "send": "Send"
+        },
+        "edit": {
+          "name": "Edit Message",
+          "reset": "Reset",
+          "save_edit": "Save Edit"
+        }
+      },
+
+      "message": "Message",
+      "message_placeholder": "Enter your message here...",
+      "formatted_message": "Formatted Message",
+      "save_message": "Save Message",
+      "load_message": "Load Message",
+      "bytes": "Bytes"
+    },
+    "item_browser": {
+      "mode": {
+        "tool": {
+          "name": "Item Browser"
+        },
+        "add": {
+          "name": "Add Items"
+        }
       }
     }
   },

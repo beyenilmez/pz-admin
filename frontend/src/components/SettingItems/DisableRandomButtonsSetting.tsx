@@ -7,8 +7,8 @@ export function DisableRandomButtonsSetting() {
   return (
     <SwitchConfig
       configKey="disableRandomButtons"
-      label={t("Disable Random Event Buttons")}
-      description={t("Disables the random event buttons to prevent misclicks")}
+      label={t("settings.setting.disable_random_event_buttons.label")}
+      description={t("settings.setting.disable_random_event_buttons.description")}
     />
   );
 }

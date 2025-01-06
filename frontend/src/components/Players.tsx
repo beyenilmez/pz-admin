@@ -48,9 +48,12 @@ import { RemovePlayerFromWhitelistDialog } from "./Dialogs/RemovePlayerFromWhite
 import { AddXpDialog } from "./Dialogs/AddXpDialog";
 import { AddVehicleDialog } from "./Dialogs/AddVehicleDialog";
 import { AddItemDialog } from "./Dialogs/AddItemDialog";
+import { useConfig } from "@/contexts/config-provider";
 
 export function PlayersTab() {
   const { players } = useRcon();
+  const { config } = useConfig();
+  const debug = config?.debugMode;
 
   const columns: ColumnDef<main.Player>[] = [
     {
@@ -396,7 +399,7 @@ export function PlayersTab() {
                     onClick={() => {
                       handleRemovePlayerFromWhitelist();
                     }}
-                    disabled={Object.keys(rowSelection).length === 0}
+                    disabled={!debug && Object.keys(rowSelection).length === 0}
                   >
                     Remove Players
                   </Button>
@@ -407,7 +410,7 @@ export function PlayersTab() {
                   onClick={() => {
                     handleSetAccessLevel();
                   }}
-                  disabled={Object.keys(rowSelection).length === 0}
+                  disabled={!debug && Object.keys(rowSelection).length === 0}
                 >
                   Set Access Level
                 </Button>
@@ -416,7 +419,7 @@ export function PlayersTab() {
                   onClick={() => {
                     handleBan();
                   }}
-                  disabled={Object.keys(rowSelection).length === 0}
+                  disabled={!debug && Object.keys(rowSelection).length === 0}
                 >
                   Ban
                 </Button>
@@ -425,7 +428,7 @@ export function PlayersTab() {
                   onClick={() => {
                     handleUnban();
                   }}
-                  disabled={Object.keys(rowSelection).length === 0}
+                  disabled={!debug && Object.keys(rowSelection).length === 0}
                 >
                   Unban
                 </Button>
@@ -435,11 +438,12 @@ export function PlayersTab() {
                     handleKick();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Kick
@@ -450,11 +454,12 @@ export function PlayersTab() {
                     handleTeleport();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Teleport
@@ -465,11 +470,12 @@ export function PlayersTab() {
                     handleCreateHorde();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Create Horde
@@ -480,11 +486,12 @@ export function PlayersTab() {
                     handleLightning();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Lightning
@@ -495,11 +502,12 @@ export function PlayersTab() {
                     handleThunder();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Thunder
@@ -510,11 +518,12 @@ export function PlayersTab() {
                     handleAddXp();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Add XP
@@ -525,11 +534,12 @@ export function PlayersTab() {
                     handleAddItem();
                   }}
                   disabled={
-                    Object.keys(rowSelection).length === 0 ||
-                    !table
-                      .getSelectedRowModel()
-                      .rows.map((row) => row.original)
-                      .some((player) => player.online)
+                    !debug &&
+                    (Object.keys(rowSelection).length === 0 ||
+                      !table
+                        .getSelectedRowModel()
+                        .rows.map((row) => row.original)
+                        .some((player) => player.online))
                   }
                 >
                   Add Item

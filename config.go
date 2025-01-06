@@ -41,6 +41,7 @@ type Config struct {
 	DisableWeatherControlButtons *bool   `json:"disableWeatherControlButtons"` // true, false
 	DisableRandomButtons         *bool   `json:"disableRandomButtons"`         // true, false
 	DisableOtherButtons          *bool   `json:"disableOtherButtons"`          // true, false
+	DebugMode                    *bool   `json:"debugMode"`                    // true, false
 }
 
 func GetDefaultConfig() Config {
@@ -73,6 +74,7 @@ func GetDefaultConfig() Config {
 	defaultDisableWeatherControlButtons := false
 	defaultDisableRandomButtons := false
 	defaultDisableOtherButtons := false
+	defaultDebugMode := false
 
 	return Config{
 		Theme:                        &defaultTheme,
@@ -104,6 +106,7 @@ func GetDefaultConfig() Config {
 		DisableWeatherControlButtons: &defaultDisableWeatherControlButtons,
 		DisableRandomButtons:         &defaultDisableRandomButtons,
 		DisableOtherButtons:          &defaultDisableOtherButtons,
+		DebugMode:                    &defaultDebugMode,
 	}
 }
 

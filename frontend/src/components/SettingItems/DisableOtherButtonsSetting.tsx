@@ -7,8 +7,8 @@ export function DisableOtherButtonsSetting() {
   return (
     <SwitchConfig
       configKey="disableOtherButtons"
-      label={t("Disable Other")}
-      description={t("Disables the other category to prevent misclicks")}
+      label={t("settings.setting.disable_other_management_buttons.label")}
+      description={t("settings.setting.disable_other_management_buttons.description")}
     />
   );
 }

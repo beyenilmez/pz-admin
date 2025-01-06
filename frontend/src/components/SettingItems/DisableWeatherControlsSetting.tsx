@@ -7,8 +7,8 @@ export function DisableWeatherControlsSetting() {
   return (
     <SwitchConfig
       configKey="disableWeatherControlButtons"
-      label={t("Disable Weather Control Buttons")}
-      description={t("Disables the weather control buttons to prevent misclicks")}
+      label={t("settings.setting.disable_weather_control_buttons.label")}
+      description={t("settings.setting.disable_weather_control_buttons.description")}
     />
   );
 }

@@ -15,7 +15,8 @@
   "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",
 
   "nav": {
-    "my_packs": "Paketlerim",
+    "admin_panel": "Admin Paneli",
+    "tools": "Araçlar",
     "settings": "Ayarlar"
   },
 
@@ -30,7 +31,8 @@
       "general": "Genel",
       "application": "Uygulama",
       "advanced": "Gelişmiş",
-      "update": "Güncelleme"
+      "update": "Güncelleme",
+      "rcon": "RCON"
     },
 
     "setting": {
@@ -138,7 +140,38 @@
         "restarting": "Yeniden başlatılıyor...",
         "need_admin_privileges": "Uygulamayı güncellemek için yönetici yetkileri gereklidir.",
         "update_successful": "Güncelleme başarıyla uygulandı."
+      },
+
+      "rcon_check_interval": {
+        "label": "RCON Kontrol Sıklığı",
+        "description": "Bağlantıyı ve aktif oyuncuları kontrol etme sıklığını (saniye cinsinden) ayarlayın."
+      },
+
+      "disable_weather_control_buttons": {
+        "label": "Hava Durumu Kontrol Düğmelerini Devre Dışı Bırak",
+        "description": "Yanlış tıklamaları önlemek için sunucu yönetim panelindeki hava durumu kontrol düğmelerini devre dışı bırakır."
+      },
+
+      "disable_random_event_buttons": {
+        "label": "Rastgele Etkinlik Düğmelerini Devre Dışı Bırak",
+        "description": "Yanlış tıklamaları önlemek için sunucu yönetim panelindeki rastgele etkinlik düğmelerini devre dışı bırakır."
+      },
+
+      "disable_other_management_buttons": {
+        "label": "Diğer Yönetim Düğmelerini Devre Dışı Bırak",
+        "description": "Yanlış tıklamaları önlemek için sunucu yönetim panelindeki 'Diğer' kategorisindeki düğmeleri devre dışı bırakır."
+      },
+
+      "debug_mode": {
+        "label": "Hata Ayıklama Modu",
+        "description": "Hata ayıklama modunu etkinleştir."
       }
+    }
+  },
+
+  "tools": {
+    "message_editor": {
+      "message": "Mesaj"
     }
   },
 

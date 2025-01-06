@@ -30,6 +30,7 @@ export namespace main {
 	    disableWeatherControlButtons?: boolean;
 	    disableRandomButtons?: boolean;
 	    disableOtherButtons?: boolean;
+	    debugMode?: boolean;
 	
 	    static createFrom(source: any = {}) {
 	        return new Config(source);
@@ -66,6 +67,7 @@ export namespace main {
 	        this.disableWeatherControlButtons = source["disableWeatherControlButtons"];
 	        this.disableRandomButtons = source["disableRandomButtons"];
 	        this.disableOtherButtons = source["disableOtherButtons"];
+	        this.debugMode = source["debugMode"];
 	    }
 	}
 	export class Coordinates {

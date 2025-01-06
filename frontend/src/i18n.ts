@@ -34,4 +34,9 @@ const initializeI18n = async () => {
   return i18n;
 };
 
+export const reloadTranslations = async () => {
+  await i18n.reloadResources();
+  i18n.changeLanguage(i18n.language); // Ensure React components re-render with the updated translations
+};
+
 export default initializeI18n;

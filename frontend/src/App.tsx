@@ -145,10 +145,10 @@ function App() {
             <TabsList className="justify-between px-3 py-7 rounded-none w-full h-12">
               <div>
                 <TabsTrigger value="admin-panel" onClick={() => setTab("admin-panel")} className="px-6">
-                  {t("Admin Panel")}
+                  {t("nav.admin_panel")}
                 </TabsTrigger>
                 <TabsTrigger value="tools" onClick={() => setTab("tools")} className="px-6">
-                  {t("Tools")}
+                  {t("nav.tools")}
                 </TabsTrigger>
                 <TabsTrigger value="settings" onClick={() => setTab("settings")} className="px-6">
                   {t("nav.settings")}

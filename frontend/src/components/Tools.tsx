@@ -14,7 +14,7 @@ export default function Tools() {
       <TabsList defaultValue={"message-editor"} className="h-full backdrop-brightness-0 rounded-none p-2 w-64 shrink-0">
         <div className="flex flex-col w-full h-full">
           <TabsTrigger value="message-editor" onClick={() => setTab("message-editor")} className="px-6 py-3 w-full">
-            {t("Message editor")}
+            {t("tools.message_editor.mode.tool.name")}
           </TabsTrigger>
           <TabsTrigger value="item-browser" onClick={() => setTab("item-browser")} className="px-6 py-3 w-full">
             {t("Item Browser")}
