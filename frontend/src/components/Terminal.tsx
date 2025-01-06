@@ -197,9 +197,9 @@ const TerminalPage: React.FC = () => {
               key={index}
               className={`break-words whitespace-pre-wrap w-[calc(100vw-18rem)] ${
                 entry.type === "command"
-                  ? "text-green-400" // Brighter green for commands
+                  ? "dark:text-green-400 text-green-900 font-semibold" // Brighter green for commands
                   : entry.type === "response"
-                  ? "text-green-700"
+                  ? "dark:text-green-700 text-green-600"
                   : entry.type === "info"
                   ? "text-blue-500"
                   : "text-red-500"
@@ -214,7 +214,7 @@ const TerminalPage: React.FC = () => {
 
       {/* Inline Input */}
       <div className="flex">
-        <span className="text-green-400 mr-2 h-[2rem] flex items-center">$</span>
+        <span className="dark:text-green-400 text-green-900 mr-2 h-[2rem] flex items-center font-semibold">$</span>
         <input
           ref={inputRef}
           type="text"
@@ -222,7 +222,7 @@ const TerminalPage: React.FC = () => {
           value={currentInput}
           onChange={(e) => resetTabCompletion(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-full bg-transparent outline-none border-none text-green-400 h-[2rem]"
+          className="w-full bg-transparent outline-none border-none dark:text-green-400 text-green-900 h-[2rem]"
           autoFocus
         />
       </div>
