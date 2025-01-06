@@ -7,9 +7,8 @@ import (
 )
 
 type ServerMessage struct {
-	Message         string         `json:"message"`
-	LineColors      map[int]string `json:"lineColors"`
-	LineColorsFloat map[int]string `json:"lineColorsFloat"`
+	Message    string         `json:"message"`
+	LineColors map[int]string `json:"lineColors"`
 }
 
 type ImportOptionsResponse struct {

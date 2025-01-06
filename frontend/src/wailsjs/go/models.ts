@@ -482,7 +482,6 @@ export namespace main {
 	export class ServerMessage {
 	    message: string;
 	    lineColors: {[key: number]: string};
-	    lineColorsFloat: {[key: number]: string};
 	
 	    static createFrom(source: any = {}) {
 	        return new ServerMessage(source);
@@ -492,7 +491,6 @@ export namespace main {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.message = source["message"];
 	        this.lineColors = source["lineColors"];
-	        this.lineColorsFloat = source["lineColorsFloat"];
 	    }
 	}
 	export class UpdateInfo {

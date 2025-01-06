@@ -16,20 +16,12 @@ interface ColorPickerProps {
 }
 
 const parseRgbString = (value: string): RgbColor => {
-  const [r, g, b] = value && value.split(",").length === 3 ? value.split(",").map(Number) : [255, 255, 255];
+  const [r, g, b] = value && value.split(",").length === 3 ? value.split(",").map(Number) : [7, 126, 245];
   return { r: r, g: g, b: b };
 };
 
 const formatRgbString = (color: RgbColor): string => {
   return `${color.r},${color.g},${color.b}`;
-};
-
-const convertToFloat = (color: RgbColor): { r: number; g: number; b: number } => {
-  return {
-    r: color.r / 255,
-    g: color.g / 255,
-    b: color.b / 255,
-  };
 };
 
 const clamp = (value: number, min: number, max: number): number => Math.max(min, Math.min(value, max));
@@ -44,18 +36,12 @@ const ColorPicker = forwardRef<HTMLInputElement, Omit<ButtonProps, "value" | "on
 
     const handleColorChange = (newColor: RgbColor) => {
       onChange(formatRgbString(newColor));
-      if (onFloatChange) {
-        onFloatChange(convertToFloat(newColor));
-      }
     };
 
     const handleInputChange = (key: keyof RgbColor, newValue: string) => {
       const numericValue = clamp(parseInt(newValue, 10) || 0, 0, 255);
       const updatedColor = { ...parsedValue, [key]: numericValue };
       onChange(formatRgbString(updatedColor));
-      if (onFloatChange) {
-        onFloatChange(convertToFloat(updatedColor));
-      }
     };
 
     return (

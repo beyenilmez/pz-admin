@@ -38,11 +38,10 @@ export function SendMessageDialog({
 }: SendMessageDialogProps) {
   const [message, setMessage] = useState("");
   const [lineColors, setLineColors] = useState<Record<number, string>>({});
-  const [lineColorsFloat, setLineColorsFloat] = useState<Record<number, string>>({});
 
   const [resetNum, setResetNum] = useState(0);
 
-  const maxBytes = mode === "tool" ? Infinity : 988 - (mode === "settings" ? 24 : 0);
+  const maxBytes = mode === "tool" ? 2147483647 : 988 - (mode === "settings" ? 24 : 0);
 
   const handleSendMessage = () => {
     ServerMsg(formattedMessage);
@@ -53,22 +52,33 @@ export function SendMessageDialog({
   useEffect(() => {
     setMessage("");
     setLineColors({});
-    setLineColorsFloat({});
     setResetNum((prev) => prev + 1);
   }, [isOpen]);
+
+  const floatLineColors: Record<number, string> = useMemo(() => {
+    return Object.entries(lineColors).reduce(
+      (acc, [key, value]) => ({
+        ...acc,
+        [key]: value
+          .split(",")
+          .map((v) => {
+            const parsedValue = parseFloat(v);
+            if (isNaN(parsedValue)) return "";
+            return +(parsedValue / 255).toFixed(2);
+          })
+          .join(","),
+      }),
+      {}
+    );
+  }, [lineColors]);
 
   const handleColorChange = (index: number, color: string) => {
     setLineColors((prev) => ({ ...prev, [index]: color }));
   };
 
-  const handleColorFloatChange = (index: number, color: string) => {
-    setLineColorsFloat((prev) => ({ ...prev, [index]: color }));
-  };
-
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const lineCount = e.target.value.split("\n").length;
     setLineColors((prev) => ({ ...prev, [lineCount]: "" }));
-    setLineColorsFloat((prev) => ({ ...prev, [lineCount]: "" }));
 
     setMessage(e.target.value.replace(/[\\"]/g, ""));
   };
@@ -76,7 +86,8 @@ export function SendMessageDialog({
   const formattedMessage = message
     .split("\n")
     .map((line, index) => {
-      const color = lineColorsFloat[index] || "1,1,1";
+      const color = floatLineColors[index];
+      if (!color) return line;
       return line.trim() ? `<RGB:${color}>${line}` : line;
     })
     .join("<LINE>");
@@ -98,7 +109,8 @@ export function SendMessageDialog({
           localFormattedMessage = truncatedMessage
             .split("\n")
             .map((line, index) => {
-              const color = lineColorsFloat[index] || "1,1,1";
+              const color = floatLineColors[index];
+              if (!color) return line;
               return line.trim() ? `<RGB:${color}>${line}` : line;
             })
             .join("<LINE>");
@@ -113,7 +125,6 @@ export function SendMessageDialog({
     const serverMessage: main.ServerMessage = {
       message: message,
       lineColors: lineColors,
-      lineColorsFloat: lineColorsFloat,
     };
 
     SaveMessagesDialog(serverMessage);
@@ -122,10 +133,8 @@ export function SendMessageDialog({
   const handleLoadMessage = () => {
     LoadMessageDialog().then((serverMessage) => {
       if (!serverMessage.message) return;
-
       setMessage(serverMessage.message);
       setLineColors(serverMessage.lineColors);
-      setLineColorsFloat(serverMessage.lineColorsFloat);
     });
   };
 
@@ -138,7 +147,6 @@ export function SendMessageDialog({
 
         if (trimmedLine.startsWith("<RGB:")) {
           const color = trimmedLine.split("<RGB:")[1].split(">")[0];
-          setLineColorsFloat((prev) => ({ ...prev, [index]: color }));
           const [x, y, z] = color.split(",");
           setLineColors((prev) => ({
             ...prev,
@@ -221,9 +229,6 @@ export function SendMessageDialog({
                     className="h-4 w-4 rounded-sm"
                     value={lineColors[index]}
                     onChange={(color) => handleColorChange(index, color)}
-                    onFloatChange={(color) =>
-                      handleColorFloatChange(index, `${color.r.toFixed(3)},${color.g.toFixed(3)},${color.b.toFixed(3)}`)
-                    }
                   />
                 </div>
 
@@ -233,11 +238,11 @@ export function SendMessageDialog({
                     lineRefs.current[index] = el;
                     return;
                   }}
-                  className="pr-12 w-full break-words whitespace-pre-wrap absolute pointer-events-none text-white font-semibold text-sm select-none font-[corbel]"
+                  className="pr-12 w-full break-words whitespace-pre-wrap absolute pointer-events-none text-[rgb(7,126,245)] font-semibold text-sm select-none font-[corbel]"
                   style={{
                     top: `${getTopPosition(index)}px`,
                     left: "2.03rem",
-                    color: `rgb(${lineColors[index] || "255,255,255"})`,
+                    color: `rgb(${lineColors[index] || "7,126,245"})`,
                   }}
                 >
                   {line.trim() === "" ? "\u00A0" : line}
@@ -265,7 +270,12 @@ export function SendMessageDialog({
                 <span className="tabular-nums">
                   {remainingBytes}/{maxBytes}
                 </span>{" "}
-                characters left
+                bytes left
+              </p>
+            )}
+            {mode === "tool" && (
+              <p className="text-right text-xs text-muted-foreground" role="status">
+                <span className="tabular-nums">{maxBytes - remainingBytes}</span> bytes
               </p>
             )}
           </div>
