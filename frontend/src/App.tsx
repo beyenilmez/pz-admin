@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TitleBar from "./components/TitleBar";
 import Settings from "./components/Settings";
 import { useTranslation } from "react-i18next";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useRef, useLayoutEffect, useState } from "react";
 import { useStorage } from "./contexts/storage-provider";
 import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
@@ -17,6 +17,9 @@ import { useProgress } from "./contexts/progress-provider";
 import { useRcon } from "./contexts/rcon-provider";
 import { main } from "./wailsjs/go/models";
 import Tools from "./components/Tools";
+import { reloadTranslations } from "@/i18n";
+import locales from "@/locales.json";
+import i18next from "i18next";
 
 function App() {
   const { config, initialConfig } = useConfig();
@@ -135,6 +138,50 @@ function App() {
   useEffect(() => {
     setValue("path1", tab);
   }, [tab]);
+
+  // Debug mode
+  const lastFetchedDataRef = useRef<Record<string, string>>({});
+  const supportedLngs = locales.locales.map((language) => language.code);
+  const namespaces = i18next.options.ns;
+
+  const pollForUpdates = async () => {
+    try {
+      let filesChanged = false;
+
+      for (const lng of supportedLngs) {
+        for (const ns of namespaces!) {
+          const filePath = `/locales/${lng}/${ns}.json`;
+          const response = await fetch(filePath, { cache: "no-store" }); // Avoid caching
+          const fileContent = await response.text();
+
+          // Check if the content has changed since last fetch
+          const fileKey = `${lng}-${ns}`;
+          if (lastFetchedDataRef.current[fileKey] !== fileContent) {
+            console.log(`Translation file updated: ${filePath}`);
+            lastFetchedDataRef.current[fileKey] = fileContent;
+            filesChanged = true;
+          }
+        }
+      }
+
+      if (filesChanged) {
+        reloadTranslations();
+      }
+    } catch (error) {
+      console.error("Error polling translation files:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (config?.debugMode) {
+      const pollingInterval = 2000;
+      const intervalId = setInterval(() => {
+        pollForUpdates();
+      }, pollingInterval);
+
+      return () => clearInterval(intervalId);
+    }
+  }, [config?.debugMode]);
 
   return (
     <React.Fragment>
