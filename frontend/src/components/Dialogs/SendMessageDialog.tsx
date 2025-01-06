@@ -212,7 +212,7 @@ export function SendMessageDialog({
             onChange={handleInputChange}
             placeholder="Your message"
             style={{ minHeight: textareaHeight, width: mode === "tool" ? "100%" : "45rem" }}
-            className="pt-3 break-words whitespace-pre-wrap bg-black/40 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
+            className="pt-3 break-words whitespace-pre-wrap dark:bg-black/40 bg-black/80 resize-none overflow-clip text-sm pl-8 leading-5 font-semibold text-transparent selection:bg-muted caret-muted-foreground font-[corbel]"
           />
           <div className="absolute top-3 left-0 w-full pointer-events-none">
             {lines.map((line, index) => (
@@ -238,7 +238,7 @@ export function SendMessageDialog({
                     lineRefs.current[index] = el;
                     return;
                   }}
-                  className="pr-12 w-full break-words whitespace-pre-wrap absolute pointer-events-none text-[rgb(7,126,245)] font-semibold text-sm select-none font-[corbel]"
+                  className="pr-[2.81rem] w-full break-words whitespace-pre-wrap absolute pointer-events-none text-[rgb(7,126,245)] font-semibold text-sm select-none font-[corbel]"
                   style={{
                     top: `${getTopPosition(index)}px`,
                     left: "2.03rem",
@@ -284,7 +284,15 @@ export function SendMessageDialog({
             style={{ width: mode === "tool" ? "100%" : "45rem", height: previewHeight }}
           >
             <div>
-              <code className="text-sm break-words whitespace-pre-wrap">{formattedMessage}</code>
+              <code
+                className="text-sm break-words whitespace-pre-wrap block max-w-full"
+                style={{
+                  wordBreak: "break-word",
+                  overflowWrap: "anywhere",
+                }}
+              >
+                {formattedMessage}
+              </code>
             </div>
           </ScrollArea>
         </div>
