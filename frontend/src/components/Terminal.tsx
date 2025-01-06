@@ -193,8 +193,22 @@ const TerminalPage: React.FC = () => {
   const commandsMap: { [key: string]: string[] } = {
     empty: commands,
     help: commands,
+    setaccesslevel: playerNames,
     banuser: playerNames,
     unbanuser: playerNames,
+    kick: playerNames,
+    teleport: playerNames,
+    tp: playerNames,
+    createhorde: playerNames,
+    lightning: playerNames,
+    thunder: playerNames,
+    addxp: playerNames,
+    additem: playerNames,
+    addvehicle: playerNames,
+    godmod: playerNames,
+    godmode: playerNames,
+    invisible: playerNames,
+    noclip: playerNames,
     changeoption: options,
   };
 
