@@ -10,6 +10,9 @@
   "show": "Show",
   "create": "Create",
   "delete": "Delete",
+  "unselect_all": "Unselect all",
+  "clear": "Clear",
+  "copy": "Copy",
 
   "downloading_missing_external_programs": "Downloading missing external programs...",
   "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
@@ -196,9 +199,22 @@
           "name": "Item Browser"
         },
         "add": {
-          "name": "Add Items"
+          "name": "Add Items",
+          "description": "You will add items to {{names}}.",
+          "add_selected_items": "Add Selected Items"
+        },
+        "edit": {
+          "name": "Edit Items",
+          "reset": "Reset",
+          "save_edit": "Save Edit"
         }
-      }
+      },
+
+      "selected_items": "Selected Items",
+      "search_items_placeholder": "Search items...",
+      "show_ids": "Show Item IDs",
+      "save_items": "Save Items",
+      "load_items": "Load Items"
     }
   },
 

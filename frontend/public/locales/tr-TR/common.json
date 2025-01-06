@@ -10,6 +10,9 @@
   "show": "Göster",
   "create": "Oluştur",
   "delete": "Sil",
+  "unselect_all": "Hepsini kaldır",
+  "clear": "Temizle",
+  "copy": "Kopyala",
 
   "downloading_missing_external_programs": "Eksik dosyalar indiriliyor...",
   "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",
@@ -171,7 +174,52 @@
 
   "tools": {
     "message_editor": {
-      "message": "Mesaj"
+      "mode": {
+        "tool": {
+          "name": "Mesaj Düzenleyici",
+          "copy_formatted_message": "Biçimlendirilmiş Mesajı Kopyala"
+        },
+        "message": {
+          "name": "Mesaj Gönder",
+          "description": "Sunucuya bir mesaj gönderin.",
+          "send": "Gönder"
+        },
+        "edit": {
+          "name": "Mesajı Düzenle",
+          "reset": "Sıfırla",
+          "save_edit": "Düzenlemeyi Kaydet"
+        }
+      },
+
+      "message": "Mesaj",
+      "message_placeholder": "Mesajınızı buraya yazın...",
+      "formatted_message": "Biçimlendirilmiş Mesaj",
+      "save_message": "Mesajı Kaydet",
+      "load_message": "Mesajı Yükle",
+      "bytes": "Bayt"
+    },
+    "item_browser": {
+      "mode": {
+        "tool": {
+          "name": "Eşya Kataloğu"
+        },
+        "add": {
+          "name": "Eşya Ekle",
+          "description": "Eşyalar şu kullanıcılara eklenecek: {{names}}.",
+          "add_selected_items": "Seçilen Eşyaları Ekle"
+        },
+        "edit": {
+          "name": "Eşyaları Düzenle",
+          "reset": "Sıfırla",
+          "save_edit": "Düzenlemeyi Kaydet"
+        }
+      },
+
+      "selected_items": "Seçilen Eşyalar",
+      "search_items_placeholder": "Eşya ara...",
+      "show_ids": "Eşya ID'lerini Göster",
+      "save_items": "Eşyaları Kaydet",
+      "load_items": "Eşya Yükle"
     }
   },
 

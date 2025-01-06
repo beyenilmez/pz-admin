@@ -272,7 +272,7 @@ export function AddItemDialog({
           <div className="relative w-full">
             <Input
               className="peer ps-9"
-              placeholder="Search items..."
+              placeholder={tc("tools.item_browser.search_items_placeholder")}
               type="search"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -287,11 +287,8 @@ export function AddItemDialog({
               label: tc(`item_categories.${category.name}`),
             }))}
             multiSelect
-            placeholder="Select Category..."
-            searchPlaceholder="Search Category..."
-            nothingFoundMessage="No categories found"
             unselectAllButton
-            unselectAllButtonText="Unselect All"
+            unselectAllButtonText={tc("unselect_all")}
             hideDisplayText
             icon={<ListFilter className="w-4 h-4 opacity-80" />}
             onChange={setSelectedFilters}
@@ -346,10 +343,10 @@ export function AddItemDialog({
       <div className="w-full">
         <div className="w-full flex justify-between pr-4 mb-4">
           <div className="flex gap-6">
-            <h3 className="text-lg font-semibold">Selected Items</h3>
+            <h3 className="text-lg font-semibold">{tc("tools.item_browser.selected_items")}</h3>
             <div className="flex gap-2 items-center h-8">
               <Checkbox id="show-ids" checked={showIds} onCheckedChange={(checked) => setShowIds(checked as boolean)} />
-              <Label htmlFor="show-ids">Show Ids</Label>
+              <Label htmlFor="show-ids">{tc("tools.item_browser.show_ids")}</Label>
             </div>
           </div>
           <Button
@@ -360,7 +357,7 @@ export function AddItemDialog({
             disabled={Object.entries(selectedItems).length === 0}
           >
             <div className="flex gap-1 items-center">
-              <XCircle className="h-4 w-4 shrink-0 mt-0.5" /> Clear
+              <XCircle className="h-4 w-4 shrink-0 mt-0.5" /> {tc("clear")}
             </div>
           </Button>
         </div>
@@ -371,10 +368,10 @@ export function AddItemDialog({
         <div className="flex justify-between">
           <div className={`flex gap-2 ${mode === "tool" && "w-full"}`}>
             <Button variant={"outline"} onClick={handleSaveItems} disabled={Object.entries(selectedItems).length === 0}>
-              Save Items
+              {tc("tools.item_browser.save_items")}
             </Button>
             <Button variant={"outline"} onClick={handleLoadItems}>
-              Load Items
+              {tc("tools.item_browser.load_items")}
             </Button>
 
             {mode === "tool" && (
@@ -383,7 +380,7 @@ export function AddItemDialog({
                 {Object.keys(selectedItems).length > 0 && (
                   <Button
                     className="bg-transparent absolute inset-y-0 end-0 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground transition-colors hover:text-foreground"
-                    tooltip="Copy"
+                    tooltip={tc("copy")}
                     onClick={() => CopyToClipboard(Object.keys(selectedItems).join(","), true)}
                   >
                     <Copy strokeWidth={2} aria-hidden="true" className="w-5 h-5 shrink-0" />
@@ -394,13 +391,13 @@ export function AddItemDialog({
           </div>
           {mode === "add" && (
             <Button onClick={handleAddItems} disabled={Object.entries(selectedItems).length === 0}>
-              Add Selected Items
+              {tc("tools.item_browser.mode.add.add_selected_items")}
             </Button>
           )}
           {mode === "settings" && (
             <div className="space-x-2">
-              <Button onClick={handleResetEdit}>Reset</Button>
-              <Button onClick={handleSaveEdit}>Save Edit</Button>
+              <Button onClick={handleResetEdit}>{tc("tools.item_browser.mode.edit.reset")}</Button>
+              <Button onClick={handleSaveEdit}>{tc("tools.item_browser.mode.edit.save_edit")}</Button>
             </div>
           )}
         </div>
@@ -416,9 +413,11 @@ export function AddItemDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[80vw] max-h-full">
         <DialogHeader>
-          <DialogTitle className="text-2xl">{mode === "add" ? "Add Items" : "Edit Items"}</DialogTitle>
+          <DialogTitle className="text-2xl">
+            {mode === "add" ? tc("tools.item_browser.mode.add.name") : tc("tools.item_browser.mode.edit.name")}
+          </DialogTitle>
           <DialogDescription>
-            {mode === "add" && <p>{"You will add items to " + names?.join(", ") + "."}</p>}
+            {mode === "add" && <p>{tc("tools.item_browser.mode.add.description", { names: names?.join(", ") })}</p>}
           </DialogDescription>
         </DialogHeader>
         {dialogContent}

@@ -17,7 +17,7 @@ export default function Tools() {
             {t("tools.message_editor.mode.tool.name")}
           </TabsTrigger>
           <TabsTrigger value="item-browser" onClick={() => setTab("item-browser")} className="px-6 py-3 w-full">
-            {t("Item Browser")}
+            {t("tools.item_browser.mode.tool.name")}
           </TabsTrigger>
           <TabsTrigger value="vehicle-browser" onClick={() => setTab("vehicle-browser")} className="px-6 py-3 w-full">
             {t("Vehicle Browser")}
