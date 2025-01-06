@@ -96,6 +96,12 @@ function App() {
     });
 
     EventsOn("setProgress", (value: number) => {
+      if (value === 0) {
+        setTimeout(() => {
+          setProgress(0);
+        }, 150);
+        return;
+      }
       setProgress(value);
     });
 
