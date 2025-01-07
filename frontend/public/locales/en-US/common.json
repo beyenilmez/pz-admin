@@ -13,6 +13,7 @@
   "unselect_all": "Unselect all",
   "clear": "Clear",
   "copy": "Copy",
+  "back": "Back",
 
   "downloading_missing_external_programs": "Downloading missing external programs...",
   "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
@@ -191,7 +192,7 @@
       "formatted_message": "Formatted Message",
       "save_message": "Save Message",
       "load_message": "Load Message",
-      "bytes": "Bytes"
+      "bytes": "bytes"
     },
     "item_browser": {
       "mode": {
@@ -215,6 +216,47 @@
       "show_ids": "Show Item IDs",
       "save_items": "Save Items",
       "load_items": "Load Items"
+    },
+    "vehicle_browser": {
+      "mode": {
+        "tool": {
+          "name": "Vehicle Browser"
+        },
+        "add": {
+          "name": "Add Vehicle",
+          "preview_in_map_website": "Preview in Map Website",
+          "player_combobox": {
+            "placeholder": "Select Target Players",
+            "search_placeholder": "Search players...",
+            "search_not_found": "No players found."
+          },
+          "add_vehicle": "Add Vehicle"
+        }
+      },
+
+      "Vehicles": "Vehicles",
+      "Heavy-duty Vehicles": "Heavy-duty Vehicles",
+      "Sport Vehicles": "Sport Vehicles",
+      "Standard Vehicles": "Standard Vehicles",
+      "Trailers": "Trailers",
+
+      "Normal": "Normal",
+      "Police": "Police",
+      "Ambulance": "Ambulance",
+      "Fire": "Fire",
+      "Mail": "Mail",
+      "Ranger": "Ranger",
+      "Ranger_Fossoil": "Ranger/Fossoil",
+      "Taxi (yellow)": "Taxi (yellow)",
+      "Taxi (green)": "Taxi (green)",
+
+      "6-Seater": "6-Seater",
+
+      "Wood Siding": "Wood Siding",
+
+      "Advert Trailer": "Advert Trailer",
+      "Trailer": "Trailer",
+      "Cover": "Cover"
     }
   },
 

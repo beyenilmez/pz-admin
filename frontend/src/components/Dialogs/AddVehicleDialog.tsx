@@ -28,6 +28,7 @@ import { BrowserOpenURL } from "@/wailsjs/runtime/runtime";
 import { main } from "@/wailsjs/go/models";
 import { useRcon } from "@/contexts/rcon-provider";
 import { AddVehicle } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 // Define the Vehicle interface
 interface Vehicle {
@@ -70,6 +71,14 @@ export function AddVehicleDialog({
   mode = "add",
   height = "24rem",
 }: AddVehicleDialogProps) {
+  const { t } = useTranslation();
+
+  const translate = (name: string) => {
+    const key = `tools.vehicle_browser.${name}`;
+    const translation = t(key);
+    return (translation === key ? name : translation).replace("_", "/");
+  };
+
   const { players } = useRcon();
   const onlinePlayers = players.filter((player) => player.online);
   //const onlinePlayers = players;
@@ -151,7 +160,7 @@ export function AddVehicleDialog({
         {selectedCar ? (
           <>
             <h1 className="text-2xl font-semibold leading-none tracking-tight mb-2.5">
-              {selectedModel ? selectedModel.name + " - " : ""} {selectedCar.name}
+              {selectedModel ? translate(selectedModel.name) + " - " : ""} {translate(selectedCar.name)}
             </h1>
             <div className="flex gap-3">
               <div>
@@ -221,7 +230,7 @@ export function AddVehicleDialog({
                           )
                         }
                       >
-                        Preview in map website
+                        {t("tools.vehicle_browser.mode.add.preview_in_map_website")}
                       </Button>
                     </TabsContent>
                     <TabsContent value="player" className="h-24">
@@ -230,9 +239,9 @@ export function AddVehicleDialog({
                           elements={onlinePlayers.map((player) => ({ value: player.name, label: player.name }))}
                           initialValue={selectedNames}
                           multiSelect={true}
-                          placeholder={"Select target player..."}
-                          searchPlaceholder={"Search player..."}
-                          nothingFoundMessage={"No online players found"}
+                          placeholder={t("tools.vehicle_browser.mode.add.player_combobox.placeholder")}
+                          searchPlaceholder={t("tools.vehicle_browser.mode.add.player_combobox.search_placeholder")}
+                          nothingFoundMessage={t("tools.vehicle_browser.mode.add.player_combobox.search_not_found")}
                           onChange={setSelectedNames}
                         />
                       </div>
@@ -264,7 +273,7 @@ export function AddVehicleDialog({
       <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />
       <DialogContent className="max-w-[80vw] max-h-full gap-0">
         <DialogHeader className="pb-4">
-          <DialogTitle>Add Vehicle</DialogTitle>
+          <DialogTitle>{t("tools.vehicle_browser.mode.add.name")}</DialogTitle>
         </DialogHeader>
 
         {dialogContent}
@@ -278,7 +287,7 @@ export function AddVehicleDialog({
               (tab == "player" && (!selectedNames || selectedNames.length === 0))
             }
           >
-            Add Vehicle
+            {t("tools.vehicle_browser.mode.add.add_vehicle")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -287,34 +296,44 @@ export function AddVehicleDialog({
 }
 
 // Vehicle Card Component
-const VehicleCard = ({ vehicle, onClick }: { vehicle: Vehicle; onClick: () => void }) => (
-  <Card onClick={onClick} className="cursor-pointer relative overflow-clip aspect-[3/2]">
-    <div className="relative w-full h-full hover:scale-105 transition-transform">
-      {vehicle.images ? (
-        <>
-          {vehicle.images.length > 1 ? (
-            <ItemImage images={vehicle.images} name={vehicle.name} className="w-full h-full object-cover" />
-          ) : (
-            <img src={vehicle.images?.[0]} alt={vehicle.name} className="w-full h-full object-cover" />
-          )}
-        </>
-      ) : (
-        <>
-          {vehicle.thumbnails && vehicle.thumbnails.length > 0 && (
-            <div className="grid grid-cols-2">
-              {vehicle.thumbnails.map((image, index) => (
-                <img key={index} src={image} alt={vehicle.name} className="w-full h-full object-cover aspect-[3/2]" />
-              ))}
-            </div>
-          )}
-        </>
-      )}
-    </div>
-    <div className="absolute bottom-0 left-0 w-full text-center font-semibold bg-black bg-opacity-40 text-background dark:text-foreground py-1">
-      {vehicle.name}
-    </div>
-  </Card>
-);
+const VehicleCard = ({ vehicle, onClick }: { vehicle: Vehicle; onClick: () => void }) => {
+  const { t } = useTranslation();
+
+  const translate = (name: string) => {
+    const key = `tools.vehicle_browser.${name}`;
+    const translation = t(key);
+    return (translation === key ? name : translation).replace("_", "/");
+  };
+
+  return (
+    <Card onClick={onClick} className="cursor-pointer relative overflow-clip aspect-[3/2]">
+      <div className="relative w-full h-full hover:scale-105 transition-transform">
+        {vehicle.images ? (
+          <>
+            {vehicle.images.length > 1 ? (
+              <ItemImage images={vehicle.images} name={vehicle.name} className="w-full h-full object-cover" />
+            ) : (
+              <img src={vehicle.images?.[0]} alt={vehicle.name} className="w-full h-full object-cover" />
+            )}
+          </>
+        ) : (
+          <>
+            {vehicle.thumbnails && vehicle.thumbnails.length > 0 && (
+              <div className="grid grid-cols-2">
+                {vehicle.thumbnails.map((image, index) => (
+                  <img key={index} src={image} alt={vehicle.name} className="w-full h-full object-cover aspect-[3/2]" />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+      <div className="absolute bottom-0 left-0 w-full text-center font-semibold bg-black bg-opacity-40 text-background dark:text-foreground py-1">
+        {translate(vehicle.name)}
+      </div>
+    </Card>
+  );
+};
 
 // Breadcrumb navigation
 interface BreadcrumbNavigationProps {
@@ -323,6 +342,14 @@ interface BreadcrumbNavigationProps {
   vehicles: VehicleData;
 }
 const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationProps) => {
+  const { t } = useTranslation();
+
+  const translate = (name: string) => {
+    const key = `tools.vehicle_browser.${name}`;
+    const translation = t(key);
+    return (translation === key ? name : translation).replace("_", "/");
+  };
+
   // Handler for moving back in the path
   const handleBack = () => setPath(path.slice(0, path.length - 1));
 
@@ -345,7 +372,7 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
             onClick={() => handleNavigateToPath([vehicle])}
             className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
           >
-            {vehicle.name}
+            {translate(vehicle.name)}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
@@ -365,11 +392,11 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
     return (
       <BreadcrumbItem className="items-center gap-0.5">
         {isLast ? (
-          <BreadcrumbPage className="pointer-events-none">{item.name}</BreadcrumbPage>
+          <BreadcrumbPage className="pointer-events-none">{translate(item.name)}</BreadcrumbPage>
         ) : hasUniformChildren ? (
           <>
             <BreadcrumbLink className="cursor-pointer" onClick={() => handleNavigateToPath(path.slice(0, index + 1))}>
-              {item.name}
+              {translate(item.name)}
             </BreadcrumbLink>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-1 cursor-pointer transition-colors hover:text-foreground">
@@ -382,7 +409,7 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
                     onClick={() => handleNavigateToPath(path.slice(0, index + 1).concat(child))}
                     className="cursor-pointer hover:bg-accent hover:text-accent-foreground"
                   >
-                    {child.name}
+                    {translate(child.name)}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>
@@ -390,7 +417,7 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
           </>
         ) : (
           <BreadcrumbLink className="cursor-pointer" onClick={() => handleNavigateToPath(path.slice(0, index + 1))}>
-            {item.name}
+            {translate(item.name)}
           </BreadcrumbLink>
         )}
       </BreadcrumbItem>
@@ -404,7 +431,7 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
         <BreadcrumbItem onClick={handleBack} className={`${path.length === 0 ? "pointer-events-none opacity-50" : ""}`}>
           <BreadcrumbLink className="flex items-center gap-1 cursor-pointer">
             <ArrowLeft className="h-4 w-4 mt-0.5" />
-            Back
+            {t("back")}
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator>/</BreadcrumbSeparator>
@@ -415,7 +442,7 @@ const BreadcrumbNavigation = ({ path, setPath, vehicles }: BreadcrumbNavigationP
             className={`${path.length === 0 ? "text-foreground pointer-events-none" : "cursor-pointer"}`}
             onClick={handleResetPath}
           >
-            Vehicles
+            {t("tools.vehicle_browser.Vehicles")}
           </BreadcrumbLink>
           {path.length > 0 && <VehicleDropdown />}
         </BreadcrumbItem>

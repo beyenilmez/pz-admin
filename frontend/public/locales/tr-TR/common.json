@@ -13,6 +13,7 @@
   "unselect_all": "Hepsini kaldır",
   "clear": "Temizle",
   "copy": "Kopyala",
+  "back": "Geri",
 
   "downloading_missing_external_programs": "Eksik dosyalar indiriliyor...",
   "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",
@@ -196,7 +197,7 @@
       "formatted_message": "Biçimlendirilmiş Mesaj",
       "save_message": "Mesajı Kaydet",
       "load_message": "Mesajı Yükle",
-      "bytes": "Bayt"
+      "bytes": "bayt"
     },
     "item_browser": {
       "mode": {
@@ -220,6 +221,47 @@
       "show_ids": "Eşya ID'lerini Göster",
       "save_items": "Eşyaları Kaydet",
       "load_items": "Eşya Yükle"
+    },
+    "vehicle_browser": {
+      "mode": {
+        "tool": {
+          "name": "Araç Kataloğu"
+        },
+        "add": {
+          "name": "Araç Ekle",
+          "preview_in_map_website": "Harita Sitesinde Görüntüle",
+          "player_combobox": {
+            "placeholder": "Hedef Oyuncuları Seçin",
+            "search_placeholder": "Oyuncuları arayın...",
+            "search_not_found": "Oyuncu bulunamadı."
+          },
+          "add_vehicle": "Araç Ekle"
+        }
+      },
+
+      "Vehicles": "Araçlar",
+      "Heavy-duty Vehicles": "Ağır Araçlar",
+      "Sport Vehicles": "Spor Araçlar",
+      "Standard Vehicles": "Standart Araçlar",
+      "Trailers": "Römorklar",
+
+      "Normal": "Normal",
+      "Police": "Polis",
+      "Ambulance": "Ambulans",
+      "Fire": "İtfaiye",
+      "Mail": "Posta",
+      "Ranger": "Korucu",
+      "Ranger_Fossoil": "Korucu/Fossoil",
+      "Taxi (yellow)": "Taksi (sarı)",
+      "Taxi (green)": "Taksi (yeşil)",
+
+      "6-Seater": "6-Koltuklu",
+
+      "Wood Siding": "Ahşap Kaplama",
+
+      "Advert Trailer": "Reklam Römorku",
+      "Trailer": "Römork",
+      "Cover": "Kapalı"
     }
   },
 

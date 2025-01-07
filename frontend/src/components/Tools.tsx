@@ -20,7 +20,7 @@ export default function Tools() {
             {t("tools.item_browser.mode.tool.name")}
           </TabsTrigger>
           <TabsTrigger value="vehicle-browser" onClick={() => setTab("vehicle-browser")} className="px-6 py-3 w-full">
-            {t("Vehicle Browser")}
+            {t("tools.vehicle_browser.mode.tool.name")}
           </TabsTrigger>
         </div>
       </TabsList>
