@@ -3,8 +3,11 @@ import { Button } from "./ui/button";
 import { SettingContent, SettingsGroup, SettingsItem } from "./ui/settings-group";
 import { useConfig } from "@/contexts/config-provider";
 import { Chopper, Gunshot, RandomLightning, RandomThunder } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 export function RandomButtons() {
+  const { t } = useTranslation();
+
   const { config } = useConfig();
   const { players } = useRcon();
 
@@ -17,57 +20,62 @@ export function RandomButtons() {
           config?.disableRandomButtons ? "opacity-60 pointer-events-none select-none" : ""
         }`}
       >
-        Random
+        {t("admin_panel.tabs.management.random.title")}
       </h1>
       <h2
         className={`text-sm text-muted-foreground ${
           config?.disableRandomButtons ? "opacity-60 pointer-events-none select-none" : ""
         }`}
       >
-        Triggers the clicked event on a random player
+        {t("admin_panel.tabs.management.random.description")}
       </h2>
       <h2
         className={`font-semibold text-xs text-muted-foreground mt-1.5 ${
           config?.disableRandomButtons ? "opacity-60 pointer-events-none select-none" : ""
         }`}
       >
-        Online Players: {onlinePlayers.length === 0 ? "None" : onlinePlayers.map((p) => p.name).join(", ")}
+        {t("admin_panel.tabs.management.random.online_players", {
+          players:
+            onlinePlayers.length === 0
+              ? t("admin_panel.tabs.management.random.no_players")
+              : onlinePlayers.map((p) => p.name).join(", "),
+        })}
       </h2>
       <SettingsGroup className="flex">
         <SettingsItem disabled={config?.disableRandomButtons} className="flex-col justify-center border-none">
           <SettingContent className="w-full">
             <div className="flex gap-2 items-start justify-start w-full">
               <Button
-                className="w-32"
-                tooltip="Place a helicopter event on a random player"
-                disabled={onlinePlayers.length === 0}
+                className="min-w-36"
+                tooltip={t("admin_panel.tabs.management.random.chopper.tooltip")}
+                disabled={!config?.debugMode && onlinePlayers.length === 0}
                 onClick={Chopper}
               >
-                Chopper
+                {t("admin_panel.tabs.management.random.chopper.name")}
               </Button>
               <Button
-                className="w-32"
-                tooltip="Place a gunshot sound on a random player"
-                disabled={onlinePlayers.length === 0}
+                className="min-w-36"
+                tooltip={t("admin_panel.tabs.management.random.gunshot.tooltip")}
+                disabled={!config?.debugMode && onlinePlayers.length === 0}
                 onClick={Gunshot}
               >
-                Gunshot
+                {t("admin_panel.tabs.management.random.gunshot.name")}
               </Button>
               <Button
-                className="w-32"
-                tooltip="Trigger a lightning on a random player"
-                disabled={onlinePlayers.length === 0}
+                className="min-w-36"
+                tooltip={t("admin_panel.tabs.management.random.lightning.tooltip")}
+                disabled={!config?.debugMode && onlinePlayers.length === 0}
                 onClick={RandomLightning}
               >
-                Lightning
+                {t("admin_panel.tabs.management.random.lightning.name")}
               </Button>
               <Button
-                className="w-32"
-                tooltip="Trigger a thunder on a random player"
-                disabled={onlinePlayers.length === 0}
+                className="min-w-36"
+                tooltip={t("admin_panel.tabs.management.random.thunder.tooltip")}
+                disabled={!config?.debugMode && onlinePlayers.length === 0}
                 onClick={RandomThunder}
               >
-                Thunder
+                {t("admin_panel.tabs.management.random.thunder.name")}
               </Button>
             </div>
           </SettingContent>

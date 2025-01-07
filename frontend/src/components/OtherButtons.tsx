@@ -2,8 +2,10 @@ import { Alarm, CheckModsNeedUpdate } from "@/wailsjs/go/main/App";
 import { Button } from "./ui/button";
 import { SettingContent, SettingDescription, SettingLabel, SettingsGroup, SettingsItem } from "./ui/settings-group";
 import { useConfig } from "@/contexts/config-provider";
+import { useTranslation } from "react-i18next";
 
 export function OtherButtons() {
+  const { t } = useTranslation();
   const { config } = useConfig();
 
   return (
@@ -13,31 +15,31 @@ export function OtherButtons() {
           config?.disableOtherButtons ? "opacity-60 pointer-events-none select-none" : ""
         }`}
       >
-        Other
+        {t("admin_panel.tabs.management.other.title")}
       </h1>
       <SettingsGroup>
         <SettingsItem disabled={config?.disableOtherButtons}>
           <div className="-flex justify-end flex-col">
-            <SettingLabel>Check mod updates</SettingLabel>
+            <SettingLabel>{t("admin_panel.tabs.management.other.check_mod_updates.name")}</SettingLabel>
             <SettingDescription>
-              Checks whether a mod has been updated. Writes answer to log file and the chat.
+              {t("admin_panel.tabs.management.other.check_mod_updates.description")}
             </SettingDescription>
           </div>
           <SettingContent>
-            <Button onClick={CheckModsNeedUpdate} className="w-52">
-              Check mod updates
+            <Button onClick={CheckModsNeedUpdate} className="min-w-52">
+              {t("admin_panel.tabs.management.other.check_mod_updates.name")}
             </Button>
           </SettingContent>
         </SettingsItem>
 
         <SettingsItem disabled={config?.disableOtherButtons} className="border-none">
           <div className="flex justify-end flex-col">
-            <SettingLabel>Alarm</SettingLabel>
-            <SettingDescription>Sound a building alarm at the Admin's position. (Must be in a room)</SettingDescription>
+            <SettingLabel>{t("admin_panel.tabs.management.other.alarm.name")}</SettingLabel>
+            <SettingDescription>{t("admin_panel.tabs.management.other.alarm.description")}</SettingDescription>
           </div>
           <SettingContent>
-            <Button onClick={Alarm} className="w-52">
-              Alarm
+            <Button onClick={Alarm} className="min-w-52">
+              {t("admin_panel.tabs.management.other.alarm.name")}
             </Button>
           </SettingContent>
         </SettingsItem>

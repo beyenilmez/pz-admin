@@ -9,8 +9,10 @@ import { StopDialog } from "./Dialogs/StopDialog";
 import { WeatherControl } from "./WeatherControl";
 import { RandomButtons } from "./RandomButtons";
 import { OtherButtons } from "./OtherButtons";
+import { useTranslation } from "react-i18next";
 
 export function ManagementTab() {
+  const { t } = useTranslation();
   const [saving, setSaving] = useState(false);
   const handleSave = async () => {
     setSaving(true);
@@ -30,13 +32,15 @@ export function ManagementTab() {
             <div className="flex mb-2 justify-between">
               <div className="space-x-2">
                 <Button className="bg-success text-success-foreground" onClick={handleSave} disabled={saving}>
-                  Save
+                  {t("save")}
                 </Button>
                 <Button variant={"destructive"} onClick={() => setIsStopDialogOpen(true)} disabled={disableStop}>
-                  Stop
+                  {t("stop")}
                 </Button>
               </div>
-              <Button onClick={() => setIsSendMessageDialogOpen(true)}>Message</Button>
+              <Button onClick={() => setIsSendMessageDialogOpen(true)}>
+                {t("admin_panel.tabs.management.send_message")}
+              </Button>
             </div>
             <div>
               <WeatherControl />

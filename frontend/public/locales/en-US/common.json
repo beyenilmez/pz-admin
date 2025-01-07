@@ -14,6 +14,8 @@
   "clear": "Clear",
   "copy": "Copy",
   "back": "Back",
+  "stop": "Stop",
+  "save_and_apply": "Save and Apply",
 
   "downloading_missing_external_programs": "Downloading missing external programs...",
   "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
@@ -257,6 +259,183 @@
       "Advert Trailer": "Advert Trailer",
       "Trailer": "Trailer",
       "Cover": "Cover"
+    }
+  },
+
+  "admin_panel": {
+    "tabs": {
+      "management": {
+        "name": "Management",
+        "send_message": "Send Message",
+
+        "weather": {
+          "title": "Weather",
+          "warning": "Reported to cause problems with weather cycles",
+          "stop_rain": "Stop Rain",
+          "stop_weather": "Stop Weather",
+
+          "start_rain": {
+            "name": "Start Rain",
+            "description": "Starts rain with an optional intensity of 1-100",
+            "intensity": "Intensity"
+          },
+          "start_storm": {
+            "name": "Start Storm",
+            "description": "Starts a storm with an optional duration (in game hours)",
+            "duration": "Duration"
+          }
+        },
+
+        "random": {
+          "title": "Random Events",
+          "description": "Triggers the clicked event on a random player",
+          "online_players": "Online Players: {{players}}",
+          "no_players": "No players online",
+          "chopper": {
+            "name": "Chopper",
+            "tooltip": "Place a helicopter event on a random player"
+          },
+          "gunshot": {
+            "name": "Gunshot",
+            "tooltip": "Place a gunshot event on a random player"
+          },
+          "lightning": {
+            "name": "Lightning",
+            "tooltip": "Trigger a lightning on a random player"
+          },
+          "thunder": {
+            "name": "Thunder",
+            "tooltip": "Trigger a thunder on a random player"
+          }
+        },
+
+        "other": {
+          "title": "Other",
+
+          "check_mod_updates": {
+            "name": "Check Mod Updates",
+            "description": "Checks whether a mod has been updated. Writes answer to log file and the chat."
+          },
+          "alarm": {
+            "name": "Alarm",
+            "description": "Sound a building alarm at the Admin's position. (Must be in a room)"
+          }
+        }
+      },
+      "players": {
+        "name": "Players",
+        "filter_by_name": "Filter By Name...",
+        "columns": {
+          "name": {
+            "name": "Name"
+          },
+          "status": {
+            "name": "Status",
+            "offline": "Offline",
+            "online": "Online",
+            "banned": "Banned"
+          },
+          "access_level": {
+            "name": "Access Level",
+            "admin": "Admin",
+            "moderator": "Moderator",
+            "overseer": "Overseer",
+            "gm": "GM",
+            "observer": "Observer",
+            "player": "Player",
+            "unknown": "Unknown"
+          }
+        },
+
+        "dialogs": {
+          "setaccesslevel": {
+            "button": "Set Access Level",
+            "title": "Set Access Level",
+            "players": "You will set access level for {{players}}.",
+            "submit": "Set Access Level",
+
+            "permissions": {
+              "player": [],
+              "observer": [
+                "Toggle god mode and invisibility (self only)",
+                "View connected players (/players)",
+                "Teleport to players or coordinates",
+                "Use noclip (self only)",
+                "View server settings",
+                "Open locked doors and enter safehouses",
+                "Bypass lag kick and join full servers",
+                "Chat while invisible",
+                "See invisible players",
+                "Immune to player attacks",
+                "Start invisible/invincible",
+                "View player stats (read-only)"
+              ],
+              "gm": [
+                "All Observer permissions",
+                "Toggle god mode, invisibility, and noclip (self and others)",
+                "Teleport players to each other",
+                "Trigger alarms, gunshots, thunder, and choppers",
+                "Control rain",
+                "Add items and XP"
+              ],
+              "overseer": [
+                "All GM permissions",
+                "Create hordes",
+                "Kick users",
+                "Send server-wide messages",
+                "View player connection info",
+                "Disconnect players",
+                "Adjust night length",
+                "Edit player stats",
+                "Ban players from chat"
+              ],
+              "moderator": [
+                "All Overseer permissions",
+                "Ban/unban users (including by Steam ID)",
+                "Manage whitelist",
+                "Assign safehouses",
+                "Change access levels (except admin)"
+              ],
+              "admin": [
+                "All Moderator permissions",
+                "Save and quit the world",
+                "Change any access level",
+                "Reload server settings and Lua files",
+                "Bypass Lua checksum",
+                "Send server pulses"
+              ]
+            }
+          },
+
+          "banuser": {
+            "button": "Ban",
+            "title": "Ban User",
+            "title_multiple": "Ban Users",
+            "players": "You will ban {{players}}.",
+            "submit": "Ban",
+
+            "reason": "Reason",
+            "reason_placeholder": "Spamming, trolling, etc.",
+            "ban_ip": "Ban IP"
+          }
+        }
+      },
+      "options": {
+        "name": "Options"
+      },
+      "terminal": {
+        "name": "Terminal"
+      },
+      "connection": {
+        "title": "Connect To Your Server",
+        "description": "Enter your server details to connect",
+        "server_ip_or_domain": "Server IP or Domain",
+        "rcon_port": "RCON Port",
+        "rcon_password": "RCON Password",
+        "save_credentials": "Save Credentials",
+        "auto_connect": "Automatically connect on startup",
+        "connect": "Connect"
+      }
     }
   },
 

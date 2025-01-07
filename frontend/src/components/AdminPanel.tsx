@@ -69,7 +69,7 @@ export default function AdminPanel() {
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Management")}
+              {t("admin_panel.tabs.management.name")}
             </TabsTrigger>
             <TabsTrigger
               value="players"
@@ -77,7 +77,7 @@ export default function AdminPanel() {
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Players")}
+              {t("admin_panel.tabs.players.name")}
             </TabsTrigger>
             <TabsTrigger
               value="options"
@@ -85,7 +85,7 @@ export default function AdminPanel() {
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Options")}
+              {t("admin_panel.tabs.options.name")}
             </TabsTrigger>
             <TabsTrigger
               value="terminal"
@@ -93,7 +93,7 @@ export default function AdminPanel() {
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Terminal")}
+              {t("admin_panel.tabs.terminal.name")}
             </TabsTrigger>
           </div>
           {isConnected && (
@@ -222,8 +222,10 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
         >
           <div className="w-[30rem] space-y-4">
             {/* Header */}
-            <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
-            <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">
+              {t("admin_panel.tabs.connection.title")}
+            </h1>
+            <p className="text-sm text-muted-foreground">{t("admin_panel.tabs.connection.description")}</p>
 
             {/* IP or Domain Field */}
             <FormField
@@ -232,7 +234,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col w-full space-y-0">
                   <div className="flex h-8 items-center gap-1">
-                    <FormLabel>{t("Server IP or Domain")}</FormLabel>
+                    <FormLabel>{t("admin_panel.tabs.connection.server_ip_or_domain")}</FormLabel>
                     <FormMessage />
                   </div>
                   <FormControl>
@@ -249,7 +251,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col w-full space-y-0">
                   <div className="flex h-8 items-center gap-1">
-                    <FormLabel>{t("RCON Port")}</FormLabel>
+                    <FormLabel>{t("admin_panel.tabs.connection.rcon_port")}</FormLabel>
                     <FormMessage />
                   </div>
                   <FormControl>
@@ -266,7 +268,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col w-full space-y-0">
                   <div className="flex h-8 items-center gap-1">
-                    <FormLabel>{t("RCON Password")}</FormLabel>
+                    <FormLabel>{t("admin_panel.tabs.connection.rcon_password")}</FormLabel>
                     <FormMessage />
                   </div>
                   <FormControl>
@@ -287,7 +289,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 htmlFor="save-credentials"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Save credentials
+                {t("admin_panel.tabs.connection.save_credentials")}
               </label>
             </div>
             <div className="flex items-center space-x-2">
@@ -301,13 +303,13 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 htmlFor="auto-connect"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Automatically connect on startup
+                {t("admin_panel.tabs.connection.auto_connect")}
               </label>
             </div>
 
             {/* Submit Button */}
             <Button type="submit" className="w-full" disabled={isConnecting || isConnected}>
-              {t("Connect")}
+              {t("admin_panel.tabs.connection.connect")}
             </Button>
           </div>
         </form>

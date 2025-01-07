@@ -10,7 +10,7 @@ import { main } from "@/wailsjs/go/models";
 import { Switch } from "./ui/switch";
 import { Input } from "./ui/input";
 import { formatWithMinimumOneDecimal } from "@/lib/utils";
-import { Edit, RotateCw, Search } from "lucide-react";
+import { Edit, Loader2, RotateCw, Search } from "lucide-react";
 import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
 import { Tooltip, TooltipContent } from "./ui/tooltip";
 import { TooltipTrigger } from "@radix-ui/react-tooltip";
@@ -251,7 +251,7 @@ export function OptionsTab() {
             ReloadOptions();
           }}
         >
-          Apply Options
+          Reload Options
         </Button>
         <div className="flex gap-2">
           <Button
@@ -261,7 +261,8 @@ export function OptionsTab() {
             disabled={!optionsModified || updatingOptions || optionsInvalid}
             className="min-w-28"
           >
-            {updatingOptions ? "Saving..." : "Save & Apply"}
+            {updatingOptions && <Loader2 className="mr-2 animate-spin" />}
+            {t("save_and_apply")}
           </Button>
           <Button
             disabled={!optionsModified || updatingOptions || optionsInvalid}
@@ -270,10 +271,11 @@ export function OptionsTab() {
             }}
             className="min-w-20"
           >
-            {updatingOptions ? "Saving..." : "Save"}
+            {updatingOptions && <Loader2 className="mr-2 animate-spin" />}
+            {t("save")}
           </Button>
           <Button variant={"destructive"} onClick={cancelModifiedOptions} disabled={!optionsModified}>
-            Cancel
+            {t("cancel")}
           </Button>
         </div>
       </div>

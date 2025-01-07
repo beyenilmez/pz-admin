@@ -11,7 +11,7 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { ArrowUpDown, Check, MoreHorizontal } from "lucide-react";
+import { ArrowUpDown, Check, MoreHorizontal, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -49,8 +49,10 @@ import { AddXpDialog } from "./Dialogs/AddXpDialog";
 import { AddVehicleDialog } from "./Dialogs/AddVehicleDialog";
 import { AddItemDialog } from "./Dialogs/AddItemDialog";
 import { useConfig } from "@/contexts/config-provider";
+import { useTranslation } from "react-i18next";
 
 export function PlayersTab() {
+  const { t } = useTranslation();
   const { players } = useRcon();
   const { config } = useConfig();
   const debug = config?.debugMode;
@@ -86,7 +88,7 @@ export function PlayersTab() {
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Name
+          {t("admin_panel.tabs.players.columns.name.name")}
           <ArrowUpDown className="w-4 h-4 ml-1" />
         </Button>
       ),
@@ -100,7 +102,7 @@ export function PlayersTab() {
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Status
+          {t("admin_panel.tabs.players.columns.status.name")}
           <ArrowUpDown className="w-4 h-4 ml-1" />
         </Button>
       ),
@@ -114,10 +116,18 @@ export function PlayersTab() {
                 online ? "bg-success text-success-foreground" : "bg-destructive text-destructive-foreground"
               }`}
             >
-              {online ? "Online" : "Offline"}
+              {online
+                ? t("admin_panel.tabs.players.columns.status.online")
+                : t("admin_panel.tabs.players.columns.status.offline")}
             </Badge>
 
-            {banned ? <Badge className="bg-warning text-warning-foreground">Banned</Badge> : ""}
+            {banned ? (
+              <Badge className="bg-warning text-warning-foreground">
+                {t("admin_panel.tabs.players.columns.status.banned")}
+              </Badge>
+            ) : (
+              ""
+            )}
           </div>
         );
       },
@@ -130,7 +140,7 @@ export function PlayersTab() {
           variant="link"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Access Level
+          {t("admin_panel.tabs.players.columns.access_level.name")}
           <ArrowUpDown className="w-4 h-4 ml-1" />
         </Button>
       ),
@@ -156,7 +166,7 @@ export function PlayersTab() {
             }`}
             variant={accessLevel === "unknown" ? "outline" : "default"}
           >
-            {accessLevel[0].toUpperCase() + accessLevel.slice(1)}
+            {t(`admin_panel.tabs.players.columns.access_level.${accessLevel}`)}
           </Badge>
         );
       },
@@ -187,9 +197,13 @@ export function PlayersTab() {
               <DropdownMenuContent align="end">
                 <DropdownMenuGroup>
                   <DropdownMenuItem onClick={() => handleSetAccessLevel(player.name)}>
-                    Set Access Level
+                    {t("admin_panel.tabs.players.dialogs.setaccesslevel.button")}
                   </DropdownMenuItem>
-                  {!player.banned && <DropdownMenuItem onClick={() => handleBan(player.name)}>Ban</DropdownMenuItem>}
+                  {!player.banned && (
+                    <DropdownMenuItem onClick={() => handleBan(player.name)}>
+                      {t("admin_panel.tabs.players.dialogs.banuser.button")}
+                    </DropdownMenuItem>
+                  )}
                   {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
                   {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
                   <DropdownMenuItem
@@ -200,20 +214,23 @@ export function PlayersTab() {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
-                {player.online && (
+                {(config?.debugMode || player.online) && (
                   <>
                     <DropdownMenuSeparator />
 
                     <DropdownMenuGroup>
                       <DropdownMenuItem
-                        disabled={!player.online}
+                        disabled={!config?.debugMode && !player.online}
                         className="flex justify-between"
                         onClick={() => handleCheat(!player.godmode, player.name)}
                       >
                         God Mode
                         {player.godmode && <Check />}
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled={!player.online} onClick={() => handleTeleport(player.name)}>
+                      <DropdownMenuItem
+                        disabled={!config?.debugMode && !player.online}
+                        onClick={() => handleTeleport(player.name)}
+                      >
                         Teleport
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
@@ -221,13 +238,22 @@ export function PlayersTab() {
                     <DropdownMenuSeparator />
 
                     <DropdownMenuGroup>
-                      <DropdownMenuItem disabled={!player.online} onClick={() => handleAddXp(player.name)}>
+                      <DropdownMenuItem
+                        disabled={!config?.debugMode && !player.online}
+                        onClick={() => handleAddXp(player.name)}
+                      >
                         Add XP
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled={!player.online} onClick={() => handleAddItem(player.name)}>
+                      <DropdownMenuItem
+                        disabled={!config?.debugMode && !player.online}
+                        onClick={() => handleAddItem(player.name)}
+                      >
                         Add Item
                       </DropdownMenuItem>
-                      <DropdownMenuItem disabled={!player.online} onClick={() => handleAddVehicle(player.name)}>
+                      <DropdownMenuItem
+                        disabled={!config?.debugMode && !player.online}
+                        onClick={() => handleAddVehicle(player.name)}
+                      >
                         Add Vehicle
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
@@ -236,7 +262,7 @@ export function PlayersTab() {
 
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger
-                        disabled={!player.online}
+                        disabled={!config?.debugMode && !player.online}
                         className="data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                       >
                         Events
@@ -381,12 +407,18 @@ export function PlayersTab() {
           <div className="w-[calc(100%-1rem)]">
             <div className="flex mb-2 space-x-2">
               <div className="shrink-0 w-72 space-y-2">
-                <Input
-                  placeholder="Filter by name..."
-                  value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-                  onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
-                  className="w-full focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0"
-                />
+                <div className="relative">
+                  <Input
+                    placeholder="Filter by name..."
+                    value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                    onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
+                    className="pl-9 w-full focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0 peer"
+                  />
+                  <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
+                    <Search className="w-4 h-4" strokeWidth={2} />
+                  </div>
+                </div>
+
                 <div className="space-x-2">
                   <Button
                     onClick={() => {
@@ -412,7 +444,7 @@ export function PlayersTab() {
                   }}
                   disabled={!debug && Object.keys(rowSelection).length === 0}
                 >
-                  Set Access Level
+                  {t("admin_panel.tabs.players.dialogs.setaccesslevel.button")}
                 </Button>
 
                 <Button
@@ -421,7 +453,7 @@ export function PlayersTab() {
                   }}
                   disabled={!debug && Object.keys(rowSelection).length === 0}
                 >
-                  Ban
+                  {t("admin_panel.tabs.players.dialogs.banuser.button")}
                 </Button>
 
                 <Button
