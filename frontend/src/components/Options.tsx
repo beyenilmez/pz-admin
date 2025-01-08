@@ -117,8 +117,8 @@ export function OptionsTab() {
           (option) =>
             option.FieldName.toLowerCase().includes(searchText.toLowerCase()) ||
             t(`options.${option.FieldName}.keywords`).toLowerCase().includes(searchText.toLowerCase()) ||
-            option.Type.toLowerCase() === searchText.toLowerCase() ||
-            category.name.toLowerCase().includes(searchText.toLowerCase())
+            category.name.toLowerCase().includes(searchText.toLowerCase()) ||
+            option.Type.toLowerCase() === searchText.toLowerCase()
         ),
       };
     })
@@ -222,13 +222,27 @@ export function OptionsTab() {
                     {option.Requirements && (
                       <div className="flex items-center gap-2 opacity-50">
                         <span className="text-xs text-muted-foreground">
-                          Requires:{" "}
-                          {option.Requirements.map(
-                            (requirement) =>
-                              t(`options.${requirement.FieldName}.display_name`) +
-                              " to be " +
-                              (requirement.FieldValue ? "enabled" : "disabled")
-                          ).join(", ")}
+                          {option.Requirements.length === 1 &&
+                            t("options.requires", {
+                              option: option.Requirements[0].FieldName,
+                              value: option.Requirements[0].FieldValue,
+                            })}
+                          {option.Requirements.length === 2 &&
+                            t("options.requires_2", {
+                              option1: option.Requirements[0].FieldName,
+                              value1: option.Requirements[0].FieldValue,
+                              option2: option.Requirements[1].FieldName,
+                              value2: option.Requirements[1].FieldValue,
+                            })}
+                          {option.Requirements.length === 3 &&
+                            t("options.requires_3", {
+                              option1: option.Requirements[0].FieldName,
+                              value1: option.Requirements[0].FieldValue,
+                              option2: option.Requirements[1].FieldName,
+                              value2: option.Requirements[1].FieldValue,
+                              option3: option.Requirements[2].FieldName,
+                              value3: option.Requirements[2].FieldValue,
+                            })}
                         </span>
                       </div>
                     )}

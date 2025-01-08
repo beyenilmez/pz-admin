@@ -618,395 +618,399 @@
   },
 
   "options": {
+    "requires": "Requires {{option}} to be {{value}}.",
+    "requires_2": "Requires {{option1}} to be {{value1}} and {{option2}} to be {{value2}}.",
+    "requires_3": "Requires {{option1}} to be {{value1}}, {{option2}} to be {{value2}} and {{option3}} to be {{value3}}.",
+
     "AntiCheatProtectionType1": {
       "display_name": "Anti-Cheat Protection Type 1",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type1"
     },
     "AntiCheatProtectionType2": {
       "display_name": "Anti-Cheat Protection Type 2",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type2"
     },
     "AntiCheatProtectionType3": {
       "display_name": "Anti-Cheat Protection Type 3",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type3"
     },
     "AntiCheatProtectionType4": {
       "display_name": "Anti-Cheat Protection Type 4",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type4"
     },
     "AntiCheatProtectionType5": {
       "display_name": "Anti-Cheat Protection Type 5",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type5"
     },
     "AntiCheatProtectionType6": {
       "display_name": "Anti-Cheat Protection Type 6",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type6"
     },
     "AntiCheatProtectionType7": {
       "display_name": "Anti-Cheat Protection Type 7",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type7"
     },
     "AntiCheatProtectionType8": {
       "display_name": "Anti-Cheat Protection Type 8",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type8"
     },
     "AntiCheatProtectionType9": {
       "display_name": "Anti-Cheat Protection Type 9",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type9"
     },
     "AntiCheatProtectionType10": {
       "display_name": "Anti-Cheat Protection Type 10",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type10"
     },
     "AntiCheatProtectionType11": {
       "display_name": "Anti-Cheat Protection Type 11",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type11"
     },
     "AntiCheatProtectionType12": {
       "display_name": "Anti-Cheat Protection Type 12",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type12"
     },
     "AntiCheatProtectionType13": {
       "display_name": "Anti-Cheat Protection Type 13",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type13"
     },
     "AntiCheatProtectionType14": {
       "display_name": "Anti-Cheat Protection Type 14",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type14"
     },
     "AntiCheatProtectionType15": {
       "display_name": "Anti-Cheat Protection Type 15",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type15"
     },
     "AntiCheatProtectionType16": {
       "display_name": "Anti-Cheat Protection Type 16",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type16"
     },
     "AntiCheatProtectionType17": {
       "display_name": "Anti-Cheat Protection Type 17",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type17"
     },
     "AntiCheatProtectionType18": {
       "display_name": "Anti-Cheat Protection Type 18",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type18"
     },
     "AntiCheatProtectionType19": {
       "display_name": "Anti-Cheat Protection Type 19",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type19"
     },
     "AntiCheatProtectionType20": {
       "display_name": "Anti-Cheat Protection Type 20",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type20"
     },
     "AntiCheatProtectionType21": {
       "display_name": "Anti-Cheat Protection Type 21",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type21"
     },
     "AntiCheatProtectionType22": {
       "display_name": "Anti-Cheat Protection Type 22",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type22"
     },
     "AntiCheatProtectionType23": {
       "display_name": "Anti-Cheat Protection Type 23",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type23"
     },
     "AntiCheatProtectionType24": {
       "display_name": "Anti-Cheat Protection Type 24",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type24"
     },
     "AntiCheatProtectionType2ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 2 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type2,threshold,multiplier"
     },
     "AntiCheatProtectionType3ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 3 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type3,threshold,multiplier"
     },
     "AntiCheatProtectionType4ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 4 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type4,threshold,multiplier"
     },
     "AntiCheatProtectionType9ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 9 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type9,threshold,multiplier"
     },
     "AntiCheatProtectionType15ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 15 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type15,threshold,multiplier"
     },
     "AntiCheatProtectionType20ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 20 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type20,threshold,multiplier"
     },
     "AntiCheatProtectionType22ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 22 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type22,threshold,multiplier"
     },
     "AntiCheatProtectionType24ThresholdMultiplier": {
       "display_name": "Anti-Cheat Protection Type 24 Threshold Multiplier",
       "description": "",
-      "keywords": "cheat"
+      "keywords": "anti-cheat,cheat,protection,type24,threshold,multiplier"
     },
     "DoLuaChecksum": {
       "display_name": "Enable Lua Checksum Kick",
-      "description": "If set, clients whose game files don't match the server's file will be kicked",
-      "keywords": "cheat,lua,checksum,kick,DoLuaChecksum,anticheat"
+      "description": "If enabled, clients whose game files don't match the server's files will be kicked.",
+      "keywords": "anti-cheat,cheat,lua,checksum,kick"
     },
     "KickFastPlayers": {
       "display_name": "Kick Fast Players",
-      "description": "If enabled, players that appear to be moving faster than is possible will be kicked. May be buggy - use with caution",
-      "keywords": "cheat,kick,fast,players,KickFastPlayers,anticheat"
+      "description": "If enabled, players that appear to be moving faster than possible will be kicked. May be buggy - use with caution.",
+      "keywords": "anti-cheat,cheat,kick,fast players"
     },
     "SteamVAC": {
       "display_name": "Enable Valve Anti-cheat (Steam VAC)",
-      "description": "Enable the Steam VAC system",
-      "keywords": "VAC,cheat,SteamVAC,anticheat"
+      "description": "Enables the Steam VAC anti-cheat system.",
+      "keywords": "anti-cheat,VAC,cheat"
     },
     "BackupsCount": {
       "display_name": "Backup Count",
-      "description": "Sets the number of backups to keep at once",
-      "keywords": "backups,count,BackupsCount"
+      "description": "Specifies the number of backups to retain.",
+      "keywords": "backup,count"
     },
     "BackupsOnStart": {
       "display_name": "Enable Backups On Start",
-      "description": "Take backups on server start",
-      "keywords": "backups,start,BackupsOnStart"
+      "description": "Creates a backup when the server starts.",
+      "keywords": "backup,start"
     },
     "BackupsOnVersionChange": {
       "display_name": "Enable Backups On Version Change",
-      "description": "Take backups on server version change",
-      "keywords": "backups,version,change,BackupsOnVersionChange"
+      "description": "Creates a backup when the server version changes.",
+      "keywords": "backup,version,change"
     },
     "BackupsPeriod": {
       "display_name": "Backup Period",
-      "description": "Sets the period between backups",
+      "description": "Specifies the period between backups.",
       "disabled": "Disabled",
-      "keywords": "backups,period,BackupsPeriod"
+      "keywords": "backups,period"
     },
     "DiscordEnable": {
       "display_name": "Enable Discord Integration",
-      "description": "If enabled, allows global text chat integration with a Discord channel. Requires a valid bot token to be set under \"Discord Token\"",
+      "description": "Allows global chat integration with a Discord channel using a valid bot token. Requires a valid bot token to be set under \"Discord Token\".",
       "disabled": "Disable",
-      "keywords": "discord,DiscordEnable"
+      "keywords": "discord,integration"
     },
     "DiscordToken": {
       "display_name": "Discord Token",
-      "description": "Sets the bot token to access the Discord servers",
-      "keywords": "discord,token,DiscordToken"
+      "description": "Sets the bot token to access the Discord servers.",
+      "keywords": "discord,token"
     },
     "DiscordChannel": {
       "display_name": "Discord Channel",
-      "description": "Sets the name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work",
-      "keywords": "discord,channel,DiscordChannel"
+      "description": "Sets the name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work.",
+      "keywords": "discord,channel"
     },
     "DiscordChannelID": {
       "display_name": "Discord Channel ID",
-      "description": "Sets the ID of the Discord channel to integrate with. Use this if \"Discord Channel\" does not work",
-      "keywords": "discord,channel,id,DiscordChannelID"
+      "description": "Sets the ID of the Discord channel to integrate with. Use this if \"Discord Channel\" does not work.",
+      "keywords": "discord,channel id"
     },
     "Faction": {
       "display_name": "Enable Factions",
-      "description": "If enabled, factions can be created and used",
-      "keywords": "factions"
+      "description": "Enables faction creation and usage.",
+      "keywords": "faction,enable"
     },
     "FactionDaySurvivedToCreate": {
       "display_name": "Game Days For Factions",
-      "description": "Number of in-game days that a player must survive for before they can create a faction",
-      "keywords": "factions,FactionDaySurvivedToCreate"
+      "description": "Number of in-game days a player must survive before creating a faction.",
+      "keywords": "faction,days,create"
     },
     "FactionPlayersRequiredForTag": {
       "display_name": "Faction Players Required For Tag",
-      "description": "Sets the number of players required as faction members before the faction owner can create a group tag",
-      "keywords": "faction,tag,FactionPlayersRequiredForTag"
+      "description": "Number of players required in a faction to create a tag.",
+      "keywords": "faction,tag,players"
     },
     "AllowDestructionBySledgehammer": {
       "display_name": "Allow Sledgehammer Destruction",
-      "description": "Allow players to destroy world objects with sledgehammers",
-      "keywords": "sledgehammer,destruction,AllowDestructionBySledgehammer"
+      "description": "Allows players to destroy world objects using sledgehammers.",
+      "keywords": "sledgehammer,destruction,destroy"
     },
     "BloodSplatLifespanDays": {
       "display_name": "Blood Splats Lifespan Days",
-      "description": "Sets the number of days before old blood splats are removed. Removal happens when map chunks are loaded.",
+      "description": "Number of days before old blood splats are removed. Removal happens when map chunks are loaded.",
       "disabled": "Never",
-      "keywords": "blood,splats,days,lifespan,BloodSplatLifespanDays"
+      "keywords": "blood,splats,lifespan,days"
     },
     "CarEngineAttractionModifier": {
       "display_name": "Car Engine Attraction Modifier",
-      "description": "Modifies the range of zombie attraction to cars. Lower values can help lag",
-      "keywords": "car,engine,attraction,modifier,CarEngineAttractionModifier"
+      "description": "Adjusts the range of zombie attraction to cars. Lower values can help lag.",
+      "keywords": "car,engine,zombie,attraction,modifier"
     },
     "ConstructionPreventsLootRespawn": {
-      "display_name": "Construction Prevents Respawn",
-      "description": "If enabled, items will not respawn in buildings that players have barricaded or built in",
-      "keywords": "loot,respawn,construction,ConstructionPreventsLootRespawn"
+      "display_name": "Construction Prevents Loot Spawn",
+      "description": "Prevents loot respawn in buildings with player construction or barricades.",
+      "keywords": "construction,loot,respawn,prevent"
     },
     "FastForwardMultiplier": {
       "display_name": "Sleep Fast Forward Multiplier",
-      "description": "Sets how fast time passes while players sleep",
-      "keywords": "fast,forward,time,sleep,multiplier,FastForwardMultiplier"
+      "description": "Determines how fast time progresses during player sleep.",
+      "keywords": "fast-forward,sleep,time,multiplier"
     },
     "HidePlayersBehindYou": {
       "display_name": "Hide Players Behind You",
-      "description": "If enabled, players that can't be seen will be automatically hidden (like zombies)",
-      "keywords": "hide,players,HidePlayersBehindYou"
+      "description": "Automatically hides players out of view behind the character (like zombies).",
+      "keywords": "hide,players,behind,view"
     },
     "HoursForLootRespawn": {
       "display_name": "Minimum Period for Loot Respawn",
-      "description": "Sets the in-game hours after which all containers that have been looted at least once will respawn loot. Loot respawn is not impacted by visibility or subsequent looting",
+      "description": "Number of in-game hours after which looted containers will respawn loot. Loot respawn is not impacted by visibility or subsequent looting.",
       "disabled": "Never",
-      "keywords": "loot,respawn,HoursForLootRespawn"
+      "keywords": "loot,respawn,hours,minimum"
     },
     "ItemNumbersLimitPerContainer": {
       "display_name": "Item Limit Per Container",
-      "description": "Sets the maximum number of items that can be placed in a container. Includes individual small items like nails",
+      "description": "Maximum number of items allowed per container. Includes individual small items like nails.",
       "disabled": "Unlimited",
-      "keywords": "item,limit,container,ItemNumbersLimitPerContainer"
+      "keywords": "item,limit,container"
     },
     "KnockedDownAllowed": {
       "display_name": "Allow Knock Down",
-      "description": "If set, players can be knocked down",
-      "keywords": "knocked,down,KnockedDownAllowed"
+      "description": "Allows players to be knocked down.",
+      "keywords": "knocked,down,allow"
     },
     "MaxItemsForLootRespawn": {
       "display_name": "Maximum Items for Loot Respawn",
-      "description": "Sets the maximum number of items that containers can hold to be allowed to respawn. If the number of items is less than or equal to the number set, loot will respawn",
-      "keywords": "loot,respawn,maximum,MaxItemsForLootRespawn"
+      "description": "Maximum number of items per container to allow loot respawn.",
+      "keywords": "loot,respawn,maximum,items"
     },
     "MinutesPerPage": {
       "display_name": "Minutes Per Book Page",
-      "description": "Sets the number of in-game minutes it takes to read one page of a book",
-      "keywords": "minutes,book,page,MinutesPerPage"
+      "description": "Number of in-game minutes to read one book page.",
+      "keywords": "minutes,book,page,read"
     },
     "NoFire": {
       "display_name": "Don't Allow Fire",
-      "description": "If enabled, fires are not allowed (except campfires)",
-      "keywords": "fire,NoFire"
+      "description": "Prevents any fire (except campfires).",
+      "keywords": "fire,prevent"
     },
     "PlayerBumpPlayer": {
       "display_name": "Enable Player Bump Player",
-      "description": "If enabled, players will bump (and knock over) other players when running through them",
-      "keywords": "player,bump,PlayerBumpPlayer"
+      "description": "Players can bump into and knock over each other.",
+      "keywords": "player,bump,knock"
     },
     "PlayerRespawnWithOther": {
       "display_name": "Enable Player Respawn At Other's Location",
-      "description": "If set, players will be allowed to respawn in-game at a split screen / Remote Play player's location",
-      "keywords": "respawn,split,screen,remote,play,location,PlayerRespawnWithOther"
+      "description": "Allows respawning at another player's location in splitscreen/remote play.",
+      "keywords": "respawn,location,other,split,screen,remote play,remote-play"
     },
     "PlayerRespawnWithSelf": {
       "display_name": "Enable Player Respawn At Death Coordinates",
-      "description": "If set, players will be able to respawn in-game at the coordinates where they died",
-      "keywords": "respawn,death,PlayerRespawnWithSelf"
+      "description": "Allows respawning at coordinates where the player died.",
+      "keywords": "respawn,death,coordinates"
     },
     "RemovePlayerCorpsesOnCorpseRemoval": {
       "display_name": "Remove Player Corpses On Corpse Removal",
-      "description": "If enabled, when 'HoursForCorpseRemoval' triggers, it will also remove player\u2019s corpses from the ground",
-      "keywords": "player,corpses,corpse,removal,RemovePlayerCorpsesOnCorpseRemoval"
+      "description": "Removes player corpses from the ground when corpse cleanup triggers.",
+      "keywords": "player,corpse,removal,clean"
     },
     "SledgehammerOnlyInSafehouse": {
       "display_name": "Allow Only Safehouse Sledgehammers",
-      "description": "If enabled, players can destroy world objects with sledgehammers only in their safehouse",
-      "keywords": "sledgehammer,destruction,SledgehammerOnlyInSafehouse"
+      "description": "Allows players to use sledgehammers only in their safehouses.",
+      "keywords": "sledgehammer,safehouse,destruction,restriction"
     },
     "SleepAllowed": {
       "display_name": "Allow Sleep",
-      "description": "If enabled, players are allowed to sleep when tired, but do not need to",
-      "keywords": "map,remote,player,visibility,MapRemotePlayerVisibility"
+      "description": "Allows players to sleep when tired but doesn't enforce it.",
+      "keywords": "sleep,allow,optional"
     },
     "SleepNeeded": {
       "display_name": "Require Sleep",
-      "description": "If enabled, players become tired and need to sleep",
-      "keywords": "sleep,SleepNeeded"
+      "description": "If enabled, players become tired and need to sleep.",
+      "keywords": "sleep,required,needed"
     },
     "SneakModeHideFromOtherPlayers": {
       "display_name": "Hide From Other Players In Sneak Mode",
-      "description": "If set, players in sneak mode will be hidden from other players",
-      "keywords": "sneak,mode,hide,hidden,SneakModeHideFromOtherPlayers"
+      "description": "Hides players from others when sneaking.",
+      "keywords": "sneak,hide,hidden,players"
     },
     "SpeedLimit": {
       "display_name": "Speed Limit",
-      "description": "Sets the speed limit for players",
-      "keywords": "speed,limit,SpeedLimit"
+      "description": "Sets the maximum movement speed for players.",
+      "keywords": "speed,limit,maximum"
     },
     "TrashDeleteAll": {
       "display_name": "Enable Trash Delete All",
-      "description": "If enabled, players can use the 'delete all' button on bins",
-      "keywords": "trash,delete,all,TrashDeleteAll"
+      "description": "Allows players to use the 'delete all' button on bins.",
+      "keywords": "trash,delete,all"
     },
     "AllowCoop": {
       "display_name": "Allow Co-op/Splitscreen Players",
-      "description": "Allows co-op/splitscreen players",
-      "keywords": "co-op,splitscreen,AllowCoop"
+      "description": "Allows co-op/splitscreen gameplay.",
+      "keywords": "co-op,splitscreen,allow"
     },
     "AllowNonAsciiUsername": {
       "display_name": "Allow Non-ASCII Usernames",
       "description": "Allow use of non-ASCII (cyrillic etc) characters in usernames",
-      "keywords": "non,ascii,username,AllowNonAsciiUsername"
+      "keywords": "non ascii,non-ascii,username,allow"
     },
     "AnnounceDeath": {
       "display_name": "Announce Player Death",
-      "description": "If enabled, a global message is displayed in the chat when a player dies",
-      "keywords": "announce,death,AnnounceDeath"
+      "description": "Broadcasts a global message in chat when a player dies.",
+      "keywords": "announce,death,player"
     },
     "BanKickGlobalSound": {
       "display_name": "Enable Ban/Kick Global Sound",
-      "description": "If set, enables the global sound for ban and kick messages",
-      "keywords": "ban,kick,message,globalsound,BanKickGlobalSound"
+      "description": "Plays a global sound when players are banned or kicked.",
+      "keywords": "ban,kick,sound,global"
     },
     "ClientActionLogs": {
       "display_name": "Client Action Logs",
       "description": "Semicolon-separated list of actions that will be written to the ClientActionLogs.txt server log",
-      "keywords": "action,logs,ClientActionLogs"
+      "keywords": "client,actions,logs"
     },
     "ClientCommandFilter": {
       "display_name": "Client Command Filter",
       "description": "Semicolon-separated list of commands that will not be written to the cmd.txt server log",
-      "keywords": "command,filter,ClientCommandFilter"
+      "keywords": "client,command,filter,logs"
     },
     "DefaultPort": {
       "display_name": "Default Port",
-      "description": "Default starting port for player data. If UDP, this is this one of two ports used.",
-      "keywords": "port"
+      "description": "Default port for server communication.",
+      "keywords": "server,port,default"
     },
     "DenyLoginOnOverloadedServer": {
       "display_name": "Deny Login On Overloaded Server",
-      "description": "If set, login will be denied on an overloaded server",
-      "keywords": "login,deny,denial,overload,DenyLoginOnOverloadedServer"
+      "description": "Prevents login if the server is overloaded.",
+      "keywords": "server,overload,login,deny"
     },
     "Map": {
       "display_name": "Maps",
-      "description": "Semi-colon separated list of maps to load on the server",
-      "keywords": "map"
+      "description": "Semi-colon separated list of maps to load on the server.",
+      "keywords": "maps,server,load"
     },
     "MapRemotePlayerVisibility": {
       "display_name": "Remote Player Map Visibility",
@@ -1015,237 +1019,241 @@
         "Hidden": "Hidden",
         "Friends": "Friends",
         "Everyone": "Everyone"
-      }
+      },
+      "keywords": "remote,player,map,visibility"
     },
     "MaxPlayers": {
       "display_name": "Max Players",
-      "description": "Maximum number of players that can be on the server at one time. This excludes admins.",
-      "keywords": "players,maximum"
+      "description": "Maximum number of players allowed on the server (Excluding admins).",
+      "keywords": "server,players,limit,maximum"
     },
     "Mods": {
-      "display_name": "Load Mods",
-      "description": "Semi-colon separated list of mod IDs",
-      "keywords": "mods"
+      "display_name": "Mods",
+      "description": "Semi-colon separated list of mod IDs.",
+      "keywords": "mods,server"
     },
     "Open": {
       "display_name": "Enable Open Server",
-      "description": "If enabled, players may join the server without already being included in the whitelist. Otherwise, admins must manually create username/password combinations",
-      "keywords": "whitelist,open"
+      "description": "Allows players to join without being on the whitelist. Otherwise, admins must manually create username/password combinations.",
+      "keywords": "server,open,whitelist"
     },
     "PauseEmpty": {
       "display_name": "Pause When Empty",
-      "description": "If enabled, game time stops when there are no players online",
-      "keywords": "pause,empty,PauseEmpty"
+      "description": "Pauses game time when no players are online.",
+      "keywords": "pause,empty,players"
     },
     "PerkLogs": {
       "display_name": "Enable Perk Logs",
-      "description": "If enabled, changes in player perk levels will be tracked in the PerkLog.txt server log",
-      "keywords": "perk,logs,PerkLogs"
+      "description": "Tracks changes in player perks in the PerkLog.txt file.",
+      "keywords": "perk,logs,tracking"
     },
     "Public": {
       "display_name": "Make Server Public",
-      "description": "If enabled, the server will be visible in the in-game browser (Steam-enabled servers are always visible in the Steam server browser)",
-      "keywords": "public,steam"
+      "description": "Displays the server in the public server browser (Steam-enabled servers are always visible in the Steam server browser).",
+      "keywords": "server,public,browser,steam"
     },
     "PublicDescription": {
       "display_name": "Server Public Description",
-      "description": "Sets the description displayed in the in-game browser",
-      "keywords": "public,description,PublicDescription"
+      "description": "Description shown in the server browser.",
+      "keywords": "server,description,public"
     },
     "PublicName": {
       "display_name": "Server Public Name",
-      "description": "Sets the server name as shown in the in-game browser and, if applicable, the Steam browser",
-      "keywords": "public,name,PublicName"
+      "description": "Name of the server shown in the server browser and, if applicable, the Steam browser.",
+      "keywords": "server,name,public,steam"
     },
     "SaveWorldEveryMinutes": {
       "display_name": "Auto World Save Interval",
-      "description": "Sets the real-world time between each automatic save of loaded parts of the map. (The map is usually saved only after clients leave a loaded area)",
+      "description": "Interval between automatic world saves in real-time minutes (The map is usually saved only after clients leave a loaded area).",
       "disabled": "Never",
-      "keywords": "save,interval,SaveWorldEveryMinutes"
+      "keywords": "save,world,interval,minutes"
     },
     "SpawnItems": {
       "display_name": "Spawn Items",
-      "description": "Comma-separated list of item types that new players spawn with",
-      "keywords": "spawn,items,SpawnItems"
+      "description": "List of items players spawn with.",
+      "keywords": "spawn,items,players"
     },
     "SpawnPoint": {
-      "display_name": "Set Spawn Point",
-      "description": "Sets the spawn point for every new player. See https://map.projectzomboid.com for coordinates",
+      "display_name": "Spawn Point",
+      "description": "Coordinates for player spawn points. See https://map.projectzomboid.com for coordinates.",
       "disabled": "0,0,0",
-      "keywords": "spawnpoint,map"
+      "keywords": "spawn,point,coordinates,map"
     },
     "UDPPort": {
       "display_name": "UDP Port",
-      "description": "",
-      "keywords": "port"
+      "description": "Port used for UDP communication.",
+      "keywords": "port,udp,communication"
     },
     "UPnP": {
       "display_name": "Enable UPnP",
-      "description": "If enabled, the server will attempt to configure automatic port forwarding on a compatible router",
-      "keywords": "upnp"
+      "description": "Allows automatic port forwarding on compatible routers.",
+      "keywords": "port,forwarding,router"
     },
     "WorkshopItems": {
-      "display_name": "Install Workshop Items",
-      "description": "Semi-colon separated list of IDs of workshop items to install.",
-      "keywords": "workshop,items,WorkshopItems"
+      "display_name": "Workshop Items",
+      "description": "Semi-colon separated list of workshop item IDs to install.",
+      "keywords": "workshop,items,mods"
     },
     "ServerWelcomeMessage": {
       "display_name": "Welcome Message",
-      "description": "Sets the first welcome message visible in the chat panel, which is displayed immediately after player login.",
-      "keywords": "welcome,message,motd,ServerWelcomeMessage"
+      "description": "Message displayed to players upon login.",
+      "keywords": "welcome,message,motd,login"
     },
     "ResetID": {
       "display_name": "Reset ID",
       "description": "Reset ID determines if the server has undergone a soft-reset. If this number does match the client, the client must create a new character. Used in conjunction with PlayerServerID. It is strongly advised that you backup these IDs somewhere",
-      "keywords": "reset,id,ResetID,miscellaneous"
+      "keywords": "reset,id,soft-reset,soft reset"
     },
     "ServerPlayerID": {
       "display_name": "Server Player ID",
       "description": "ServerPlayerID determines if a character is from another server, or single player. This value may be changed by soft resets. If this number does match the client, the client must create a new character. This is used in conjunction with ResetID. It is strongly advised that you backup these IDs somewhere",
-      "keywords": "player,id,ServerPlayerID,miscellaneous"
+      "keywords": "server,player,id,soft-reset,soft reset"
     },
     "PVP": {
       "display_name": "Allow PvP",
-      "description": "If enabled, players can hurt and kill other players",
-      "keywords": "pvp"
+      "description": "Enables player versus player combat.",
+      "keywords": "pvp,combat,enable"
     },
     "PVPFirearmDamageModifier": {
       "display_name": "PvP Firearm Damage Modifier",
-      "description": "Sets the damage multiplier for PvP ranged attacks"
+      "description": "Adjusts firearm damage in PvP.",
+      "keywords": "pvp,firearm,damage,modifier"
     },
     "PVPMeleeDamageModifier": {
       "display_name": "PvP Melee Damage Modifier",
-      "description": "Sets the damage multiplier for PvP melee attacks",
-      "keywords": "pvp,melee,damage,modifier,PVPMeleeDamageModifier"
+      "description": "Adjusts melee damage in PvP.",
+      "keywords": "pvp,melee,damage,modifier"
     },
     "PVPMeleeWhileHitReaction": {
       "display_name": "Enable PvP Melee While Hit Reaction",
-      "description": "If enabled, players can hit again when struck by another player",
-      "keywords": "pvp,melee,hit,reaction,PVPMeleeWhileHitReaction"
+      "description": "Allows players to hit again when struck by another player.",
+      "keywords": "pvp,melee,hit,reactions"
     },
     "SafetyCooldownTimer": {
       "display_name": "PvP Cooldown Timer",
-      "description": "Sets the delay before a player can enter or leave PvP mode again, having recently done so"
+      "description": "Time before a player can re-enter PvP mode.",
+      "keywords": "pvp,cooldown,timer"
     },
     "SafetySystem": {
       "display_name": "Enable PvP Toggle (Safety System)",
-      "description": "If enabled, allows players to enter and leave PvP mode on an individual basis. A player can only hurt another player when at least one of them is in PvP mode. Requires \"Allow PvP\" to be enabled",
-      "keywords": "pvp,firearm,damage,modifier,PVPFirearmDamageModifier"
+      "description": "Allows toggling PvP mode on and off on an individual basis. A player can only hurt another player when at least one of them is in PvP mode.",
+      "keywords": "pvp,toggle,mode,safety system"
     },
     "SafetyToggleTimer": {
       "display_name": "PvP Toggle Timer",
-      "description": "Sets the time taken for a player to enter and leave PvP mode"
+      "description": "Time required to toggle PvP mode.",
+      "keywords": "pvp,toggle,timer"
     },
     "ShowSafety": {
       "display_name": "Show Player PvP Status",
-      "description": "If enabled, displays a skull icon above the heads of players who have entered PvP mode",
-      "keywords": "pvp,status,safety,system,ShowSafety"
+      "description": "Displays a skull icon above the heads of players who have entered PvP mode",
+      "keywords": "pvp,status,indicator,safety system"
     },
     "AutoCreateUserInWhiteList": {
       "display_name": "Automatically Whitelist Players",
-      "description": "Automatically add unknown usernames to the whitelist when players join (for open servers). Players will supply their own username/password on joining",
-      "keywords": "whitelist,add,automatic,AutoCreateUserInWhiteList"
+      "description": "Automatically adds new players to the whitelist (for open servers). Players will supply their own username/password on joining.",
+      "keywords": "whitelist,add,auto-create,automatic,players"
     },
     "DisplayUserName": {
       "display_name": "Display Player Usernames",
-      "description": "Displays players' usernames above their heads in-game",
-      "keywords": "display,name,DisplayUserName"
+      "description": "Shows usernames above players' characters.",
+      "keywords": "username,display,player"
     },
     "DropOffWhiteListAfterDeath": {
       "display_name": "Drop Off Whitelist After Death",
-      "description": "If set, player accounts will be removed from the whitelist after death. This prevents players creating a new character after death on non-open servers",
-      "keywords": "whitelist,drop,death,DropOffWhiteListAfterDeath"
+      "description": "Removes players from the whitelist after death. This prevents players creating a new character after death on non-open servers.",
+      "keywords": "whitelist,drop,death,remove"
     },
     "LoginQueueConnectTimeout": {
       "display_name": "Login Queue Connect Timeout",
-      "description": "Sets the connection timeout for the login queue",
-      "keywords": "login,queue,LoginQueueConnectTimeout"
+      "description": "Timeout duration for players in the login queue.",
+      "keywords": "login,queue,timeout"
     },
     "LoginQueueEnabled": {
       "display_name": "Enable Login Queue",
-      "description": "If set, the login queue will be enabled",
+      "description": "Enables a queue for logging into the server.",
       "keywords": "login,queue,LoginQueueEnabled"
     },
     "MaxAccountsPerUser": {
       "display_name": "Maximum Accounts Per User",
       "description": "Sets the limit on the number of different accounts a single Steam user may create on the server",
       "disabled": "Unlimited",
-      "keywords": "maximum,accounts,MaxAccountsPerUser"
+      "keywords": "maximum,accounts,limit,user,steam"
     },
     "MouseOverToSeeDisplayName": {
       "display_name": "Require Mouse Over To See Display Name",
-      "description": "If enabled, players will have to mouse over someone to see their display name",
-      "keywords": "mouse,over,display,name,MouseOverToSeeDisplayName"
+      "description": "Requires players to mouse over someone to see their display name.",
+      "keywords": "mouse,over,display,name,mouse-over"
     },
     "PingLimit": {
       "display_name": "Ping Limit",
-      "description": "Sets the ping limit before a player is kicked from the server",
+      "description": "Sets a maximum ping before a player is kicked.",
       "disabled": "Unlimited",
-      "keywords": "ping,limit,PingLimit"
+      "keywords": "ping,limit,kick"
     },
     "ShowFirstAndLastName": {
       "display_name": "Display Player Character Names",
-      "description": "If enabled, displays players' first and last names above their heads in-game instead of usernames",
-      "keywords": "display,character,name,ShowFirstAndLastName"
+      "description": "Shows first and last names above characters instead of usernames.",
+      "keywords": "display,character,name"
     },
     "SteamScoreboard": {
       "display_name": "Steam Scoreboard",
-      "description": "Sets whether steam usernames and avatars are visible in the player list",
-      "keywords": "steam,scoreboard,SteamScoreboard"
+      "description": "Displays Steam usernames and avatars in the player list.",
+      "keywords": "steam,scoreboard,display"
     },
     "AdminSafehouse": {
       "display_name": "Allow Admin Safehouses",
-      "description": "If enabled, only admins can claim safehouses",
-      "keywords": "safehouse,AdminSafehouse"
+      "description": "Allows admins to claim safehouses.",
+      "keywords": "safehouse,admin,restrict"
     },
     "DisableSafehouseWhenPlayerConnected": {
       "display_name": "Disable Safehouse When Player Connected",
-      "description": "If set, disables a safehouse when a member of the safehouse is connected, so that it acts like a normal house and is only secure when players are offline",
-      "keywords": "safehouse,disable,connected,DisableSafehouseWhenPlayerConnected"
+      "description": "Disables safehouse protections when a player is online, so that it acts like a normal house and is only secure when players are offline.",
+      "keywords": "safehouse,disable,connected"
     },
     "PlayerSafehouse": {
       "display_name": "Allow Player Safehouses",
-      "description": "If enabled, both admins and players can claim safehouses",
-      "keywords": "safehouse,PlayerSafehouse"
+      "description": "Allows players and admins to claim safehouses.",
+      "keywords": "safehouse,player,claim"
     },
     "SafeHouseRemovalTime": {
       "display_name": "Safehouse Removal Period",
-      "description": "Players are automatically removed from a safehouse they have not visited for this many real-world hours",
-      "keywords": "safehouse,house,removal,SafeHouseRemovalTime"
+      "description": "Players are automatically removed from a safehouse they have not visited for this many real-world hours.",
+      "keywords": "safehouse,removal,period,inactivity"
     },
     "SafehouseAllowFire": {
       "display_name": "Allow Safehouse Fire",
-      "description": "If enabled, safehouses can be damaged by fire",
-      "keywords": "safehouse,fire,SafehouseAllowFire"
+      "description": "Allows safehouses to be damaged by fire.",
+      "keywords": "safehouse,fire,damage"
     },
     "SafehouseAllowLoot": {
       "display_name": "Allow Safehouse Loot",
-      "description": "If enabled, non-members can loot safehouses",
-      "keywords": "safehouse,loot,SafehouseAllowLoot"
+      "description": "Allows non-members to loot items from safehouses.",
+      "keywords": "safehouse,loot,allow"
     },
     "SafehouseAllowNonResidential": {
       "display_name": "Allow Non-Residential Safehouses",
-      "description": "If enabled, players can claim non-residential buildings",
-      "keywords": "safehouse,non-residential,SafehouseAllowNonResidential"
+      "description": "Enables players to claim non-residential buildings as safehouses.",
+      "keywords": "safehouse,non-residential,buildings"
     },
     "SafehouseAllowRespawn": {
       "display_name": "Allow Safehouse Respawn",
-      "description": "If enabled, players will respawn in a safehouse they were a member of before death",
-      "keywords": "safehouse,respawn,SafehouseAllowRespawn"
+      "description": "Allows players to respawn in their safehouse after death.",
+      "keywords": "safehouse,respawn,allow,spawn"
     },
     "SafehouseAllowTrepass": {
       "display_name": "Allow Safehouse Trespass",
-      "description": "If enabled, non-members can enter a safehouse without being invited",
-      "keywords": "safehouse,trespass"
+      "description": "Allows non-members to enter a safehouse without being invited.",
+      "keywords": "safehouse,trespass,allow"
     },
     "SafehouseDaySurvivedToClaim": {
       "display_name": "Game Days For Safehouse",
-      "description": "Sets the number of in-game days that a player must survive for before they can claim a safehouse",
-      "keywords": "safehouse,days,SafehouseDaySurvivedToClaim"
+      "description": "Number of in-game days a player must survive before they can claim a safehouse.",
+      "keywords": "safehouse,days,claim"
     },
     "ChatStreams": {
       "display_name": "Chat Streams",
-      "description": "Sets the enabled chat streams for different message targets",
+      "description": "Enables specific chat streams for communication.",
       "choices": {
         "Say": "Say",
         "Radio": "Radio",
@@ -1255,62 +1263,62 @@
         "Faction": "Faction",
         "All": "All"
       },
-      "keywords": "chat,streams,ChatStreams"
+      "keywords": "chat,streams,communication"
     },
     "DisableRadioAdmin": {
       "display_name": "Disable Radio For Admins",
-      "description": "Disables radio transmissions from players with 'admin' access level",
-      "keywords": "radio,admin,DisableRadioAdmin"
+      "description": "Disables radio transmissions from players with 'admin' access level.",
+      "keywords": "radio,admin,disable"
     },
     "DisableRadioGM": {
       "display_name": "Disable Radio For GMs",
-      "description": "Disables radio transmissions from players with 'gm' access level",
-      "keywords": "radio,gm,DisableRadioGM"
+      "description": "Disables radio transmissions from players with 'gm' access level.",
+      "keywords": "radio,gm,disable"
     },
     "DisableRadioInvisible": {
       "display_name": "Disable Radio For Invisible Players",
-      "description": "Disables radio transmissions from invisible players",
-      "keywords": "radio,invisible,DisableRadioInvisible"
+      "description": "Disables radio transmissions from invisible players.",
+      "keywords": "radio,invisible,disable"
     },
     "DisableRadioModerator": {
       "display_name": "Disable Radio For Moderators",
-      "description": "Disables radio transmissions from players with 'moderator' access level",
-      "keywords": "radio,moderator,DisableRadioModerator"
+      "description": "Disables radio transmissions from players with 'moderator' access level.",
+      "keywords": "radio,moderator,disable"
     },
     "DisableRadioOverseer": {
       "display_name": "Disable Radio For Overseers",
-      "description": "Disables radio transmissions from players with 'overseer' access level",
-      "keywords": "radio,overseer,DisableRadioOverseer"
+      "description": "Disables radio transmissions from players with 'overseer' access level.",
+      "keywords": "radio,overseer,disable"
     },
     "DisableRadioStaff": {
       "display_name": "Disable Radio For Staff",
-      "description": "Disables radio transmissions from players with an access level",
-      "keywords": "radio,staff,DisableRadioStaff"
+      "description": "Disables radio transmissions from players with an access level.",
+      "keywords": "radio,staff,disable"
     },
     "GlobalChat": {
       "display_name": "Enable Global Chat",
-      "description": "If enabled, players can communicate with everyone (using the /all command in chat)",
-      "keywords": "chat,global,GlobalChat"
+      "description": "If enabled, players can communicate with everyone (using the /all command in chat).",
+      "keywords": "chat,global,communication"
     },
     "Voice3D": {
       "display_name": "Enable VOIP 3D",
-      "description": "If set, enables directional audio for VOIP",
-      "keywords": "voice,3D,Voice3D"
+      "description": "Activates directional audio for VOIP.",
+      "keywords": "voice,3d,voip"
     },
     "VoiceEnable": {
       "display_name": "Enable VOIP",
-      "description": "If set, VOIP will be enabled",
-      "keywords": "voice,enable,VoiceEnable"
+      "description": "Enables voice communication for players.",
+      "keywords": "voice,enable,voip"
     },
     "VoiceMaxDistance": {
       "display_name": "Maximum Distance For VOIP",
-      "description": "Sets the maximum tile distance over which VOIP sounds can be heard",
-      "keywords": "voice,maximum,max,distance,VoiceMaxDistance"
+      "description": "Specifies the maximum range for VOIP audio.",
+      "keywords": "voice,maximum,maximum,distance,range"
     },
     "VoiceMinDistance": {
       "display_name": "Minimum Distance For VOIP",
-      "description": "Sets the minimum tile distance over which VOIP sounds can be heard",
-      "keywords": "voice,minimum,min,distance,VoiceMinDistance"
+      "description": "Specifies the minimum range for VOIP audio.",
+      "keywords": "voice,minimum,minimum,distance,range"
     }
   },
 
