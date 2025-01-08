@@ -846,7 +846,7 @@
     },
     "FactionDaySurvivedToCreate": {
       "display_name": "Game Days For Factions",
-      "description": "Number of in-game days a player must survive before creating a faction.",
+      "description": "Specifies how many in-game days a player must survive to unlock faction creation.",
       "keywords": "faction,days,create"
     },
     "FactionPlayersRequiredForTag": {
@@ -1233,7 +1233,7 @@
     },
     "SafehouseAllowNonResidential": {
       "display_name": "Allow Non-Residential Safehouses",
-      "description": "Enables players to claim non-residential buildings as safehouses.",
+      "description": "Allows players to claim non-residential buildings (e.g., schools) as safehouses.",
       "keywords": "safehouse,non-residential,buildings"
     },
     "SafehouseAllowRespawn": {
