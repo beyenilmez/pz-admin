@@ -148,7 +148,7 @@ export function OptionsTab() {
           <div className="relative w-full">
             <Input
               className="peer ps-9"
-              placeholder="Search option..."
+              placeholder={t("admin_panel.tabs.options.search_options")}
               type="search"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}

@@ -601,7 +601,8 @@
       "options": {
         "name": "Options",
 
-        "reload_options": "Reload Options"
+        "reload_options": "Reload Options",
+        "search_options": "Search Options..."
       },
       "terminal": {
         "name": "Terminal"

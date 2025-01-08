@@ -606,7 +606,8 @@
       "options": {
         "name": "Seçenekler",
 
-        "reload_options": "Ayarları Yenile"
+        "reload_options": "Ayarları Yenile",
+        "search_options": "Ayar Ara..."
       },
       "terminal": {
         "name": "Terminal"
