@@ -604,7 +604,9 @@
         }
       },
       "options": {
-        "name": "Seçenekler"
+        "name": "Seçenekler",
+
+        "reload_options": "Ayarları Yenile"
       },
       "terminal": {
         "name": "Terminal"

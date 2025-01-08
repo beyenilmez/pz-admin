@@ -599,7 +599,9 @@
         }
       },
       "options": {
-        "name": "Options"
+        "name": "Options",
+
+        "reload_options": "Reload Options"
       },
       "terminal": {
         "name": "Terminal"

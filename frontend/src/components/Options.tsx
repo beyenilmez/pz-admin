@@ -265,7 +265,7 @@ export function OptionsTab() {
             ReloadOptions();
           }}
         >
-          Reload Options
+          {t("admin_panel.tabs.options.reload_options")}
         </Button>
         <div className="flex gap-2">
           <Button
