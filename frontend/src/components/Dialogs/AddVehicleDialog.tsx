@@ -182,10 +182,10 @@ export function AddVehicleDialog({
                   <Tabs value={tab} className="w-3/4 max-w-full">
                     <TabsList className="grid w-full grid-cols-2">
                       <TabsTrigger value="coordinates" onClick={() => setTab("coordinates")}>
-                        To Coordinates
+                        {t("admin_panel.tabs.players.dialogs.addvehicle.coordinates_tab")}
                       </TabsTrigger>
                       <TabsTrigger value="player" onClick={() => setTab("player")}>
-                        To Player
+                        {t("admin_panel.tabs.players.dialogs.addvehicle.player_tab")}
                       </TabsTrigger>
                     </TabsList>
                     <TabsContent value="coordinates" className="h-24">

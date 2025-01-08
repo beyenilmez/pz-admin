@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Lightning } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 interface LightningDialogProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface LightningDialogProps {
 }
 
 export function LightningDialog({ isOpen, onClose, names }: LightningDialogProps) {
+  const { t } = useTranslation();
   const handleLightning = () => {
     onClose();
 
@@ -24,16 +26,16 @@ export function LightningDialog({ isOpen, onClose, names }: LightningDialogProps
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[28rem]">
+      <DialogContent className="w-[28rem]">
         <DialogHeader>
-          <DialogTitle>Trigger Lightning</DialogTitle>
+          <DialogTitle>{t("admin_panel.tabs.players.dialogs.lightning.title")}</DialogTitle>
           <DialogDescription>
-            <p>{"You will trigger lightning for " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.lightning.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button type="submit" onClick={handleLightning}>
-            Trigger Lightning
+            {t("admin_panel.tabs.players.dialogs.lightning.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

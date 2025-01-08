@@ -11,6 +11,7 @@ import { Label } from "@/components/ui/label";
 import { useEffect, useState } from "react";
 import { Input } from "../ui/input";
 import { CreateHorde } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 interface CreateHordeDialogProps {
   isOpen: boolean;
@@ -19,6 +20,7 @@ interface CreateHordeDialogProps {
 }
 
 export function CreateHordeDialog({ isOpen, onClose, names }: CreateHordeDialogProps) {
+  const { t } = useTranslation();
   const [count, setCount] = useState("");
 
   const handleCreateHorde = () => {
@@ -40,19 +42,28 @@ export function CreateHordeDialog({ isOpen, onClose, names }: CreateHordeDialogP
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
-          <DialogTitle>{names.length > 1 ? "Ban Users" : "Ban User"}</DialogTitle>
+          <DialogTitle>{t("admin_panel.tabs.players.dialogs.createhorde.title")}</DialogTitle>
           <DialogDescription>
-            <p>{"You will create a horde near " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.createhorde.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1">
           <Label htmlFor="horde-size" className="text-right">
-            Horde Size
+            {t("admin_panel.tabs.players.dialogs.createhorde.horde_size")}
           </Label>
           <Input
             value={count}
-            onChange={(e) => setCount(e.target.value)}
+            onChange={(e) => {
+              const parsedValue = parseInt(e.target.value);
+
+              if (!isNaN(parsedValue)) {
+                setCount(Math.max(0, Math.min(parsedValue, 2147483647)).toString());
+              } else {
+                setCount(e.target.value);
+              }
+            }}
             min={0}
+            max={2147483647}
             id="horde-size"
             type="number"
             placeholder="150"
@@ -62,9 +73,9 @@ export function CreateHordeDialog({ isOpen, onClose, names }: CreateHordeDialogP
           <Button
             type="submit"
             onClick={handleCreateHorde}
-            disabled={count === "" || isNaN(parseInt(count)) || parseInt(count) < 0}
+            disabled={count === "" || isNaN(parseInt(count)) || parseInt(count) < 0 || parseFloat(count) % 1 !== 0}
           >
-            Create Horde
+            {t("admin_panel.tabs.players.dialogs.createhorde.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

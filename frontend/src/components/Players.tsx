@@ -204,13 +204,21 @@ export function PlayersTab() {
                       {t("admin_panel.tabs.players.dialogs.banuser.button")}
                     </DropdownMenuItem>
                   )}
-                  {player.banned && <DropdownMenuItem onClick={() => handleUnban(player.name)}>Unban</DropdownMenuItem>}
-                  {player.online && <DropdownMenuItem onClick={() => handleKick(player.name)}>Kick</DropdownMenuItem>}
+                  {player.banned && (
+                    <DropdownMenuItem onClick={() => handleUnban(player.name)}>
+                      {t("admin_panel.tabs.players.dialogs.unbanuser.button")}
+                    </DropdownMenuItem>
+                  )}
+                  {player.online && (
+                    <DropdownMenuItem onClick={() => handleKick(player.name)}>
+                      {t("admin_panel.tabs.players.dialogs.kickuser.button")}
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuItem
                     disabled={player.banned}
                     onClick={() => handleRemovePlayerFromWhitelist(player.name)}
                   >
-                    Remove from Whitelist
+                    {t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.dropdown_button")}
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
@@ -224,14 +232,14 @@ export function PlayersTab() {
                         className="flex justify-between"
                         onClick={() => handleCheat(!player.godmode, player.name)}
                       >
-                        God Mode
+                        {t("admin_panel.tabs.players.god_mode")}
                         {player.godmode && <Check />}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         disabled={!config?.debugMode && !player.online}
                         onClick={() => handleTeleport(player.name)}
                       >
-                        Teleport
+                        {t("admin_panel.tabs.players.dialogs.teleport.button")}
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
 
@@ -242,19 +250,19 @@ export function PlayersTab() {
                         disabled={!config?.debugMode && !player.online}
                         onClick={() => handleAddXp(player.name)}
                       >
-                        Add XP
+                        {t("admin_panel.tabs.players.dialogs.addxp.button")}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         disabled={!config?.debugMode && !player.online}
                         onClick={() => handleAddItem(player.name)}
                       >
-                        Add Item
+                        {t("admin_panel.tabs.players.dialogs.additem.button")}
                       </DropdownMenuItem>
                       <DropdownMenuItem
                         disabled={!config?.debugMode && !player.online}
                         onClick={() => handleAddVehicle(player.name)}
                       >
-                        Add Vehicle
+                        {t("admin_panel.tabs.players.dialogs.addvehicle.button")}
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
 
@@ -265,15 +273,19 @@ export function PlayersTab() {
                         disabled={!config?.debugMode && !player.online}
                         className="data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
                       >
-                        Events
+                        {t("admin_panel.tabs.players.events")}
                       </DropdownMenuSubTrigger>
                       <DropdownMenuPortal>
                         <DropdownMenuSubContent>
                           <DropdownMenuItem onClick={() => handleCreateHorde(player.name)}>
-                            Create Horde
+                            {t("admin_panel.tabs.players.dialogs.createhorde.button")}
                           </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleLightning(player.name)}>Lightning</DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleThunder(player.name)}>Thunder</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleLightning(player.name)}>
+                            {t("admin_panel.tabs.players.dialogs.lightning.button")}
+                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleThunder(player.name)}>
+                            {t("admin_panel.tabs.players.dialogs.thunder.button")}
+                          </DropdownMenuItem>
                         </DropdownMenuSubContent>
                       </DropdownMenuPortal>
                     </DropdownMenuSub>
@@ -409,7 +421,7 @@ export function PlayersTab() {
               <div className="shrink-0 w-72 space-y-2">
                 <div className="relative">
                   <Input
-                    placeholder="Filter by name..."
+                    placeholder={t("admin_panel.tabs.players.filter_by_name")}
                     value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
                     onChange={(event) => table.getColumn("name")?.setFilterValue(event.target.value)}
                     className="pl-9 w-full focus-visible:ring-0 focus-visible:ring-offset-0 shrink-0 peer"
@@ -425,7 +437,7 @@ export function PlayersTab() {
                       setAddPlayerToWhitelistDialogOpen(true);
                     }}
                   >
-                    Add Player
+                    {t("admin_panel.tabs.players.dialogs.addplayertowhitelist.button")}
                   </Button>
                   <Button
                     onClick={() => {
@@ -433,7 +445,7 @@ export function PlayersTab() {
                     }}
                     disabled={!debug && Object.keys(rowSelection).length === 0}
                   >
-                    Remove Players
+                    {t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.button")}
                   </Button>
                 </div>
               </div>
@@ -462,7 +474,7 @@ export function PlayersTab() {
                   }}
                   disabled={!debug && Object.keys(rowSelection).length === 0}
                 >
-                  Unban
+                  {t("admin_panel.tabs.players.dialogs.unbanuser.button")}
                 </Button>
 
                 <Button
@@ -478,7 +490,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Kick
+                  {t("admin_panel.tabs.players.dialogs.kickuser.button")}
                 </Button>
 
                 <Button
@@ -494,7 +506,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Teleport
+                  {t("admin_panel.tabs.players.dialogs.teleport.button")}
                 </Button>
 
                 <Button
@@ -510,7 +522,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Create Horde
+                  {t("admin_panel.tabs.players.dialogs.createhorde.button")}
                 </Button>
 
                 <Button
@@ -526,7 +538,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Lightning
+                  {t("admin_panel.tabs.players.dialogs.lightning.button")}
                 </Button>
 
                 <Button
@@ -542,7 +554,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Thunder
+                  {t("admin_panel.tabs.players.dialogs.thunder.button")}
                 </Button>
 
                 <Button
@@ -558,7 +570,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Add XP
+                  {t("admin_panel.tabs.players.dialogs.addxp.button")}
                 </Button>
 
                 <Button
@@ -574,7 +586,7 @@ export function PlayersTab() {
                         .some((player) => player.online))
                   }
                 >
-                  Add Item
+                  {t("admin_panel.tabs.players.dialogs.additem.button")}
                 </Button>
 
                 <Button
@@ -582,7 +594,7 @@ export function PlayersTab() {
                     handleAddVehicle();
                   }}
                 >
-                  Add Vehicle
+                  {t("admin_panel.tabs.players.dialogs.addvehicle.button")}
                 </Button>
               </div>
             </div>
@@ -645,7 +657,7 @@ export function PlayersTab() {
                 variant="link"
                 className="text-sky-600 dark:text-sky-400"
               >
-                Missing a player? Add an offline player to the list.
+                {t("admin_panel.tabs.players.dialogs.add_missing_player.button")}
               </Button>
             </div>
           </div>

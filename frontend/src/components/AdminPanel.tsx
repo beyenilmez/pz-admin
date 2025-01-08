@@ -98,11 +98,9 @@ export default function AdminPanel() {
           </div>
           {isConnected && (
             <div className="text-xs space-y-2 w-full">
-              <p>
-                Connected to {ip}:{port}
-              </p>
+              <p>{t("admin_panel.connected_to", { socket: `${ip}:${port}` })}</p>
               <Button className="w-full" variant={"destructive"} onClick={handleDisconnect}>
-                Disconnect
+                {t("admin_panel.disconnect")}
               </Button>
             </div>
           )}

@@ -675,6 +675,8 @@ func (params *RCONCommand) execute() int {
 	total := 1 // Default to 1 for commands without names
 	if len(names) > 0 {
 		total = len(names)
+	} else if len(names) == 0 {
+		names = nil
 	}
 
 	baseCommand := params.CommandTemplate

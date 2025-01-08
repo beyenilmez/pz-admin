@@ -10,6 +10,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useEffect, useState } from "react";
 import { RemovePlayersFromWhitelist } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 interface RemovePlayerFromWhitelistDialogProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ export function RemovePlayerFromWhitelistDialog({
   names,
   setRowSelection,
 }: RemovePlayerFromWhitelistDialogProps) {
+  const { t } = useTranslation();
   const [removeFromList, setRemoveFromList] = useState(false);
 
   const handleRemove = () => {
@@ -45,10 +47,14 @@ export function RemovePlayerFromWhitelistDialog({
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
           <DialogTitle>
-            {names.length > 1 ? "Remove Players From Whitelist" : "Remove Player From Whitelist"}
+            {names.length > 1
+              ? t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.title_multiple")
+              : t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.title")}
           </DialogTitle>
           <DialogDescription>
-            <p>{"You will remove: " + names.join(", ") + "."}</p>
+            <p>
+              {t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.players", { players: names.join(", ") })}
+            </p>
           </DialogDescription>
         </DialogHeader>
         <div className="flex items-center space-x-2">
@@ -61,12 +67,14 @@ export function RemovePlayerFromWhitelistDialog({
             htmlFor="w-remove-list"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Remove from players list too
+            {t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.remove_from_players_list")}
           </label>
         </div>
         <DialogFooter>
           <Button type="submit" onClick={handleRemove}>
-            Remove {names.length > 1 ? "Players" : "Player"}
+            {names.length > 1
+              ? t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.submit_multiple")
+              : t("admin_panel.tabs.players.dialogs.removeplayersfromwhitelist.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

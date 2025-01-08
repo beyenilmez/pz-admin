@@ -267,6 +267,361 @@
     }
   },
 
+  "admin_panel": {
+    "disconnect": "Bağlantıyı Kes",
+    "connected_to": "{{socket}}'e bağlandı",
+
+    "tabs": {
+      "management": {
+        "name": "Yönetim",
+        "send_message": "Mesaj Gönder",
+
+        "weather": {
+          "title": "Hava Durumu",
+          "warning": "Hava döngüleriyle ilgili sorunlara neden olabilir",
+          "stop_rain": "Yağmuru Durdur",
+          "stop_weather": "Hava Olaylarını Durdur",
+
+          "start_rain": {
+            "name": "Yağmur Başlat",
+            "description": "1-100 arası isteğe bağlı bir yoğunlukla yağmur başlatır",
+            "intensity": "Yoğunluk"
+          },
+          "start_storm": {
+            "name": "Fırtına Başlat",
+            "description": "Oyun saati cinsinden isteğe bağlı bir süre ile bir fırtına başlatır",
+            "duration": "Süre"
+          }
+        },
+
+        "random": {
+          "title": "Rastgele Olaylar",
+          "description": "Seçilen olayı rastgele bir oyuncu üzerinde tetikler",
+          "online_players": "Çevrimiçi Oyuncular: {{players}}",
+          "no_players": "Çevrimiçi oyuncu yok",
+          "chopper": {
+            "name": "Helikopter",
+            "tooltip": "Rastgele bir oyuncunun üstünde helikopter eventi başlat"
+          },
+          "gunshot": {
+            "name": "Silah Sesi",
+            "tooltip": "Rastgele bir oyuncunun yanında silah sesi çıkar"
+          },
+          "lightning": {
+            "name": "Yıldırım",
+            "tooltip": "Rastgele bir oyuncu üzerinde yıldırım oluştur"
+          },
+          "thunder": {
+            "name": "Gök Gürültüsü",
+            "tooltip": "Rastgele bir oyuncu üzerinde gök gürültüsü oluştur"
+          }
+        },
+
+        "other": {
+          "title": "Diğer",
+
+          "check_mod_updates": {
+            "name": "Mod Güncellemelerini Kontrol Et",
+            "description": "Herhangi bir modun güncellenip güncellenmediğini kontrol eder. Sonucu log dosyasına ve sohbete yazar."
+          },
+          "alarm": {
+            "name": "Alarm",
+            "description": "Admin'in konumunda bir bina alarmı çalar. (Bir odada olması gerekir)"
+          }
+        }
+      },
+      "players": {
+        "name": "Oyuncular",
+        "filter_by_name": "İsme Göre Filtrele...",
+        "god_mode": "Tanrı modu",
+        "events": "Olaylar",
+
+        "columns": {
+          "name": {
+            "name": "İsim"
+          },
+          "status": {
+            "name": "Durum",
+            "offline": "Çevrimdışı",
+            "online": "Çevrimiçi",
+            "banned": "Yasaklı"
+          },
+          "access_level": {
+            "name": "Erişim Seviyesi",
+            "admin": "Admin",
+            "moderator": "Moderator",
+            "overseer": "Overseer",
+            "gm": "GM",
+            "observer": "Observer",
+            "player": "Oyuncu",
+            "unknown": "Bilinmeyen"
+          }
+        },
+
+        "dialogs": {
+          "setaccesslevel": {
+            "button": "Erişim Seviyesi Belirle",
+            "title": "Erişim Seviyesi Belirle",
+            "players": "{{players}} için erişim seviyesi belirleyeceksiniz.",
+            "submit": "Erişim Seviyesi Belirle",
+
+            "permissions": {
+              "player": [],
+              "observer": [
+                "Tanrı modunu ve görünmezliği aç/kapat (yalnızca kendisi)",
+                "Çevrimiçi oyuncuları görüntüle (/players)",
+                "Oyunculara veya koordinatlara ışınlan",
+                "Noclip kullan (yalnızca kendisi)",
+                "Sunucu ayarlarını görüntüle",
+                "Kilitli kapıları aç ve güvenli evlere gir",
+                "Lag nedeniyle atılmayı ve dolu sunuculara katılmayı atla",
+                "Görünmezken sohbet et",
+                "Görünmez oyuncuları gör",
+                "Oyuncu saldırılarına karşı bağışıklık",
+                "Görünmez/Yenilmez başla",
+                "Oyuncu istatistiklerini görüntüle (yalnızca okuyabilir)"
+              ],
+              "gm": [
+                "Tüm Gözlemci izinleri",
+                "Tanrı modu, görünmezlik ve noclip aç/kapat (kendi ve başkaları)",
+                "Oyuncuları birbirine ışınla",
+                "Alarmlar, silah sesleri, gök gürültüleri ve helikopterler tetikle",
+                "Yağmuru kontrol et",
+                "Eşya ve XP ekle"
+              ],
+              "overseer": [
+                "Tüm GM izinleri",
+                "Zombi sürüleri oluştur",
+                "Kullanıcıları at",
+                "Sunucu çapında mesajlar gönder",
+                "Oyuncu bağlantı bilgilerini görüntüle",
+                "Oyuncu bağlantısını kes",
+                "Gece uzunluğunu ayarla",
+                "Oyuncu istatistiklerini düzenle",
+                "Sohbetten oyuncuları yasakla"
+              ],
+              "moderator": [
+                "Tüm Gözetmen izinleri",
+                "Kullanıcıları yasakla/yasağı kaldır (Steam ID dahil)",
+                "Beyaz listeyi yönet",
+                "Güvenli ev ata",
+                "Erişim seviyelerini değiştir (admin hariç)"
+              ],
+              "admin": [
+                "Tüm Moderatör izinleri",
+                "Dünyayı kaydet ve çık",
+                "Herhangi bir erişim seviyesini değiştir",
+                "Sunucu ayarlarını ve Lua dosyalarını yeniden yükle",
+                "Lua doğrulamasını atla",
+                "Sunucu sinyalleri gönder"
+              ]
+            }
+          },
+
+          "banuser": {
+            "button": "Yasakla",
+            "title": "Kullanıcıyı Yasakla",
+            "title_multiple": "Kullanıcıları Yasakla",
+            "players": "Bu oyuncular yasaklanacak: {{players}}",
+            "submit": "Yasakla",
+
+            "reason": "Sebep",
+            "reason_placeholder": "Spam, troll, vb.",
+            "ban_ip": "IP'yi Yasakla"
+          },
+
+          "unbanuser": {
+            "button": "Yasağı Kaldır",
+            "title": "Kullanıcının Yasağını Kaldır",
+            "title_multiple": "Kullanıcıların Yasağını Kaldır",
+            "players": "Bu oyuncuların yasağı kaldırılacak: {{players}}",
+            "submit": "Yasağı Kaldır"
+          },
+
+          "kickuser": {
+            "button": "At",
+            "title": "Kullanıcıyı At",
+            "title_multiple": "Kullanıcıları At",
+            "players": "Bu oyuncular atılacak: {{players}}",
+            "submit": "At",
+
+            "reason": "Sebep",
+            "reason_placeholder": "Spam, troll, vb."
+          },
+
+          "teleport": {
+            "button": "Işınla",
+            "title": "Kullanıcıyı Işınla",
+            "title_multiple": "Kullanıcıları Işınla",
+            "players": "Işınlanacak oyuncular: {{players}}",
+            "submit": "Işınla",
+
+            "coordinates_tab": "Koordinatlara",
+            "player_tab": "Oyuncuya",
+
+            "preview_in_map_website": "Harita Sitesinde Görüntüle",
+
+            "player_combobox": {
+              "placeholder": "Hedef Oyuncuları Seçin",
+              "search_placeholder": "Oyuncuları ara...",
+              "search_not_found": "Oyuncu bulunamadı."
+            }
+          },
+
+          "createhorde": {
+            "button": "Sürü Oluştur",
+            "title": "Sürü Oluştur",
+            "players": "{{players}} yakınına bir zombi sürüsü oluşturacaksınız.",
+            "submit": "Sürü Oluştur",
+
+            "horde_size": "Sürü Büyüklüğü"
+          },
+
+          "lightning": {
+            "button": "Yıldırım",
+            "title": "Yıldırım Tetikle",
+            "players": "{{players}} yakınına bir yıldırım tetikleyeceksiniz.",
+            "submit": "Yıldırım Tetikle"
+          },
+
+          "thunder": {
+            "button": "Gök Gürültüsü",
+            "title": "Gök Gürültüsü Tetikle",
+            "players": "{{players}} yakınına bir gök gürültüsü tetikleyeceksiniz.",
+            "submit": "Gök Gürültüsü Tetikle"
+          },
+
+          "addxp": {
+            "button": "XP Ekle",
+            "title": "XP Ekle",
+            "players": "XP eklenecek oyuncular: {{players}}",
+            "submit": "XP Ekle",
+
+            "xp_amount": "XP Miktarı",
+            "max_all": "Hepsini Maksimum Yap",
+            "regular_skill": "Normal Yetenek",
+            "passive_skill": "Pasif Yetenek",
+            "lvl": "Sv",
+
+            "skills": {
+              "Passive": {
+                "name": "Pasif",
+
+                "Fitness": "Fitness",
+                "Strength": "Güç"
+              },
+
+              "Firearm": {
+                "name": "Ateşli Silahlar",
+
+                "Aiming": "Nişan Alma",
+                "Reloading": "Şarjör Doldurma"
+              },
+
+              "Survivalist": {
+                "name": "Hayatta Kalma",
+
+                "Fishing": "Balıkçılık",
+                "Trapping": "Avcılık",
+                "PlantScavenging": "Araştırma"
+              },
+
+              "Combat": {
+                "name": "Mücadele",
+
+                "Axe": "Balta",
+                "Blunt": "Yakın Dövüş Silahları",
+                "SmallBlunt": "Kısa Ezici",
+                "LongBlade": "Uzun Kesici",
+                "SmallBlade": "Kısa Kesici",
+                "Spear": "Mızrak",
+                "Maintenance": "Onarma"
+              },
+
+              "Agility": {
+                "name": "Çeviklik",
+
+                "Sprinting": "Koşuculuk",
+                "Nimble": "Zariflik",
+                "Lightfoot": "Atiklik",
+                "Sneak": "Gizlilik"
+              },
+
+              "Crafting": {
+                "name": "Üretkenlik",
+
+                "Woodwork": "Marangozluk",
+                "Cooking": "Aşcılık",
+                "Farming": "Çiftçilik",
+                "Doctor": "İlk Yardım",
+                "Electricity": "Elektrikçilik",
+                "MetalWelding": "Metal İşleme",
+                "Mechanics": ":Tamircilik",
+                "Tailoring": "Terzilik"
+              }
+            }
+          },
+
+          "addplayertowhitelist": {
+            "button": "Oyuncu Ekle",
+            "title": "Beyaz Listeye Oyuncu Ekle",
+            "submit": "Beyaz Listeye Ekle",
+
+            "name": "İsim",
+            "password": "Şifre"
+          },
+
+          "removeplayersfromwhitelist": {
+            "button": "Oyuncuları Kaldır",
+            "dropdown_button": "Beyaz Listeden Kaldır",
+            "title": "Beyaz Listeden Oyuncu Kaldır",
+            "title_multiple": "Beyaz Listeden Oyuncuları Kaldır",
+            "players": "Bu oyuncular beyaz listeden kaldırılacak: {{players}}",
+            "submit": "Oyuncuyu Kaldır",
+            "submit_multiple": "Oyuncuları Kaldır",
+
+            "remove_from_players_list": "Oyuncuları oyuncu listesinden de kaldır"
+          },
+
+          "add_missing_player": {
+            "button": "Eksik bir oyuncu mı var? Listeye çevrimdışı bir oyuncu ekleyin.",
+            "title": "Oyuncu Ekle",
+            "submit": "Oyuncu Ekle",
+
+            "name": "İsim"
+          },
+
+          "additem": {
+            "button": "Eşya Ekle"
+          },
+
+          "addvehicle": {
+            "button": "Araç Ekle",
+
+            "coordinates_tab": "Koordinatlara",
+            "player_tab": "Oyunculara"
+          }
+        }
+      },
+      "options": {
+        "name": "Seçenekler"
+      },
+      "terminal": {
+        "name": "Terminal"
+      },
+      "connection": {
+        "title": "Sunucunuza Bağlanın",
+        "description": "Bağlanmak için sunucu bilgilerinizi girin",
+        "server_ip_or_domain": "Sunucu IP veya Alan Adı",
+        "rcon_port": "RCON Port",
+        "rcon_password": "RCON Şifresi",
+        "save_credentials": "Kimlik Bilgilerini Kaydet",
+        "auto_connect": "Başlangıçta otomatik bağlan",
+        "connect": "Bağlan"
+      }
+    }
+  },
+
   "item_categories": {
     "Accessory": "Aksesuar",
     "Ammo": "Cephane",

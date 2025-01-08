@@ -12,64 +12,33 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
 import { AddXp } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 const perks_default = [
   {
     category: "Passive",
-    perks: [
-      { name: "Fitness", perkName: "Fitness" },
-      { name: "Strength", perkName: "Strength" },
-    ],
+    perks: ["Fitness", "Strength"],
   },
   {
     category: "Firearm",
-    perks: [
-      { name: "Aiming", perkName: "Aiming" },
-      { name: "Reloading", perkName: "Reloading" },
-    ],
+    perks: ["Aiming", "Reloading"],
   },
   {
     category: "Survivalist",
-    perks: [
-      { name: "Fishing", perkName: "Fishing" },
-      { name: "Trapping", perkName: "Trapping" },
-      { name: "Foraging", perkName: "PlantScavenging" },
-    ],
+    perks: ["Fishing", "Trapping", "PlantScavenging"],
   },
   {
     category: "Combat",
-    perks: [
-      { name: "Axe", perkName: "Axe" },
-      { name: "Long Blunt", perkName: "Blunt" },
-      { name: "Short Blunt", perkName: "SmallBlunt" },
-      { name: "Long Blade", perkName: "LongBlade" },
-      { name: "Short Blade", perkName: "SmallBlade" },
-      { name: "Spear", perkName: "Spear" },
-      { name: "Maintenance", perkName: "Maintenance" },
-    ],
+    perks: ["Axe", "Blunt", "SmallBlunt", "LongBlade", "SmallBlade", "Spear", "Maintenance"],
   },
   {
     category: "Agility",
-    perks: [
-      { name: "Sprinting", perkName: "Sprinting" },
-      { name: "Nimble", perkName: "Nimble" },
-      { name: "Lightfooted", perkName: "Lightfoot" },
-      { name: "Sneaking", perkName: "Sneak" },
-    ],
+    perks: ["Sprinting", "Nimble", "Lightfoot", "Sneak"],
   },
 
   {
     category: "Crafting",
-    perks: [
-      { name: "Carpentry", perkName: "Woodwork" },
-      { name: "Cooking", perkName: "Cooking" },
-      { name: "Farming", perkName: "Farming" },
-      { name: "First Aid", perkName: "Doctor" },
-      { name: "Electrical", perkName: "Electricity" },
-      { name: "Metalworking", perkName: "MetalWelding" },
-      { name: "Mechanics", perkName: "Mechanics" },
-      { name: "Tailoring", perkName: "Tailoring" },
-    ],
+    perks: ["Woodwork", "Cooking", "Farming", "Doctor", "Electricity", "MetalWelding", "Mechanics", "Tailoring"],
   },
 ];
 
@@ -83,6 +52,7 @@ interface AddXpDialogProps {
 }
 
 export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
+  const { t } = useTranslation();
   const [count, setCount] = useState("");
   const [selectedPerks, setSelectedPerks] = useState<string[]>([]);
 
@@ -129,16 +99,18 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="w-[60rem] max-w-full max-h-full">
         <DialogHeader>
-          <DialogTitle>Add XP</DialogTitle>
+          <DialogTitle>{t("admin_panel.tabs.players.dialogs.addxp.title")}</DialogTitle>
           <DialogDescription>
-            <p>{"You will add XP to " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.addxp.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
 
         <div className="grid gap-3 grid-cols-2">
           {perks_default.map((category) => (
             <div key={category.category} className="space-y-2">
-              <h3 className="text-lg font-semibold">{category.category}</h3>
+              <h3 className="text-lg font-semibold">
+                {t(`admin_panel.tabs.players.dialogs.addxp.skills.${category.category}.name`)}
+              </h3>
               <ToggleGroup
                 type="multiple"
                 size="sm"
@@ -147,14 +119,14 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
               >
                 {category.perks.map((perk) => (
                   <ToggleGroupItem
-                    key={perk.perkName}
-                    value={perk.perkName}
-                    aria-label={`Toggle ${perk.name}`}
+                    key={perk}
+                    value={perk}
+                    aria-label={`Toggle ${perk}`}
                     className="border flex gap-1 hover:bg-accent hover:text-accent-foreground hover:backdrop-brightness-75"
-                    onClick={() => handleTogglePerk(perk.perkName)}
+                    onClick={() => handleTogglePerk(perk)}
                   >
-                    <img src={`/perks/${perk.perkName}.png`} alt={perk.name} className="h-5 w-5 object-cover" />
-                    {perk.name}
+                    <img src={`/perks/${perk}.png`} alt={perk} className="h-5 w-5 object-cover" />
+                    {t(`admin_panel.tabs.players.dialogs.addxp.skills.${category.category}.${perk}`)}
                   </ToggleGroupItem>
                 ))}
               </ToggleGroup>
@@ -165,13 +137,13 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
         <div className="space-y-2">
           <div className="flex items-center gap-2 ml-[7.3rem]">
             {Array.from({ length: 10 }).map((_: any, i: number) => (
-              <div className="w-[3.9rem]">{`Lvl ${i + 1}`}</div>
+              <div className="w-[3.9rem]">{`${t("admin_panel.tabs.players.dialogs.addxp.lvl")} ${i + 1}`}</div>
             ))}
           </div>
 
           {/* Regular Skill XP Buttons */}
           <div className="flex items-center gap-2">
-            <h4 className="text-md font-medium w-24">Regular Skill</h4>
+            <h4 className="text-md font-medium w-24">{t("admin_panel.tabs.players.dialogs.addxp.regular_skill")}</h4>
             <ToggleGroup
               type="multiple"
               size="sm"
@@ -193,7 +165,7 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
 
           {/* Passive Skill XP Buttons */}
           <div className="flex items-center gap-2">
-            <h4 className="text-md font-medium w-24">Passive Skill</h4>
+            <h4 className="text-md font-medium w-24">{t("admin_panel.tabs.players.dialogs.addxp.passive_skill")}</h4>
             <ToggleGroup
               type="multiple"
               size="sm"
@@ -217,7 +189,7 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
         <DialogFooter className="flex items-end w-full">
           <div className="space-y-1 w-full">
             <Label htmlFor="xp-amount" className="text-right">
-              XP Amount
+              {t("admin_panel.tabs.players.dialogs.addxp.xp_amount")}
             </Label>
             <Input
               value={count}
@@ -231,18 +203,18 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
           </div>
           <Button
             onClick={() => {
-              setSelectedPerks(perks_default.flatMap((category) => category.perks.map((perk) => perk.perkName)));
+              setSelectedPerks(perks_default.flatMap((category) => category.perks.map((perk) => perk)));
               setCount("487500");
             }}
           >
-            Max all
+            {t("admin_panel.tabs.players.dialogs.addxp.max_all")}
           </Button>
           <Button
             type="submit"
             onClick={handleAddXp}
             disabled={selectedPerks.length === 0 || count === "" || isNaN(parseInt(count)) || parseInt(count) < 0}
           >
-            Add XP
+            {t("admin_panel.tabs.players.dialogs.addxp.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { UnbanUsers } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 interface UnbanUserDialogProps {
   isOpen: boolean;
@@ -16,9 +17,10 @@ interface UnbanUserDialogProps {
 }
 
 export function UnbanUserDialog({ isOpen, onClose, names }: UnbanUserDialogProps) {
+  const { t } = useTranslation();
   const handleBan = () => {
     onClose();
-    
+
     UnbanUsers(names);
   };
 
@@ -26,14 +28,18 @@ export function UnbanUserDialog({ isOpen, onClose, names }: UnbanUserDialogProps
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
-          <DialogTitle>{names.length > 1 ? "Unban Users" : "Unban User"}</DialogTitle>
+          <DialogTitle>
+            {names.length > 1
+              ? t("admin_panel.tabs.players.dialogs.unbanuser.title_multiple")
+              : t("admin_panel.tabs.players.dialogs.unbanuser.title")}
+          </DialogTitle>
           <DialogDescription>
-            <p>{"You will unban " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.unbanuser.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button type="submit" onClick={handleBan}>
-            Unban
+            {t("admin_panel.tabs.players.dialogs.unbanuser.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

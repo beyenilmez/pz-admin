@@ -263,6 +263,9 @@
   },
 
   "admin_panel": {
+    "disconnect": "Disconnect",
+    "connected_to": "Connected to {{socket}}",
+
     "tabs": {
       "management": {
         "name": "Management",
@@ -325,6 +328,9 @@
       "players": {
         "name": "Players",
         "filter_by_name": "Filter By Name...",
+        "god_mode": "God Mode",
+        "events": "Events",
+
         "columns": {
           "name": {
             "name": "Name"
@@ -417,6 +423,178 @@
             "reason": "Reason",
             "reason_placeholder": "Spamming, trolling, etc.",
             "ban_ip": "Ban IP"
+          },
+
+          "unbanuser": {
+            "button": "Unban",
+            "title": "Unban User",
+            "title_multiple": "Unban Users",
+            "players": "You will unban {{players}}.",
+            "submit": "Unban"
+          },
+
+          "kickuser": {
+            "button": "Kick",
+            "title": "Kick User",
+            "title_multiple": "Kick Users",
+            "players": "You will kick {{players}}.",
+            "submit": "Kick",
+
+            "reason": "Reason",
+            "reason_placeholder": "Spamming, trolling, etc."
+          },
+
+          "teleport": {
+            "button": "Teleport",
+            "title": "Teleport User",
+            "title_multiple": "Teleport Users",
+            "players": "You will teleport {{players}}.",
+            "submit": "Teleport",
+
+            "coordinates_tab": "To Coordinates",
+            "player_tab": "To Player",
+
+            "preview_in_map_website": "Preview in Map Website",
+
+            "player_combobox": {
+              "placeholder": "Select Target Players",
+              "search_placeholder": "Search players...",
+              "search_not_found": "No players found."
+            }
+          },
+
+          "createhorde": {
+            "button": "Create Horde",
+            "title": "Create Horde",
+            "players": "You will create a horde near {{players}}.",
+            "submit": "Create Horde",
+
+            "horde_size": "Horde Size"
+          },
+
+          "lightning": {
+            "button": "Lightning",
+            "title": "Trigger Lightning",
+            "players": "You will trigger a lightning near {{players}}.",
+            "submit": "Trigger Lightning"
+          },
+
+          "thunder": {
+            "button": "Thunder",
+            "title": "Trigger Thunder",
+            "players": "You will trigger a thunder near {{players}}.",
+            "submit": "Trigger Thunder"
+          },
+
+          "addxp": {
+            "button": "Add XP",
+            "title": "Add XP",
+            "players": "You will add xp to {{players}}.",
+            "submit": "Add XP",
+
+            "xp_amount": "XP Amount",
+            "max_all": "Max All",
+            "regular_skill": "Regular Skill",
+            "passive_skill": "Passive Skill",
+            "lvl": "Lvl",
+
+            "skills": {
+              "Passive": {
+                "name": "Passive",
+
+                "Fitness": "Fitness",
+                "Strength": "Strength"
+              },
+
+              "Firearm": {
+                "name": "Firearm",
+
+                "Aiming": "Aiming",
+                "Reloading": "Reloading"
+              },
+
+              "Survivalist": {
+                "name": "Survivalist",
+
+                "Fishing": "Fishing",
+                "Trapping": "Trapping",
+                "PlantScavenging": "Foraging"
+              },
+
+              "Combat": {
+                "name": "Combat",
+
+                "Axe": "Axe",
+                "Blunt": "Long Blunt",
+                "SmallBlunt": "Short Blunt",
+                "LongBlade": "Long Blade",
+                "SmallBlade": "Short Blade",
+                "Spear": "Spear",
+                "Maintenance": "Maintenance"
+              },
+
+              "Agility": {
+                "name": "Agility",
+
+                "Sprinting": "Sprinting",
+                "Nimble": "Nimble",
+                "Lightfoot": "Lightfooted",
+                "Sneak": "Sneaking"
+              },
+
+              "Crafting": {
+                "name": "Crafting",
+
+                "Woodwork": "Carpentry",
+                "Cooking": "Cooking",
+                "Farming": "Farming",
+                "Doctor": "First Aid",
+                "Electricity": "Electrical",
+                "MetalWelding": "Metalworking",
+                "Mechanics": "Mechanics",
+                "Tailoring": "Tailoring"
+              }
+            }
+          },
+
+          "addplayertowhitelist": {
+            "button": "Add Player",
+            "title": "Add Player to Whitelist",
+            "submit": "Add Player to Whitelist",
+
+            "name": "Name",
+            "password": "Password"
+          },
+
+          "removeplayersfromwhitelist": {
+            "button": "Remove Players",
+            "dropdown_button": "Remove from Whitelist",
+            "title": "Remove Player from Whitelist",
+            "title_multiple": "Remove Players from Whitelist",
+            "players": "You will remove {{players}} from the whitelist.",
+            "submit": "Remove Player",
+            "submit_multiple": "Remove Players",
+
+            "remove_from_players_list": "Remove players from the player list too"
+          },
+
+          "add_missing_player": {
+            "button": "Missing a player? Add an offline player to the list.",
+            "title": "Add Player",
+            "submit": "Add Player",
+
+            "name": "Name"
+          },
+
+          "additem": {
+            "button": "Add Item"
+          },
+
+          "addvehicle": {
+            "button": "Add Vehicle",
+
+            "coordinates_tab": "To Coordinates",
+            "player_tab": "To Players"
           }
         }
       },
