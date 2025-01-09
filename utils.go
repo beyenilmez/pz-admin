@@ -8,6 +8,7 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 
@@ -106,4 +107,29 @@ func Decrypt(encryptedText, key string) (string, error) {
 	stream.XORKeyStream(ciphertext, ciphertext)
 
 	return string(ciphertext), nil
+}
+
+func (app *App) Format(t string, args ...interface{}) string {
+	return fmt.Sprintf(t, args...)
+}
+
+func (a *App) CopyToClipboard(text string, sendNotification bool) {
+	err := runtime.ClipboardSetText(a.ctx, text)
+	if err != nil {
+		runtime.LogErrorf(appContext, "Error copying to clipboard: %s", err.Error())
+		if sendNotification {
+			a.SendNotification(Notification{
+				Message: "Error copying to clipboard",
+				Variant: "error",
+			})
+		}
+		return
+	}
+
+	if sendNotification {
+		a.SendNotification(Notification{
+			Message: "Copied to clipboard",
+			Variant: "success",
+		})
+	}
 }

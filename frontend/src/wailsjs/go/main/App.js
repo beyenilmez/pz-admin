@@ -22,6 +22,10 @@ export function AddXp(arg1, arg2, arg3) {
   return window['go']['main']['App']['AddXp'](arg1, arg2, arg3);
 }
 
+export function Alarm() {
+  return window['go']['main']['App']['Alarm']();
+}
+
 export function BanUsers(arg1, arg2, arg3) {
   return window['go']['main']['App']['BanUsers'](arg1, arg2, arg3);
 }
@@ -30,8 +34,20 @@ export function CheckForUpdate() {
   return window['go']['main']['App']['CheckForUpdate']();
 }
 
+export function CheckModsNeedUpdate() {
+  return window['go']['main']['App']['CheckModsNeedUpdate']();
+}
+
+export function Chopper() {
+  return window['go']['main']['App']['Chopper']();
+}
+
 export function ConnectRcon(arg1) {
   return window['go']['main']['App']['ConnectRcon'](arg1);
+}
+
+export function CopyToClipboard(arg1, arg2) {
+  return window['go']['main']['App']['CopyToClipboard'](arg1, arg2);
 }
 
 export function CreateHorde(arg1, arg2) {
@@ -46,6 +62,14 @@ export function DisconnectRcon() {
   return window['go']['main']['App']['DisconnectRcon']();
 }
 
+export function ExportOptionsDialog(arg1) {
+  return window['go']['main']['App']['ExportOptionsDialog'](arg1);
+}
+
+export function Format(arg1, arg2) {
+  return window['go']['main']['App']['Format'](arg1, arg2);
+}
+
 export function GetConfig() {
   return window['go']['main']['App']['GetConfig']();
 }
@@ -58,16 +82,20 @@ export function GetLoadConfigPath() {
   return window['go']['main']['App']['GetLoadConfigPath']();
 }
 
-export function GetPlayers() {
-  return window['go']['main']['App']['GetPlayers']();
-}
-
 export function GetVersion() {
   return window['go']['main']['App']['GetVersion']();
 }
 
 export function GodMode(arg1, arg2) {
   return window['go']['main']['App']['GodMode'](arg1, arg2);
+}
+
+export function Gunshot() {
+  return window['go']['main']['App']['Gunshot']();
+}
+
+export function ImportOptionsDialog() {
+  return window['go']['main']['App']['ImportOptionsDialog']();
 }
 
 export function IsRconConnected() {
@@ -90,12 +118,32 @@ export function LoadItemsDialog() {
   return window['go']['main']['App']['LoadItemsDialog']();
 }
 
+export function LoadMessageDialog() {
+  return window['go']['main']['App']['LoadMessageDialog']();
+}
+
 export function OpenFileInExplorer(arg1) {
   return window['go']['main']['App']['OpenFileInExplorer'](arg1);
 }
 
+export function Players() {
+  return window['go']['main']['App']['Players']();
+}
+
+export function RandomLightning() {
+  return window['go']['main']['App']['RandomLightning']();
+}
+
+export function RandomThunder() {
+  return window['go']['main']['App']['RandomThunder']();
+}
+
 export function ReadConfig(arg1) {
   return window['go']['main']['App']['ReadConfig'](arg1);
+}
+
+export function ReloadOptions() {
+  return window['go']['main']['App']['ReloadOptions']();
 }
 
 export function RemovePlayersFromWhitelist(arg1, arg2) {
@@ -118,6 +166,10 @@ export function SaveItemsDialog(arg1) {
   return window['go']['main']['App']['SaveItemsDialog'](arg1);
 }
 
+export function SaveMessagesDialog(arg1) {
+  return window['go']['main']['App']['SaveMessagesDialog'](arg1);
+}
+
 export function SaveWorld() {
   return window['go']['main']['App']['SaveWorld']();
 }
@@ -134,12 +186,36 @@ export function SendWindowsNotification(arg1) {
   return window['go']['main']['App']['SendWindowsNotification'](arg1);
 }
 
+export function ServerMsg(arg1) {
+  return window['go']['main']['App']['ServerMsg'](arg1);
+}
+
 export function SetAccessLevel(arg1, arg2) {
   return window['go']['main']['App']['SetAccessLevel'](arg1, arg2);
 }
 
 export function SetConfigField(arg1, arg2) {
   return window['go']['main']['App']['SetConfigField'](arg1, arg2);
+}
+
+export function StartRain(arg1) {
+  return window['go']['main']['App']['StartRain'](arg1);
+}
+
+export function StartStorm(arg1) {
+  return window['go']['main']['App']['StartStorm'](arg1);
+}
+
+export function StopRain() {
+  return window['go']['main']['App']['StopRain']();
+}
+
+export function StopServer() {
+  return window['go']['main']['App']['StopServer']();
+}
+
+export function StopWeather() {
+  return window['go']['main']['App']['StopWeather']();
 }
 
 export function TeleportToCoordinates(arg1, arg2) {
@@ -160,4 +236,8 @@ export function UnbanUsers(arg1) {
 
 export function Update(arg1) {
   return window['go']['main']['App']['Update'](arg1);
+}
+
+export function UpdatePzOptions(arg1, arg2) {
+  return window['go']['main']['App']['UpdatePzOptions'](arg1, arg2);
 }

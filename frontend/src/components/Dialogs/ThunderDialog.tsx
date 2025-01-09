@@ -8,6 +8,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Thunder } from "@/wailsjs/go/main/App";
+import { useTranslation } from "react-i18next";
 
 interface ThunderDialogProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface ThunderDialogProps {
 }
 
 export function ThunderDialog({ isOpen, onClose, names }: ThunderDialogProps) {
+  const { t } = useTranslation();
   const handleThunder = () => {
     onClose();
 
@@ -24,16 +26,16 @@ export function ThunderDialog({ isOpen, onClose, names }: ThunderDialogProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-[28rem]">
+      <DialogContent className="w-[28rem]">
         <DialogHeader>
-          <DialogTitle>Trigger Thunder</DialogTitle>
+          <DialogTitle>{t("admin_panel.tabs.players.dialogs.thunder.title")}</DialogTitle>
           <DialogDescription>
-            <p>{"You will trigger thunder for " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.thunder.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
           <Button type="submit" onClick={handleThunder}>
-            Trigger Thunder
+            {t("admin_panel.tabs.players.dialogs.thunder.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

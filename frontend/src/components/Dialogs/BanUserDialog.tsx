@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "../ui/textarea";
 import { BanUsers } from "@/wailsjs/go/main/App";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface BanUserDialogProps {
   isOpen: boolean;
@@ -20,6 +21,7 @@ interface BanUserDialogProps {
 }
 
 export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
+  const { t } = useTranslation();
   const [reason, setReason] = useState("");
   const [banIp, setBanIp] = useState(false);
 
@@ -38,20 +40,24 @@ export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
-          <DialogTitle>{names.length > 1 ? "Ban Users" : "Ban User"}</DialogTitle>
+          <DialogTitle>
+            {names.length > 1
+              ? t("admin_panel.tabs.players.dialogs.banuser.title_multiple")
+              : t("admin_panel.tabs.players.dialogs.banuser.title")}
+          </DialogTitle>
           <DialogDescription>
-            <p>{"You will ban " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.banuser.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-1">
           <Label htmlFor="ban-reason" className="text-right">
-            Reason
+            {t("admin_panel.tabs.players.dialogs.banuser.reason")}
           </Label>
           <Textarea
             value={reason}
-            onChange={(e) => setReason(e.target.value.replace(/[\\"']/g, ""))}
+            onChange={(e) => setReason(e.target.value.replace(/[\\"'\n\r]/g, ""))}
             id="ban-reason"
-            placeholder="Spam, etc."
+            placeholder={t("admin_panel.tabs.players.dialogs.banuser.reason_placeholder")}
             className="col-span-3 max-h-64"
           />
         </div>
@@ -61,12 +67,12 @@ export function BanUserDialog({ isOpen, onClose, names }: BanUserDialogProps) {
             htmlFor="ban-ip"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
-            Ban IP
+            {t("admin_panel.tabs.players.dialogs.banuser.ban_ip")}
           </label>
         </div>
         <DialogFooter>
           <Button type="submit" onClick={handleBan}>
-            Ban
+            {t("admin_panel.tabs.players.dialogs.banuser.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

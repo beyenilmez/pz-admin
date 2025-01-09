@@ -9,7 +9,8 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "vehicles": "node ./scripts/vehicles.mjs",
-    "items": "node ./scripts/items.mjs"
+    "items": "node ./scripts/items.mjs",
+    "convert-item-translations": "node ./scripts/convert-item-translations.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -46,9 +47,12 @@
     "lucide-react": "^0.469.0",
     "next-themes": "^0.4.4",
     "react": "^19.0.0",
+    "react-colorful": "^5.6.1",
     "react-dom": "^19.0.0",
     "react-hook-form": "^7.54.2",
     "react-i18next": "^15.2.0",
+    "react-markdown": "^9.0.3",
+    "remark-gfm": "^4.0.0",
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
@@ -64,6 +68,7 @@
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.16",
+    "iconv-lite": "^0.6.3",
     "path": "^latest",
     "postcss": "^8.4.49",
     "puppeteer": "^23.11.1",

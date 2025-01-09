@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"math/rand"
+
 	"github.com/gorcon/rcon"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -45,8 +47,17 @@ type ItemRecord struct {
 	Count  int    `json:"count"`
 }
 
+type RconResponse struct {
+	Response string `json:"response"`
+	Error    string `json:"error"`
+}
+
 var connectionCredentials Credentials
 var players []Player
+
+func (app *App) Players() []Player {
+	return players
+}
 
 func (app *App) ConnectRcon(credentials Credentials) bool {
 	if credentials.IP == "" || credentials.Port == "" || credentials.Password == "" {
@@ -87,6 +98,10 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	if err != nil {
 		runtime.LogError(app.ctx, "Error updating players: "+err.Error())
 	}
+	err = pzOptions_update()
+	if err != nil {
+		runtime.LogError(app.ctx, "Error updating pzOptions: "+err.Error())
+	}
 
 	app.SendNotification(Notification{
 		Title:   "RCON connection established",
@@ -121,19 +136,39 @@ func (app *App) DisconnectRcon() bool {
 	return err == nil
 }
 
-func (app *App) SendRconCommand(command string) string {
+func (app *App) SendRconCommand(command string) RconResponse {
 	connMutex.Lock()
 	defer connMutex.Unlock()
 
+	runtime.EventsEmit(app.ctx, "setProgress", 50)
+	defer runtime.EventsEmit(app.ctx, "setProgress", 0)
+
 	if conn == nil {
 		runtime.LogError(app.ctx, "RCON is not connected")
-		return ""
+		return RconResponse{
+			Response: "",
+			Error:    "RCON is not connected",
+		}
+	}
+
+	if len([]byte(command)) > 1000 {
+		runtime.LogError(app.ctx, "RCON command size exceeds 1000 bytes")
+		return RconResponse{
+			Response: "",
+			Error:    "RCON command size exceeds 1000 bytes",
+		}
 	}
 
 	res, err := conn.Execute(command)
+
+	runtime.EventsEmit(app.ctx, "setProgress", 100)
+
 	if err != nil {
 		runtime.LogError(app.ctx, "Error executing RCON command: "+err.Error())
-		return ""
+		return RconResponse{
+			Response: "",
+			Error:    "Error executing RCON command: " + err.Error(),
+		}
 	}
 	if strings.Contains(command, "banuser ") && strings.Contains(res, "is now banned") {
 		for i := range players {
@@ -238,9 +273,17 @@ func (app *App) SendRconCommand(command string) string {
 		if nameExists {
 			runtime.EventsEmit(app.ctx, "update-players", players)
 		}
+	} else if strings.Contains(command, "changeoption ") {
+		err = pzOptions_update()
+		if err != nil {
+			runtime.LogError(app.ctx, "Error updating PZ options: "+err.Error())
+		}
 	}
 
-	return res
+	return RconResponse{
+		Response: res,
+		Error:    "",
+	}
 }
 
 // watchConnection monitors the RCON connection and logs if it is lost
@@ -254,6 +297,9 @@ func (app *App) watchConnection() {
 			if err != nil {
 				runtime.LogError(app.ctx, "Error saving players: "+err.Error())
 			}
+			players = nil
+			pzOptions = PzOptions{}
+			lastOptionsHash = ""
 			return
 		case <-time.After(time.Duration(*config.RconCheckInterval) * time.Second):
 			connMutex.Lock()
@@ -339,10 +385,6 @@ func (app *App) DeleteCredentials() bool {
 	}
 
 	return true
-}
-
-func (app *App) GetPlayers() []Player {
-	return players
 }
 
 func players_init() error {
@@ -439,7 +481,7 @@ func players_update() error {
 	}
 
 	if !playersChanged {
-		runtime.LogDebugf(app.ctx, "No changes in players, skipping event emission")
+		runtime.LogTracef(app.ctx, "No changes in players, skipping event emission")
 		return nil
 	}
 
@@ -625,11 +667,16 @@ func (params *RCONCommand) execute() int {
 	connMutex.Lock()
 	defer connMutex.Unlock()
 
+	defer runtime.EventsEmit(app.ctx, "setProgress", 0)
+	runtime.EventsEmit(app.ctx, "setProgress", 10)
+
 	names := params.PlayerNames
 	successCount := 0
 	total := 1 // Default to 1 for commands without names
 	if len(names) > 0 {
 		total = len(names)
+	} else if len(names) == 0 {
+		names = nil
 	}
 
 	baseCommand := params.CommandTemplate
@@ -659,6 +706,8 @@ func (params *RCONCommand) execute() int {
 	var lastErrRes string
 
 	for i := 0; i < total; i++ {
+		runtime.EventsEmit(app.ctx, "setProgress", int(float64(i+1)/float64(total)*100))
+
 		var command string
 		if names == nil {
 			command = baseCommand
@@ -667,19 +716,31 @@ func (params *RCONCommand) execute() int {
 		}
 
 		command = strings.Join(strings.Fields(command), " ") // Collapse spaces
+
+		if len([]byte(command)) > 1000 {
+			runtime.LogError(app.ctx, "RCON command size exceeds 1000 bytes")
+			lastErrRes = "RCON command size exceeds 1000 bytes"
+			continue
+		}
+
 		res, err = conn.Execute(command)
+
+		if err != nil {
+			lastErrRes = res
+			continue
+		}
 
 		if params.ResponseUpdate != nil {
 			res = params.ResponseUpdate(names[i], res)
 		}
 
 		if names == nil {
-			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck("", res)) {
+			if params.ErrorCheck != nil && params.ErrorCheck("", res) {
 				lastErrRes = res
 				continue
 			}
 		} else {
-			if err != nil || (params.ErrorCheck != nil && params.ErrorCheck(names[i], res)) {
+			if params.ErrorCheck != nil && params.ErrorCheck(names[i], res) {
 				lastErrRes = res
 				continue
 			}
@@ -709,6 +770,8 @@ func (params *RCONCommand) execute() int {
 			}
 		}
 	}
+
+	runtime.EventsEmit(app.ctx, "setProgress", 100)
 
 	if params.Notifications != (RCONCommandNotifications{}) {
 		if total > 1 {
@@ -1259,6 +1322,242 @@ func (app *App) SaveWorld() {
 		Notifications: RCONCommandNotifications{
 			SingleSuccess: "Successfully saved the world",
 			SingleFail:    "Failed to save the world",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StopServer() bool {
+	command := RCONCommand{
+		CommandTemplate: "quit",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Quit"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Stopping the server",
+			SingleFail:    "Failed to stop the server",
+		},
+	}
+
+	return command.execute() == 1
+}
+
+func (app *App) CheckModsNeedUpdate() {
+	command := RCONCommand{
+		CommandTemplate: "checkModsNeedUpdate",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Checking started. The answer will be written in the log file and in the chat"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Checking started. The answer will be written in the log file and in the chat",
+			SingleFail:    "Failed to check mods that need update",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) ServerMsg(message string) {
+	command := RCONCommand{
+		CommandTemplate: "servermsg {message}",
+		Args: []RCONCommandParam{
+			{
+				Name:      "message",
+				Value:     fmt.Sprintf("\"%s\"", message),
+				Mandatory: true,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Message sent."
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully sent server message",
+			SingleFail:    "Failed to send server message",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StartRain(intensity int) {
+	command := RCONCommand{
+		CommandTemplate: "startrain {intensity}",
+		Args: []RCONCommandParam{
+			{
+				Name: "intensity",
+				Value: func() interface{} {
+					if intensity == -1 {
+						return nil
+					}
+					return fmt.Sprintf("%d", intensity)
+				}(),
+				Mandatory: false,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Rain started"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully started rain",
+			SingleFail:    "Failed to start rain",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StartStorm(duration int) {
+	command := RCONCommand{
+		CommandTemplate: "startstorm {duration}",
+		Args: []RCONCommandParam{
+			{
+				Name: "duration",
+				Value: func() interface{} {
+					if duration == -1 {
+						return nil
+					}
+					return fmt.Sprintf("%d", duration)
+				}(),
+				Mandatory: false,
+			},
+		},
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Thunderstorm started"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully started storm",
+			SingleFail:    "Failed to start storm",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StopRain() {
+	command := RCONCommand{
+		CommandTemplate: "stoprain",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Rain stopped"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully stopped rain",
+			SingleFail:    "Failed to stop rain",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) StopWeather() {
+	command := RCONCommand{
+		CommandTemplate: "stopweather",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Weather stopped"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully stopped weather",
+			SingleFail:    "Failed to stop weather",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) Chopper() {
+	command := RCONCommand{
+		CommandTemplate: "chopper",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Chopper launched"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully launched chopper",
+			SingleFail:    "Failed to launch chopper",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) Gunshot() {
+	command := RCONCommand{
+		CommandTemplate: "gunshot",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Gunshot fired"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully fired gunshot",
+			SingleFail:    "Failed to fire gunshot",
+		},
+	}
+
+	command.execute()
+}
+
+func getRandomOnlinePlayer() (string, bool) {
+	onlinePlayers := make([]string, 0)
+
+	for _, player := range players {
+		if player.Online && player.Name != "" {
+			onlinePlayers = append(onlinePlayers, player.Name)
+		}
+	}
+
+	if len(onlinePlayers) == 0 {
+		return "", false // No online players
+	}
+
+	randomPlayer := onlinePlayers[rand.Intn(len(onlinePlayers))]
+	return randomPlayer, true
+}
+
+func (app *App) RandomLightning() {
+	randomPlayer, found := getRandomOnlinePlayer()
+	if !found {
+		runtime.LogDebugf(app.ctx, "No players online")
+		return
+	}
+
+	app.Lightning([]string{randomPlayer})
+}
+
+func (app *App) RandomThunder() {
+	randomPlayer, found := getRandomOnlinePlayer()
+	if !found {
+		runtime.LogDebugf(app.ctx, "No players online")
+		return
+	}
+
+	app.Thunder([]string{randomPlayer})
+}
+
+func (app *App) Alarm() {
+	command := RCONCommand{
+		CommandTemplate: "alarm",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Alarm triggered"
+		},
+		ErrorCheck: func(name string, response string) bool {
+			return response == "Not in a room"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully triggered alarm",
+			SingleFail:    "Failed to trigger alarm",
+		},
+	}
+
+	command.execute()
+}
+
+func (app *App) ReloadOptions() {
+	command := RCONCommand{
+		CommandTemplate: "reloadoptions",
+		SuccessCheck: func(name string, response string) bool {
+			return response == "Options reloaded"
+		},
+		Notifications: RCONCommandNotifications{
+			SingleSuccess: "Successfully reloaded options",
+			SingleFail:    "Failed to reload options",
 		},
 	}
 

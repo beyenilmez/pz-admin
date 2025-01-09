@@ -11,6 +11,8 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
@@ -90,7 +92,7 @@ func main() {
 		Title:             "PZ Admin",
 		Width:             1280,
 		Height:            800,
-		MinWidth:          1024,
+		MinWidth:          1023,
 		MinHeight:         768,
 		DisableResize:     false,
 		Frameless:         !*config.UseSystemTitleBar,
@@ -126,6 +128,27 @@ func main() {
 			WebviewUserDataPath: path.Join(appData, "pz-admin"),
 			ZoomFactor:          1.0,
 			DisablePinchZoom:    true,
+		},
+		Mac: &mac.Options{
+			TitleBar: &mac.TitleBar{
+				TitlebarAppearsTransparent: true,
+				HideTitle:                  true,
+				HideTitleBar:               true,
+				FullSizeContent:            true,
+				UseToolbar:                 false,
+				HideToolbarSeparator:       true,
+			},
+			Appearance:           mac.DefaultAppearance,
+			WebviewIsTransparent: windowTransparent,
+			WindowIsTranslucent:  windowTransparent,
+			Preferences: &mac.Preferences{
+				FullscreenEnabled: mac.Enabled,
+			},
+		},
+		Linux: &linux.Options{
+			WindowIsTranslucent: windowTransparent,
+			WebviewGpuPolicy:    linux.WebviewGpuPolicyAlways,
+			ProgramName:         "pz-admin",
 		},
 	})
 

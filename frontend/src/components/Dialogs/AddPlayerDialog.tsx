@@ -5,6 +5,7 @@ import { AddPlayer } from "@/wailsjs/go/main/App";
 import { useEffect, useState } from "react";
 import { useRcon } from "@/contexts/rcon-provider";
 import { Input } from "../ui/input";
+import { useTranslation } from "react-i18next";
 
 interface AddPlayerDialogProps {
   isOpen: boolean;
@@ -12,6 +13,7 @@ interface AddPlayerDialogProps {
 }
 
 export function AddPlayerDialog({ isOpen, onClose }: AddPlayerDialogProps) {
+  const { t } = useTranslation();
   const { players } = useRcon();
   const [name, setName] = useState("");
 
@@ -29,11 +31,11 @@ export function AddPlayerDialog({ isOpen, onClose }: AddPlayerDialogProps) {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
-          <DialogTitle>Add Player</DialogTitle>
+          <DialogTitle>{t("admin_panel.tabs.players.dialogs.add_missing_player.title")}</DialogTitle>
         </DialogHeader>
         <div className="space-y-1">
           <Label htmlFor="reason" className="text-right">
-            Name
+            {t("admin_panel.tabs.players.dialogs.add_missing_player.name")}
           </Label>
           <Input
             value={name}
@@ -51,7 +53,7 @@ export function AddPlayerDialog({ isOpen, onClose }: AddPlayerDialogProps) {
             onClick={handleAddPlayer}
             disabled={!name || players.some((player) => player.name === name)}
           >
-            Add Player
+            {t("admin_panel.tabs.players.dialogs.add_missing_player.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>

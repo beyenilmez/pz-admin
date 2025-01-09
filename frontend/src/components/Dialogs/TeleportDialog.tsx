@@ -16,6 +16,7 @@ import { BrowserOpenURL } from "@/wailsjs/runtime/runtime";
 import { useEffect, useState } from "react";
 import { Combobox } from "../ui/combobox";
 import { useRcon } from "@/contexts/rcon-provider";
+import { useTranslation } from "react-i18next";
 
 interface TeleportDialogProps {
   isOpen: boolean;
@@ -24,6 +25,7 @@ interface TeleportDialogProps {
 }
 
 export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) {
+  const { t } = useTranslation();
   const [tab, setTab] = useState("coordinates");
   const [coordinates, setCoordinates] = useState({} as main.Coordinates);
   const [player, setPlayer] = useState("");
@@ -54,18 +56,22 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
       <div className="fixed inset-0 bg-black bg-opacity-80" hidden={!isOpen} />
       <DialogContent className="max-w-[28rem]">
         <DialogHeader>
-          <DialogTitle>{names.length > 1 ? "Teleport Users" : "Teleport User"}</DialogTitle>
+          <DialogTitle>
+            {names.length > 1
+              ? t("admin_panel.tabs.players.dialogs.teleport.title_multiple")
+              : t("admin_panel.tabs.players.dialogs.teleport.title")}
+          </DialogTitle>
           <DialogDescription>
-            <p>{"You will teleport " + names.join(", ") + "."}</p>
+            <p>{t("admin_panel.tabs.players.dialogs.teleport.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
         <Tabs value={tab} className="w-[400px]">
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="coordinates" onClick={() => setTab("coordinates")}>
-              To Coordinates
+              {t("admin_panel.tabs.players.dialogs.teleport.coordinates_tab")}
             </TabsTrigger>
             <TabsTrigger value="player" onClick={() => setTab("player")}>
-              To Player
+              {t("admin_panel.tabs.players.dialogs.teleport.player_tab")}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="coordinates" className="h-24">
@@ -109,7 +115,7 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
                 )
               }
             >
-              Preview in map website
+              {t("admin_panel.tabs.players.dialogs.teleport.preview_in_map_website")}
             </Button>
           </TabsContent>
           <TabsContent value="player" className="h-24">
@@ -122,9 +128,9 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
                     value: player.name,
                     label: player.name,
                   }))}
-                placeholder={"Select target player..."}
-                searchPlaceholder={"Search player..."}
-                nothingFoundMessage={"No online players found"}
+                placeholder={t("admin_panel.tabs.players.dialogs.teleport.player_combobox.placeholder")}
+                searchPlaceholder={t("admin_panel.tabs.players.dialogs.teleport.player_combobox.search_placeholder")}
+                nothingFoundMessage={t("admin_panel.tabs.players.dialogs.teleport.player_combobox.search_not_found")}
                 onChange={handlePlayerChange}
               />
             </div>
@@ -136,7 +142,7 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
             onClick={handleTeleport}
             disabled={(tab == "coordinates" && (!coordinates.x || !coordinates.y)) || (tab == "player" && !player)}
           >
-            Teleport
+            {t("admin_panel.tabs.players.dialogs.teleport.submit")}
           </Button>
         </DialogFooter>
       </DialogContent>
