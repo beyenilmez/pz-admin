@@ -1,87 +1,52 @@
-name: Build pz-admin
+name: Wails build
 
 on:
   push:
     branches:
       - actions-test
 
+env:
+  # Necessary for most environments as build failure can occur due to OOM issues
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
     strategy:
-      matrix:
-        include:
-          - os: ubuntu-latest
-            platform: linux
-            arch: amd64
-          - os: ubuntu-latest
-            platform: linux
-            arch: arm64
-          - os: windows-latest
-            platform: windows
-            arch: amd64
-          - os: windows-latest
-            platform: windows
-            arch: arm64
-          - os: macos-latest
-            platform: darwin
-            arch: universal
+      # Failure in one platform build won't impact the others
       fail-fast: false
+      matrix:
+        build:
+          - name: "pz-admin-linux-amd64"
+            platform: "linux/amd64"
+            os: "ubuntu-latest"
+          - name: "pz-admin-linux-arm64"
+            platform: "linux/arm64"
+            os: "ubuntu-latest"
+          - name: "pz-admin-windows-amd64"
+            platform: "windows/amd64"
+            os: "windows-latest"
+          - name: "pz-admin-windows-arm64"
+            platform: "windows/arm64"
+            os: "windows-latest"
+          - name: "pz-admin-darwin-universal"
+            platform: "darwin/universal"
+            os: "macos-latest"
 
+    runs-on: ${{ matrix.build.os }}
     steps:
-      # Checkout code
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
-
-      # Setup GoLang
-      - name: Setup GoLang
-        uses: actions/setup-go@v4
         with:
+          submodules: recursive
+
+      - name: Build wails
+        uses: The-Egg-Corp/wails-build-action@v1.4
+        id: build
+        with:
+          build-name: ${{ matrix.build.name }}
+          build-platform: ${{ matrix.build.platform }}
+          nsis: true
+          package: true
           go-version: "1.23.4"
-      - run: go version
-        shell: bash
-
-      # Setup NodeJS
-      - name: Setup NodeJS
-        uses: actions/setup-node@v3
-        with:
+          wails-version: "2.9.2"
           node-version: "22.11.0"
-      - run: node --version
-        shell: bash
-
-      # Install Wails
-      - name: Install Wails
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
-        shell: bash
-
-      # Install platform-specific dependencies
-      - name: Install Linux Dependencies
-        if: matrix.os == 'ubuntu-latest'
-        run: sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.0-dev gcc-aarch64-linux-gnu
-        shell: bash
-
-      - name: Install macOS Dependencies
-        if: matrix.os == 'macos-latest'
-        run: brew install mitchellh/gon/gon
-        shell: bash
-
-      # Build the application
-      - name: Build Application
-        run: |
-          platform="${{ matrix.platform }}"
-          arch="${{ matrix.arch }}"
-          output="build/bin/pz-admin-${platform}-${arch}"
-          extra_flags=""
-          if [[ "$platform" == "windows" ]]; then
-            extra_flags="-nsis"
-          fi
-          wails build --platform $platform/$arch -webview2 download $extra_flags -o $output
-        shell: bash
-
-      # Upload artifacts
-      - name: Upload Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: pz-admin-Build-${{ matrix.os }}-${{ matrix.arch }}
-          path: |
-            build/bin/pz-admin-${{ matrix.platform }}-${{ matrix.arch }}
