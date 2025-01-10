@@ -48,5 +48,5 @@ jobs:
           nsis: true
           package: true
           go-version: "1.23.4"
-          wails-version: "2.9.2"
+          wails-version: "v2.9.2"
           node-version: "22.11.0"
