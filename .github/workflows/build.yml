@@ -1,93 +1,93 @@
-name: "Wails Build for pz-admin"
-description: "Builds the pz-admin application for all platforms including ARM64"
+name: Build pz-admin
 
 on:
   push:
     branches:
       - actions-test
 
-runs:
-  using: "composite"
-  steps:
-    # Setup GoLang
-    - name: Setup GoLang
-      uses: actions/setup-go@v4
-      with:
-        go-version: "1.23.4"
-    - run: go version
-      shell: bash
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux
+            arch: amd64
+          - os: ubuntu-latest
+            platform: linux
+            arch: arm64
+          - os: windows-latest
+            platform: windows
+            arch: amd64
+          - os: windows-latest
+            platform: windows
+            arch: arm64
+          - os: macos-latest
+            platform: darwin
+            arch: universal
+      fail-fast: false
 
-    # Setup NodeJS
-    - name: Setup NodeJS
-      uses: actions/setup-node@v3
-      with:
-        node-version: "22.11.0"
-    - run: node --version
-      shell: bash
+    steps:
+      # Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    # Install Wails
-    - name: Install Wails
-      run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
-      shell: bash
+      # Setup GoLang
+      - name: Setup GoLang
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.23.4"
+      - run: go version
+        shell: bash
 
-    # Install platform-specific dependencies
-    - name: Install Linux Dependencies
-      if: runner.os == 'Linux'
-      run: sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.0-dev gcc-aarch64-linux-gnu
-      shell: bash
+      # Setup NodeJS
+      - name: Setup NodeJS
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22.11.0"
+      - run: node --version
+        shell: bash
 
-    - name: Install macOS Dependencies
-      if: runner.os == 'macOS'
-      run: brew install mitchellh/gon/gon
-      shell: bash
+      # Install Wails
+      - name: Install Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
+        shell: bash
 
-    # Build for macOS
-    - name: Build for macOS
-      if: runner.os == 'macOS'
-      run: wails build --platform darwin/universal -webview2 download -o pz-admin-macos
-      shell: bash
+      # Install platform-specific dependencies
+      - name: Install Linux Dependencies
+        if: matrix.os == 'ubuntu-latest'
+        run: sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.0-dev gcc-aarch64-linux-gnu
+        shell: bash
 
-    # Build for Linux AMD64
-    - name: Build for Linux AMD64
-      if: runner.os == 'Linux'
-      run: wails build --platform linux/amd64 -webview2 download -o pz-admin-linux-amd64
-      shell: bash
+      - name: Install macOS Dependencies
+        if: matrix.os == 'macos-latest'
+        run: brew install mitchellh/gon/gon
+        shell: bash
 
-    # Build for Linux ARM64
-    - name: Build for Linux ARM64
-      if: runner.os == 'Linux'
-      run: wails build --platform linux/arm64 -webview2 download -o pz-admin-linux-arm64
-      shell: bash
+      # Build the application
+      - name: Build Application
+        run: |
+          platform="${{ matrix.platform }}"
+          arch="${{ matrix.arch }}"
+          output="pz-admin-${platform}-${arch}"
+          extra_flags=""
+          if [[ "$platform" == "windows" ]]; then
+            extra_flags="-nsis"
+          fi
+          wails build --platform $platform/$arch -webview2 download $extra_flags -o $output
+        shell: bash
 
-    # Build for Windows AMD64 with NSIS
-    - name: Build for Windows AMD64
-      if: runner.os == 'Windows'
-      run: wails build --platform windows/amd64 -webview2 download -nsis -o pz-admin-windows-amd64.exe
-      shell: bash
+      # Adjust permissions for macOS and Linux
+      - name: Adjust Permissions (Linux and macOS)
+        if: matrix.os != 'windows-latest'
+        run: chmod +x pz-admin-*
+        shell: bash
 
-    # Build for Windows ARM64 with NSIS
-    - name: Build for Windows ARM64
-      if: runner.os == 'Windows'
-      run: wails build --platform windows/arm64 -webview2 download -nsis -o pz-admin-windows-arm64.exe
-      shell: bash
-
-    # Adjust permissions for macOS and Linux
-    - name: Adjust Permissions (Linux)
-      if: runner.os == 'Linux'
-      run: chmod +x pz-admin-linux-*
-      shell: bash
-
-    - name: Adjust Permissions (macOS)
-      if: runner.os == 'macOS'
-      run: chmod +x pz-admin-macos
-      shell: bash
-
-    # Upload build artifacts
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: pz-admin-Build
-        path: |
-          pz-admin-macos
-          pz-admin-linux-*
-          pz-admin-windows-*.exe
+      # Upload artifacts
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: pz-admin-Build-${{ matrix.os }}-${{ matrix.arch }}
+          path: |
+            pz-admin-*
