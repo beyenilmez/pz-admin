@@ -70,18 +70,12 @@ jobs:
         run: |
           platform="${{ matrix.platform }}"
           arch="${{ matrix.arch }}"
-          output="pz-admin-${platform}-${arch}"
+          output="build/bin/pz-admin-${platform}-${arch}"
           extra_flags=""
           if [[ "$platform" == "windows" ]]; then
             extra_flags="-nsis"
           fi
           wails build --platform $platform/$arch -webview2 download $extra_flags -o $output
-        shell: bash
-
-      # Adjust permissions for macOS and Linux
-      - name: Adjust Permissions (Linux and macOS)
-        if: matrix.os != 'windows-latest'
-        run: chmod +x pz-admin-*
         shell: bash
 
       # Upload artifacts
@@ -90,4 +84,4 @@ jobs:
         with:
           name: pz-admin-Build-${{ matrix.os }}-${{ matrix.arch }}
           path: |
-            pz-admin-*
+            build/bin/pz-admin-${{ matrix.platform }}-${{ matrix.arch }}
