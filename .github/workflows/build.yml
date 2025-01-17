@@ -39,7 +39,6 @@ jobs:
       - run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
       - name: Build
         run: |
-          make server-linux
           wails build --platform linux/amd64 -webview2 embed
       - run: chmod +x build/bin/pz-admin
       - name: 'Tar files'
@@ -80,7 +79,6 @@ jobs:
             brew install mitchellh/gon/gon
       - name: Build
         run: |
-          make server-macos
           wails build --platform darwin/amd64 -webview2 embed
       - name: chmod +x exe
         run: chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
@@ -123,7 +121,6 @@ jobs:
       - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
       - name: Build
         run: |
-          make server-windows
           wails build --platform windows/amd64 -webview2 embed
       - name: package
         working-directory: ${{ github.workspace }}/build/bin
