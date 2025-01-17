@@ -1,52 +1,138 @@
-name: Wails build
+name: Build
+
+permissions:
+  contents: write
 
 on:
   push:
     branches:
-      - actions-test
-
-env:
-  # Necessary for most environments as build failure can occur due to OOM issues
-  NODE_OPTIONS: "--max-old-space-size=4096"
+      - 'actions-test'
 
 jobs:
-  build:
-    strategy:
-      # Failure in one platform build won't impact the others
-      fail-fast: false
-      matrix:
-        build:
-          - name: "pz-admin-linux-amd64"
-            platform: "linux/amd64"
-            os: "ubuntu-22.04"
-          - name: "pz-admin-linux-arm64"
-            platform: "linux/arm64"
-            os: "ubuntu-22.04"
-          - name: "pz-admin-windows-amd64"
-            platform: "windows/amd64"
-            os: "windows-latest"
-          - name: "pz-admin-windows-arm64"
-            platform: "windows/arm64"
-            os: "windows-latest"
-          - name: "pz-admin-darwin-universal"
-            platform: "darwin/universal"
-            os: "macos-latest"
-
-    runs-on: ${{ matrix.build.os }}
+  linux:
+    runs-on: ubuntu-20.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      # Checkout code
+      - uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      - name: Build wails
-        uses: The-Egg-Corp/wails-build-action@v1.4
-        id: build
+      # Install GoLang
+      - name: Set up Go
+        uses: actions/setup-go@v4
         with:
-          build-name: ${{ matrix.build.name }}
-          build-platform: ${{ matrix.build.platform }}
-          nsis: true
-          package: true
-          go-version: "1.23.4"
-          wails-version: "v2.9.2"
-          node-version: "22.11.0"
+          go-version: ^1.23
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      # Set up GoLang cache
+      - name: Go Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      # Install Wails build deps
+      - run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.0-dev
+      - run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
+      - name: Build
+        run: |
+          make server-linux
+          wails build --platform linux/amd64 -webview2 embed
+      - run: chmod +x build/bin/pz-admin
+      - name: 'Tar files'
+        run: cd build/bin/ && tar -cvf ../../linux-pz-admin.tar .
+      # uploads the job file, makes no release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Linux Desktop
+          path: linux-pz-admin.tar
+
+  macos:
+    runs-on: macos-latest
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # Install GoLang
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ^1.23
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      # Set up GoLang cache
+      - name: Go Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Caches/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - run: | 
+            go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
+            brew install mitchellh/gon/gon
+      - name: Build
+        run: |
+          make server-macos
+          wails build --platform darwin/amd64 -webview2 embed
+      - name: chmod +x exe
+        run: chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
+      - name: Zip .app
+        working-directory: ./build/bin
+        run: |
+           ditto -c -k --keepParent ./pz-admin.app ../../pz-admin.app.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macOS Universal Desktop
+          path: pz-admin.app.zip
+
+  windows:
+    runs-on: windows-2022
+    steps:
+      # Checkout code
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      # Install GoLang
+      - uses: actions/setup-go@v4
+        with:
+          go-version: ^1.23
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      # Set up GoLang cache
+      - name: Go Cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            %LocalAppData%\go-build
+            ~\go\pkg\mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: Eat the Choco
+        run: |
+          choco install zip -y
+      - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+      - name: Build
+        run: |
+          make server-windows
+          wails build --platform windows/amd64 -webview2 embed
+      - name: package
+        working-directory: ${{ github.workspace }}/build/bin
+        run: |
+          zip -r ${{ github.workspace }}/pz-admin-windows-amd64.zip *
+      # uploads the job file, makes no release
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Windows Desktop
+          if-no-files-found: error
+          path: |
+            ${{ github.workspace }}/pz-admin-windows-amd64.zip
