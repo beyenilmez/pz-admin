@@ -18,10 +18,10 @@ jobs:
         build:
           - name: "pz-admin-linux-amd64"
             platform: "linux/amd64"
-            os: "ubuntu-latest"
+            os: "ubuntu-22.04"
           - name: "pz-admin-linux-arm64"
             platform: "linux/arm64"
-            os: "ubuntu-latest"
+            os: "ubuntu-22.04"
           - name: "pz-admin-windows-amd64"
             platform: "windows/amd64"
             os: "windows-latest"
