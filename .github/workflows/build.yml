@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: 22.x
       # Install Wails build deps
-      - run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.0-dev
+      - run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.1-dev
       - run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
       - name: Build
         run: |
