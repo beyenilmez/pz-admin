@@ -24,30 +24,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      # Set up GoLang cache
-      - name: Go Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
       # Install Wails build deps
       - run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.0-dev
       - run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
       - name: Build
         run: |
-          wails build --platform linux/amd64 -webview2 embed
+          wails build --platform linux/amd64 -tags webkit2_41
       - run: chmod +x build/bin/pz-admin
-      - name: 'Tar files'
-        run: cd build/bin/ && tar -cvf ../../linux-pz-admin.tar .
       # uploads the job file, makes no release
       - uses: actions/upload-artifact@v4
         with:
           name: Linux Desktop
-          path: linux-pz-admin.tar
+          path: ./build/bin
 
   macos:
     runs-on: macos-latest
@@ -79,7 +67,7 @@ jobs:
             brew install mitchellh/gon/gon
       - name: Build
         run: |
-          wails build --platform darwin/amd64 -webview2 embed
+          wails build --platform darwin/universal
       - name: chmod +x exe
         run: chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
       - name: Zip .app
@@ -115,21 +103,13 @@ jobs:
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-go-
-      - name: Eat the Choco
-        run: |
-          choco install zip -y
       - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
       - name: Build
         run: |
-          wails build --platform windows/amd64 -webview2 embed
-      - name: package
-        working-directory: ${{ github.workspace }}/build/bin
-        run: |
-          zip -r ${{ github.workspace }}/pz-admin-windows-amd64.zip *
+          wails build --platform windows/amd64
       # uploads the job file, makes no release
       - uses: actions/upload-artifact@v4
         with:
           name: Windows Desktop
           if-no-files-found: error
-          path: |
-            ${{ github.workspace }}/pz-admin-windows-amd64.zip
+          path: ./build/bin
