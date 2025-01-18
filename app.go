@@ -206,7 +206,7 @@ func (a *App) GetVersion() string {
 func (a *App) SendNotification(notification Notification) {
 	runtime.LogInfo(a.ctx, "Sending notification")
 
-	if runtime.WindowIsNormal(a.ctx) || runtime.WindowIsMaximised(a.ctx) || runtime.WindowIsFullscreen(a.ctx) {
+	if a.GetOs() != "windows" || runtime.WindowIsNormal(a.ctx) || runtime.WindowIsMaximised(a.ctx) || runtime.WindowIsFullscreen(a.ctx) {
 		runtime.LogInfo(a.ctx, "Sending notification to toast")
 		runtime.EventsEmit(a.ctx, "toast", notification)
 	} else {

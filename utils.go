@@ -13,6 +13,8 @@ import (
 	"os"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+
+	r "runtime"
 )
 
 func writeJSON(path string, data interface{}) error {
@@ -131,5 +133,15 @@ func (a *App) CopyToClipboard(text string, sendNotification bool) {
 			Message: "Copied to clipboard",
 			Variant: "success",
 		})
+	}
+}
+
+func (a *App) GetOs() string {
+	if r.GOOS == "windows" {
+		return "windows"
+	} else if r.GOOS == "darwin" {
+		return "macos"
+	} else {
+		return "linux"
 	}
 }

@@ -405,6 +405,9 @@ func players_init() error {
 		}
 	} else {
 		err := readJSON(playersFilePath, &players)
+		if players == nil {
+			players = []Player{}
+		}
 		runtime.LogDebugf(app.ctx, "Players readed: %v", players)
 		runtime.EventsEmit(app.ctx, "update-players", players)
 		if err != nil {

@@ -20,9 +20,11 @@ import Tools from "./components/Tools";
 import { reloadTranslations } from "@/i18n";
 import locales from "@/locales.json";
 import i18next from "i18next";
+import { useOs } from "./contexts/os-provider";
 
 function App() {
   const { config, initialConfig } = useConfig();
+  const { os } = useOs();
   const { t } = useTranslation();
   const { setValue } = useStorage();
   const [tab, setTab] = useState("admin-panel");
@@ -42,10 +44,10 @@ function App() {
 
       document.documentElement.style.setProperty(
         "--opacity",
-        ((initialConfig.windowEffect === 1 ? 100 : config.opacity) / 100).toString()
+        ((initialConfig.windowEffect === 1 || os === "linux" ? 100 : config.opacity) / 100).toString()
       );
     }
-  }, [config?.windowScale, config?.opacity, initialConfig?.windowEffect]);
+  }, [config?.windowScale, config?.opacity, initialConfig?.windowEffect, os]);
 
   useEffect(() => {
     EventsOn("toast", (data: main.Notification) => {

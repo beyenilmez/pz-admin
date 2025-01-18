@@ -330,8 +330,31 @@ func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 }
 
 func (a *App) OpenFileInExplorer(path string) {
-	runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
+	os := a.GetOs()
+	if os == "windows" {
+		runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
 
-	cmd := exec.Command(`explorer`, `/select,`, path)
-	cmd.Run()
+		cmd := exec.Command(`explorer`, `/select,`, path)
+		cmd.Run()
+	} else if os == "darwin" {
+		runtime.LogInfo(a.ctx, "Opening file in finder: "+path)
+
+		cmd := exec.Command(`open`, `-R`, path)
+		cmd.Run()
+	} else if os == "linux" {
+		runtime.LogInfo(a.ctx, "Opening file in nautilus: "+path)
+
+		cmd := exec.Command(`nautilus`, path)
+		cmd.Run()
+
+		runtime.LogInfo(a.ctx, "Opening file in xdg-open: "+path)
+
+		cmd = exec.Command(`xdg-open`, path)
+		cmd.Run()
+
+		runtime.LogInfo(a.ctx, "Opening file in gnome-open: "+path)
+
+		cmd = exec.Command(`gnome-open`, path)
+		cmd.Run()
+	}
 }
