@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -331,18 +332,18 @@ func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 }
 
 func (a *App) OpenFileInExplorer(path string) {
-	os := a.GetOs()
-	if os == "windows" {
+	osName := a.GetOs()
+	if osName == "windows" {
 		runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
 
 		cmd := exec.Command(`explorer`, `/select,`, path)
 		cmd.Run()
-	} else if os == "darwin" {
+	} else if osName == "darwin" {
 		runtime.LogInfo(a.ctx, "Opening file in finder: "+path)
 
 		cmd := exec.Command(`open`, `-R`, path)
 		cmd.Run()
-	} else if os == "linux" {
+	} else if osName == "linux" {
 		runtime.LogInfo(a.ctx, "Opening file in with dbus: "+path)
 		cmd := exec.Command(
 			"dbus-send",
@@ -354,6 +355,7 @@ func (a *App) OpenFileInExplorer(path string) {
 			`string:""`,
 		)
 		cmd.Dir = "/"
+		cmd.Env = os.Environ()
 		err := cmd.Run()
 		if err != nil {
 			runtime.LogInfo(a.ctx, "Error running dbus-send: "+err.Error())
