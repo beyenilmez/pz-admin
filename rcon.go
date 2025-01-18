@@ -788,6 +788,9 @@ func (params *RCONCommand) execute() int {
 				app.SendNotification(Notification{
 					Title:   fmt.Sprintf(params.Notifications.AllSuccess, successCount),
 					Variant: "success",
+					Parameters: map[string]string{
+						"s": fmt.Sprintf("%d", total),
+					},
 				})
 			} else if successCount == 0 {
 				// All Fail (Multiple)
@@ -795,6 +798,9 @@ func (params *RCONCommand) execute() int {
 					Title:   fmt.Sprintf(params.Notifications.AllFail, total),
 					Message: lastErrRes,
 					Variant: "error",
+					Parameters: map[string]string{
+						"f": fmt.Sprintf("%d", total),
+					},
 				})
 			} else {
 				// Partial Success
@@ -802,6 +808,10 @@ func (params *RCONCommand) execute() int {
 					Title:   fmt.Sprintf(params.Notifications.Partial, successCount, total-successCount),
 					Message: lastErrRes,
 					Variant: "warning",
+					Parameters: map[string]string{
+						"s": fmt.Sprintf("%d", successCount),
+						"f": fmt.Sprintf("%d", total-successCount),
+					},
 				})
 			}
 		} else if len(names) == 1 {
@@ -810,6 +820,9 @@ func (params *RCONCommand) execute() int {
 				app.SendNotification(Notification{
 					Title:   fmt.Sprintf(params.Notifications.SingleSuccess, names[0]),
 					Variant: "success",
+					Parameters: map[string]string{
+						"name": names[0],
+					},
 				})
 			} else {
 				// Single Fail
@@ -817,6 +830,9 @@ func (params *RCONCommand) execute() int {
 					Title:   fmt.Sprintf(params.Notifications.SingleFail, names[0]),
 					Message: lastErrRes,
 					Variant: "error",
+					Parameters: map[string]string{
+						"name": names[0],
+					},
 				})
 			}
 		} else if names == nil {
