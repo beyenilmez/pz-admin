@@ -13,6 +13,7 @@ import { Input } from "../ui/input";
 import { useEffect, useState } from "react";
 import { AddXp } from "@/wailsjs/go/main/App";
 import { useTranslation } from "react-i18next";
+import { useConfig } from "@/contexts/config-provider";
 
 const perks_default = [
   {
@@ -52,6 +53,7 @@ interface AddXpDialogProps {
 }
 
 export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
+  const { config } = useConfig();
   const { t } = useTranslation();
   const [count, setCount] = useState("");
   const [selectedPerks, setSelectedPerks] = useState<string[]>([]);
@@ -93,6 +95,16 @@ export function AddXpDialog({ isOpen, onClose, names }: AddXpDialogProps) {
     setCount("");
     setSelectedRegularXp([]);
     setSelectedPassiveXp([]);
+
+    if (config?.windowScale! >= 140) {
+      if (isOpen) {
+        document.documentElement.style.fontSize = 130 * (16 / 100) + "px";
+      } else {
+        if (config?.windowScale) {
+          document.documentElement.style.fontSize = config.windowScale * (16 / 100) + "px";
+        }
+      }
+    }
   }, [isOpen]);
 
   return (

@@ -82,7 +82,7 @@ export function Combobox(props: ComboboxProps) {
           size={props.hideDisplayText ? "icon" : "default"}
           role="combobox"
           aria-expanded={open}
-          className={`justify-between ${props.hideDisplayText ? "w-12 flex justify-center items-center" : "w-[200px]"}`}
+          className={`justify-between ${props.hideDisplayText ? "w-12 flex justify-center items-center" : "w-[12.5rem]"}`}
         >
           {!props.hideDisplayText && <span className="truncate">{displayValue()}</span>}
           {props.icon ? (
@@ -92,7 +92,7 @@ export function Combobox(props: ComboboxProps) {
           )}
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="p-0 w-[200px]">
+      <PopoverContent className="p-0 w-[12.5rem]">
         <Command>
           {!props.disableSearch && (
             <CommandInput

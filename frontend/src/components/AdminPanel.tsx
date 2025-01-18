@@ -216,7 +216,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className={`flex w-full ${
-            config?.useSystemTitleBar ? "h-[calc(100vh-10rem)]" : "h-[calc(100vh-12rem)]"
+            config?.useSystemTitleBar ? "h-[calc(100vh-4rem)]" : "h-[calc(100vh-6rem)]"
           } items-center justify-center ${isConnecting ? "pointer-events-none blur-[1px] select-none opacity-80" : ""}`}
           autoComplete="off"
         >

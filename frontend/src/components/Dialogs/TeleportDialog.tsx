@@ -65,7 +65,7 @@ export function TeleportDialog({ isOpen, onClose, names }: TeleportDialogProps) 
             <p>{t("admin_panel.tabs.players.dialogs.teleport.players", { players: names.join(", ") })}</p>
           </DialogDescription>
         </DialogHeader>
-        <Tabs value={tab} className="w-[400px]">
+        <Tabs value={tab}>
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="coordinates" onClick={() => setTab("coordinates")}>
               {t("admin_panel.tabs.players.dialogs.teleport.coordinates_tab")}
