@@ -10,11 +10,6 @@ import (
 
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
-
-	"github.com/daifiyum/wintray"
-	W "github.com/daifiyum/wintray/windows"
-
-	r "runtime"
 )
 
 // App struct
@@ -24,7 +19,6 @@ type App struct {
 
 var appContext context.Context
 var app *App
-var w *wintray.App
 
 // NewApp creates a new App application struct
 func NewApp() *App {
@@ -76,17 +70,7 @@ func (a *App) startup(ctx context.Context) {
 	}
 
 	// Initiate notifications for Windows
-	if a.GetOs() == "windows" {
-		// Register AUMID in the registry
-		W.RegisterAUMID("pz-admin", "PZ Admin", appIconPath)
-		// Bind the current process to the registered AUMID
-		W.SetAUMID("pz-admin")
-
-		r.LockOSThread()
-		defer r.UnlockOSThread()
-		w = wintray.New("pz-admin", appIconPath)
-		w.Run()
-	}
+	notification_init()
 }
 
 // domReady is called after front-end resources have been loaded
@@ -233,7 +217,7 @@ func (a *App) SendNotification(notification Notification) {
 }
 
 func (a *App) SendWindowsNotification(notification Notification) {
-	err := w.ShowTrayNotification(notification.Title, notification.Message)
+	err := SendSystemNotification(notification)
 
 	if err != nil {
 		runtime.LogError(a.ctx, "Error sending notification: "+err.Error())
