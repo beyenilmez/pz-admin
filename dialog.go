@@ -342,19 +342,32 @@ func (a *App) OpenFileInExplorer(path string) {
 		cmd := exec.Command(`open`, `-R`, path)
 		cmd.Run()
 	} else if os == "linux" {
-		runtime.LogInfo(a.ctx, "Opening file in nautilus: "+path)
+		runtime.LogInfo(a.ctx, "Opening file in with dbus: "+path)
+		cmd := exec.Command(`dbus-send --print-reply --dest=org.freedesktop.FileManager1 /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowItems`, `array:string:"file:////`+path+`"`, `string:""`)
+		err := cmd.Run()
+		if err == nil {
+			return
+		}
 
-		cmd := exec.Command(`nautilus`, path)
-		cmd.Run()
+		runtime.LogInfo(a.ctx, "Opening file in nautilus: "+path)
+		cmd = exec.Command(`nautilus`, path)
+		err = cmd.Run()
+		if err == nil {
+			return
+		}
 
 		runtime.LogInfo(a.ctx, "Opening file in xdg-open: "+path)
-
 		cmd = exec.Command(`xdg-open`, path)
-		cmd.Run()
+		err = cmd.Run()
+		if err == nil {
+			return
+		}
 
 		runtime.LogInfo(a.ctx, "Opening file in gnome-open: "+path)
-
 		cmd = exec.Command(`gnome-open`, path)
-		cmd.Run()
+		err = cmd.Run()
+		if err == nil {
+			return
+		}
 	}
 }
