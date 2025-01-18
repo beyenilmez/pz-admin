@@ -343,7 +343,7 @@ func (a *App) OpenFileInExplorer(path string) {
 		cmd.Run()
 	} else if os == "linux" {
 		runtime.LogInfo(a.ctx, "Opening file in with dbus: "+path)
-		cmd := exec.Command(`dbus-send --print-reply --dest=org.freedesktop.FileManager1 /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowItems`, `array:string:"file:////`+path+`"`, `string:""`)
+		cmd := exec.Command(`dbus-send --print-reply --dest=org.freedesktop.FileManager1 /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowItems`, `array:string:"file://`+path+`"`, `string:""`)
 		err := cmd.Run()
 		if err == nil {
 			return
