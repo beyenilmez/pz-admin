@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os/exec"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -343,10 +344,19 @@ func (a *App) OpenFileInExplorer(path string) {
 		cmd.Run()
 	} else if os == "linux" {
 		runtime.LogInfo(a.ctx, "Opening file in with dbus: "+path)
-		cmd := exec.Command(`dbus-send --print-reply --dest=org.freedesktop.FileManager1 /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowItems`, `array:string:"file://`+path+`"`, `string:""`)
+		cmd := exec.Command(
+			"dbus-send",
+			"--print-reply",
+			"--dest=org.freedesktop.FileManager1",
+			"/org/freedesktop/FileManager1",
+			"org.freedesktop.FileManager1.ShowItems",
+			fmt.Sprintf(`array:string:"file://%s"`, path),
+			`string:""`,
+		)
+		cmd.Dir = "/"
 		err := cmd.Run()
-		if err == nil {
-			return
+		if err != nil {
+			runtime.LogInfo(a.ctx, "Error running dbus-send: "+err.Error())
 		}
 
 		runtime.LogInfo(a.ctx, "Opening file in nautilus: "+path)
