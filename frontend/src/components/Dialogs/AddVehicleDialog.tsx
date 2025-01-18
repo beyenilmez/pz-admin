@@ -311,9 +311,9 @@ const VehicleCard = ({ vehicle, onClick }: { vehicle: Vehicle; onClick: () => vo
         {vehicle.images ? (
           <>
             {vehicle.images.length > 1 ? (
-              <ItemImage images={vehicle.images} name={vehicle.name} className="w-full h-full object-cover" />
+              <ItemImage images={vehicle.images} name={vehicle.name} className="w-full aspect-[3/2] object-cover" />
             ) : (
-              <img src={vehicle.images?.[0]} alt={vehicle.name} className="w-full h-full object-cover" />
+              <img src={vehicle.images?.[0]} alt={vehicle.name} className="w-full aspect-[3/2] object-cover" />
             )}
           </>
         ) : (

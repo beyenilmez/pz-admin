@@ -92,7 +92,7 @@ async function scrapeItems() {
         const imageFileName = `${item.itemId}_${index}.png`;
         const imageFilePath = path.join(imagesPath, imageFileName);
         await downloadImage(imageUrl, imageFilePath);
-        downloadedImages.push(`items/${imageFileName}`);
+        downloadedImages.push(`/items/${imageFileName}`);
       }
       item.images = downloadedImages; // Replace URLs with local paths
       categoryItems.push(item);
