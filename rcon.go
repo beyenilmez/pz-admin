@@ -75,7 +75,7 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	if err != nil {
 		runtime.LogError(app.ctx, "Error connecting to RCON: "+err.Error())
 		app.SendNotification(Notification{
-			Title:   "RCON connection failed",
+			Title:   "rcon.rcon_connection_failed",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -104,7 +104,7 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	}
 
 	app.SendNotification(Notification{
-		Title:   "RCON connection established",
+		Title:   "rcon.rcon_connection_established",
 		Variant: "success",
 	})
 	return true
@@ -333,7 +333,7 @@ func (app *App) SaveCredentials(credentials Credentials) bool {
 	credentials.Password, err = Encrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
 	if err != nil {
 		app.SendNotification(Notification{
-			Title:   "Error encrypting credentials",
+			Title:   "rcon.error_encrypting_credentials",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -344,7 +344,7 @@ func (app *App) SaveCredentials(credentials Credentials) bool {
 	err = writeJSON(credentialsPath, credentials)
 	if err != nil {
 		app.SendNotification(Notification{
-			Title:   "Error saving credentials",
+			Title:   "rcon.error_saving_credentials",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -359,6 +359,11 @@ func (app *App) LoadCredentials() Credentials {
 	var credentials Credentials
 	err := readJSON(credentialsPath, &credentials)
 	if err != nil {
+		app.SendNotification(Notification{
+			Title:   "rcon.error_loading_credentials",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		runtime.LogError(app.ctx, "Error loading credentials: "+err.Error())
 		return Credentials{}
 	}
@@ -366,7 +371,7 @@ func (app *App) LoadCredentials() Credentials {
 	credentials.Password, err = Decrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
 	if err != nil {
 		app.SendNotification(Notification{
-			Title:   "Error decrypting credentials",
+			Title:   "rcon.error_decrypting_credentials",
 			Message: err.Error(),
 			Variant: "error",
 		})

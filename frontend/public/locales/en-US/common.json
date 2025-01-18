@@ -26,6 +26,15 @@
     "settings": "Settings"
   },
 
+  "rcon": {
+    "rcon_connection_failed": "RCON connection failed",
+    "rcon_connection_established": "RCON connection established",
+    "error_encrypting_credentials": "Error encrypting credentials",
+    "error_decrypting_credentials": "Error decrypting credentials",
+    "error_saving_credentials": "Error saving credentials",
+    "error_loading_credentials": "Error loading credentials"
+  },
+
   "settings": {
     "restart_the_app_for_changes_to_take_effect": "Restart the app for changes to take effect.",
     "are_you_sure_you_want_to_import_this_config": "Are you sure you want to import this config?",

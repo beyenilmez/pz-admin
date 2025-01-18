@@ -26,6 +26,15 @@
     "settings": "Ayarlar"
   },
 
+  "rcon": {
+    "rcon_connection_failed": "RCON bağlantısı başarısız oldu",
+    "rcon_connection_established": "RCON bağlantısı kuruldu",
+    "error_encrypting_credentials": "Kimlik bilgilerini şifrerken bir hata oluştu",
+    "error_decrypting_credentials": "Kimlik bilgilerinin şifresini çözerken bir hata oluştu",
+    "error_saving_credentials": "Kimlik bilgilerinini kaydederken bir hata oluştu",
+    "error_loading_credentials": "Kimlik bilgilerini yüklerken bir hata oluştu"
+  },
+
   "settings": {
     "restart_the_app_for_changes_to_take_effect": "Değişikliklerin etkili olması için uygulamayı yeniden başlatın.",
     "are_you_sure_you_want_to_import_this_config": "Bu ayarları yüklemek istediğinize emin misiniz?",

@@ -52,7 +52,7 @@ function App() {
   useEffect(() => {
     EventsOn("toast", (data: main.Notification) => {
       const props = {
-        description: t(data.message),
+        description: t(data.message, data.parameters),
         action: data.path
           ? {
               label: data.path.startsWith("__") ? t("show") : t("show_in_explorer"),
@@ -62,30 +62,30 @@ function App() {
       };
       switch (data.variant) {
         case "message":
-          toast.message(t(data.title), props);
+          toast.message(t(data.title, data.parameters), props);
           break;
         case "success":
-          toast.success(t(data.title), props);
+          toast.success(t(data.title, data.parameters), props);
           break;
         case "info":
-          toast.info(t(data.title), props);
+          toast.info(t(data.title, data.parameters), props);
           break;
         case "warning":
-          toast.warning(t(data.title), props);
+          toast.warning(t(data.title, data.parameters), props);
           break;
         case "error":
-          toast.error(t(data.title), props);
+          toast.error(t(data.title, data.parameters), props);
           break;
         default:
-          toast(t(data.title), props);
+          toast(t(data.title, data.parameters), props);
           break;
       }
     });
 
     EventsOn("sendNotification", (data: main.Notification) => {
       SendWindowsNotification({
-        title: t(data.title),
-        message: t(data.message),
+        title: t(data.title, data.parameters),
+        message: t(data.message, data.parameters),
         path: data.path,
         variant: data.variant,
       });

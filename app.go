@@ -27,10 +27,11 @@ func NewApp() *App {
 }
 
 type Notification struct {
-	Title   string `json:"title"`
-	Message string `json:"message"`
-	Path    string `json:"path"`
-	Variant string `json:"variant"`
+	Title      string            `json:"title"`
+	Message    string            `json:"message"`
+	Path       string            `json:"path"`
+	Variant    string            `json:"variant"`
+	Parameters map[string]string `json:"parameters,omitempty"`
 }
 
 // startup is called at application startup
