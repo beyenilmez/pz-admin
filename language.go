@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "embed"
+	"strings"
 
 	"encoding/json"
 
@@ -44,6 +45,10 @@ func set_system_language() error {
 func contains(haystack []string, needle string) bool {
 	for _, v := range haystack {
 		if v == needle {
+			return true
+		}
+		splitted := strings.Split(v, "-")
+		if len(splitted) == 2 && splitted[0] == needle {
 			return true
 		}
 	}
