@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"os/exec"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -332,33 +331,23 @@ func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 }
 
 func (a *App) OpenFileInExplorer(path string) {
-	osName := a.GetOs()
-	if osName == "windows" {
+	os := a.GetOs()
+	if os == "windows" {
 		runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
 
 		cmd := exec.Command(`explorer`, `/select,`, path)
 		cmd.Run()
-	} else if osName == "darwin" {
+	} else if os == "darwin" {
 		runtime.LogInfo(a.ctx, "Opening file in finder: "+path)
 
 		cmd := exec.Command(`open`, `-R`, path)
 		cmd.Run()
-	} else if osName == "linux" {
-		runtime.LogInfo(a.ctx, "Opening file in with dbus: "+path)
-		cmd := exec.Command(
-			"dbus-send",
-			"--print-reply",
-			"--dest=org.freedesktop.FileManager1",
-			"/org/freedesktop/FileManager1",
-			"org.freedesktop.FileManager1.ShowItems",
-			fmt.Sprintf(`array:string:"file://%s"`, path),
-			`string:""`,
-		)
-		cmd.Dir = "/"
-		cmd.Env = os.Environ()
+	} else if os == "linux" {
+		runtime.LogInfo(a.ctx, "Opening file with dbus: "+path)
+		cmd := exec.Command("bash", "-c", fmt.Sprintf(`dbus-send --print-reply --dest=org.freedesktop.FileManager1 /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowItems array:string:"file://%s" string:""`, path))
 		err := cmd.Run()
-		if err != nil {
-			runtime.LogInfo(a.ctx, "Error running dbus-send: "+err.Error())
+		if err == nil {
+			return
 		}
 
 		runtime.LogInfo(a.ctx, "Opening file in nautilus: "+path)
@@ -378,8 +367,6 @@ func (a *App) OpenFileInExplorer(path string) {
 		runtime.LogInfo(a.ctx, "Opening file in gnome-open: "+path)
 		cmd = exec.Command(`gnome-open`, path)
 		err = cmd.Run()
-		if err == nil {
-			return
-		}
+
 	}
 }
