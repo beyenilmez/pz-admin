@@ -259,8 +259,8 @@ export function SendMessageDialog({
 
   const dialogContent = (
     <div className="space-y-1">
-      <Label htmlFor="server-message" className="text-right">
-        Message
+      <Label htmlFor="server-message">
+        {t("tools.message_editor.message")}
       </Label>
       {renderTextareaWithColors()}
       <div className="space-y-0.5">
