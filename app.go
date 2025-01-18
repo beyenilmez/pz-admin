@@ -8,9 +8,13 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/gen2brain/beeep"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+
+	"github.com/daifiyum/wintray"
+	W "github.com/daifiyum/wintray/windows"
+
+	r "runtime"
 )
 
 // App struct
@@ -20,6 +24,7 @@ type App struct {
 
 var appContext context.Context
 var app *App
+var w *wintray.App
 
 // NewApp creates a new App application struct
 func NewApp() *App {
@@ -68,6 +73,19 @@ func (a *App) startup(ctx context.Context) {
 	// Check if configPath exists
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		onFirstRun()
+	}
+
+	// Initiate notifications for Windows
+	if a.GetOs() == "windows" {
+		// Register AUMID in the registry
+		W.RegisterAUMID("pz-admin", "PZ Admin", appIconPath)
+		// Bind the current process to the registered AUMID
+		W.SetAUMID("pz-admin")
+
+		r.LockOSThread()
+		defer r.UnlockOSThread()
+		w = wintray.New("pz-admin", appIconPath)
+		w.Run()
 	}
 }
 
@@ -215,7 +233,8 @@ func (a *App) SendNotification(notification Notification) {
 }
 
 func (a *App) SendWindowsNotification(notification Notification) {
-	err := beeep.Notify(notification.Title, notification.Message, appIconPath)
+	err := w.ShowTrayNotification(notification.Title, notification.Message)
+
 	if err != nil {
 		runtime.LogError(a.ctx, "Error sending notification: "+err.Error())
 	}

@@ -22,6 +22,9 @@ var assets embed.FS
 //go:embed build/appicon.png
 var appIcon []byte
 
+//go:embed build/windows/icon.ico
+var appIconIco []byte
+
 //go:embed wails.json
 var wailsJSON []byte
 
