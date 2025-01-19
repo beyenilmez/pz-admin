@@ -6,110 +6,92 @@ permissions:
 on:
   push:
     branches:
-      - 'actions-test'
+      - "actions-test"
 
 jobs:
-  linux:
-    runs-on: ubuntu-latest
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            platform: linux/amd64
+            name: "pz-admin-linux-amd64"
+            args: "-tags webkit2_41"
+            deps: "sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.1-dev"
+            post-build: "chmod +x build/bin/pz-admin-linux-amd64"
+            artifact: "./build/bin"
+            artifact-name: "Linux Desktop (amd64)"
+          - os: ubuntu-latest
+            platform: linux/arm64
+            name: "pz-admin-linux-arm64"
+            args: "-tags webkit2_41"
+            deps: "sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.1-dev"
+            post-build: "chmod +x build/bin/pz-admin-linux-arm64"
+            artifact: "./build/bin"
+            artifact-name: "Linux Desktop (arm64)"
+          - os: macos-latest
+            platform: darwin/universal
+            deps: |
+              brew install mitchellh/gon/gon
+            post-build: |
+              chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
+              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin.app.zip
+            artifact: "./build/bin/pz-admin.app.zip"
+            artifact-name: "macOS Universal Desktop"
+          - os: windows-latest
+            platform: windows/amd64
+            name: "pz-admin-windows-amd64.exe"
+            deps: ""
+            post-build: ""
+            artifact: "./build/bin"
+            artifact-name: "Windows Desktop (amd64)"
+          - os: windows-latest
+            platform: windows/arm64
+            name: "pz-admin-windows-arm64.exe"
+            deps: ""
+            post-build: ""
+            artifact: "./build/bin"
+            artifact-name: "Windows Desktop (arm64)"
+    runs-on: ${{ matrix.os }}
+
     steps:
       # Checkout code
       - uses: actions/checkout@v4
         with:
           submodules: recursive
+
       # Install GoLang
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: ^1.23
+
+      # Install Node.js
       - uses: actions/setup-node@v4
         with:
           node-version: 22.x
-      # Install Wails build deps
-      - run: sudo apt-get update && sudo apt-get install libgtk-3-0 libwebkit2gtk-4.1-dev
+
+      # Install platform-specific dependencies
+      - name: Install dependencies
+        if: matrix.deps != ''
+        run: ${{ matrix.deps }}
+
+      # Install Wails CLI
       - run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
-      - name: Build
-        run: |
-          wails build --platform linux/amd64 -tags webkit2_41
-      - run: chmod +x build/bin/pz-admin
-      # uploads the job file, makes no release
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Linux Desktop
-          path: ./build/bin
 
-  macos:
-    runs-on: macos-latest
-    steps:
-      # Checkout code
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      # Install GoLang
-      - name: Set up Go
-        uses: actions/setup-go@v4
-        with:
-          go-version: ^1.23
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-      # Set up GoLang cache
-      - name: Go Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/Library/Caches/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - run: | 
-            go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
-            brew install mitchellh/gon/gon
+      # Build the application
       - name: Build
         run: |
-          wails build --platform darwin/universal
-      - name: chmod +x exe
-        run: chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
-      - name: Zip .app
-        working-directory: ./build/bin
-        run: |
-           ditto -c -k --keepParent ./pz-admin.app ../../pz-admin.app.zip
-      - uses: actions/upload-artifact@v4
-        with:
-          name: macOS Universal Desktop
-          path: pz-admin.app.zip
+          wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
 
-  windows:
-    runs-on: windows-2022
-    steps:
-      # Checkout code
-      - uses: actions/checkout@v4
-        with:
-          submodules: recursive
-      # Install GoLang
-      - uses: actions/setup-go@v4
-        with:
-          go-version: ^1.23
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22.x
-      # Set up GoLang cache
-      - name: Go Cache
-        uses: actions/cache@v4
-        with:
-          path: |
-            %LocalAppData%\go-build
-            ~\go\pkg\mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-      - run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
-      - name: Build
-        run: |
-          wails build --platform windows/amd64
-      # uploads the job file, makes no release
+      # Run post-build commands (if any)
+      - name: Post-build
+        if: matrix.post-build != ''
+        run: ${{ matrix.post-build }}
+
+      # Upload artifacts
       - uses: actions/upload-artifact@v4
         with:
-          name: Windows Desktop
-          if-no-files-found: error
-          path: ./build/bin
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact }}
