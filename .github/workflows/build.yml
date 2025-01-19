@@ -32,7 +32,7 @@ jobs:
             artifact-name: "Linux Desktop (arm64)"
           - os: macos-latest
             platform: darwin/universal
-            name: "pz-admin.app"
+            name: "pz-admin"
             args: ""
             deps: |
               brew install mitchellh/gon/gon
