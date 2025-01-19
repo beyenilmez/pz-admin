@@ -13,6 +13,8 @@ import (
 	"os"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+
+	r "runtime"
 )
 
 func writeJSON(path string, data interface{}) error {
@@ -119,7 +121,7 @@ func (a *App) CopyToClipboard(text string, sendNotification bool) {
 		runtime.LogErrorf(appContext, "Error copying to clipboard: %s", err.Error())
 		if sendNotification {
 			a.SendNotification(Notification{
-				Message: "Error copying to clipboard",
+				Message: "notifications.copy_to_clipboard_failed",
 				Variant: "error",
 			})
 		}
@@ -128,8 +130,18 @@ func (a *App) CopyToClipboard(text string, sendNotification bool) {
 
 	if sendNotification {
 		a.SendNotification(Notification{
-			Message: "Copied to clipboard",
+			Message: "notifications.copy_to_clipboard",
 			Variant: "success",
 		})
+	}
+}
+
+func (a *App) GetOs() string {
+	if r.GOOS == "windows" {
+		return "windows"
+	} else if r.GOOS == "darwin" {
+		return "macos"
+	} else {
+		return "linux"
 	}
 }

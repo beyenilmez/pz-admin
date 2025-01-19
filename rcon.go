@@ -75,7 +75,7 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	if err != nil {
 		runtime.LogError(app.ctx, "Error connecting to RCON: "+err.Error())
 		app.SendNotification(Notification{
-			Title:   "RCON connection failed",
+			Title:   "rcon.rcon_connection_failed",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -104,7 +104,7 @@ func (app *App) ConnectRcon(credentials Credentials) bool {
 	}
 
 	app.SendNotification(Notification{
-		Title:   "RCON connection established",
+		Title:   "rcon.rcon_connection_established",
 		Variant: "success",
 	})
 	return true
@@ -333,7 +333,7 @@ func (app *App) SaveCredentials(credentials Credentials) bool {
 	credentials.Password, err = Encrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
 	if err != nil {
 		app.SendNotification(Notification{
-			Title:   "Error encrypting credentials",
+			Title:   "rcon.error_encrypting_credentials",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -344,7 +344,7 @@ func (app *App) SaveCredentials(credentials Credentials) bool {
 	err = writeJSON(credentialsPath, credentials)
 	if err != nil {
 		app.SendNotification(Notification{
-			Title:   "Error saving credentials",
+			Title:   "rcon.error_saving_credentials",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -359,6 +359,11 @@ func (app *App) LoadCredentials() Credentials {
 	var credentials Credentials
 	err := readJSON(credentialsPath, &credentials)
 	if err != nil {
+		app.SendNotification(Notification{
+			Title:   "rcon.error_loading_credentials",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		runtime.LogError(app.ctx, "Error loading credentials: "+err.Error())
 		return Credentials{}
 	}
@@ -366,7 +371,7 @@ func (app *App) LoadCredentials() Credentials {
 	credentials.Password, err = Decrypt(credentials.Password, "6f6c11c2-1dc8-417d-a68e-0e487629")
 	if err != nil {
 		app.SendNotification(Notification{
-			Title:   "Error decrypting credentials",
+			Title:   "rcon.error_decrypting_credentials",
 			Message: err.Error(),
 			Variant: "error",
 		})
@@ -405,6 +410,9 @@ func players_init() error {
 		}
 	} else {
 		err := readJSON(playersFilePath, &players)
+		if players == nil {
+			players = []Player{}
+		}
 		runtime.LogDebugf(app.ctx, "Players readed: %v", players)
 		runtime.EventsEmit(app.ctx, "update-players", players)
 		if err != nil {
@@ -512,9 +520,12 @@ func (app *App) AddPlayer(name string) {
 			connMutex.Unlock()
 			runtime.LogWarningf(app.ctx, "Player %s is already in the list", name)
 			app.SendNotification(Notification{
-				Title:   "Can't add player",
-				Message: "Player " + name + " is already in the list",
+				Title:   "rcon.addPlayer.cant_add_player",
+				Message: "rcon.addPlayer.player_already_in_list",
 				Variant: "warning",
+				Parameters: map[string]string{
+					"name": name,
+				},
 			})
 			return
 		}
@@ -575,8 +586,8 @@ func (app *App) AddPlayerToWhitelist(username string, password string) {
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully added player",
-			SingleFail:    "Failed to add player",
+			SingleSuccess: "rcon.addPlayerToWhitelist.single_success",
+			SingleFail:    "rcon.addPlayerToWhitelist.single_fail",
 		},
 	}
 
@@ -608,9 +619,12 @@ func (app *App) RemovePlayersFromWhitelist(names []string, removeFromList bool) 
 				if !success {
 					runtime.LogWarningf(app.ctx, "Player %s not found in the list", name)
 					app.SendNotification(Notification{
-						Title:   "Can't remove player",
-						Message: "Player " + name + " not found in the list",
+						Title:   "rcon.removePlayersFromWhitelist.cant_remove_player",
+						Message: "rcon.removePlayersFromWhitelist.player_not_found_in_list",
 						Variant: "warning",
+						Parameters: map[string]string{
+							"name": name,
+						},
 					})
 				}
 			} else {
@@ -625,11 +639,11 @@ func (app *App) RemovePlayersFromWhitelist(names []string, removeFromList bool) 
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully removed player %s",
-			SingleFail:    "Failed to remove player %s",
-			Partial:       "Successfully removed %d players, failed to remove %d players",
-			AllSuccess:    "Successfully removed %d players",
-			AllFail:       "Failed to remove %d players",
+			SingleSuccess: "rcon.removePlayersFromWhitelist.single_success",
+			SingleFail:    "rcon.removePlayersFromWhitelist.single_fail",
+			Partial:       "rcon.removePlayersFromWhitelist.partial",
+			AllSuccess:    "rcon.removePlayersFromWhitelist.all_success",
+			AllFail:       "rcon.removePlayersFromWhitelist.all_fail",
 		},
 	}
 
@@ -778,37 +792,53 @@ func (params *RCONCommand) execute() int {
 			if successCount == total {
 				// All Success (Multiple)
 				app.SendNotification(Notification{
-					Title:   fmt.Sprintf(params.Notifications.AllSuccess, successCount),
+					Title:   params.Notifications.AllSuccess,
 					Variant: "success",
+					Parameters: map[string]string{
+						"s": fmt.Sprintf("%d", total),
+					},
 				})
 			} else if successCount == 0 {
 				// All Fail (Multiple)
 				app.SendNotification(Notification{
-					Title:   fmt.Sprintf(params.Notifications.AllFail, total),
+					Title:   params.Notifications.AllFail,
 					Message: lastErrRes,
 					Variant: "error",
+					Parameters: map[string]string{
+						"f": fmt.Sprintf("%d", total),
+					},
 				})
 			} else {
 				// Partial Success
 				app.SendNotification(Notification{
-					Title:   fmt.Sprintf(params.Notifications.Partial, successCount, total-successCount),
+					Title:   params.Notifications.Partial,
 					Message: lastErrRes,
 					Variant: "warning",
+					Parameters: map[string]string{
+						"s": fmt.Sprintf("%d", successCount),
+						"f": fmt.Sprintf("%d", total-successCount),
+					},
 				})
 			}
 		} else if len(names) == 1 {
 			if successCount == 1 {
 				// Single Success
 				app.SendNotification(Notification{
-					Title:   fmt.Sprintf(params.Notifications.SingleSuccess, names[0]),
+					Title:   params.Notifications.SingleSuccess,
 					Variant: "success",
+					Parameters: map[string]string{
+						"name": names[0],
+					},
 				})
 			} else {
 				// Single Fail
 				app.SendNotification(Notification{
-					Title:   fmt.Sprintf(params.Notifications.SingleFail, names[0]),
+					Title:   params.Notifications.SingleFail,
 					Message: lastErrRes,
 					Variant: "error",
+					Parameters: map[string]string{
+						"name": names[0],
+					},
 				})
 			}
 		} else if names == nil {
@@ -883,11 +913,11 @@ func (app *App) BanUsers(names []string, reason string, banIp bool) {
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Banned %d users",
-			AllFail:       "Failed to ban %d users",
-			Partial:       "Banned %d users, failed to ban %d users",
-			SingleSuccess: "Successfully banned %s",
-			SingleFail:    "Failed to ban %s",
+			AllSuccess:    "rcon.banUsers.all_success",
+			AllFail:       "rcon.banUsers.all_fail",
+			Partial:       "rcon.banUsers.partial",
+			SingleSuccess: "rcon.banUsers.single_success",
+			SingleFail:    "rcon.banUsers.single_fail",
 		},
 	}
 
@@ -917,11 +947,11 @@ func (app *App) UnbanUsers(names []string) {
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Unbanned %d users",
-			AllFail:       "Failed to unban %d users",
-			Partial:       "Unbanned %d users, failed to unban %d users",
-			SingleSuccess: "Successfully unbanned %s",
-			SingleFail:    "Failed to unban %s",
+			AllSuccess:    "rcon.unbanUsers.all_success",
+			AllFail:       "rcon.unbanUsers.all_fail",
+			Partial:       "rcon.unbanUsers.partial",
+			SingleSuccess: "rcon.unbanUsers.single_success",
+			SingleFail:    "rcon.unbanUsers.single_fail",
 		},
 	}
 
@@ -956,11 +986,11 @@ func (app *App) KickUsers(names []string, reason string) {
 			return strings.Contains(response, " kicked.")
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Kicked %d users",
-			AllFail:       "Failed to kick %d users",
-			Partial:       "Kicked %d users, failed to kick %d users",
-			SingleSuccess: "Successfully kicked %s",
-			SingleFail:    "Failed to kick %s",
+			AllSuccess:    "rcon.kickUsers.all_success",
+			AllFail:       "rcon.kickUsers.all_fail",
+			Partial:       "rcon.kickUsers.partial",
+			SingleSuccess: "rcon.kickUsers.single_success",
+			SingleFail:    "rcon.kickUsers.single_fail",
 		},
 	}
 
@@ -1005,11 +1035,11 @@ func (app *App) GodMode(names []string, value bool) {
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Set godmode for %d users",
-			AllFail:       "Failed to set godmode for %d users",
-			Partial:       "Set godmode for %d users, failed to set godmode for %d users",
-			SingleSuccess: "Successfully set godmode for %s",
-			SingleFail:    "Failed to set godmode for %s",
+			AllSuccess:    "rcon.godMode.all_success",
+			AllFail:       "rcon.godMode.all_fail",
+			Partial:       "rcon.godMode.partial",
+			SingleSuccess: "rcon.godMode.single_success",
+			SingleFail:    "rcon.godMode.single_fail",
 		},
 	}
 
@@ -1036,11 +1066,11 @@ func (app *App) TeleportToCoordinates(names []string, coordinates Coordinates) {
 			return response == fmt.Sprintf("Can't find player %s", name)
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Teleported %d users",
-			AllFail:       "Failed to teleport %d users",
-			Partial:       "Teleported %d users, failed to teleport %d users",
-			SingleSuccess: "Successfully teleported %s",
-			SingleFail:    "Failed to teleport %s",
+			AllSuccess:    "rcon.teleport.all_success",
+			AllFail:       "rcon.teleport.all_fail",
+			Partial:       "rcon.teleport.partial",
+			SingleSuccess: "rcon.teleport.single_success",
+			SingleFail:    "rcon.teleport.single_fail",
 		},
 	}
 
@@ -1067,11 +1097,11 @@ func (app *App) TeleportToUser(names []string, targetUser string) {
 			return response == fmt.Sprintf("Can't find player %s", name)
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Teleported %d users",
-			AllFail:       "Failed to teleport %d users",
-			Partial:       "Teleported %d users, failed to teleport %d users",
-			SingleSuccess: "Successfully teleported %s",
-			SingleFail:    "Failed to teleport %s",
+			AllSuccess:    "rcon.teleport.all_success",
+			AllFail:       "rcon.teleport.all_fail",
+			Partial:       "rcon.teleport.partial",
+			SingleSuccess: "rcon.teleport.single_success",
+			SingleFail:    "rcon.teleport.single_fail",
 		},
 	}
 
@@ -1114,11 +1144,11 @@ func (app *App) SetAccessLevel(names []string, accessLevel string) {
 		},
 		EmitUpdatePlayers: true,
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Set access level for %d users",
-			AllFail:       "Failed to set access level for %d users",
-			Partial:       "Set access level for %d users, failed to set access level for %d users",
-			SingleSuccess: "Successfully set access level for %s",
-			SingleFail:    "Failed to set access level for %s",
+			AllSuccess:    "rcon.setAccessLevel.all_success",
+			AllFail:       "rcon.setAccessLevel.all_fail",
+			Partial:       "rcon.setAccessLevel.partial",
+			SingleSuccess: "rcon.setAccessLevel.single_success",
+			SingleFail:    "rcon.setAccessLevel.single_fail",
 		},
 	}
 
@@ -1145,11 +1175,11 @@ func (app *App) CreateHorde(names []string, count int) {
 			return response == "Horde spawned."
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Created a horde near %d users",
-			AllFail:       "Failed to create a horde near %d users",
-			Partial:       "Created a horde near %d users, failed to create a horde near %d users",
-			SingleSuccess: "Successfully created a horde near %s",
-			SingleFail:    "Failed to create a horde near %s",
+			AllSuccess:    "rcon.createHorde.all_success",
+			AllFail:       "rcon.createHorde.all_fail",
+			Partial:       "rcon.createHorde.partial",
+			SingleSuccess: "rcon.createHorde.single_success",
+			SingleFail:    "rcon.createHorde.single_fail",
 		},
 	}
 
@@ -1164,11 +1194,11 @@ func (app *App) Lightning(names []string) {
 			return response == "Lightning triggered"
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Triggered lightning near %d users",
-			AllFail:       "Failed to trigger lightning near %d users",
-			Partial:       "Triggered lightning near %d users, failed to trigger lightning near %d users",
-			SingleSuccess: "Successfully triggered lightning near %s",
-			SingleFail:    "Failed to trigger lightning near %s",
+			AllSuccess:    "rcon.lightning.all_success",
+			AllFail:       "rcon.lightning.all_fail",
+			Partial:       "rcon.lightning.partial",
+			SingleSuccess: "rcon.lightning.single_success",
+			SingleFail:    "rcon.lightning.single_fail",
 		},
 	}
 
@@ -1183,11 +1213,11 @@ func (app *App) Thunder(names []string) {
 			return response == "Thunder triggered"
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Triggered thunder near %d users",
-			AllFail:       "Failed to trigger thunder near %d users",
-			Partial:       "Triggered thunder near %d users, failed to trigger thunder near %d users",
-			SingleSuccess: "Successfully triggered thunder near %s",
-			SingleFail:    "Failed to trigger thunder near %s",
+			AllSuccess:    "rcon.thunder.all_success",
+			AllFail:       "rcon.thunder.all_fail",
+			Partial:       "rcon.thunder.partial",
+			SingleSuccess: "rcon.thunder.single_success",
+			SingleFail:    "rcon.thunder.single_fail",
 		},
 	}
 
@@ -1224,13 +1254,13 @@ func (app *App) AddXp(names []string, perks []string, amount int) {
 	if successCount > 0 {
 		runtime.LogInfof(app.ctx, "Added %d xp's to %d skills", amount, successCount)
 		app.SendNotification(Notification{
-			Title:   fmt.Sprintf("Added %d xp's to %d skills", amount, successCount),
+			Title:   "rcon.addXP.success",
 			Variant: "success",
 		})
 	} else {
 		runtime.LogInfo(app.ctx, "Failed to add xp")
 		app.SendNotification(Notification{
-			Title:   "Failed to add xp",
+			Title:   "rcon.addXP.fail",
 			Variant: "error",
 		})
 	}
@@ -1256,11 +1286,11 @@ func (app *App) AddVehicle(vehicleId string, names []string, coordinates Coordin
 			return response == fmt.Sprintf("Unknown vehicle script \"%s\"", vehicleId) || response == fmt.Sprintf("User \"%s\" not found", name) || response == "Z coordinate must be 0 for now" || response == fmt.Sprintf("Invalid location %d,%d,%d", coordinates.X, coordinates.Y, coordinates.Z)
 		},
 		Notifications: RCONCommandNotifications{
-			AllSuccess:    "Added %d vehicles",
-			AllFail:       "Failed to add %d vehicles",
-			Partial:       "Added %d vehicles, failed to add %d vehicles",
-			SingleSuccess: "Successfully added a vehicle to %s",
-			SingleFail:    "Failed to add a vehicle to %s",
+			AllSuccess:    "rcon.addVehicle.all_success",
+			AllFail:       "rcon.addVehicle.all_fail",
+			Partial:       "rcon.addVehicle.partial",
+			SingleSuccess: "rcon.addVehicle.single_success",
+			SingleFail:    "rcon.addVehicle.single_fail",
 		},
 	}
 
@@ -1301,13 +1331,13 @@ func (app *App) AddItems(names []string, itemRecords []ItemRecord) {
 	if successCount > 0 {
 		runtime.LogInfof(app.ctx, "Added items")
 		app.SendNotification(Notification{
-			Title:   "Added items",
+			Title:   "rcon.addItems.success",
 			Variant: "success",
 		})
 	} else {
 		runtime.LogInfo(app.ctx, "Failed to add items")
 		app.SendNotification(Notification{
-			Title:   "Failed to add items",
+			Title:   "rcon.addItems.fail",
 			Variant: "error",
 		})
 	}
@@ -1320,8 +1350,8 @@ func (app *App) SaveWorld() {
 			return response == "World saved"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully saved the world",
-			SingleFail:    "Failed to save the world",
+			SingleSuccess: "rcon.saveWorld.single_success",
+			SingleFail:    "rcon.saveWorld.single_fail",
 		},
 	}
 
@@ -1335,8 +1365,8 @@ func (app *App) StopServer() bool {
 			return response == "Quit"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Stopping the server",
-			SingleFail:    "Failed to stop the server",
+			SingleSuccess: "rcon.stopServer.single_success",
+			SingleFail:    "rcon.stopServer.single_fail",
 		},
 	}
 
@@ -1350,8 +1380,8 @@ func (app *App) CheckModsNeedUpdate() {
 			return response == "Checking started. The answer will be written in the log file and in the chat"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Checking started. The answer will be written in the log file and in the chat",
-			SingleFail:    "Failed to check mods that need update",
+			SingleSuccess: "rcon.checkModsNeedUpdate.single_success",
+			SingleFail:    "rcon.checkModsNeedUpdate.single_fail",
 		},
 	}
 
@@ -1372,8 +1402,8 @@ func (app *App) ServerMsg(message string) {
 			return response == "Message sent."
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully sent server message",
-			SingleFail:    "Failed to send server message",
+			SingleSuccess: "rcon.serverMessage.single_success",
+			SingleFail:    "rcon.serverMessage.single_fail",
 		},
 	}
 
@@ -1399,8 +1429,8 @@ func (app *App) StartRain(intensity int) {
 			return response == "Rain started"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully started rain",
-			SingleFail:    "Failed to start rain",
+			SingleSuccess: "rcon.startRain.single_success",
+			SingleFail:    "rcon.startRain.single_fail",
 		},
 	}
 
@@ -1426,8 +1456,8 @@ func (app *App) StartStorm(duration int) {
 			return response == "Thunderstorm started"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully started storm",
-			SingleFail:    "Failed to start storm",
+			SingleSuccess: "rcon.startStorm.single_success",
+			SingleFail:    "rcon.startStorm.single_fail",
 		},
 	}
 
@@ -1441,8 +1471,8 @@ func (app *App) StopRain() {
 			return response == "Rain stopped"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully stopped rain",
-			SingleFail:    "Failed to stop rain",
+			SingleSuccess: "rcon.stopRain.single_success",
+			SingleFail:    "rcon.stopRain.single_fail",
 		},
 	}
 
@@ -1456,8 +1486,8 @@ func (app *App) StopWeather() {
 			return response == "Weather stopped"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully stopped weather",
-			SingleFail:    "Failed to stop weather",
+			SingleSuccess: "rcon.stopWeather.single_success",
+			SingleFail:    "rcon.stopWeather.single_fail",
 		},
 	}
 
@@ -1471,8 +1501,8 @@ func (app *App) Chopper() {
 			return response == "Chopper launched"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully launched chopper",
-			SingleFail:    "Failed to launch chopper",
+			SingleSuccess: "rcon.chopper.single_success",
+			SingleFail:    "rcon.chopper.single_fail",
 		},
 	}
 
@@ -1486,8 +1516,8 @@ func (app *App) Gunshot() {
 			return response == "Gunshot fired"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully fired gunshot",
-			SingleFail:    "Failed to fire gunshot",
+			SingleSuccess: "rcon.gunshot.single_success",
+			SingleFail:    "rcon.gunshot.single_fail",
 		},
 	}
 
@@ -1541,8 +1571,8 @@ func (app *App) Alarm() {
 			return response == "Not in a room"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully triggered alarm",
-			SingleFail:    "Failed to trigger alarm",
+			SingleSuccess: "rcon.triggerAlarm.single_success",
+			SingleFail:    "rcon.triggerAlarm.single_fail",
 		},
 	}
 
@@ -1556,8 +1586,8 @@ func (app *App) ReloadOptions() {
 			return response == "Options reloaded"
 		},
 		Notifications: RCONCommandNotifications{
-			SingleSuccess: "Successfully reloaded options",
-			SingleFail:    "Failed to reload options",
+			SingleSuccess: "rcon.reloadOptions.single_success",
+			SingleFail:    "rcon.reloadOptions.single_fail",
 		},
 	}
 

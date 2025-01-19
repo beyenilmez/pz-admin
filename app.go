@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/gen2brain/beeep"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -28,10 +27,11 @@ func NewApp() *App {
 }
 
 type Notification struct {
-	Title   string `json:"title"`
-	Message string `json:"message"`
-	Path    string `json:"path"`
-	Variant string `json:"variant"`
+	Title      string            `json:"title"`
+	Message    string            `json:"message"`
+	Path       string            `json:"path"`
+	Variant    string            `json:"variant"`
+	Parameters map[string]string `json:"parameters,omitempty"`
 }
 
 // startup is called at application startup
@@ -69,6 +69,9 @@ func (a *App) startup(ctx context.Context) {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		onFirstRun()
 	}
+
+	// Initiate notifications for Windows
+	notification_init()
 }
 
 // domReady is called after front-end resources have been loaded
@@ -206,7 +209,7 @@ func (a *App) GetVersion() string {
 func (a *App) SendNotification(notification Notification) {
 	runtime.LogInfo(a.ctx, "Sending notification")
 
-	if runtime.WindowIsNormal(a.ctx) || runtime.WindowIsMaximised(a.ctx) || runtime.WindowIsFullscreen(a.ctx) {
+	if a.GetOs() != "windows" || runtime.WindowIsNormal(a.ctx) || runtime.WindowIsMaximised(a.ctx) || runtime.WindowIsFullscreen(a.ctx) {
 		runtime.LogInfo(a.ctx, "Sending notification to toast")
 		runtime.EventsEmit(a.ctx, "toast", notification)
 	} else {
@@ -215,7 +218,8 @@ func (a *App) SendNotification(notification Notification) {
 }
 
 func (a *App) SendWindowsNotification(notification Notification) {
-	err := beeep.Notify(notification.Title, notification.Message, appIconPath)
+	err := SendSystemNotification(notification)
+
 	if err != nil {
 		runtime.LogError(a.ctx, "Error sending notification: "+err.Error())
 	}

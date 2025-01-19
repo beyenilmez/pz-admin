@@ -22,6 +22,9 @@ var assets embed.FS
 //go:embed build/appicon.png
 var appIcon []byte
 
+//go:embed build/windows/icon.ico
+var appIconIco []byte
+
 //go:embed wails.json
 var wailsJSON []byte
 
@@ -131,22 +134,25 @@ func main() {
 		},
 		Mac: &mac.Options{
 			TitleBar: &mac.TitleBar{
-				TitlebarAppearsTransparent: true,
-				HideTitle:                  true,
-				HideTitleBar:               true,
-				FullSizeContent:            true,
+				TitlebarAppearsTransparent: false,
+				HideTitle:                  false,
+				HideTitleBar:               false,
+				FullSizeContent:            false,
 				UseToolbar:                 false,
 				HideToolbarSeparator:       true,
 			},
-			Appearance:           mac.DefaultAppearance,
-			WebviewIsTransparent: windowTransparent,
-			WindowIsTranslucent:  windowTransparent,
-			Preferences: &mac.Preferences{
-				FullscreenEnabled: mac.Enabled,
+			About: &mac.AboutInfo{
+				Title:   "PZ Admin",
+				Message: "Copyright © 2024 Bedirhan Yenilmez",
+				Icon:    appIcon,
 			},
+			Appearance:           mac.DefaultAppearance,
+			WebviewIsTransparent: true,
+			WindowIsTranslucent:  true,
 		},
 		Linux: &linux.Options{
-			WindowIsTranslucent: windowTransparent,
+			Icon:                appIcon,
+			WindowIsTranslucent: false,
 			WebviewGpuPolicy:    linux.WebviewGpuPolicyAlways,
 			ProgramName:         "pz-admin",
 		},

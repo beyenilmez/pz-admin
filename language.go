@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "embed"
+	"strings"
 
 	"encoding/json"
 
@@ -33,20 +34,24 @@ func set_system_language() error {
 	}
 
 	for _, l := range userLocales {
-		if contains(availableLocales, l) {
-			config.Language = &l
+		if selected := contains(availableLocales, l); selected != "" {
+			config.Language = &selected
 		}
 	}
 
 	return nil
 }
 
-func contains(haystack []string, needle string) bool {
+func contains(haystack []string, needle string) string {
 	for _, v := range haystack {
 		if v == needle {
-			return true
+			return v
+		}
+		splitted := strings.Split(v, "-")
+		if len(splitted) == 2 && splitted[0] == needle {
+			return v
 		}
 	}
 
-	return false
+	return ""
 }

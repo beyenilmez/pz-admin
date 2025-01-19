@@ -20,8 +20,10 @@ import { AddItemDialog } from "./Dialogs/AddItemDialog";
 import { Slider } from "./ui/my-slider";
 import { ReloadOptions } from "@/wailsjs/go/main/App";
 import { Label } from "./ui/label";
+import { useConfig } from "@/contexts/config-provider";
 
 export function OptionsTab() {
+  const { config } = useConfig();
   const { t } = useTranslation();
   const {
     optionsModified,
@@ -91,7 +93,7 @@ export function OptionsTab() {
     const updateHeight = () => {
       if (tabsRef.current) {
         const tabsHeight = tabsRef.current.offsetHeight;
-        setScrollAreaHeight(`calc(100% - ${tabsHeight}px - 3.5rem)`);
+        setScrollAreaHeight(`calc(100% - ${tabsHeight}px - 2.5rem)`);
       }
     };
 
@@ -125,7 +127,11 @@ export function OptionsTab() {
     .filter((category) => category.options.length > 0);
 
   return (
-    <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2 space-y-2">
+    <div
+      className={`w-full ${
+        config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"
+      } dark:bg-black/20 bg-white/20 p-2`}
+    >
       <Tabs value={tab}>
         <TabsList defaultValue={"General"} className="flex flex-wrap h-fit min-h-10" ref={tabsRef}>
           {filteredCategories.map((category) => (
@@ -144,7 +150,7 @@ export function OptionsTab() {
       </Tabs>
 
       <ScrollArea className={`w-full pr-6`} ref={scrollAreaRef} style={{ height: scrollAreaHeight }}>
-        <div className="flex items-center gap-2 m-1 sticky top-0">
+        <div className="flex items-center gap-2 m-1">
           <div className="relative w-full">
             <Input
               className="peer ps-9"

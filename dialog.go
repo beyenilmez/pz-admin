@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os/exec"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -107,7 +108,7 @@ func (a *App) SaveItemsDialog(items []ItemRecord) {
 		}
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error saving the items",
+			Message: "admin_panel.tabs.players.dialogs.additem.notifications.error_saving_items",
 			Variant: "error",
 		})
 		return
@@ -115,7 +116,7 @@ func (a *App) SaveItemsDialog(items []ItemRecord) {
 
 	runtime.LogInfo(a.ctx, "Items saved to "+path)
 	app.SendNotification(Notification{
-		Message: "Items saved",
+		Message: "admin_panel.tabs.players.dialogs.additem.notifications.items_saved",
 		Path:    path,
 		Variant: "success",
 	})
@@ -142,7 +143,7 @@ func (a *App) LoadItemsDialog() []ItemRecord {
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error loading the items",
+			Message: "admin_panel.tabs.players.dialogs.additem.notifications.error_loading_items",
 			Variant: "error",
 		})
 		return nil
@@ -153,7 +154,7 @@ func (a *App) LoadItemsDialog() []ItemRecord {
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error loading the items",
+			Message: "admin_panel.tabs.players.dialogs.additem.notifications.error_loading_items",
 			Variant: "error",
 		})
 		return nil
@@ -190,7 +191,7 @@ func (a *App) SaveMessagesDialog(message ServerMessage) {
 		}
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error saving the message",
+			Message: "tools.message_editor.notifications.error_saving_message",
 			Variant: "error",
 		})
 		return
@@ -198,7 +199,7 @@ func (a *App) SaveMessagesDialog(message ServerMessage) {
 
 	runtime.LogInfo(a.ctx, "Message saved to "+path)
 	app.SendNotification(Notification{
-		Message: "Message saved",
+		Message: "tools.message_editor.notifications.message_saved",
 		Path:    path,
 		Variant: "success",
 	})
@@ -225,7 +226,7 @@ func (a *App) LoadMessageDialog() ServerMessage {
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error loading the message",
+			Message: "tools.message_editor.notifications.error_loading_message",
 			Variant: "error",
 		})
 		return ServerMessage{}
@@ -236,7 +237,7 @@ func (a *App) LoadMessageDialog() ServerMessage {
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error loading the message",
+			Message: "tools.message_editor.notifications.error_loading_message",
 			Variant: "error",
 		})
 		return ServerMessage{}
@@ -273,7 +274,7 @@ func (a *App) ExportOptionsDialog(options PzOptions) {
 		}
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error exporting the options",
+			Message: "admin_panel.tabs.options.notifications.error_exporting_options",
 			Variant: "error",
 		})
 		return
@@ -281,7 +282,7 @@ func (a *App) ExportOptionsDialog(options PzOptions) {
 
 	runtime.LogInfo(a.ctx, "Options saved to "+path)
 	app.SendNotification(Notification{
-		Message: "Options exported",
+		Message: "admin_panel.tabs.options.notifications.options_exported",
 		Path:    path,
 		Variant: "success",
 	})
@@ -308,7 +309,7 @@ func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error importing the options",
+			Message: "admin_panel.tabs.options.notifications.error_importing_options",
 			Variant: "error",
 		})
 		return ImportOptionsResponse{Success: false}
@@ -320,7 +321,7 @@ func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 	if err != nil {
 		runtime.LogWarning(a.ctx, err.Error())
 		app.SendNotification(Notification{
-			Message: "There was an error importing the options",
+			Message: "admin_panel.tabs.options.notifications.error_importing_options",
 			Variant: "error",
 		})
 		return ImportOptionsResponse{Success: false}
@@ -330,8 +331,42 @@ func (a *App) ImportOptionsDialog() ImportOptionsResponse {
 }
 
 func (a *App) OpenFileInExplorer(path string) {
-	runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
+	os := a.GetOs()
+	if os == "windows" {
+		runtime.LogInfo(a.ctx, "Opening file in explorer: "+path)
 
-	cmd := exec.Command(`explorer`, `/select,`, path)
-	cmd.Run()
+		cmd := exec.Command(`explorer`, `/select,`, path)
+		cmd.Run()
+	} else if os == "darwin" {
+		runtime.LogInfo(a.ctx, "Opening file in finder: "+path)
+
+		cmd := exec.Command(`open`, `-R`, path)
+		cmd.Run()
+	} else if os == "linux" {
+		runtime.LogInfo(a.ctx, "Opening file with dbus: "+path)
+		cmd := exec.Command("bash", "-c", fmt.Sprintf(`dbus-send --print-reply --dest=org.freedesktop.FileManager1 /org/freedesktop/FileManager1 org.freedesktop.FileManager1.ShowItems array:string:"file://%s" string:""`, path))
+		err := cmd.Run()
+		if err == nil {
+			return
+		}
+
+		runtime.LogInfo(a.ctx, "Opening file in nautilus: "+path)
+		cmd = exec.Command(`nautilus`, path)
+		err = cmd.Run()
+		if err == nil {
+			return
+		}
+
+		runtime.LogInfo(a.ctx, "Opening file in xdg-open: "+path)
+		cmd = exec.Command(`xdg-open`, path)
+		err = cmd.Run()
+		if err == nil {
+			return
+		}
+
+		runtime.LogInfo(a.ctx, "Opening file in gnome-open: "+path)
+		cmd = exec.Command(`gnome-open`, path)
+		err = cmd.Run()
+
+	}
 }

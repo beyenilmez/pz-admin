@@ -120,7 +120,9 @@ export default function AdminPanel() {
         <div className={tab === "terminal" ? "block" : "hidden"} key={"terminal" + terminalState}>
           <TerminalPage />
         </div>
-        <div className={tab === "connection" ? "block" : "hidden"}>{tab === "connection" && <ConnectionForm />}</div>
+        <div className={tab === "connection" ? "block" : "hidden"}>
+          <ConnectionForm />
+        </div>
       </div>
     </Tabs>
   );
@@ -213,9 +215,9 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={`flex w-full h-[calc(100vh-12rem)] items-center justify-center ${
-            isConnecting ? "pointer-events-none blur-[1px] select-none opacity-80" : ""
-          }`}
+          className={`flex w-full ${
+            config?.useSystemTitleBar ? "h-[calc(100vh-4rem)]" : "h-[calc(100vh-6rem)]"
+          } items-center justify-center ${isConnecting ? "pointer-events-none blur-[1px] select-none opacity-80" : ""}`}
           autoComplete="off"
         >
           <div className="w-[30rem] space-y-4">

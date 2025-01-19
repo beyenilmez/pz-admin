@@ -42,6 +42,8 @@ export function GetConfigField(arg1:string):Promise<any>;
 
 export function GetLoadConfigPath():Promise<string>;
 
+export function GetOs():Promise<string>;
+
 export function GetVersion():Promise<string>;
 
 export function GodMode(arg1:Array<string>,arg2:boolean):Promise<void>;

@@ -39,7 +39,7 @@ func path_init() error {
 	externalFolder = filepath.Join(appFolder, "external")
 
 	configPath = filepath.Join(appFolder, "config.json")
-	appIconPath = filepath.Join(appFolder, "appicon.png")
+	appIconPath = filepath.Join(appFolder, "appicon.ico")
 	credentialsPath = filepath.Join(appFolder, "credentials.json")
 
 	runtime.LogTrace(appContext, "Attempting to create folders")
@@ -84,7 +84,7 @@ func path_init() error {
 	// Create icon from embedded appIcon if it exists
 	if _, err := os.Stat(appIconPath); os.IsNotExist(err) {
 		runtime.LogTrace(appContext, "appicon not found, creating from embedded appIcon")
-		err = os.WriteFile(appIconPath, appIcon, 0o644)
+		err = os.WriteFile(appIconPath, appIconIco, 0o644)
 		if err != nil {
 			return err
 		}

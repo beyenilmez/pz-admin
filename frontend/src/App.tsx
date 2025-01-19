@@ -20,9 +20,11 @@ import Tools from "./components/Tools";
 import { reloadTranslations } from "@/i18n";
 import locales from "@/locales.json";
 import i18next from "i18next";
+import { useOs } from "./contexts/os-provider";
 
 function App() {
   const { config, initialConfig } = useConfig();
+  const { os } = useOs();
   const { t } = useTranslation();
   const { setValue } = useStorage();
   const [tab, setTab] = useState("admin-panel");
@@ -42,15 +44,15 @@ function App() {
 
       document.documentElement.style.setProperty(
         "--opacity",
-        ((initialConfig.windowEffect === 1 ? 100 : config.opacity) / 100).toString()
+        ((initialConfig.windowEffect === 1 || os === "linux" ? 100 : config.opacity) / 100).toString()
       );
     }
-  }, [config?.windowScale, config?.opacity, initialConfig?.windowEffect]);
+  }, [config?.windowScale, config?.opacity, initialConfig?.windowEffect, os]);
 
   useEffect(() => {
     EventsOn("toast", (data: main.Notification) => {
       const props = {
-        description: t(data.message),
+        description: t(data.message, data.parameters),
         action: data.path
           ? {
               label: data.path.startsWith("__") ? t("show") : t("show_in_explorer"),
@@ -60,30 +62,30 @@ function App() {
       };
       switch (data.variant) {
         case "message":
-          toast.message(t(data.title), props);
+          toast.message(t(data.title, data.parameters), props);
           break;
         case "success":
-          toast.success(t(data.title), props);
+          toast.success(t(data.title, data.parameters), props);
           break;
         case "info":
-          toast.info(t(data.title), props);
+          toast.info(t(data.title, data.parameters), props);
           break;
         case "warning":
-          toast.warning(t(data.title), props);
+          toast.warning(t(data.title, data.parameters), props);
           break;
         case "error":
-          toast.error(t(data.title), props);
+          toast.error(t(data.title, data.parameters), props);
           break;
         default:
-          toast(t(data.title), props);
+          toast(t(data.title, data.parameters), props);
           break;
       }
     });
 
     EventsOn("sendNotification", (data: main.Notification) => {
       SendWindowsNotification({
-        title: t(data.title),
-        message: t(data.message),
+        title: t(data.title, data.parameters),
+        message: t(data.message, data.parameters),
         path: data.path,
         variant: data.variant,
       });
@@ -91,7 +93,7 @@ function App() {
 
     EventsOn("rconDisconnected", () => {
       SendNotification({
-        title: "RCON connection lost",
+        title: t("rcon.rcon_connection_lost"),
         variant: "error",
       } as main.Notification);
       setIsConnected(false);

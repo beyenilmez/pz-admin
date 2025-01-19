@@ -414,7 +414,7 @@ export function PlayersTab() {
 
   return (
     <>
-      <div className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 p-2">
+      <div className={`w-full ${config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"} dark:bg-black/20 bg-white/20 p-2`}>
         <ScrollArea className="h-full w-full overflow-auto">
           <div className="w-[calc(100%-1rem)]">
             <div className="flex mb-2 space-x-2">

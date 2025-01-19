@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRcon } from "@/contexts/rcon-provider";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useConfig } from "@/contexts/config-provider";
 
 const commands = [
   "additem",
@@ -186,6 +187,7 @@ const options = [
 ];
 
 const TerminalPage: React.FC = () => {
+  const { config } = useConfig();
   const { sendCommand, players } = useRcon();
 
   const playerNames = players.map((player) => player.name);
@@ -335,7 +337,9 @@ const TerminalPage: React.FC = () => {
 
   return (
     <div
-      className="w-[calc(100vw-16rem)] h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 font-mono p-2 pb-1"
+      className={`w-[calc(100vw-16rem)] ${
+        config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"
+      } dark:bg-black/20 bg-white/20 font-mono p-2 pb-1`}
       onClick={() => inputRef.current?.focus()}
     >
       <ScrollArea className="h-[calc(100%-2rem)] overflow-auto pr-4">
