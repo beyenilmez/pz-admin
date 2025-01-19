@@ -253,20 +253,22 @@ func (app *App) UpdatePzOptions(newOptions PzOptions, reloadOptions bool) bool {
 	optionsToUpdate := app.diffOptions(newOptions)
 
 	if len(optionsToUpdate) == 0 {
-		app.SendNotification(Notification{Title: "No options to update", Variant: "warning"})
+		app.SendNotification(Notification{Title: "rcon.no_options_to_update", Variant: "warning"})
 		return false
 	}
 
 	successCount := app.applyOptions(optionsToUpdate)
 
 	if successCount != len(optionsToUpdate) {
-		app.SendNotification(Notification{Title: fmt.Sprintf("Failed to update %d options", len(optionsToUpdate)-successCount), Variant: "error"})
+		app.SendNotification(Notification{Title: "rcon.failed_to_update_n_options", Parameters: map[string]string{
+			"n": fmt.Sprintf("%d", len(optionsToUpdate)-successCount),
+		}, Variant: "error"})
 		return false
 	}
 
 	if err := pzOptions_update(); err != nil {
 		runtime.LogErrorf(app.ctx, "Error syncing options after update: %v", err)
-		app.SendNotification(Notification{Title: "Options updated but sync failed", Variant: "error"})
+		app.SendNotification(Notification{Title: "rcon.options_updated_sync_failed", Variant: "error"})
 		return false
 	}
 
@@ -280,15 +282,15 @@ func (app *App) UpdatePzOptions(newOptions PzOptions, reloadOptions bool) bool {
 
 		success := command.execute() == 1
 		if !success {
-			app.SendNotification(Notification{Title: "Failed to reload options", Variant: "error"})
+			app.SendNotification(Notification{Title: "rcon.reloadOptions.single_fail", Variant: "error"})
 			return false
 		} else {
-			app.SendNotification(Notification{Title: "Options saved and applied successfully", Variant: "success"})
+			app.SendNotification(Notification{Title: "rcon.options_saved_and_reloaded", Variant: "success"})
 			return true
 		}
 	}
 
-	app.SendNotification(Notification{Title: "Options updated successfully", Variant: "success"})
+	app.SendNotification(Notification{Title: "rcon.options_updated", Variant: "success"})
 	return true
 }
 

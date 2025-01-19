@@ -3,7 +3,7 @@ import path from "node:path";
 
 const VEHICLES_DIR = path.join(process.cwd(), "public", "vehicles");
 const OUTPUT_FILE = path.join(process.cwd(), "src", "assets", "vehicles.json");
-const BASE_IMAGE_PATH = "vehicles";
+const BASE_IMAGE_PATH = "/vehicles";
 
 async function processDirectory(dirPath, type) {
   const entries = await fs.readdir(dirPath, { withFileTypes: true });

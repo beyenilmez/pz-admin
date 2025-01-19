@@ -82,6 +82,10 @@ export function GetLoadConfigPath() {
   return window['go']['main']['App']['GetLoadConfigPath']();
 }
 
+export function GetOs() {
+  return window['go']['main']['App']['GetOs']();
+}
+
 export function GetVersion() {
   return window['go']['main']['App']['GetVersion']();
 }

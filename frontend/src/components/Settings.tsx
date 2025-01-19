@@ -23,9 +23,13 @@ import { DisableWeatherControlsSetting } from "./SettingItems/DisableWeatherCont
 import { DisableRandomButtonsSetting } from "./SettingItems/DisableRandomButtonsSetting";
 import { DisableOtherButtonsSetting } from "./SettingItems/DisableOtherButtonsSetting";
 import { DebugModeSetting } from "./SettingItems/DebugModeSetting";
+import { useConfig } from "@/contexts/config-provider";
+import { useOs } from "@/contexts/os-provider";
 
 export default function Settings() {
   const { t } = useTranslation();
+  const { config } = useConfig();
+  const { os } = useOs();
   const [tab, setTab] = useState("general");
   const { getValue, setValue } = useStorage();
 
@@ -57,7 +61,10 @@ export default function Settings() {
         </TabsTrigger>
       </TabsList>
 
-      <TabsContent value="general" className="w-full h-[calc(100vh-5.5rem)]">
+      <TabsContent
+        value="general"
+        className={`w-full ${config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"}`}
+      >
         <ScrollArea className="h-full w-full overflow-auto">
           <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
             <LocaleSetting />
@@ -66,20 +73,26 @@ export default function Settings() {
           </SettingsGroup>
         </ScrollArea>
       </TabsContent>
-      <TabsContent value="app" className="w-full h-[calc(100vh-5.5rem)]">
+      <TabsContent
+        value="app"
+        className={`w-full ${config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"}`}
+      >
         <ScrollArea className="h-full w-full overflow-auto">
           <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
             <ThemeSetting />
             <ColorSchemeSetting />
-            <WindowEffectSetting />
-            <WindowOpacitySetting />
+            {os === "windows" && <WindowEffectSetting />}
+            {os !== "linux" && <WindowOpacitySetting />}
             <WindowScaleSetting />
-            {false && <UseSystemTitleBarSetting />}
+            <UseSystemTitleBarSetting />
             <SaveWindowStatusSetting />
           </SettingsGroup>
         </ScrollArea>
       </TabsContent>
-      <TabsContent value="rcon" className="w-full h-[calc(100vh-5.5rem)]">
+      <TabsContent
+        value="rcon"
+        className={`w-full ${config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"}`}
+      >
         <ScrollArea className="h-full w-full overflow-auto">
           <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
             <RCONCheckIntervalSetting />
@@ -90,7 +103,10 @@ export default function Settings() {
         </ScrollArea>
       </TabsContent>
       {false && (
-        <TabsContent value="system" className="w-full h-[calc(100vh-5.5rem)]">
+        <TabsContent
+          value="system"
+          className={`w-full ${config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"}`}
+        >
           Edit your system settings here.
         </TabsContent>
       )}
@@ -105,7 +121,10 @@ export default function Settings() {
           </SettingsGroup>
         </ScrollArea>
       </TabsContent>
-      <TabsContent value="update" className="w-full h-[calc(100vh-5.5rem)]">
+      <TabsContent
+        value="update"
+        className={`w-full ${config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"}`}
+      >
         <ScrollArea className="h-full w-full overflow-auto">
           <SettingsGroup className="flex flex-col items-start px-4 py-2 w-full h-full">
             <CheckForUpdatesSetting />

@@ -4,8 +4,10 @@ import { Tabs, TabsList, TabsTrigger } from "./ui/tabs";
 import { useTranslation } from "react-i18next";
 import { AddVehicleDialog } from "./Dialogs/AddVehicleDialog";
 import { SendMessageDialog } from "./Dialogs/SendMessageDialog";
+import { useConfig } from "@/contexts/config-provider";
 
 export default function Tools() {
+  const { config } = useConfig();
   const { t } = useTranslation();
   const [tab, setTab] = useState("message-editor");
 
@@ -33,14 +35,14 @@ export default function Tools() {
               mode="tool"
               onClose={() => {}}
               isOpen
-              textareaHeight={`calc(100vh - 27rem)`}
+              textareaHeight={`calc(100vh - 27rem ${config?.useSystemTitleBar ? "+ 2rem" : ""})`}
               previewHeight={`13rem`}
             />
           )}
         </div>
         <div className={tab === "item-browser" ? "block w-full" : "hidden"}>
           {tab === "item-browser" && (
-            <AddItemDialog mode="tool" onClose={() => {}} isOpen height={`calc(100vh - 11.5rem)`} />
+            <AddItemDialog mode="tool" onClose={() => {}} isOpen height={`calc(100vh - 11.5rem ${config?.useSystemTitleBar ? "+ 2rem" : ""})`} />
           )}
         </div>
         <div className={tab === "vehicle-browser" ? "block w-full" : "hidden"}>
@@ -50,7 +52,7 @@ export default function Tools() {
               onClose={() => {}}
               isOpen
               initialNames={[]}
-              height={`calc(100vh - 11.5rem)`}
+              height={`calc(100vh - 11.5rem ${config?.useSystemTitleBar ? "+ 2rem" : ""})`}
             />
           )}
         </div>

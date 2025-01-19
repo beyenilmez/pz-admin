@@ -433,6 +433,7 @@ export namespace main {
 	    message: string;
 	    path: string;
 	    variant: string;
+	    parameters?: {[key: string]: string};
 	
 	    static createFrom(source: any = {}) {
 	        return new Notification(source);
@@ -444,6 +445,7 @@ export namespace main {
 	        this.message = source["message"];
 	        this.path = source["path"];
 	        this.variant = source["variant"];
+	        this.parameters = source["parameters"];
 	    }
 	}
 	export class Player {

@@ -26,6 +26,172 @@
     "settings": "Settings"
   },
 
+  "notifications": {
+    "copy_to_clipboard": "Copied to clipboard",
+    "copy_to_clipboard_failed": "Failed to copy to clipboard"
+  },
+
+  "rcon": {
+    "rcon_connection_failed": "RCON connection failed",
+    "rcon_connection_established": "RCON connection established",
+    "rcon_connection_lost": "RCON connection lost",
+    "error_encrypting_credentials": "Error encrypting credentials",
+    "error_decrypting_credentials": "Error decrypting credentials",
+    "error_saving_credentials": "Error saving credentials",
+    "error_loading_credentials": "Error loading credentials",
+
+    "no_options_to_update": "No options to update",
+    "failed_to_update_n_options": "Failed to update {{n}} options",
+    "options_updated_sync_failed": "Options updated, but failed to sync with the client",
+    "options_saved_and_reloaded": "Options updated and reloaded",
+    "options_updated": "Options updated",
+
+    "addPlayer": {
+      "cant_add_player": "Can't add player",
+      "player_already_in_list": "Player {{name}} is already in list"
+    },
+    "addPlayerToWhitelist": {
+      "single_success": "Successfully added player",
+      "single_fail": "Failed to add player"
+    },
+    "removePlayersFromWhitelist": {
+      "all_success": "Successfully removed {{s}} players",
+      "all_fail": "Failed to remove {{f}} players",
+      "partial": "Successfully removed {{s}} players, failed to remove {{f}} players",
+      "single_success": "Successfully removed player {{name}}",
+      "single_fail": "Failed to remove player {{name}}",
+
+      "cant_remove_player": "Can't remove player",
+      "player_not_found_in_list": "Player {{name}} was not found in list"
+    },
+    "banUsers": {
+      "all_success": "Banned {{s}} users",
+      "all_fail": "Failed to ban {{f}} users",
+      "partial": "Banned {{s}} users, failed to ban {{f}} users",
+      "single_success": "Successfully banned {{name}}",
+      "single_fail": "Failed to ban {{name}}"
+    },
+    "unbanUsers": {
+      "all_success": "Unbanned {{s}} users",
+      "all_fail": "Failed to unban {{f}} users",
+      "partial": "Unbanned {{s}} users, failed to unban {{f}} users",
+      "single_success": "Successfully unbanned {{name}}",
+      "single_fail": "Failed to unban {{name}}"
+    },
+    "kickUsers": {
+      "all_success": "Kicked {{s}} users",
+      "all_fail": "Failed to kick {{f}} users",
+      "partial": "Kicked {{s}} users, failed to kick {{f}} users",
+      "single_success": "Successfully kicked {{name}}",
+      "single_fail": "Failed to kick {{name}}"
+    },
+    "godMode": {
+      "all_success": "Set godmode for {{s}} users",
+      "all_fail": "Failed to set godmode for {{f}} users",
+      "partial": "Set godmode for {{s}} users, failed to set godmode for {{f}} users",
+      "single_success": "Successfully set godmode for {{name}}",
+      "single_fail": "Failed to set godmode for {{name}}"
+    },
+    "teleport": {
+      "all_success": "Teleported {{s}} users",
+      "all_fail": "Failed to teleport {{f}} users",
+      "partial": "Teleported {{s}} users, failed to teleport {{f}} users",
+      "single_success": "Successfully teleported {{name}}",
+      "single_fail": "Failed to teleport {{name}}"
+    },
+    "setAccessLevel": {
+      "all_success": "Set access level for {{s}} users",
+      "all_fail": "Failed to set access level for {{f}} users",
+      "partial": "Set access level for {{s}} users, failed to set access level for {{f}} users",
+      "single_success": "Successfully set access level for {{name}}",
+      "single_fail": "Failed to set access level for {{name}}"
+    },
+    "createHorde": {
+      "all_success": "Created a horde near {{s}} users",
+      "all_fail": "Failed to create a horde near {{f}} users",
+      "partial": "Created a horde near {{s}} users, failed to create a horde near {{f}} users",
+      "single_success": "Successfully created a horde near {{name}}",
+      "single_fail": "Failed to create a horde near {{name}}"
+    },
+    "lightning": {
+      "all_success": "Triggered lightning near {{s}} users",
+      "all_fail": "Failed to trigger lightning near {{f}} users",
+      "partial": "Triggered lightning near {{s}} users, failed to trigger lightning near {{f}} users",
+      "single_success": "Successfully triggered lightning near {{name}}",
+      "single_fail": "Failed to trigger lightning near {{name}}"
+    },
+    "thunder": {
+      "all_success": "Triggered thunder near {{s}} users",
+      "all_fail": "Failed to trigger thunder near {{f}} users",
+      "partial": "Triggered thunder near {{s}} users, failed to trigger thunder near {{f}} users",
+      "single_success": "Successfully triggered thunder near {{name}}",
+      "single_fail": "Failed to trigger thunder near {{name}}"
+    },
+    "addXP": {
+      "success": "Successfully added XP",
+      "fail": "Failed to add XP"
+    },
+    "addVehicle": {
+      "all_success": "Added {{s}} vehicles",
+      "all_fail": "Failed to add {{f}} vehicles",
+      "partial": "Added {{s}} vehicles, failed to add {{f}} vehicles",
+      "single_success": "Successfully added a vehicle to {{name}}",
+      "single_fail": "Failed to add a vehicle to {{name}}"
+    },
+    "addItems": {
+      "success": "Successfully added items",
+      "fail": "Failed to add items"
+    },
+    "saveWorld": {
+      "single_success": "Successfully saved the world",
+      "single_fail": "Failed to save the world"
+    },
+    "stopServer": {
+      "single_success": "Stopping the server",
+      "single_fail": "Failed to stop the server"
+    },
+    "checkModsNeedUpdate": {
+      "single_success": "Checking started. The answer will be written in the log file and in the chat",
+      "single_fail": "Failed to check mods that need update"
+    },
+    "serverMessage": {
+      "single_success": "Successfully sent server message",
+      "single_fail": "Failed to send server message"
+    },
+    "startRain": {
+      "single_success": "Successfully started rain",
+      "single_fail": "Failed to start rain"
+    },
+    "startStorm": {
+      "single_success": "Successfully started a storm",
+      "single_fail": "Failed to start a storm"
+    },
+    "stopRain": {
+      "single_success": "Successfully stopped rain",
+      "single_fail": "Failed to stop rain"
+    },
+    "stopWeather": {
+      "single_success": "Successfully stopped weather",
+      "single_fail": "Failed to stop weather"
+    },
+    "chopper": {
+      "single_success": "Successfully launched chopper",
+      "single_fail": "Failed to launch chopper"
+    },
+    "gunshot": {
+      "single_success": "Successfully fired gunshot",
+      "single_fail": "Failed to fire gunshot"
+    },
+    "triggerAlarm": {
+      "single_success": "Successfully triggered alarm",
+      "single_fail": "Failed to trigger alarm"
+    },
+    "reloadOptions": {
+      "single_success": "Successfully reloaded options",
+      "single_fail": "Failed to reload options"
+    }
+  },
+
   "settings": {
     "restart_the_app_for_changes_to_take_effect": "Restart the app for changes to take effect.",
     "are_you_sure_you_want_to_import_this_config": "Are you sure you want to import this config?",
@@ -187,6 +353,11 @@
           "reset": "Reset",
           "save_edit": "Save Edit"
         }
+      },
+      "notifications": {
+        "error_saving_message": "There was an error saving the message",
+        "message_saved": "Message saved",
+        "error_loading_message": "There was an error loading the message"
       },
 
       "message": "Message",
@@ -587,7 +758,12 @@
           },
 
           "additem": {
-            "button": "Add Item"
+            "button": "Add Item",
+            "notifications": {
+              "error_saving_items": "There was an error saving the items",
+              "items_saved": "Items saved",
+              "error_loading_items": "There was an error loading the items"
+            }
           },
 
           "addvehicle": {
@@ -602,7 +778,13 @@
         "name": "Options",
 
         "reload_options": "Reload Options",
-        "search_options": "Search Options..."
+        "search_options": "Search Options...",
+
+        "notifications": {
+          "error_exporting_options": "There was an error exporting the options",
+          "options_exported": "Options exported",
+          "error_importing_options": "There was an error importing the options"
+        }
       },
       "terminal": {
         "name": "Terminal"

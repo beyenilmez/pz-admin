@@ -13,6 +13,7 @@ import { AddItems, CopyToClipboard, LoadItemsDialog, SaveItemsDialog } from "@/w
 import { useTranslation } from "react-i18next";
 import { Checkbox } from "../ui/checkbox";
 import { Label } from "../ui/label";
+import { useConfig } from "@/contexts/config-provider";
 
 interface AddItemDialogProps {
   isOpen: boolean;
@@ -44,6 +45,7 @@ export function AddItemDialog({
   onSaveEdit,
   height,
 }: AddItemDialogProps) {
+  const { config } = useConfig();
   const { t } = useTranslation("items");
   const { t: tc } = useTranslation();
 
@@ -172,6 +174,16 @@ export function AddItemDialog({
     setSelectedItems({});
     setResetNum((prev) => prev + 1);
     setShowIds(false);
+
+    if (config?.windowScale! >= 140 && mode !== "tool") {
+      if (isOpen) {
+        document.documentElement.style.fontSize = 130 * (16 / 100) + "px";
+      } else {
+        if (config?.windowScale) {
+          document.documentElement.style.fontSize = config.windowScale * (16 / 100) + "px";
+        }
+      }
+    }
   }, [isOpen]);
 
   useEffect(() => {
