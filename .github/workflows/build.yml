@@ -32,13 +32,13 @@ jobs:
             artifact-name: "Linux Desktop (arm64)"
           - os: macos-latest
             platform: darwin/universal
-            name: "pz-admin-macos-universal.app"
+            name: "pz-admin.app"
             args: ""
             deps: |
               brew install mitchellh/gon/gon
             post-build: |
-              chmod +x build/bin/pz-admin-macos-universal.app/Contents/MacOS/pz-admin
-              ditto -c -k --keepParent ./build/bin/pz-admin-macos-universal.app ./build/bin/pz-admin-macos-universal.app.zip
+              chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
+              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app.zip
             artifact: "./build/bin/pz-admin-macos-universal.app.zip"
             artifact-name: "macOS Universal Desktop"
           - os: windows-latest
