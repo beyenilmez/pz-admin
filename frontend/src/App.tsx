@@ -93,7 +93,7 @@ function App() {
 
     EventsOn("rconDisconnected", () => {
       SendNotification({
-        title: "RCON connection lost",
+        title: t("rcon.rcon_connection_lost"),
         variant: "error",
       } as main.Notification);
       setIsConnected(false);

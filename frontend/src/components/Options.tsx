@@ -93,11 +93,7 @@ export function OptionsTab() {
     const updateHeight = () => {
       if (tabsRef.current) {
         const tabsHeight = tabsRef.current.offsetHeight;
-        if (config?.useSystemTitleBar) {
-          setScrollAreaHeight(`calc(100% - ${tabsHeight}px - 2.5rem)`);
-        }else{
-          setScrollAreaHeight(`calc(100% - ${tabsHeight}px - 3.5rem)`);
-        }
+        setScrollAreaHeight(`calc(100% - ${tabsHeight}px - 2.5rem)`);
       }
     };
 

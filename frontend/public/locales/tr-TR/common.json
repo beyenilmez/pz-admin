@@ -26,13 +26,170 @@
     "settings": "Ayarlar"
   },
 
+  "notifications": {
+    "copy_to_clipboard": "Panoya kopyalandı",
+    "copy_to_clipboard_failed": "Kopyalama hatası"
+  },
+
   "rcon": {
     "rcon_connection_failed": "RCON bağlantısı başarısız oldu",
     "rcon_connection_established": "RCON bağlantısı kuruldu",
+    "rcon_connection_lost": "RCON bağlantısı kesildi",
     "error_encrypting_credentials": "Kimlik bilgilerini şifrerken bir hata oluştu",
     "error_decrypting_credentials": "Kimlik bilgilerinin şifresini çözerken bir hata oluştu",
     "error_saving_credentials": "Kimlik bilgilerinini kaydederken bir hata oluştu",
-    "error_loading_credentials": "Kimlik bilgilerini yüklerken bir hata oluştu"
+    "error_loading_credentials": "Kimlik bilgilerini yüklerken bir hata oluştu",
+
+    "no_options_to_update": "Güncellenecek ayar yok",
+    "failed_to_update_n_options": "{{n}} ayar güncellenemedi",
+    "options_updated_sync_failed": "Ayarlar güncellendi, ancak istemciyle senkronize edilemedi",
+    "options_saved_and_reloaded": "Ayarlar güncellendi ve yeniden yüklendi",
+    "options_updated": "Ayarlar güncellendi",
+
+    "addPlayer": {
+      "cant_add_player": "Oyuncu eklenemiyor",
+      "player_already_in_list": "Oyuncu {{name}} zaten listede"
+    },
+    "addPlayerToWhitelist": {
+      "single_success": "Oyuncu başarıyla eklendi",
+      "single_fail": "Oyuncu eklenemedi"
+    },
+    "removePlayersFromWhitelist": {
+      "all_success": "{{s}} oyuncu başarıyla kaldırıldı",
+      "all_fail": "{{f}} oyuncu kaldırılamadı",
+      "partial": "{{s}} oyuncu başarıyla kaldırıldı, {{f}} oyuncu kaldırılamadı",
+      "single_success": "Oyuncu {{name}} başarıyla kaldırıldı",
+      "single_fail": "Oyuncu {{name}} kaldırılamadı",
+
+      "cant_remove_player": "Oyuncu kaldırılamıyor",
+      "player_not_found_in_list": "Oyuncu {{name}} listede bulunamadı"
+    },
+    "banUsers": {
+      "all_success": "{{s}} kullanıcı yasaklandı",
+      "all_fail": "{{f}} kullanıcı yasaklanamadı",
+      "partial": "{{s}} kullanıcı yasaklandı, {{f}} kullanıcı yasaklanamadı",
+      "single_success": "Oyuncu {{name}} başarıyla yasaklandı",
+      "single_fail": "Oyuncu {{name}} yasaklanamadı"
+    },
+    "unbanUsers": {
+      "all_success": "{{s}} kullanıcı yasağı kaldırıldı",
+      "all_fail": "{{f}} kullanıcının yasağı kaldırılamadı",
+      "partial": "{{s}} kullanıcı yasağı kaldırıldı, {{f}} kullanıcının yasağı kaldırılamadı",
+      "single_success": "Oyuncu {{name}}'in yasağı başarıyla kaldırıldı",
+      "single_fail": "Oyuncu {{name}}'in yasağı kaldırılamadı"
+    },
+    "kickUsers": {
+      "all_success": "{{s}} kullanıcı atıldı",
+      "all_fail": "{{f}} kullanıcı atılamadı",
+      "partial": "{{s}} kullanıcı atıldı, {{f}} kullanıcı atılamadı",
+      "single_success": "Oyuncu {{name}} başarıyla atıldı",
+      "single_fail": "Oyuncu {{name}} atılamadı"
+    },
+    "godMode": {
+      "all_success": "{{s}} kullanıcı için tanrı modu etkinleştirildi",
+      "all_fail": "{{f}} kullanıcı için tanrı modu etkinleştirilemedi",
+      "partial": "{{s}} kullanıcı için tanrı modu etkinleştirildi, {{f}} kullanıcı için etkinleştirilemedi",
+      "single_success": "{{name}} için tanrı modu başarıyla etkinleştirildi",
+      "single_fail": "{{name}} için tanrı modu etkinleştirilemedi"
+    },
+    "teleport": {
+      "all_success": "{{s}} kullanıcı ışınlandı",
+      "all_fail": "{{f}} kullanıcı ışınlanamadı",
+      "partial": "{{s}} kullanıcı ışınlandı, {{f}} kullanıcı ışınlanamadı",
+      "single_success": "Oyuncu {{name}} başarıyla ışınlandı",
+      "single_fail": "Oyuncu {{name}} ışınlanamadı"
+    },
+    "setAccessLevel": {
+      "all_success": "{{s}} kullanıcı için erişim seviyesi ayarlandı",
+      "all_fail": "{{f}} kullanıcı için erişim seviyesi ayarlanamadı",
+      "partial": "{{s}} kullanıcı için erişim seviyesi ayarlandı, {{f}} kullanıcı için ayarlanamadı",
+      "single_success": "{{name}} için erişim seviyesi başarıyla ayarlandı",
+      "single_fail": "{{name}} için erişim seviyesi ayarlanamadı"
+    },
+    "createHorde": {
+      "all_success": "{{s}} kullanıcının yakınında bir sürü oluşturuldu",
+      "all_fail": "{{f}} kullanıcının yakınında bir sürü oluşturulamadı",
+      "partial": "{{s}} kullanıcının yakınında bir sürü oluşturuldu, {{f}} kullanıcının yakınında oluşturulamadı",
+      "single_success": "Oyuncu {{name}}'in yakınında başarıyla bir sürü oluşturuldu",
+      "single_fail": "Oyuncu {{name}}'in yakınında bir sürü oluşturulamadı"
+    },
+    "lightning": {
+      "all_success": "{{s}} kullanıcının yakınında yıldırım oluşturuldu",
+      "all_fail": "{{f}} kullanıcının yakınında yıldırım oluşturulamadı",
+      "partial": "{{s}} kullanıcının yakınında yıldırım oluşturuldu, {{f}} kullanıcının yakınında oluşturulamadı",
+      "single_success": "Oyuncu {{name}}'in yakınında başarıyla yıldırım oluşturuldu",
+      "single_fail": "Oyuncu {{name}}'in yakınında yıldırım oluşturulamadı"
+    },
+    "thunder": {
+      "all_success": "{{s}} kullanıcının yakınında gök gürültüsü oluşturuldu",
+      "all_fail": "{{f}} kullanıcının yakınında gök gürültüsü oluşturulamadı",
+      "partial": "{{s}} kullanıcının yakınında gök gürültüsü oluşturuldu, {{f}} kullanıcının yakınında oluşturulamadı",
+      "single_success": "Oyuncu {{name}}'in yakınında başarıyla gök gürültüsü oluşturuldu",
+      "single_fail": "Oyuncu {{name}}'in yakınında gök gürültüsü oluşturulamadı"
+    },
+    "addXP": {
+      "success": "XP eklendi",
+      "fail": "XP eklenemedi"
+    },
+    "addVehicle": {
+      "all_success": "{{s}} araç eklendi",
+      "all_fail": "{{f}} araç eklenemedi",
+      "partial": "{{s}} araç eklendi, {{f}} araç eklenemedi",
+      "single_success": "{{name}} için başarıyla bir araç eklendi",
+      "single_fail": "{{name}} için araç eklenemedi"
+    },
+    "addItems": {
+      "success": "Eşyalar başarıyla eklendi",
+      "fail": "Eşyalar eklenemedi"
+    },
+    "saveWorld": {
+      "single_success": "Dünya başarıyla kaydedildi",
+      "single_fail": "Dünya kaydedilemedi"
+    },
+    "stopServer": {
+      "single_success": "Sunucu durduruluyor",
+      "single_fail": "Sunucu durdurulamadı"
+    },
+    "checkModsNeedUpdate": {
+      "single_success": "Kontrol başladı. Sonuç log dosyasına ve sohbete yazılacak",
+      "single_fail": "Güncelleme gerektiren modları kontrol edilemedi"
+    },
+    "serverMessage": {
+      "single_success": "Sunucu mesajı gönderildi",
+      "single_fail": "Sunucu mesajı gönderilemedi"
+    },
+    "startRain": {
+      "single_success": "Yağmur başlatıldı",
+      "single_fail": "Yağmur başlatılamadı"
+    },
+    "startStorm": {
+      "single_success": "Fırtına başlatıldı",
+      "single_fail": "Fırtına başlatılamadı"
+    },
+    "stopRain": {
+      "single_success": "Yağmur durduruldu",
+      "single_fail": "Yağmur durdurulamadı"
+    },
+    "stopWeather": {
+      "single_success": "Hava durumu durduruldu",
+      "single_fail": "Hava durumu durdurulamadı"
+    },
+    "chopper": {
+      "single_success": "Helikopter başlatıldı",
+      "single_fail": "Helikopter başlatılamadı"
+    },
+    "gunshot": {
+      "single_success": "Silah sesi ateşlendi",
+      "single_fail": "Silah sesi ateşlenemedi"
+    },
+    "triggerAlarm": {
+      "single_success": "Alarm tetiklendi",
+      "single_fail": "Alarm tetiklenemedi"
+    },
+    "reloadOptions": {
+      "single_success": "Ayarlar yeniden yüklendi",
+      "single_fail": "Ayarlar yeniden yüklenemedi"
+    }
   },
 
   "settings": {
@@ -201,6 +358,11 @@
           "reset": "Sıfırla",
           "save_edit": "Düzenlemeyi Kaydet"
         }
+      },
+      "notifications": {
+        "error_saving_message": "Mesaj kaydedilirken bir hata oluştu",
+        "message_saved": "Mesaj kaydedildi",
+        "error_loading_message": "Mesaj yüklenirken bir hata oluştu"
       },
 
       "message": "Mesaj",
@@ -601,7 +763,12 @@
           },
 
           "additem": {
-            "button": "Eşya Ekle"
+            "button": "Eşya Ekle",
+            "notifications": {
+              "error_saving_items": "Eşyalar kaydedilirken bir hata oluştu",
+              "items_saved": "Eşyalar kaydedildi",
+              "error_loading_items": "Eşyalar yüklenirken bir hata oluştu"
+            }
           },
 
           "addvehicle": {
@@ -616,7 +783,12 @@
         "name": "Seçenekler",
 
         "reload_options": "Ayarları Yenile",
-        "search_options": "Ayar Ara..."
+        "search_options": "Ayar Ara...",
+        "notifications": {
+          "error_exporting_options": "Ayarlar dışarı aktarılırken bir hata oluştu",
+          "options_exported": "Ayarlar dışarı aktarıldı",
+          "error_importing_options": "Ayarlar içe aktarılırken bir hata oluştu"
+        }
       },
       "terminal": {
         "name": "Terminal"
