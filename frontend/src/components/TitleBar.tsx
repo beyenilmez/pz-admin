@@ -47,17 +47,17 @@ export default function TitleBar() {
             <Button
               size={"icon"}
               onClick={() => Quit()}
-              className="rounded-full h-4 w-4 bg-destructive hover:dark:brightness-110 hover:brightness-90"
+              className="rounded-full h-4 w-4 bg-destructive hover:dark:brightness-110 hover:brightness-90 cursor-default"
             />
             <Button
               size={"icon"}
               onClick={() => WindowMinimise()}
-              className="rounded-full h-4 w-4 bg-warning hover:dark:brightness-110 hover:brightness-90"
+              className="rounded-full h-4 w-4 bg-warning hover:dark:brightness-110 hover:brightness-90 cursor-default"
             />
             <Button
               size={"icon"}
               onClick={() => WindowToggleMaximise()}
-              className="rounded-full h-4 w-4 bg-success hover:dark:brightness-110 hover:brightness-90"
+              className="rounded-full h-4 w-4 bg-success hover:dark:brightness-110 hover:brightness-90 cursor-default"
             />
           </div>
         )}
