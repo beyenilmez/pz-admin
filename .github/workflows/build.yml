@@ -19,16 +19,22 @@ jobs:
             name: "pz-admin-linux-amd64"
             args: "-tags webkit2_41"
             deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
+            pre-build: ""
             post-build: "chmod +x build/bin/pz-admin-linux-amd64"
-            artifact: "./build/bin"
+            artifact: "./build/bin/pz-admin-linux-amd64"
             artifact-name: "Linux Desktop (amd64)"
           - os: ubuntu-latest
             platform: linux/arm64
             name: "pz-admin-linux-arm64"
             args: "-tags webkit2_41"
             deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev gcc-aarch64-linux-gnu"
+            pre-build: |
+              export CC=aarch64-linux-gnu-gcc
+              export CXX=aarch64-linux-gnu-g++
+              export CGO_ENABLED=1
+              export GOARCH=arm64
             post-build: "chmod +x build/bin/pz-admin-linux-arm64"
-            artifact: "./build/bin"
+            artifact: "./build/bin/pz-admin-linux-arm64"
             artifact-name: "Linux Desktop (arm64)"
           - os: macos-latest
             platform: darwin/universal
@@ -36,6 +42,7 @@ jobs:
             args: ""
             deps: |
               brew install mitchellh/gon/gon
+            pre-build: ""
             post-build: |
               chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
               ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app.zip
@@ -46,16 +53,18 @@ jobs:
             name: "pz-admin-windows-amd64.exe"
             args: ""
             deps: ""
+            pre-build: ""
             post-build: ""
-            artifact: "./build/bin"
+            artifact: "./build/bin/pz-admin-windows-amd64.exe"
             artifact-name: "Windows Desktop (amd64)"
           - os: windows-latest
             platform: windows/arm64
             name: "pz-admin-windows-arm64.exe"
             args: ""
             deps: ""
+            pre-build: ""
             post-build: ""
-            artifact: "./build/bin"
+            artifact: "./build/bin/pz-admin-windows-arm64.exe"
             artifact-name: "Windows Desktop (arm64)"
     runs-on: ${{ matrix.os }}
 
@@ -87,16 +96,14 @@ jobs:
       - name: Install Wails CLI
         run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
 
+      # Prebuild commands (if any)
+      - name: Pre-build
+        if: matrix.pre-build != ''
+        run: ${{ matrix.pre-build }}
+
       # Build the application
       - name: Build
-        run: |
-          if [ "${{ matrix.platform }}" = "linux/arm64" ]; then
-            export CC=aarch64-linux-gnu-gcc
-            export CXX=aarch64-linux-gnu-g++
-            export CGO_ENABLED=1
-          fi
-
-          wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
+        run: wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
 
       # Run post-build commands (if any)
       - name: Post-build
