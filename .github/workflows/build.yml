@@ -95,7 +95,6 @@ jobs:
             export CC=aarch64-linux-gnu-gcc
             export CXX=aarch64-linux-gnu-g++
             export CGO_ENABLED=1
-            export GOARCH=arm64
           fi
 
           wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
