@@ -26,7 +26,7 @@ jobs:
             platform: linux/arm64
             name: "pz-admin-linux-arm64"
             args: "-tags webkit2_41"
-            deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
+            deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev gcc-aarch64-linux-gnu"
             post-build: "chmod +x build/bin/pz-admin-linux-arm64"
             artifact: "./build/bin"
             artifact-name: "Linux Desktop (arm64)"
@@ -90,6 +90,12 @@ jobs:
       # Build the application
       - name: Build
         run: |
+          if [ "${{ matrix.platform }}" = "linux/arm64" ]; then
+            export CC=aarch64-linux-gnu-gcc
+            export CXX=aarch64-linux-gnu-g++
+            export CGO_ENABLED=1
+          fi
+
           wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
 
       # Run post-build commands (if any)
