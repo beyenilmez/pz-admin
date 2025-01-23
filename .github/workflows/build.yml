@@ -11,7 +11,6 @@ on:
 jobs:
   build:
     strategy:
-      fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
@@ -21,15 +20,7 @@ jobs:
             deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
             post-build: "chmod +x build/bin/pz-admin-linux-amd64"
             artifact: "./build/bin"
-            artifact-name: "Linux Desktop (amd64)"
-          - os: ubuntu-latest
-            platform: linux/arm64
-            name: "pz-admin-linux-arm64"
-            args: "-tags webkit2_41"
-            deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev gcc-aarch64-linux-gnu"
-            post-build: "chmod +x build/bin/pz-admin-linux-arm64"
-            artifact: "./build/bin"
-            artifact-name: "Linux Desktop (arm64)"
+            artifact-name: "Linux (amd64)"
           - os: macos-latest
             platform: darwin/universal
             name: "pz-admin"
@@ -38,9 +29,9 @@ jobs:
               brew install mitchellh/gon/gon
             post-build: |
               chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
-              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app.zip
-            artifact: "./build/bin/pz-admin-macos-universal.app.zip"
-            artifact-name: "macOS Universal Desktop"
+              ditto ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app
+            artifact: "./build/bin/pz-admin-macos-universal.app"
+            artifact-name: "macOS (universal)"
           - os: windows-latest
             platform: windows/amd64
             name: "pz-admin-windows-amd64.exe"
@@ -48,7 +39,7 @@ jobs:
             deps: ""
             post-build: ""
             artifact: "./build/bin"
-            artifact-name: "Windows Desktop (amd64)"
+            artifact-name: "Windows (amd64)"
           - os: windows-latest
             platform: windows/arm64
             name: "pz-admin-windows-arm64.exe"
@@ -56,62 +47,95 @@ jobs:
             deps: ""
             post-build: ""
             artifact: "./build/bin"
-            artifact-name: "Windows Desktop (arm64)"
+            artifact-name: "Windows (arm64)"
     runs-on: ${{ matrix.os }}
 
     steps:
-      # Checkout code
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           submodules: recursive
 
-      # Set up Go
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
           go-version: ^1.23
 
-      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22.x
 
-      # Install platform-specific dependencies
       - name: Install dependencies
         if: matrix.deps != ''
         run: ${{ matrix.deps }}
 
-      # Install Wails CLI
       - name: Install Wails CLI
         run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
 
-      # Build the application
       - name: Build
-        if: runner.os != 'Windows'
-        run: |
-          if [ "${{ matrix.platform }}" = "linux/arm64" ]; then
-            export CC=aarch64-linux-gnu-gcc
-            export CXX=aarch64-linux-gnu-g++
-            export CGO_ENABLED=1
-          fi
+        run: wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
 
-          wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
-
-      - name: Build on Windows
-        if: runner.os == 'Windows'
-        run: |
-          wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
-
-      # Run post-build commands (if any)
       - name: Post-build
         if: matrix.post-build != ''
         run: ${{ matrix.post-build }}
 
-      # Upload artifacts
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.artifact }}
+
+  extract-version:
+    if: github.ref == 'refs/heads/actions-test'
+    name: Extract version
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          version=$(jq -r '.info.productVersion' wails.json)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+  create-release:
+    if: github.ref == 'refs/heads/actions-test'
+    name: Create release
+    needs: [extract-version, build]
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        artifact-name:
+          - "Linux (amd64)"
+          - "macOS (universal)"
+          - "Windows (amd64)"
+          - "Windows (arm64)"
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ./artifacts
+
+      - name: Prepare Release
+        id: prepare_release
+        run: |
+          mkdir -p ./release
+          mv ./artifacts/* ./release
+
+      - name: Create Draft Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create v${{ needs.extract-version.outputs.version }} ./release/* \
+          --title "Release v${{ needs.extract-version.outputs.version }}" \
+          --draft \
+          --generate-notes
