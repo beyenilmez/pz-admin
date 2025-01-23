@@ -110,36 +110,46 @@ jobs:
     needs: [extract-version, build]
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        artifact-name:
-          - "Linux (amd64)"
-          - "macOS (universal)"
-          - "Windows (amd64)"
-          - "Windows (arm64)"
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Prepare release directory
+        run: mkdir -p ./release
 
-      - name: Download artifact
+      # Download artifacts
+      - name: Download macOS artifact (universal)
         uses: actions/download-artifact@v4
         with:
-          name: ${{ matrix.artifact-name }}
-          path: ./artifacts
+          name: macOS (universal)
+          path: ./release
 
+      - name: Download Windows artifact (amd64)
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows (amd64)
+          path: ./release
+
+      - name: Download Windows artifact (arm64)
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows (arm64)
+          path: ./release
+
+      - name: Download Linux artifact (amd64)
+        uses: actions/download-artifact@v4
+        with:
+          name: Linux (amd64)
+          path: ./release
+
+      # Extract macOS app
       - name: Extract macOS app
-        if: matrix.artifact-name == 'macOS (universal)'
         run: |
-          unzip ./artifacts/pz-admin-macos-universal.app.zip -d ./artifacts
-          mv ./artifacts/pz-admin.app ./release/pz-admin-macos-universal.app
-        shell: bash
+          unzip ./release/pz-admin-macos-universal.app.zip -d ./release
+          rm ./release/pz-admin-macos-universal.app.zip
 
-      - name: Prepare Other Artifacts
-        if: matrix.artifact-name != 'macOS (universal)'
-        run: |
-          mkdir -p ./release
-          mv ./artifacts/* ./release
+      - name: List release files
+        run: ls -l ./release
 
       - name: Create Draft Release
         env:
