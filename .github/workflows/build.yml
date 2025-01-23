@@ -29,7 +29,7 @@ jobs:
               brew install mitchellh/gon/gon
             post-build: |
               chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
-              ditto ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app
+              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app.zip
             artifact: "./build/bin/pz-admin-macos-universal.app"
             artifact-name: "macOS (universal)"
           - os: windows-latest
@@ -96,7 +96,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Extract version
         id: extract_version
@@ -119,14 +119,24 @@ jobs:
           - "Windows (arm64)"
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.artifact-name }}
           path: ./artifacts
 
-      - name: Prepare Release
-        id: prepare_release
+      - name: Extract macOS app
+        if: matrix.artifact-name == 'macOS (universal)'
+        run: |
+          unzip ./artifacts/pz-admin-macos-universal.app.zip -d ./artifacts
+          mv ./artifacts/pz-admin.app ./release/pz-admin-macos-universal.app
+        shell: bash
+
+      - name: Prepare Other Artifacts
+        if: matrix.artifact-name != 'macOS (universal)'
         run: |
           mkdir -p ./release
           mv ./artifacts/* ./release
