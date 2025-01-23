@@ -142,12 +142,6 @@ jobs:
           name: Linux (amd64)
           path: ./release
 
-      # Extract macOS app
-      - name: Extract macOS app
-        run: |
-          unzip ./release/pz-admin-macos-universal.app.zip -d ./release
-          rm ./release/pz-admin-macos-universal.app.zip
-
       - name: List release files
         run: ls -l ./release
 
