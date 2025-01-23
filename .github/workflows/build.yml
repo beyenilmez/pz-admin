@@ -30,7 +30,7 @@ jobs:
             post-build: |
               chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
               ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app.zip
-            artifact: "./build/bin/pz-admin-macos-universal.app"
+            artifact: "./build/bin/pz-admin-macos-universal.app.zip"
             artifact-name: "macOS (universal)"
           - os: windows-latest
             platform: windows/amd64
