@@ -70,6 +70,10 @@ export function Format(arg1, arg2) {
   return window['go']['main']['App']['Format'](arg1, arg2);
 }
 
+export function GetArch() {
+  return window['go']['main']['App']['GetArch']();
+}
+
 export function GetConfig() {
   return window['go']['main']['App']['GetConfig']();
 }

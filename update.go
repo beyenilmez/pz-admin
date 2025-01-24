@@ -30,6 +30,19 @@ type Release struct {
 }
 
 func (app *App) CheckForUpdate() UpdateInfo {
+	os := app.GetOs()     // windows, linux, macos
+	arch := app.GetArch() // amd64, arm64
+
+	if !(os == "windows" || os == "linux" || os == "macos") {
+		return UpdateInfo{
+			UpdateAvailable: false,
+			CurrentVersion:  version,
+			LatestVersion:   "",
+			ReleaseNotes:    "",
+			DownloadUrl:     "",
+		}
+	}
+
 	var updateInfo UpdateInfo = UpdateInfo{
 		UpdateAvailable: false,
 		CurrentVersion:  version,
@@ -44,7 +57,7 @@ func (app *App) CheckForUpdate() UpdateInfo {
 	config.LastUpdateCheck = &lastUpdateCheck
 
 	repoOwner := "beyenilmez"
-	repoName := "pz-admin"
+	repoName := "folder-creator"
 
 	// GitHub API endpoint to fetch latest release
 	apiUrl := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", repoOwner, repoName)
@@ -93,7 +106,27 @@ func (app *App) CheckForUpdate() UpdateInfo {
 	releaseNotes := release.ReleaseNotes
 	prerelease := release.Prerelease
 	name := release.Name
-	downloadUrl := fmt.Sprintf("https://github.com/%s/%s/releases/download/%s/pz-admin.exe", repoOwner, repoName, latestVersion)
+
+	versionNoPrefix := strings.TrimPrefix(latestVersion, "v")
+
+	// Determine the correct download URL based on OS and architecture
+	var fileName string
+	switch os {
+	case "windows":
+		if arch == "amd64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_windows_amd64.exe"
+		} else if arch == "arm64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_windows_arm64.exe"
+		}
+	case "linux":
+		if arch == "amd64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_linux_amd64"
+		} else if arch == "arm64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_linux_arm64"
+		}
+	}
+
+	downloadUrl := fmt.Sprintf("https://github.com/%s/%s/releases/download/%s/%s", repoOwner, repoName, latestVersion, fileName)
 
 	// Parse current and latest versions
 	parsedVersion, err := semver.ParseTolerant(version)

@@ -36,6 +36,8 @@ export function ExportOptionsDialog(arg1:main.PzOptions):Promise<void>;
 
 export function Format(arg1:string,arg2:Array<any>):Promise<string>;
 
+export function GetArch():Promise<string>;
+
 export function GetConfig():Promise<main.Config>;
 
 export function GetConfigField(arg1:string):Promise<any>;
