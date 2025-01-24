@@ -355,7 +355,7 @@ export function AddItemDialog({
       <div className="w-full">
         <div className="w-full flex justify-between pr-4 mb-4">
           <div className="flex gap-6">
-            <h3 className="text-lg font-semibold">{tc("tools.item_browser.selected_items")}</h3>
+            <h3 className="text-lg font-semibold whitespace-nowrap">{tc("tools.item_browser.selected_items")}</h3>
             <div className="flex gap-2 items-center h-8">
               <Checkbox id="show-ids" checked={showIds} onCheckedChange={(checked) => setShowIds(checked as boolean)} />
               <Label htmlFor="show-ids">{tc("tools.item_browser.show_ids")}</Label>
@@ -374,7 +374,7 @@ export function AddItemDialog({
           </Button>
         </div>
         <ScrollArea className="pr-4 mb-4" style={{ height: height ? `calc(${height} - 2.5rem)` : "31rem" }}>
-          <div className="grid grid-cols-2 2xl:grid-cols-3">{renderSelectedItems()}</div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">{renderSelectedItems()}</div>
           <div ref={scrollRef} />
         </ScrollArea>
         <div className="flex justify-between">

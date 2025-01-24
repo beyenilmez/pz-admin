@@ -52,7 +52,7 @@ export default function Tools() {
               onClose={() => {}}
               isOpen
               initialNames={[]}
-              height={`calc(100vh - 11.5rem ${config?.useSystemTitleBar ? "+ 2rem" : ""})`}
+              height={`calc(100vh - 9.5rem ${config?.useSystemTitleBar ? "+ 2rem" : ""})`}
             />
           )}
         </div>
