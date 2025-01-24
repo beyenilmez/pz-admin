@@ -20,6 +20,7 @@ type UpdateInfo struct {
 	Name            string `json:"name"`
 	ReleaseNotes    string `json:"releaseNotes"`
 	DownloadUrl     string `json:"downloadUrl"`
+	ReleaseUrl      string `json:"releaseUrl"`
 }
 
 type Release struct {
@@ -40,6 +41,7 @@ func (app *App) CheckForUpdate() UpdateInfo {
 			LatestVersion:   "",
 			ReleaseNotes:    "",
 			DownloadUrl:     "",
+			ReleaseUrl:      "",
 		}
 	}
 
@@ -49,6 +51,7 @@ func (app *App) CheckForUpdate() UpdateInfo {
 		LatestVersion:   "",
 		ReleaseNotes:    "",
 		DownloadUrl:     "",
+		ReleaseUrl:      "",
 	}
 	updateInfo.CurrentVersion = version
 
@@ -158,6 +161,7 @@ func (app *App) CheckForUpdate() UpdateInfo {
 		updateInfo.Name = name
 		updateInfo.ReleaseNotes = releaseNotes
 		updateInfo.DownloadUrl = downloadUrl
+		updateInfo.ReleaseUrl = fmt.Sprintf("https://github.com/%s/%s/releases/latest", repoOwner, repoName)
 	} else {
 		runtime.LogInfo(app.ctx, "You have the latest version.")
 	}

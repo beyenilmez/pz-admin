@@ -504,6 +504,7 @@ export namespace main {
 	    name: string;
 	    releaseNotes: string;
 	    downloadUrl: string;
+	    releaseUrl: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new UpdateInfo(source);
@@ -517,6 +518,7 @@ export namespace main {
 	        this.name = source["name"];
 	        this.releaseNotes = source["releaseNotes"];
 	        this.downloadUrl = source["downloadUrl"];
+	        this.releaseUrl = source["releaseUrl"];
 	    }
 	}
 
