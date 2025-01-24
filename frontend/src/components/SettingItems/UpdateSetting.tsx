@@ -106,10 +106,21 @@ export function UpdateSetting() {
           <Button onClick={handleCheckForUpdate}>{t("settings.setting.update.check_for_updates")}</Button>
         </div>
       </div>
-      <div className="p-1.5">
-        <SettingLabel>{updateInfo.name}</SettingLabel>
-        <SettingDescription className="ml-2">
+      <div className="p-1.5 pt-0" hidden={!updateInfo.updateAvailable}>
+        <Button
+          variant={"link"}
+          className="p-0 m-0 text-md text-foreground"
+          asChild
+          onClick={() => {
+            BrowserOpenURL(updateInfo.releaseUrl);
+          }}
+        >
+          <SettingLabel className="cursor-pointer">{updateInfo.name} </SettingLabel>
+        </Button>
+
+        <SettingDescription>
           <Markdown
+            className="ml-2"
             components={{
               a: ({ href, children }) => (
                 <a

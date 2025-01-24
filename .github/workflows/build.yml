@@ -1,0 +1,206 @@
+name: Build
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "main"
+      - "development"
+  pull_request:
+    branches:
+      - "main"
+      - "development"
+
+jobs:
+  extract-version:
+    name: Extract version
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          version=$(jq -r '.info.productVersion' wails.json)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
+  build:
+    needs: extract-version
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            platform: linux/amd64
+            name: pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
+            args: "-tags webkit2_41"
+            deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev alien"
+            post-build: |
+              chmod +x build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
+              mkdir -p build/deb/DEBIAN
+              mkdir -p build/deb/usr/local/bin
+              mkdir -p build/deb/usr/share/applications
+              mkdir -p build/deb/usr/share/icons/hicolor/256x256/apps
+
+              # Copy binary
+              cp build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64 build/deb/usr/local/bin/pz-admin
+
+              # Create .desktop file
+              cat <<EOF > build/deb/usr/share/applications/pz-admin.desktop
+              [Desktop Entry]
+              Version=${{ needs.extract-version.outputs.version }}
+              Type=Application
+              Name=PZ Admin
+              GenericName=Project Zomboid Server Administration Tool
+              Comment=Project Zomboid Server Administration Tool
+              Exec=/usr/local/bin/pz-admin
+              Icon=pz-admin
+              Terminal=false
+              Categories=Utility;
+              StartupNotify=false
+              EOF
+    
+              # Copy icon
+              cp frontend/src/assets/appicon.png build/deb/usr/share/icons/hicolor/256x256/apps/pz-admin.png
+
+              # Create control file
+              echo "Package: pz-admin" > build/deb/DEBIAN/control
+              echo "Version: ${{ needs.extract-version.outputs.version }}" >> build/deb/DEBIAN/control
+              echo "Section: utils" >> build/deb/DEBIAN/control
+              echo "Priority: optional" >> build/deb/DEBIAN/control
+              echo "Architecture: amd64" >> build/deb/DEBIAN/control
+              echo "Maintainer: Bedirhan Yenilmez <yenilmezbedirhan@gmail.com>" >> build/deb/DEBIAN/control
+              echo "Description: Project Zomboid Server Administration Tool" >> build/deb/DEBIAN/control
+
+              # Build deb
+              dpkg-deb --build build/deb build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.deb
+
+               # Convert .deb to .rpm
+              sudo alien --to-rpm --scripts build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.deb
+    
+              # Move .rpm to build/bin
+              mv pz-admin-${{ needs.extract-version.outputs.version }}-2.x86_64.rpm build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.rpm
+            artifact: "./build/bin"
+            artifact-name: "Linux (amd64)"
+          - os: macos-latest
+            platform: darwin/universal
+            name: "pz-admin"
+            args: ""
+            deps: |
+              brew install mitchellh/gon/gon
+            post-build: |
+              chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
+              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip
+            artifact: "./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip"
+            artifact-name: "macOS (universal)"
+          - os: windows-latest
+            platform: windows/amd64
+            name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_amd64.exe
+            args: "-nsis"
+            deps: ""
+            post-build: "ren ./build/bin/pz-admin-amd64-installer.exe pz-admin_${{ needs.extract-version.outputs.version }}_windows_amd64_installer.exe"
+            artifact: "./build/bin"
+            artifact-name: "Windows (amd64)"
+          - os: windows-latest
+            platform: windows/arm64
+            name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_arm64.exe
+            args: "-nsis"
+            deps: ""
+            post-build: "ren ./build/bin/pz-admin-arm64-installer.exe pz-admin_${{ needs.extract-version.outputs.version }}_windows_arm64_installer.exe"
+            artifact: "./build/bin"
+            artifact-name: "Windows (arm64)"
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: ^1.23
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+
+      - name: Install dependencies
+        if: matrix.deps != ''
+        run: ${{ matrix.deps }}
+
+      - name: Install Wails CLI
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
+
+      - name: Build
+        run: wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}
+
+      - name: Post-build
+        if: matrix.post-build != ''
+        run: ${{ matrix.post-build }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact-name }}
+          path: ${{ matrix.artifact }}
+
+  create-release:
+    if: github.ref == 'refs/heads/main'
+    name: Create release
+    needs: [extract-version, build]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare release directory
+        run: mkdir -p ./release
+
+      # Download artifacts
+      - name: Download macOS artifact (universal)
+        uses: actions/download-artifact@v4
+        with:
+          name: macOS (universal)
+          path: ./release
+
+      - name: Download Windows artifact (amd64)
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows (amd64)
+          path: ./release
+
+      - name: Download Windows artifact (arm64)
+        uses: actions/download-artifact@v4
+        with:
+          name: Windows (arm64)
+          path: ./release
+
+      - name: Download Linux artifact (amd64)
+        uses: actions/download-artifact@v4
+        with:
+          name: Linux (amd64)
+          path: ./release
+
+      - name: List release files
+        run: ls -l ./release
+
+      - name: Create Draft Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create v${{ needs.extract-version.outputs.version }} ./release/* \
+          --title "Release v${{ needs.extract-version.outputs.version }}" \
+          --draft \
+          --generate-notes

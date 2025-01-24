@@ -56,9 +56,11 @@ export default function Settings() {
         <TabsTrigger value="advanced" onClick={() => setTab("advanced")} className="px-12 py-2 w-full">
           {t("settings.categories.advanced")}
         </TabsTrigger>
-        <TabsTrigger value="update" onClick={() => setTab("update")} className="px-12 py-2 w-full">
-          {t("settings.categories.update")}
-        </TabsTrigger>
+        {(os === "windows" || os === "linux") && (
+          <TabsTrigger value="update" onClick={() => setTab("update")} className="px-12 py-2 w-full">
+            {t("settings.categories.update")}
+          </TabsTrigger>
+        )}
       </TabsList>
 
       <TabsContent

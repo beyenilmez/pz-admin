@@ -124,6 +124,15 @@ func config_init() error {
 		merge_defaults()
 	}
 
+	if GetOs() == "macos" {
+		falseValue := false
+		config.CheckForUpdates = &falseValue
+	}
+	if GetOs() != "windows" {
+		opacityValue := 100
+		config.Opacity = &opacityValue
+	}
+
 	return nil
 }
 

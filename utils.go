@@ -136,7 +136,7 @@ func (a *App) CopyToClipboard(text string, sendNotification bool) {
 	}
 }
 
-func (a *App) GetOs() string {
+func GetOs() string {
 	if r.GOOS == "windows" {
 		return "windows"
 	} else if r.GOOS == "darwin" {
@@ -144,4 +144,12 @@ func (a *App) GetOs() string {
 	} else {
 		return "linux"
 	}
+}
+
+func (a *App) GetOs() string {
+	return GetOs()
+}
+
+func (a *App) GetArch() string {
+	return r.GOARCH
 }

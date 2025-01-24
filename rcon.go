@@ -356,6 +356,11 @@ func (app *App) SaveCredentials(credentials Credentials) bool {
 }
 
 func (app *App) LoadCredentials() Credentials {
+	if !file_exists(credentialsPath) {
+		runtime.LogInfof(app.ctx, "Credentials file not found: %s", credentialsPath)
+		return Credentials{}
+	}
+
 	var credentials Credentials
 	err := readJSON(credentialsPath, &credentials)
 	if err != nil {
