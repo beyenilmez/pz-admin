@@ -38,7 +38,8 @@ jobs:
             name: pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
             args: "-tags webkit2_41"
             deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
-            post-build: "chmod +x build/bin/pz-admin-linux-amd64"
+            post-build: |
+              chmod +x build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
             artifact: "./build/bin"
             artifact-name: "Linux (amd64)"
           - os: macos-latest
@@ -50,7 +51,7 @@ jobs:
             post-build: |
               chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
               ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip
-            artifact: "./build/bin"
+            artifact: "./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip"
             artifact-name: "macOS (universal)"
           - os: windows-latest
             platform: windows/amd64
