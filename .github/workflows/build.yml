@@ -37,7 +37,7 @@ jobs:
             platform: linux/amd64
             name: pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
             args: "-tags webkit2_41"
-            deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
+            deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev alien"
             post-build: |
               chmod +x build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
               mkdir -p build/deb/DEBIAN
@@ -77,6 +77,12 @@ jobs:
 
               # Build deb
               dpkg-deb --build build/deb build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.deb
+
+               # Convert .deb to .rpm
+              sudo alien --to-rpm --scripts build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.deb
+    
+              # Move .rpm to build/bin
+              mv pz-admin-${{ needs.extract-version.outputs.version }}-2.x86_64.rpm build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.rpm
             artifact: "./build/bin"
             artifact-name: "Linux (amd64)"
           - os: macos-latest
