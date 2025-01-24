@@ -9,13 +9,33 @@ on:
       - "actions-test"
 
 jobs:
+  extract-version:
+    if: github.ref == 'refs/heads/actions-test'
+    name: Extract version
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.extract_version.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract version
+        id: extract_version
+        run: |
+          version=$(jq -r '.info.productVersion' wails.json)
+          echo "version=$version" >> $GITHUB_OUTPUT
+
   build:
+    needs: extract-version
+
     strategy:
       matrix:
         include:
           - os: ubuntu-latest
             platform: linux/amd64
-            name: "pz-admin-linux-amd64"
+            name: pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
             args: "-tags webkit2_41"
             deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
             post-build: "chmod +x build/bin/pz-admin-linux-amd64"
@@ -29,12 +49,12 @@ jobs:
               brew install mitchellh/gon/gon
             post-build: |
               chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
-              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin-macos-universal.app.zip
-            artifact: "./build/bin/pz-admin-macos-universal.app.zip"
+              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip
+            artifact: "./build/bin"
             artifact-name: "macOS (universal)"
           - os: windows-latest
             platform: windows/amd64
-            name: "pz-admin-windows-amd64.exe"
+            name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_amd64.exe
             args: ""
             deps: ""
             post-build: ""
@@ -42,7 +62,7 @@ jobs:
             artifact-name: "Windows (amd64)"
           - os: windows-latest
             platform: windows/arm64
-            name: "pz-admin-windows-arm64.exe"
+            name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_arm64.exe
             args: ""
             deps: ""
             post-build: ""
@@ -86,24 +106,6 @@ jobs:
           name: ${{ matrix.artifact-name }}
           path: ${{ matrix.artifact }}
 
-  extract-version:
-    if: github.ref == 'refs/heads/actions-test'
-    name: Extract version
-    runs-on: ubuntu-latest
-
-    outputs:
-      version: ${{ steps.extract_version.outputs.version }}
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Extract version
-        id: extract_version
-        run: |
-          version=$(jq -r '.info.productVersion' wails.json)
-          echo "version=$version" >> $GITHUB_OUTPUT
-
   create-release:
     if: github.ref == 'refs/heads/actions-test'
     name: Create release
@@ -113,7 +115,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Prepare release directory
         run: mkdir -p ./release
 
