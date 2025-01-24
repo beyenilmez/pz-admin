@@ -4,13 +4,18 @@ permissions:
   contents: write
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - "actions-test"
+      - "main"
+      - "development"
+  pull_request:
+    branches:
+      - "main"
+      - "development"
 
 jobs:
   extract-version:
-    if: github.ref == 'refs/heads/actions-test'
     name: Extract version
     runs-on: ubuntu-latest
 
@@ -151,7 +156,7 @@ jobs:
           path: ${{ matrix.artifact }}
 
   create-release:
-    if: github.ref == 'refs/heads/actions-test'
+    if: github.ref == 'refs/heads/main'
     name: Create release
     needs: [extract-version, build]
     runs-on: ubuntu-latest
