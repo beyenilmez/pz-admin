@@ -40,6 +40,17 @@ jobs:
             deps: "sudo apt-get update && sudo apt-get install -y libgtk-3-0 libwebkit2gtk-4.1-dev"
             post-build: |
               chmod +x build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
+              mkdir -p build/deb/DEBIAN
+              mkdir -p build/deb/usr/local/bin
+              cp build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64 build/deb/usr/local/bin/pz-admin
+              echo "Package: pz-admin" > build/deb/DEBIAN/control
+              echo "Version: ${{ needs.extract-version.outputs.version }}" >> build/deb/DEBIAN/control
+              echo "Section: utils" >> build/deb/DEBIAN/control
+              echo "Priority: optional" >> build/deb/DEBIAN/control
+              echo "Architecture: amd64" >> build/deb/DEBIAN/control
+              echo "Maintainer: Bedirhan Yenilmez <yenilmezbedirhan@gmail.com>" >> build/deb/DEBIAN/control
+              echo "Description: Project Zomboid Server Administration Tool" >> build/deb/DEBIAN/control
+              dpkg-deb --build build/deb build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.deb
             artifact: "./build/bin"
             artifact-name: "Linux (amd64)"
           - os: macos-latest
