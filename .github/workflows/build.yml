@@ -90,17 +90,6 @@ jobs:
               mv pz-admin-${{ needs.extract-version.outputs.version }}-2.x86_64.rpm build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.rpm
             artifact: "./build/bin"
             artifact-name: "Linux (amd64)"
-          - os: macos-latest
-            platform: darwin/universal
-            name: "pz-admin"
-            args: ""
-            deps: |
-              brew install mitchellh/gon/gon
-            post-build: |
-              chmod +x build/bin/pz-admin.app/Contents/MacOS/pz-admin
-              ditto -c -k --keepParent ./build/bin/pz-admin.app ./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip
-            artifact: "./build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_macos.zip"
-            artifact-name: "macOS (universal)"
           - os: windows-latest
             platform: windows/amd64
             name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_amd64.exe
@@ -169,12 +158,6 @@ jobs:
         run: mkdir -p ./release
 
       # Download artifacts
-      - name: Download macOS artifact (universal)
-        uses: actions/download-artifact@v4
-        with:
-          name: macOS (universal)
-          path: ./release
-
       - name: Download Windows artifact (amd64)
         uses: actions/download-artifact@v4
         with:
