@@ -42,7 +42,31 @@ jobs:
               chmod +x build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64
               mkdir -p build/deb/DEBIAN
               mkdir -p build/deb/usr/local/bin
+              mkdir -p build/deb/usr/share/applications
+              mkdir -p build/deb/usr/share/icons/hicolor/256x256/apps
+
+              # Copy binary
               cp build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64 build/deb/usr/local/bin/pz-admin
+
+              # Create .desktop file
+              cat <<EOF > build/deb/usr/share/applications/pz-admin.desktop
+              [Desktop Entry]
+              Version=${{ needs.extract-version.outputs.version }}
+              Type=Application
+              Name=PZ Admin
+              GenericName=Project Zomboid Server Administration Tool
+              Comment=Project Zomboid Server Administration Tool
+              Exec=/usr/local/bin/pz-admin
+              Icon=pz-admin
+              Terminal=false
+              Categories=Utility;
+              StartupNotify=false
+              EOF
+    
+              # Copy icon
+              cp frontend/src/assets/appicon.png build/deb/usr/share/icons/hicolor/256x256/apps/pz-admin.png
+
+              # Create control file
               echo "Package: pz-admin" > build/deb/DEBIAN/control
               echo "Version: ${{ needs.extract-version.outputs.version }}" >> build/deb/DEBIAN/control
               echo "Section: utils" >> build/deb/DEBIAN/control
@@ -50,6 +74,8 @@ jobs:
               echo "Architecture: amd64" >> build/deb/DEBIAN/control
               echo "Maintainer: Bedirhan Yenilmez <yenilmezbedirhan@gmail.com>" >> build/deb/DEBIAN/control
               echo "Description: Project Zomboid Server Administration Tool" >> build/deb/DEBIAN/control
+
+              # Build deb
               dpkg-deb --build build/deb build/bin/pz-admin_${{ needs.extract-version.outputs.version }}_linux_amd64.deb
             artifact: "./build/bin"
             artifact-name: "Linux (amd64)"
