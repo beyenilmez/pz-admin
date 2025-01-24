@@ -60,7 +60,7 @@ func (app *App) CheckForUpdate() UpdateInfo {
 	config.LastUpdateCheck = &lastUpdateCheck
 
 	repoOwner := "beyenilmez"
-	repoName := "folder-creator"
+	repoName := "pz-admin"
 
 	// GitHub API endpoint to fetch latest release
 	apiUrl := fmt.Sprintf("https://api.github.com/repos/%s/%s/releases/latest", repoOwner, repoName)
