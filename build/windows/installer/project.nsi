@@ -103,10 +103,7 @@ Section "uninstall"
     !insertmacro wails.setShellContext
     SetShellVarContext current
 
-    RMDir /r "$AppData\pz-admin\EBWebView" # Remove the WebView2 DataPath
-    RMDir /r "$AppData\pz-admin\external" # Remove external programs
-    RMDir /r "$AppData\pz-admin\temp" # Remove temp folder
-
+    RMDir /r "$AppData\pz-admin" # Remove the config dir
     RMDir /r $INSTDIR
 
     Delete "$SMPROGRAMS\${INFO_PRODUCTNAME}.lnk"
