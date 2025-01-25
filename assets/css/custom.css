@@ -1,0 +1,60 @@
+body {
+  overflow-x: hidden;
+}
+
+.slider-container {
+  overflow: hidden;
+  position: relative;
+  width: 100vw;
+  max-width: 150rem;
+  transform: translateX(-50%);
+  left: 50%;
+  box-sizing: border-box;
+}
+@media screen and (max-width: 1280px) {
+  .slider-container {
+    width: 100%;
+  }
+}
+
+.swiper-container {
+  width: 100%;
+}
+
+.swiper-slide img {
+  width: 100%;
+  height: auto;
+  display: block;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.swiper-pagination {
+  bottom: 20px !important;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.swiper-pagination-bullet {
+  opacity: 0.8;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+#download-buttons {
+  min-height: 4.25rem;
+}
+@media screen and (max-width: 673px) {
+  #download-buttons {
+    display: none;
+  }
+}

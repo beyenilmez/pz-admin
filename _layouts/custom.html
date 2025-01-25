@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+
+{% seo %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#157878">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/custom.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% include head-custom.html %}
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header" role="banner">
+      <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
+      <h2 class="project-tagline">{{ page.description | default: site.description | default: site.github.project_tagline }}</h2>
+      {% if site.github.is_project_page %}
+        <a href="{{ site.github.repository_url }}" class="btn">
+            <i class="fa-brands fa-github fa-xl"></i>&nbsp;
+            View on GitHub
+        </a>
+        <a href="https://github.com/beyenilmez/pz-admin/releases/latest" class="btn">
+            <i class="fa-solid fa-rocket"></i>&nbsp;
+            Latest Release
+        </a>
+      {% endif %}
+      {% if site.show_downloads %}
+        <div id="download-buttons"></div>
+      {% endif %}
+    </header>
+
+    <main id="content" class="main-content" role="main">
+      {{ content }}
+
+      <footer class="site-footer">
+        {% if site.github.is_project_page %}
+          <span class="site-footer-owner"><a href="{{ site.github.repository_url }}">{{ site.github.repository_name }}</a> is maintained by <a href="{{ site.github.owner_url }}">{{ site.github.owner_name }}</a>.</span>
+        {% endif %}
+      </footer>
+    </main>
+
+    <script>
+        // Function to detect architecture
+        function detectArchitecture() {
+          let arch = "amd64"; // Default architecture
+      
+          if (navigator.userAgentData) {
+            // Modern API
+            arch = navigator.userAgentData.platform.includes("arm") ? "arm64" : "amd64";
+          } else if (navigator.userAgent.toLowerCase().includes("arm")) {
+            // Fallback for older browsers
+            arch = "arm64";
+          }
+      
+          return arch;
+        }
+      
+        // Function to fetch the version from wails.json
+        async function fetchVersionFromWails() {
+          try {
+            const response = await fetch(
+              "https://raw.githubusercontent.com/beyenilmez/pz-admin/main/wails.json"
+            );
+            const config = await response.json();
+            return config.info.productVersion; // Return the version from the file
+          } catch (error) {
+            console.error("Error fetching wails.json:", error);
+            return null; // Fallback if the request fails
+          }
+        }
+      
+        // Function to update download links dynamically
+        async function updateDownloadLinks() {
+          const arch = detectArchitecture();
+          const version = await fetchVersionFromWails();
+      
+          if (!version) {
+            document.getElementById("download-buttons").innerHTML =
+              "<p>Error fetching the latest version. Please try again later.</p>";
+            return;
+          }
+      
+          const downloadContainer = document.getElementById("download-buttons");
+      
+          // Dynamically generate download links
+          const downloads = {
+            windows: {
+              amd64: `pz-admin_${version}_windows_amd64.exe`,
+              amd64_installer: `pz-admin_${version}_windows_amd64_installer.exe`,
+              arm64: `pz-admin_${version}_windows_arm64.exe`,
+              arm64_installer: `pz-admin_${version}_windows_arm64_installer.exe`,
+            },
+            linux: {
+              amd64: `pz-admin_${version}_linux_amd64`,
+              deb: `pz-admin_${version}_linux_amd64.deb`,
+              rpm: `pz-admin_${version}_linux_amd64.rpm`,
+            },
+          };
+      
+          // Render the appropriate download links
+          downloadContainer.innerHTML = `
+            <a href="https://github.com/beyenilmez/pz-admin/releases/download/v${version}/${downloads.windows[arch]}" class="btn">
+              <i class="fa-brands fa-windows fa-xl"></i>&nbsp;
+              Windows (${arch})
+            </a>
+            <a href="https://github.com/beyenilmez/pz-admin/releases/download/v${version}/${downloads.windows[arch + "_installer"]}" class="btn">
+              <i class="fa-brands fa-windows fa-xl"></i>&nbsp;
+              Windows Installer (${arch})
+            </a>
+            <a href="https://github.com/beyenilmez/pz-admin/releases/download/v${version}/${downloads.linux.amd64}" class="btn">
+              <i class="fa-brands fa-linux fa-xl"></i>&nbsp;
+              Linux (amd64)
+            </a>
+            <a href="https://github.com/beyenilmez/pz-admin/releases/download/v${version}/${downloads.linux.deb}" class="btn">
+              <i class="fa-brands fa-debian fa-xl"></i>&nbsp;
+              .deb (amd64)
+            </a>
+            <a href="https://github.com/beyenilmez/pz-admin/releases/download/v${version}/${downloads.linux.rpm}" class="btn">
+              <i class="fa-brands fa-redhat fa-xl"></i>&nbsp;
+              .rpm (amd64)
+            </a>
+          `;
+        }
+      
+        // Run the function on page load
+        document.addEventListener("DOMContentLoaded", updateDownloadLinks);
+
+        function initializeSwiper() {
+            // Destroy any existing Swiper instance if already initialized
+            if (window.swiperInstance) {
+                window.swiperInstance.destroy(true, true);
+            }
+      
+            // Reinitialize Swiper with dynamic settings
+            const slidesPerView = window.innerWidth < 1280 ? 1 : 1.6;
+      
+            window.swiperInstance = new Swiper('.swiper-container', {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                slidesPerView: slidesPerView, // Dynamically calculated slides per view
+                centeredSlides: true,
+                spaceBetween: 10, // Add spacing between slides
+                });
+            }
+            // Initialize Swiper on DOMContentLoaded
+            document.addEventListener('DOMContentLoaded', initializeSwiper);
+  
+            // Reinitialize Swiper on window resize for responsiveness
+            window.addEventListener('resize', initializeSwiper);
+    </script>
+  </body>
+</html>
