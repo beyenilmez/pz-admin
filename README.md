@@ -1,10 +1,10 @@
 # PZ Admin
 
-**PZ Admin** is a Windows and Linux desktop application to manage Project Zomboid servers via RCON.
+**PZ Admin** is a Windows and Linux desktop application for managing Project Zomboid servers with RCON.
 
 ## Installation
 
-Go to [the releases page](https://github.com/beyenilmez/pz-admin/releases/latest) and download the matching binary for your platform.
+Download from the [website](https://beyenilmez.github.io/pz-admin) or go to [the releases page](https://github.com/beyenilmez/pz-admin/releases/latest) and download the matching binary for your platform.
 Windows(amd64, arm64) and Linux(amd64) are supported.
 
 ## Table of Contents
