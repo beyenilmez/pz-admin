@@ -19,6 +19,8 @@
 # in the templates via {{ site.myvariable }}.
 
 show_downloads: true
+google_analytics: G-1L92WWDEFN
+
 title: PZ Admin
 description: PZ Admin is a Windows and Linux desktop application for managing Project Zomboid servers with RCON.
 baseurl: "/pz-admin"
