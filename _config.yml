@@ -21,6 +21,8 @@
 show_downloads: true
 title: PZ Admin
 description: PZ Admin is a Windows and Linux desktop application for managing Project Zomboid servers with RCON.
+baseurl: "/pz-admin"
+url: "https://beyenilmez.github.io"
 
 # Build settings
 remote_theme: pages-themes/cayman@v0.2.0
