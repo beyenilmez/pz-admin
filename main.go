@@ -11,6 +11,8 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/logger"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
+	"github.com/wailsapp/wails/v2/pkg/options/linux"
+	"github.com/wailsapp/wails/v2/pkg/options/mac"
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
@@ -19,6 +21,9 @@ var assets embed.FS
 
 //go:embed build/appicon.png
 var appIcon []byte
+
+//go:embed build/windows/icon.ico
+var appIconIco []byte
 
 //go:embed wails.json
 var wailsJSON []byte
@@ -90,8 +95,8 @@ func main() {
 		Title:             "PZ Admin",
 		Width:             1280,
 		Height:            800,
-		MinWidth:          1024,
-		MinHeight:         768,
+		MinWidth:          974,
+		MinHeight:         720,
 		DisableResize:     false,
 		Frameless:         !*config.UseSystemTitleBar,
 		StartHidden:       true,
@@ -126,6 +131,30 @@ func main() {
 			WebviewUserDataPath: path.Join(appData, "pz-admin"),
 			ZoomFactor:          1.0,
 			DisablePinchZoom:    true,
+		},
+		Mac: &mac.Options{
+			TitleBar: &mac.TitleBar{
+				TitlebarAppearsTransparent: false,
+				HideTitle:                  false,
+				HideTitleBar:               false,
+				FullSizeContent:            false,
+				UseToolbar:                 false,
+				HideToolbarSeparator:       true,
+			},
+			About: &mac.AboutInfo{
+				Title:   "PZ Admin",
+				Message: "Copyright © 2024 Bedirhan Yenilmez",
+				Icon:    appIcon,
+			},
+			Appearance:           mac.DefaultAppearance,
+			WebviewIsTransparent: true,
+			WindowIsTranslucent:  true,
+		},
+		Linux: &linux.Options{
+			Icon:                appIcon,
+			WindowIsTranslucent: false,
+			WebviewGpuPolicy:    linux.WebviewGpuPolicyAlways,
+			ProgramName:         "pz-admin",
 		},
 	})
 

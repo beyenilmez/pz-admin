@@ -8,11 +8,7 @@ interface SettingsComponentProps extends React.HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
 }
 
-export const SettingsGroup: React.FC<SettingsComponentProps> = ({
-  children,
-  className,
-  ...rest
-}) => (
+export const SettingsGroup: React.FC<SettingsComponentProps> = ({ children, className, ...rest }) => (
   <div className={`w-full ${className}`} {...rest}>
     {children}
   </div>
@@ -72,10 +68,8 @@ export const SettingsItem: React.FC<SettingsItemProps> = ({
   } else {
     return (
       <div
-        className={`flex gap-4 justify-between py-2 w-full border-b ${
-          vertical ? "flex-col" : "flex-row items-center"
-        } 
-    ${disabled ? "opacity-50 pointer-events-none" : ""}
+        className={`flex gap-4 justify-between py-2 w-full border-b ${vertical ? "flex-col" : "flex-row items-center"} 
+    ${disabled ? "opacity-50 pointer-events-none select-none" : ""}
        ${className}`}
         {...rest}
       >
@@ -85,47 +79,28 @@ export const SettingsItem: React.FC<SettingsItemProps> = ({
   }
 };
 
-export const SettingLabel: React.FC<SettingsComponentProps> = ({
-  children,
-  className,
-  ...rest
-}) => (
+export const SettingLabel: React.FC<SettingsComponentProps> = ({ children, className, ...rest }) => (
   <div className={`font-medium text-foreground ${className}`} {...rest}>
     {children}
   </div>
 );
 
-export const SettingDescription: React.FC<SettingsComponentProps> = ({
-  children,
-  className,
-  ...rest
-}) => (
+export const SettingDescription: React.FC<SettingsComponentProps> = ({ children, className, ...rest }) => (
   <div className={`text-sm text-muted-foreground ${className}`} {...rest}>
     {children}
   </div>
 );
 
-export const SettingContent: React.FC<SettingsComponentProps> = ({
-  children,
-  className,
-  ...rest
-}) => (
+export const SettingContent: React.FC<SettingsComponentProps> = ({ children, className, ...rest }) => (
   <div className={`flex flex-col ${className}`} {...rest}>
     {children}
   </div>
 );
 
-interface SettingsGroupSkeletonProps
-  extends React.HTMLAttributes<HTMLDivElement> {}
+interface SettingsGroupSkeletonProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-const SettingsItemSkeleton: React.FC<SettingsGroupSkeletonProps> = ({
-  className,
-  ...rest
-}) => (
-  <div
-    className={`flex items-center justify-between w-full my-2 ${className}`}
-    {...rest}
-  >
+const SettingsItemSkeleton: React.FC<SettingsGroupSkeletonProps> = ({ className, ...rest }) => (
+  <div className={`flex items-center justify-between w-full my-2 ${className}`} {...rest}>
     <div className="space-y-2 w-full">
       <Skeleton className="w-1/3 h-4" />
       <Skeleton className="w-[90%] h-4" />

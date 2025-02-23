@@ -14,6 +14,9 @@ import { Checkbox } from "./ui/checkbox";
 import { DeleteCredentials, LoadCredentials, SaveCredentials } from "@/wailsjs/go/main/App";
 import { useConfig } from "@/contexts/config-provider";
 import { LoaderCircle } from "lucide-react";
+import { PlayersTab } from "./Players";
+import { ManagementTab } from "./Management";
+import { OptionsTab } from "./Options";
 
 export default function AdminPanel() {
   const { isConnected, disconnect, ip, port } = useRcon();
@@ -21,27 +24,29 @@ export default function AdminPanel() {
   const { t } = useTranslation();
   const [tab, setTab] = useState("connection");
 
-  const [settingsState, setSettingsState] = useState<number>(0);
-  const [sandboxState, setSandboxState] = useState<number>(0);
+  const [managementState, setManagementState] = useState<number>(0);
+  const [playersState, setPlayersState] = useState<number>(0);
+  const [optionsState, setOptionsState] = useState<number>(0);
   const [terminalState, setTerminalState] = useState<number>(0);
 
   useEffect(() => {
     if (isConnected && tab === "terminal") {
-      setSettingsState(settingsState + 1);
-      setSandboxState(sandboxState + 1);
+      setOptionsState(optionsState + 1);
     }
   }, [tab]);
 
   useEffect(() => {
     if (isConnected) {
-      setSettingsState(settingsState + 1);
-      setSandboxState(sandboxState + 1);
+      setManagementState(managementState + 1);
+      setPlayersState(playersState + 1);
+      setOptionsState(optionsState + 1);
       setTerminalState(terminalState + 1);
-      setTab("terminal");
+      setTab("management");
     } else {
       setTab("connection");
-      setSettingsState(settingsState + 1);
-      setSandboxState(sandboxState + 1);
+      setManagementState(managementState + 1);
+      setPlayersState(playersState + 1);
+      setOptionsState(optionsState + 1);
       setTerminalState(terminalState + 1);
     }
   }, [isConnected]);
@@ -52,24 +57,35 @@ export default function AdminPanel() {
 
   return (
     <Tabs value={tab} className="flex w-full h-full">
-      <TabsList defaultValue={"settings"} className="h-full backdrop-brightness-0 rounded-none min-w-52 p-2">
+      <TabsList
+        defaultValue={"connection"}
+        className={`h-full backdrop-brightness-0 rounded-none p-2 w-64 shrink-0 ${!isConnected ? "hidden" : ""}`}
+      >
         <div className="flex flex-col justify-between w-full h-full">
           <div>
             <TabsTrigger
-              value="settings"
-              onClick={() => setTab("settings")}
+              value="management"
+              onClick={() => setTab("management")}
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Settings")}
+              {t("admin_panel.tabs.management.name")}
             </TabsTrigger>
             <TabsTrigger
-              value="sandbox"
-              onClick={() => setTab("sandbox")}
+              value="players"
+              onClick={() => setTab("players")}
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Sandbox")}
+              {t("admin_panel.tabs.players.name")}
+            </TabsTrigger>
+            <TabsTrigger
+              value="options"
+              onClick={() => setTab("options")}
+              className="px-6 w-full"
+              disabled={!isConnected}
+            >
+              {t("admin_panel.tabs.options.name")}
             </TabsTrigger>
             <TabsTrigger
               value="terminal"
@@ -77,16 +93,14 @@ export default function AdminPanel() {
               className="px-6 w-full"
               disabled={!isConnected}
             >
-              {t("Terminal")}
+              {t("admin_panel.tabs.terminal.name")}
             </TabsTrigger>
           </div>
           {isConnected && (
             <div className="text-xs space-y-2 w-full">
-              <p>
-                Connected to {ip}:{port}
-              </p>
+              <p>{t("admin_panel.connected_to", { socket: `${ip}:${port}` })}</p>
               <Button className="w-full" variant={"destructive"} onClick={handleDisconnect}>
-                Disconnect
+                {t("admin_panel.disconnect")}
               </Button>
             </div>
           )}
@@ -94,11 +108,14 @@ export default function AdminPanel() {
       </TabsList>
       {/* Tab Content */}
       <div className="w-full h-full relative">
-        <div className={tab === "settings" ? "block" : "hidden"} key={"settings" + settingsState}>
-          <div>Settingsaaaaaaaaaaaaaaaaaaaaaaa</div>
+        <div className={tab === "management" ? "block" : "hidden"} key={"management" + managementState}>
+          {tab === "management" && <ManagementTab />}
         </div>
-        <div className={tab === "sandbox" ? "block" : "hidden"} key={"sandbox" + sandboxState}>
-          <div>Sandbox</div>
+        <div className={tab === "players" ? "block" : "hidden"} key={"players" + playersState}>
+          <PlayersTab />
+        </div>
+        <div className={tab === "options" ? "block" : "hidden"} key={"options" + optionsState}>
+          {tab === "options" && <OptionsTab />}
         </div>
         <div className={tab === "terminal" ? "block" : "hidden"} key={"terminal" + terminalState}>
           <TerminalPage />
@@ -117,8 +134,9 @@ function isIpOrDomain(value: string): boolean {
     /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/;
   // Validates Domain
   const domainRegex = /^(?!-)([a-zA-Z0-9-]{1,63}(?<!-)\.)+[a-zA-Z]{2,63}$/;
+  const localHostRegex = /^localhost(:\d{1,5})?$/;
 
-  return ipRegex.test(value) || domainRegex.test(value);
+  return ipRegex.test(value) || domainRegex.test(value) || localHostRegex.test(value);
 }
 
 interface ConnectionFormProps {
@@ -197,14 +215,17 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className={`flex w-full h-[calc(100vh-12rem)] items-center justify-center ${
-            isConnecting ? "pointer-events-none blur-[1px]" : ""
-          }`}
+          className={`flex w-full ${
+            config?.useSystemTitleBar ? "h-[calc(100vh-4rem)]" : "h-[calc(100vh-6rem)]"
+          } items-center justify-center ${isConnecting ? "pointer-events-none blur-[1px] select-none opacity-80" : ""}`}
           autoComplete="off"
         >
-          <div className="w-1/2 space-y-4">
-            <h1 className="text-2xl font-semibold leading-none tracking-tight">{t("Connect to your server")}</h1>
-            <p className="text-sm text-muted-foreground">{t("Enter your server details to connect")}</p>
+          <div className="w-[30rem] space-y-4">
+            {/* Header */}
+            <h1 className="text-2xl font-semibold leading-none tracking-tight">
+              {t("admin_panel.tabs.connection.title")}
+            </h1>
+            <p className="text-sm text-muted-foreground">{t("admin_panel.tabs.connection.description")}</p>
 
             {/* IP or Domain Field */}
             <FormField
@@ -213,7 +234,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col w-full space-y-0">
                   <div className="flex h-8 items-center gap-1">
-                    <FormLabel>{t("Server IP or Domain")}</FormLabel>
+                    <FormLabel>{t("admin_panel.tabs.connection.server_ip_or_domain")}</FormLabel>
                     <FormMessage />
                   </div>
                   <FormControl>
@@ -222,6 +243,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 </FormItem>
               )}
             />
+
             {/* Port Field */}
             <FormField
               control={form.control}
@@ -229,7 +251,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col w-full space-y-0">
                   <div className="flex h-8 items-center gap-1">
-                    <FormLabel>{t("RCON Port")}</FormLabel>
+                    <FormLabel>{t("admin_panel.tabs.connection.rcon_port")}</FormLabel>
                     <FormMessage />
                   </div>
                   <FormControl>
@@ -238,6 +260,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 </FormItem>
               )}
             />
+
             {/* Password Field */}
             <FormField
               control={form.control}
@@ -245,7 +268,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
               render={({ field }) => (
                 <FormItem className="flex flex-col w-full space-y-0">
                   <div className="flex h-8 items-center gap-1">
-                    <FormLabel>{t("RCON Password")}</FormLabel>
+                    <FormLabel>{t("admin_panel.tabs.connection.rcon_password")}</FormLabel>
                     <FormMessage />
                   </div>
                   <FormControl>
@@ -254,7 +277,8 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 </FormItem>
               )}
             />
-            {/* Save Credentials */}
+
+            {/* Checkboxes */}
             <div className="flex items-center space-x-2">
               <Checkbox
                 checked={config?.rememberCredentials || false}
@@ -265,7 +289,7 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 htmlFor="save-credentials"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Save credentials
+                {t("admin_panel.tabs.connection.save_credentials")}
               </label>
             </div>
             <div className="flex items-center space-x-2">
@@ -279,13 +303,13 @@ function ConnectionForm({ defaultValues }: ConnectionFormProps) {
                 htmlFor="auto-connect"
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                Automatically connect on startup
+                {t("admin_panel.tabs.connection.auto_connect")}
               </label>
             </div>
 
             {/* Submit Button */}
             <Button type="submit" className="w-full" disabled={isConnecting || isConnected}>
-              {isConnected ? t("Connected") : t("Connect")}
+              {t("admin_panel.tabs.connection.connect")}
             </Button>
           </div>
         </form>

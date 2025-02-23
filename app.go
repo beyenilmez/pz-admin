@@ -8,7 +8,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/gen2brain/beeep"
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -25,6 +24,14 @@ var app *App
 func NewApp() *App {
 	app = &App{}
 	return app
+}
+
+type Notification struct {
+	Title      string            `json:"title"`
+	Message    string            `json:"message"`
+	Path       string            `json:"path"`
+	Variant    string            `json:"variant"`
+	Parameters map[string]string `json:"parameters,omitempty"`
 }
 
 // startup is called at application startup
@@ -62,6 +69,9 @@ func (a *App) startup(ctx context.Context) {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		onFirstRun()
 	}
+
+	// Initiate notifications for Windows
+	notification_init()
 }
 
 // domReady is called after front-end resources have been loaded
@@ -87,7 +97,12 @@ func (a *App) domReady(ctx context.Context) {
 		updateInfo := a.CheckForUpdate()
 
 		if updateInfo.UpdateAvailable {
-			a.SendNotification("settings.setting.update.update_available", "v"+updateInfo.CurrentVersion+" ⭢ "+updateInfo.LatestVersion, "__settings__update", "info")
+			a.SendNotification(Notification{
+				Title:   "settings.setting.update.update_available",
+				Message: "v" + updateInfo.CurrentVersion + " ⭢ " + updateInfo.LatestVersion,
+				Path:    "__settings__update",
+				Variant: "info",
+			})
 		}
 	}
 
@@ -102,7 +117,12 @@ func (a *App) domReady(ctx context.Context) {
 		case "--notify":
 			if i+4 < len(args) {
 				runtime.LogInfo(a.ctx, "Notify: "+args[i+1]+" "+args[i+2]+" "+args[i+3]+" "+args[i+4])
-				a.SendNotification(args[i+1], args[i+2], args[i+3], args[i+4])
+				a.SendNotification(Notification{
+					Title:   args[i+1],
+					Message: args[i+2],
+					Path:    args[i+3],
+					Variant: args[i+4],
+				})
 				i += 4
 			}
 		default:
@@ -151,6 +171,9 @@ func (a *App) beforeClose(ctx context.Context) (prevent bool) {
 
 	runtime.LogInfo(a.ctx, "Saving config complete")
 
+	// Disconnect
+	app.DisconnectRcon()
+
 	return false
 }
 
@@ -183,31 +206,20 @@ func (a *App) GetVersion() string {
 }
 
 // Send notification
-func (a *App) SendNotification(title string, message string, path string, variant string) {
+func (a *App) SendNotification(notification Notification) {
 	runtime.LogInfo(a.ctx, "Sending notification")
 
-	if runtime.WindowIsNormal(a.ctx) || runtime.WindowIsMaximised(a.ctx) || runtime.WindowIsFullscreen(a.ctx) {
-		if path != "" {
-			runtime.WindowExecJS(a.ctx, `window.toast({
-				title: "`+title+`", 
-				description: "`+message+`",
-				path: "`+path+`",
-				variant: "`+variant+`"
-				});`)
-		} else {
-			runtime.WindowExecJS(a.ctx, `window.toast({
-				title: "`+title+`", 
-				description: "`+message+`",
-				variant: "`+variant+`"
-				});`)
-		}
+	if a.GetOs() != "windows" || runtime.WindowIsNormal(a.ctx) || runtime.WindowIsMaximised(a.ctx) || runtime.WindowIsFullscreen(a.ctx) {
+		runtime.LogInfo(a.ctx, "Sending notification to toast")
+		runtime.EventsEmit(a.ctx, "toast", notification)
 	} else {
-		runtime.WindowExecJS(a.ctx, `window.sendNotification("`+title+`", "`+message+`", "`+path+`", "`+variant+`")`)
+		runtime.EventsEmit(a.ctx, "sendNotification", notification)
 	}
 }
 
-func (a *App) SendWindowsNotification(title string, message string, path string, variant string) {
-	err := beeep.Notify(title, message, appIconPath)
+func (a *App) SendWindowsNotification(notification Notification) {
+	err := SendSystemNotification(notification)
+
 	if err != nil {
 		runtime.LogError(a.ctx, "Error sending notification: "+err.Error())
 	}

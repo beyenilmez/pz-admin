@@ -72,7 +72,7 @@ ManifestDPIAware true
 
 Name "${INFO_PRODUCTNAME}"
 OutFile "..\..\bin\${INFO_PROJECTNAME}-${ARCH}-installer.exe" # Name of the installer's file.
-InstallDir "$PROGRAMFILES64\${INFO_PRODUCTNAME}" # Default installing folder ($PROGRAMFILES is Program Files folder).
+InstallDir "$LocalAppdata\Programs\${INFO_PRODUCTNAME}" # Default installing folder ($PROGRAMFILES is Program Files folder).
 ShowInstDetails show # This will always show the installation details.
 
 Function .onInit
@@ -104,8 +104,7 @@ Section "uninstall"
     SetShellVarContext current
 
     RMDir /r "$AppData\pz-admin\EBWebView" # Remove the WebView2 DataPath
-    RMDir /r "$AppData\pz-admin\external" # Remove external programs
-    RMDir /r "$AppData\pz-admin\temp" # Remove temp folder
+    RMDir /r "$AppData\pz-admin" # Remove the config dir
 
     RMDir /r $INSTDIR
 

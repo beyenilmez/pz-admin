@@ -1,0 +1,858 @@
+{
+  "save": "Kaydet",
+  "cancel": "İptal",
+  "yes": "Evet",
+  "no": "Hayır",
+  "show_in_explorer": "Klasörü aç",
+  "import": "İçe Aktar",
+  "export": "Dışa Aktar",
+  "error": "Hata",
+  "show": "Göster",
+  "create": "Oluştur",
+  "delete": "Sil",
+  "unselect_all": "Hepsini kaldır",
+  "clear": "Temizle",
+  "copy": "Kopyala",
+  "back": "Geri",
+  "stop": "Durdur",
+  "save_and_apply": "Kaydet ve Uygula",
+
+  "downloading_missing_external_programs": "Eksik dosyalar indiriliyor...",
+  "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",
+
+  "nav": {
+    "admin_panel": "Admin Paneli",
+    "tools": "Araçlar",
+    "settings": "Ayarlar"
+  },
+
+  "notifications": {
+    "copy_to_clipboard": "Panoya kopyalandı",
+    "copy_to_clipboard_failed": "Kopyalama hatası"
+  },
+
+  "rcon": {
+    "rcon_connection_failed": "RCON bağlantısı başarısız oldu",
+    "rcon_connection_established": "RCON bağlantısı kuruldu",
+    "rcon_connection_lost": "RCON bağlantısı kesildi",
+    "error_encrypting_credentials": "Kimlik bilgilerini şifrerken bir hata oluştu",
+    "error_decrypting_credentials": "Kimlik bilgilerinin şifresini çözerken bir hata oluştu",
+    "error_saving_credentials": "Kimlik bilgilerinini kaydederken bir hata oluştu",
+    "error_loading_credentials": "Kimlik bilgilerini yüklerken bir hata oluştu",
+
+    "no_options_to_update": "Güncellenecek ayar yok",
+    "failed_to_update_n_options": "{{n}} ayar güncellenemedi",
+    "options_updated_sync_failed": "Ayarlar güncellendi, ancak istemciyle senkronize edilemedi",
+    "options_saved_and_reloaded": "Ayarlar güncellendi ve yeniden yüklendi",
+    "options_updated": "Ayarlar güncellendi",
+
+    "addPlayer": {
+      "cant_add_player": "Oyuncu eklenemiyor",
+      "player_already_in_list": "Oyuncu {{name}} zaten listede"
+    },
+    "addPlayerToWhitelist": {
+      "single_success": "Oyuncu başarıyla eklendi",
+      "single_fail": "Oyuncu eklenemedi"
+    },
+    "removePlayersFromWhitelist": {
+      "all_success": "{{s}} oyuncu başarıyla kaldırıldı",
+      "all_fail": "{{f}} oyuncu kaldırılamadı",
+      "partial": "{{s}} oyuncu başarıyla kaldırıldı, {{f}} oyuncu kaldırılamadı",
+      "single_success": "Oyuncu {{name}} başarıyla kaldırıldı",
+      "single_fail": "Oyuncu {{name}} kaldırılamadı",
+
+      "cant_remove_player": "Oyuncu kaldırılamıyor",
+      "player_not_found_in_list": "Oyuncu {{name}} listede bulunamadı"
+    },
+    "banUsers": {
+      "all_success": "{{s}} kullanıcı yasaklandı",
+      "all_fail": "{{f}} kullanıcı yasaklanamadı",
+      "partial": "{{s}} kullanıcı yasaklandı, {{f}} kullanıcı yasaklanamadı",
+      "single_success": "Oyuncu {{name}} başarıyla yasaklandı",
+      "single_fail": "Oyuncu {{name}} yasaklanamadı"
+    },
+    "unbanUsers": {
+      "all_success": "{{s}} kullanıcı yasağı kaldırıldı",
+      "all_fail": "{{f}} kullanıcının yasağı kaldırılamadı",
+      "partial": "{{s}} kullanıcı yasağı kaldırıldı, {{f}} kullanıcının yasağı kaldırılamadı",
+      "single_success": "Oyuncu {{name}}'in yasağı başarıyla kaldırıldı",
+      "single_fail": "Oyuncu {{name}}'in yasağı kaldırılamadı"
+    },
+    "kickUsers": {
+      "all_success": "{{s}} kullanıcı atıldı",
+      "all_fail": "{{f}} kullanıcı atılamadı",
+      "partial": "{{s}} kullanıcı atıldı, {{f}} kullanıcı atılamadı",
+      "single_success": "Oyuncu {{name}} başarıyla atıldı",
+      "single_fail": "Oyuncu {{name}} atılamadı"
+    },
+    "godMode": {
+      "all_success": "{{s}} kullanıcı için tanrı modu etkinleştirildi",
+      "all_fail": "{{f}} kullanıcı için tanrı modu etkinleştirilemedi",
+      "partial": "{{s}} kullanıcı için tanrı modu etkinleştirildi, {{f}} kullanıcı için etkinleştirilemedi",
+      "single_success": "{{name}} için tanrı modu başarıyla etkinleştirildi",
+      "single_fail": "{{name}} için tanrı modu etkinleştirilemedi"
+    },
+    "teleport": {
+      "all_success": "{{s}} kullanıcı ışınlandı",
+      "all_fail": "{{f}} kullanıcı ışınlanamadı",
+      "partial": "{{s}} kullanıcı ışınlandı, {{f}} kullanıcı ışınlanamadı",
+      "single_success": "Oyuncu {{name}} başarıyla ışınlandı",
+      "single_fail": "Oyuncu {{name}} ışınlanamadı"
+    },
+    "setAccessLevel": {
+      "all_success": "{{s}} kullanıcı için erişim seviyesi ayarlandı",
+      "all_fail": "{{f}} kullanıcı için erişim seviyesi ayarlanamadı",
+      "partial": "{{s}} kullanıcı için erişim seviyesi ayarlandı, {{f}} kullanıcı için ayarlanamadı",
+      "single_success": "{{name}} için erişim seviyesi başarıyla ayarlandı",
+      "single_fail": "{{name}} için erişim seviyesi ayarlanamadı"
+    },
+    "createHorde": {
+      "all_success": "{{s}} kullanıcının yakınında bir sürü oluşturuldu",
+      "all_fail": "{{f}} kullanıcının yakınında bir sürü oluşturulamadı",
+      "partial": "{{s}} kullanıcının yakınında bir sürü oluşturuldu, {{f}} kullanıcının yakınında oluşturulamadı",
+      "single_success": "Oyuncu {{name}}'in yakınında başarıyla bir sürü oluşturuldu",
+      "single_fail": "Oyuncu {{name}}'in yakınında bir sürü oluşturulamadı"
+    },
+    "lightning": {
+      "all_success": "{{s}} kullanıcının yakınında yıldırım oluşturuldu",
+      "all_fail": "{{f}} kullanıcının yakınında yıldırım oluşturulamadı",
+      "partial": "{{s}} kullanıcının yakınında yıldırım oluşturuldu, {{f}} kullanıcının yakınında oluşturulamadı",
+      "single_success": "Oyuncu {{name}}'in yakınında başarıyla yıldırım oluşturuldu",
+      "single_fail": "Oyuncu {{name}}'in yakınında yıldırım oluşturulamadı"
+    },
+    "thunder": {
+      "all_success": "{{s}} kullanıcının yakınında gök gürültüsü oluşturuldu",
+      "all_fail": "{{f}} kullanıcının yakınında gök gürültüsü oluşturulamadı",
+      "partial": "{{s}} kullanıcının yakınında gök gürültüsü oluşturuldu, {{f}} kullanıcının yakınında oluşturulamadı",
+      "single_success": "Oyuncu {{name}}'in yakınında başarıyla gök gürültüsü oluşturuldu",
+      "single_fail": "Oyuncu {{name}}'in yakınında gök gürültüsü oluşturulamadı"
+    },
+    "addXP": {
+      "success": "XP eklendi",
+      "fail": "XP eklenemedi"
+    },
+    "addVehicle": {
+      "all_success": "{{s}} araç eklendi",
+      "all_fail": "{{f}} araç eklenemedi",
+      "partial": "{{s}} araç eklendi, {{f}} araç eklenemedi",
+      "single_success": "{{name}} için başarıyla bir araç eklendi",
+      "single_fail": "{{name}} için araç eklenemedi"
+    },
+    "addItems": {
+      "success": "Eşyalar başarıyla eklendi",
+      "fail": "Eşyalar eklenemedi"
+    },
+    "saveWorld": {
+      "single_success": "Dünya başarıyla kaydedildi",
+      "single_fail": "Dünya kaydedilemedi"
+    },
+    "stopServer": {
+      "single_success": "Sunucu durduruluyor",
+      "single_fail": "Sunucu durdurulamadı"
+    },
+    "checkModsNeedUpdate": {
+      "single_success": "Kontrol başladı. Sonuç log dosyasına ve sohbete yazılacak",
+      "single_fail": "Güncelleme gerektiren modları kontrol edilemedi"
+    },
+    "serverMessage": {
+      "single_success": "Sunucu mesajı gönderildi",
+      "single_fail": "Sunucu mesajı gönderilemedi"
+    },
+    "startRain": {
+      "single_success": "Yağmur başlatıldı",
+      "single_fail": "Yağmur başlatılamadı"
+    },
+    "startStorm": {
+      "single_success": "Fırtına başlatıldı",
+      "single_fail": "Fırtına başlatılamadı"
+    },
+    "stopRain": {
+      "single_success": "Yağmur durduruldu",
+      "single_fail": "Yağmur durdurulamadı"
+    },
+    "stopWeather": {
+      "single_success": "Hava durumu durduruldu",
+      "single_fail": "Hava durumu durdurulamadı"
+    },
+    "chopper": {
+      "single_success": "Helikopter başlatıldı",
+      "single_fail": "Helikopter başlatılamadı"
+    },
+    "gunshot": {
+      "single_success": "Silah sesi ateşlendi",
+      "single_fail": "Silah sesi ateşlenemedi"
+    },
+    "triggerAlarm": {
+      "single_success": "Alarm tetiklendi",
+      "single_fail": "Alarm tetiklenemedi"
+    },
+    "reloadOptions": {
+      "single_success": "Ayarlar yeniden yüklendi",
+      "single_fail": "Ayarlar yeniden yüklenemedi"
+    }
+  },
+
+  "settings": {
+    "restart_the_app_for_changes_to_take_effect": "Değişikliklerin etkili olması için uygulamayı yeniden başlatın.",
+    "are_you_sure_you_want_to_import_this_config": "Bu ayarları yüklemek istediğinize emin misiniz?",
+    "the_app_will_restart_to_load_the_new_config": "Uygulama, yeni ayarları yüklemek için yeniden başlatılacak.",
+    "config_saved": "Ayarlar kaydedildi",
+    "there_was_an_error_saving_the_config": "Ayarlar kaydedilirken bir hata oluştu.",
+
+    "categories": {
+      "general": "Genel",
+      "application": "Uygulama",
+      "advanced": "Gelişmiş",
+      "update": "Güncelleme",
+      "rcon": "RCON"
+    },
+
+    "setting": {
+      "language": {
+        "label": "Dil",
+        "description": "Tercih ettiğiniz dili seçin.",
+        "select_language": "Dil seçin...",
+        "search_language": "Dil ara...",
+        "no_languages_found": "Hiçbir dil bulunamadı."
+      },
+
+      "theme": {
+        "label": "Tema",
+        "description": "Arayüz için bir tema seçin."
+      },
+
+      "color_scheme": {
+        "label": "Renk Şeması",
+        "description": "Tercih ettiğiniz renk şemasını seçin.",
+        "select_color_scheme": "Renk şeması seçin...",
+        "search_color_scheme": "Renk şeması ara...",
+        "no_color_schemes_found": "Renk şeması bulunamadı.",
+
+        "color_schemes": {
+          "default": "Varsayılan",
+          "midnightAsh": "Gece Külü",
+          "dawnMist": "Şafak Sisi",
+          "forestDawn": "Orman Şafağı",
+          "goldenEmber": "Altın Kor"
+        }
+      },
+
+      "window_effect": {
+        "label": "Pencere Efekti",
+        "description": "Pencere efektini seçin.",
+
+        "auto": "Otomatik",
+        "none": "Yok",
+        "acrylic": "Akrilik",
+        "mica": "Mika",
+        "tabbed": "Tabbed"
+      },
+
+      "window_opacity": {
+        "label": "Pencere Opaklığı",
+        "description": "Pencere opaklığını ayarlayın. (Pencere efekti için 'Yok' seçilmişse bu ayar yok sayılır.)"
+      },
+
+      "window_scale": {
+        "label": "Pencere Ölçeği",
+        "description": "Pencere ölçeğini ayarlayın."
+      },
+
+      "use_system_title_bar": {
+        "label": "Sistem Başlık Çubuğunu Kullan",
+        "description": "Özel başlık çubuğu yerine varsayılan sistem başlık çubuğunu kullanın."
+      },
+
+      "logging": {
+        "label": "Günlüğe Kaydetmeyi Etkinleştir",
+        "description": "Dosyalara günlüğe kaydetmeyi etkinleştir."
+      },
+
+      "log_levels": {
+        "label": "Günlük Seviyeleri",
+        "description": "Kaydedilecek günlük seviyelerini seçin."
+      },
+
+      "max_log_files": {
+        "label": "Maksimum Günlük Dosyaları",
+        "description": "Tutulacak maksimum günlük dosyası sayısını ayarlayın."
+      },
+
+      "import_export": {
+        "label": "Ayarları İçe/Dışa Aktar",
+        "description": "Ayarlarınızı bir JSON dosyasından içe veya dışa aktarın."
+      },
+
+      "save_window_status": {
+        "label": "Pencere Durumunu Kaydet",
+        "description": "Pencere boyutunu, konumunu ve durumunu kaydet."
+      },
+
+      "match_by_destination": {
+        "label": "Kısayolları Hedeflerine Göre Eşleştir",
+        "description": "Dosya yolu ile eşleştirme başarısız olursa, kısayolları hedeflerine göre eşleştir."
+      },
+
+      "check_for_updates": {
+        "label": "Başlangıçta Güncellemeleri Kontrol Et",
+        "description": "Başlangıçta güncellemeleri kontrol et."
+      },
+
+      "update": {
+        "update_available": "Güncelleme mevcut",
+        "no_updates_available": "Güncelleme yok",
+        "last_checked": "Son kontrol",
+        "check_for_updates": "Güncellemeleri kontrol et",
+        "update": "Güncelle",
+        "updating": "Güncelleniyor...",
+        "failed_to_check_for_updates": "Güncellemeler kontrol edilemedi. Lütfen daha sonra tekrar deneyin.",
+        "failed_to_download_update": "Güncelleme indirilemedi. Lütfen daha sonra tekrar deneyin.",
+        "failed_to_apply_update": "Güncelleme uygulanamadı.",
+        "update_applied": "Güncelleme uygulandı.",
+        "restarting": "Yeniden başlatılıyor...",
+        "need_admin_privileges": "Uygulamayı güncellemek için yönetici yetkileri gereklidir.",
+        "update_successful": "Güncelleme başarıyla uygulandı."
+      },
+
+      "rcon_check_interval": {
+        "label": "RCON Kontrol Sıklığı",
+        "description": "Bağlantıyı ve aktif oyuncuları kontrol etme sıklığını (saniye cinsinden) ayarlayın."
+      },
+
+      "disable_weather_control_buttons": {
+        "label": "Hava Durumu Kontrol Düğmelerini Devre Dışı Bırak",
+        "description": "Yanlış tıklamaları önlemek için sunucu yönetim panelindeki hava durumu kontrol düğmelerini devre dışı bırakır."
+      },
+
+      "disable_random_event_buttons": {
+        "label": "Rastgele Etkinlik Düğmelerini Devre Dışı Bırak",
+        "description": "Yanlış tıklamaları önlemek için sunucu yönetim panelindeki rastgele etkinlik düğmelerini devre dışı bırakır."
+      },
+
+      "disable_other_management_buttons": {
+        "label": "Diğer Yönetim Düğmelerini Devre Dışı Bırak",
+        "description": "Yanlış tıklamaları önlemek için sunucu yönetim panelindeki 'Diğer' kategorisindeki düğmeleri devre dışı bırakır."
+      },
+
+      "debug_mode": {
+        "label": "Hata Ayıklama Modu",
+        "description": "Hata ayıklama modunu etkinleştir."
+      }
+    }
+  },
+
+  "tools": {
+    "message_editor": {
+      "mode": {
+        "tool": {
+          "name": "Mesaj Düzenleyici",
+          "copy_formatted_message": "Biçimlendirilmiş Mesajı Kopyala"
+        },
+        "message": {
+          "name": "Mesaj Gönder",
+          "description": "Sunucuya bir mesaj gönderin.",
+          "send": "Gönder"
+        },
+        "edit": {
+          "name": "Mesajı Düzenle",
+          "reset": "Sıfırla",
+          "save_edit": "Düzenlemeyi Kaydet"
+        }
+      },
+      "notifications": {
+        "error_saving_message": "Mesaj kaydedilirken bir hata oluştu",
+        "message_saved": "Mesaj kaydedildi",
+        "error_loading_message": "Mesaj yüklenirken bir hata oluştu"
+      },
+
+      "message": "Mesaj",
+      "message_placeholder": "Mesajınızı buraya yazın...",
+      "formatted_message": "Biçimlendirilmiş Mesaj",
+      "save_message": "Mesajı Kaydet",
+      "load_message": "Mesajı Yükle",
+      "bytes": "bayt"
+    },
+    "item_browser": {
+      "mode": {
+        "tool": {
+          "name": "Eşya Kataloğu"
+        },
+        "add": {
+          "name": "Eşya Ekle",
+          "description": "Eşyalar şu kullanıcılara eklenecek: {{names}}.",
+          "add_selected_items": "Seçilen Eşyaları Ekle"
+        },
+        "edit": {
+          "name": "Eşyaları Düzenle",
+          "reset": "Sıfırla",
+          "save_edit": "Düzenlemeyi Kaydet"
+        }
+      },
+
+      "selected_items": "Seçilen Eşyalar",
+      "search_items_placeholder": "Eşya ara...",
+      "show_ids": "Eşya ID'lerini Göster",
+      "save_items": "Eşyaları Kaydet",
+      "load_items": "Eşya Yükle"
+    },
+    "vehicle_browser": {
+      "mode": {
+        "tool": {
+          "name": "Araç Kataloğu"
+        },
+        "add": {
+          "name": "Araç Ekle",
+          "preview_in_map_website": "Harita Sitesinde Görüntüle",
+          "player_combobox": {
+            "placeholder": "Hedef Oyuncuları Seçin",
+            "search_placeholder": "Oyuncuları arayın...",
+            "search_not_found": "Oyuncu bulunamadı."
+          },
+          "add_vehicle": "Araç Ekle"
+        }
+      },
+
+      "Vehicles": "Araçlar",
+      "Heavy-duty Vehicles": "Ağır Araçlar",
+      "Sport Vehicles": "Spor Araçlar",
+      "Standard Vehicles": "Standart Araçlar",
+      "Trailers": "Römorklar",
+
+      "Normal": "Normal",
+      "Police": "Polis",
+      "Ambulance": "Ambulans",
+      "Fire": "İtfaiye",
+      "Mail": "Posta",
+      "Ranger": "Korucu",
+      "Ranger_Fossoil": "Korucu/Fossoil",
+      "Taxi (yellow)": "Taksi (sarı)",
+      "Taxi (green)": "Taksi (yeşil)",
+
+      "6-Seater": "6-Koltuklu",
+
+      "Wood Siding": "Ahşap Kaplama",
+
+      "Advert Trailer": "Reklam Römorku",
+      "Trailer": "Römork",
+      "Cover": "Kapalı"
+    }
+  },
+
+  "admin_panel": {
+    "disconnect": "Bağlantıyı Kes",
+    "connected_to": "{{socket}}'e bağlandı",
+
+    "tabs": {
+      "management": {
+        "name": "Yönetim",
+        "send_message": "Mesaj Gönder",
+
+        "weather": {
+          "title": "Hava Durumu",
+          "warning": "Hava döngüleriyle ilgili sorunlara neden olabilir",
+          "stop_rain": "Yağmuru Durdur",
+          "stop_weather": "Hava Olaylarını Durdur",
+
+          "start_rain": {
+            "name": "Yağmur Başlat",
+            "description": "1-100 arası isteğe bağlı bir yoğunlukla yağmur başlatır",
+            "intensity": "Yoğunluk"
+          },
+          "start_storm": {
+            "name": "Fırtına Başlat",
+            "description": "Oyun saati cinsinden isteğe bağlı bir süre ile bir fırtına başlatır",
+            "duration": "Süre"
+          }
+        },
+
+        "random": {
+          "title": "Rastgele Olaylar",
+          "description": "Seçilen olayı rastgele bir oyuncu üzerinde tetikler",
+          "online_players": "Çevrimiçi Oyuncular: {{players}}",
+          "no_players": "Çevrimiçi oyuncu yok",
+          "chopper": {
+            "name": "Helikopter",
+            "tooltip": "Rastgele bir oyuncunun üstünde helikopter eventi başlat"
+          },
+          "gunshot": {
+            "name": "Silah Sesi",
+            "tooltip": "Rastgele bir oyuncunun yanında silah sesi çıkar"
+          },
+          "lightning": {
+            "name": "Yıldırım",
+            "tooltip": "Rastgele bir oyuncu üzerinde yıldırım oluştur"
+          },
+          "thunder": {
+            "name": "Gök Gürültüsü",
+            "tooltip": "Rastgele bir oyuncu üzerinde gök gürültüsü oluştur"
+          }
+        },
+
+        "other": {
+          "title": "Diğer",
+
+          "check_mod_updates": {
+            "name": "Mod Güncellemelerini Kontrol Et",
+            "description": "Herhangi bir modun güncellenip güncellenmediğini kontrol eder. Sonucu log dosyasına ve sohbete yazar."
+          },
+          "alarm": {
+            "name": "Alarm",
+            "description": "Admin'in konumunda bir bina alarmı çalar. (Bir odada olması gerekir)"
+          }
+        }
+      },
+      "players": {
+        "name": "Oyuncular",
+        "filter_by_name": "İsme Göre Filtrele...",
+        "god_mode": "Tanrı modu",
+        "events": "Olaylar",
+
+        "columns": {
+          "name": {
+            "name": "İsim"
+          },
+          "status": {
+            "name": "Durum",
+            "offline": "Çevrimdışı",
+            "online": "Çevrimiçi",
+            "banned": "Yasaklı"
+          },
+          "access_level": {
+            "name": "Erişim Seviyesi",
+            "admin": "Admin",
+            "moderator": "Moderator",
+            "overseer": "Overseer",
+            "gm": "GM",
+            "observer": "Observer",
+            "player": "Oyuncu",
+            "unknown": "Bilinmeyen"
+          }
+        },
+
+        "dialogs": {
+          "setaccesslevel": {
+            "button": "Erişim Seviyesi Belirle",
+            "title": "Erişim Seviyesi Belirle",
+            "players": "{{players}} için erişim seviyesi belirleyeceksiniz.",
+            "submit": "Erişim Seviyesi Belirle",
+
+            "permissions": {
+              "player": [],
+              "observer": [
+                "Tanrı modunu ve görünmezliği aç/kapat (yalnızca kendisi)",
+                "Çevrimiçi oyuncuları görüntüle (/players)",
+                "Oyunculara veya koordinatlara ışınlan",
+                "Noclip kullan (yalnızca kendisi)",
+                "Sunucu ayarlarını görüntüle",
+                "Kilitli kapıları aç ve güvenli evlere gir",
+                "Lag nedeniyle atılmayı ve dolu sunuculara katılmayı atla",
+                "Görünmezken sohbet et",
+                "Görünmez oyuncuları gör",
+                "Oyuncu saldırılarına karşı bağışıklık",
+                "Görünmez/Yenilmez başla",
+                "Oyuncu istatistiklerini görüntüle (yalnızca okuyabilir)"
+              ],
+              "gm": [
+                "Tüm Gözlemci izinleri",
+                "Tanrı modu, görünmezlik ve noclip aç/kapat (kendi ve başkaları)",
+                "Oyuncuları birbirine ışınla",
+                "Alarmlar, silah sesleri, gök gürültüleri ve helikopterler tetikle",
+                "Yağmuru kontrol et",
+                "Eşya ve XP ekle"
+              ],
+              "overseer": [
+                "Tüm GM izinleri",
+                "Zombi sürüleri oluştur",
+                "Kullanıcıları at",
+                "Sunucu çapında mesajlar gönder",
+                "Oyuncu bağlantı bilgilerini görüntüle",
+                "Oyuncu bağlantısını kes",
+                "Gece uzunluğunu ayarla",
+                "Oyuncu istatistiklerini düzenle",
+                "Sohbetten oyuncuları yasakla"
+              ],
+              "moderator": [
+                "Tüm Gözetmen izinleri",
+                "Kullanıcıları yasakla/yasağı kaldır (Steam ID dahil)",
+                "Beyaz listeyi yönet",
+                "Güvenli ev ata",
+                "Erişim seviyelerini değiştir (admin hariç)"
+              ],
+              "admin": [
+                "Tüm Moderatör izinleri",
+                "Dünyayı kaydet ve çık",
+                "Herhangi bir erişim seviyesini değiştir",
+                "Sunucu ayarlarını ve Lua dosyalarını yeniden yükle",
+                "Lua doğrulamasını atla",
+                "Sunucu sinyalleri gönder"
+              ]
+            }
+          },
+
+          "banuser": {
+            "button": "Yasakla",
+            "title": "Kullanıcıyı Yasakla",
+            "title_multiple": "Kullanıcıları Yasakla",
+            "players": "Bu oyuncular yasaklanacak: {{players}}",
+            "submit": "Yasakla",
+
+            "reason": "Sebep",
+            "reason_placeholder": "Spam, troll, vb.",
+            "ban_ip": "IP'yi Yasakla"
+          },
+
+          "unbanuser": {
+            "button": "Yasağı Kaldır",
+            "title": "Kullanıcının Yasağını Kaldır",
+            "title_multiple": "Kullanıcıların Yasağını Kaldır",
+            "players": "Bu oyuncuların yasağı kaldırılacak: {{players}}",
+            "submit": "Yasağı Kaldır"
+          },
+
+          "kickuser": {
+            "button": "At",
+            "title": "Kullanıcıyı At",
+            "title_multiple": "Kullanıcıları At",
+            "players": "Bu oyuncular atılacak: {{players}}",
+            "submit": "At",
+
+            "reason": "Sebep",
+            "reason_placeholder": "Spam, troll, vb."
+          },
+
+          "teleport": {
+            "button": "Işınla",
+            "title": "Kullanıcıyı Işınla",
+            "title_multiple": "Kullanıcıları Işınla",
+            "players": "Işınlanacak oyuncular: {{players}}",
+            "submit": "Işınla",
+
+            "coordinates_tab": "Koordinatlara",
+            "player_tab": "Oyuncuya",
+
+            "preview_in_map_website": "Harita Sitesinde Görüntüle",
+
+            "player_combobox": {
+              "placeholder": "Hedef Oyuncuları Seçin",
+              "search_placeholder": "Oyuncuları ara...",
+              "search_not_found": "Oyuncu bulunamadı."
+            }
+          },
+
+          "createhorde": {
+            "button": "Sürü Oluştur",
+            "title": "Sürü Oluştur",
+            "players": "{{players}} yakınına bir zombi sürüsü oluşturacaksınız.",
+            "submit": "Sürü Oluştur",
+
+            "horde_size": "Sürü Büyüklüğü"
+          },
+
+          "lightning": {
+            "button": "Yıldırım",
+            "title": "Yıldırım Tetikle",
+            "players": "{{players}} yakınına bir yıldırım tetikleyeceksiniz.",
+            "submit": "Yıldırım Tetikle"
+          },
+
+          "thunder": {
+            "button": "Gök Gürültüsü",
+            "title": "Gök Gürültüsü Tetikle",
+            "players": "{{players}} yakınına bir gök gürültüsü tetikleyeceksiniz.",
+            "submit": "Gök Gürültüsü Tetikle"
+          },
+
+          "addxp": {
+            "button": "XP Ekle",
+            "title": "XP Ekle",
+            "players": "XP eklenecek oyuncular: {{players}}",
+            "submit": "XP Ekle",
+
+            "xp_amount": "XP Miktarı",
+            "max_all": "Hepsini Maksimum Yap",
+            "regular_skill": "Normal Yetenek",
+            "passive_skill": "Pasif Yetenek",
+            "lvl": "Sv",
+
+            "skills": {
+              "Passive": {
+                "name": "Pasif",
+
+                "Fitness": "Fitness",
+                "Strength": "Güç"
+              },
+
+              "Firearm": {
+                "name": "Ateşli Silahlar",
+
+                "Aiming": "Nişan Alma",
+                "Reloading": "Şarjör Doldurma"
+              },
+
+              "Survivalist": {
+                "name": "Hayatta Kalma",
+
+                "Fishing": "Balıkçılık",
+                "Trapping": "Avcılık",
+                "PlantScavenging": "Araştırma"
+              },
+
+              "Combat": {
+                "name": "Mücadele",
+
+                "Axe": "Balta",
+                "Blunt": "Yakın Dövüş Silahları",
+                "SmallBlunt": "Kısa Ezici",
+                "LongBlade": "Uzun Kesici",
+                "SmallBlade": "Kısa Kesici",
+                "Spear": "Mızrak",
+                "Maintenance": "Onarma"
+              },
+
+              "Agility": {
+                "name": "Çeviklik",
+
+                "Sprinting": "Koşuculuk",
+                "Nimble": "Zariflik",
+                "Lightfoot": "Atiklik",
+                "Sneak": "Gizlilik"
+              },
+
+              "Crafting": {
+                "name": "Üretkenlik",
+
+                "Woodwork": "Marangozluk",
+                "Cooking": "Aşcılık",
+                "Farming": "Çiftçilik",
+                "Doctor": "İlk Yardım",
+                "Electricity": "Elektrikçilik",
+                "MetalWelding": "Metal İşleme",
+                "Mechanics": "Tamircilik",
+                "Tailoring": "Terzilik"
+              }
+            }
+          },
+
+          "addplayertowhitelist": {
+            "button": "Oyuncu Ekle",
+            "title": "Beyaz Listeye Oyuncu Ekle",
+            "submit": "Beyaz Listeye Ekle",
+
+            "name": "İsim",
+            "password": "Şifre"
+          },
+
+          "removeplayersfromwhitelist": {
+            "button": "Oyuncuları Kaldır",
+            "dropdown_button": "Beyaz Listeden Kaldır",
+            "title": "Beyaz Listeden Oyuncu Kaldır",
+            "title_multiple": "Beyaz Listeden Oyuncuları Kaldır",
+            "players": "Bu oyuncular beyaz listeden kaldırılacak: {{players}}",
+            "submit": "Oyuncuyu Kaldır",
+            "submit_multiple": "Oyuncuları Kaldır",
+
+            "remove_from_players_list": "Oyuncuları oyuncu listesinden de kaldır"
+          },
+
+          "add_missing_player": {
+            "button": "Eksik bir oyuncu mı var? Listeye çevrimdışı bir oyuncu ekleyin.",
+            "title": "Oyuncu Ekle",
+            "submit": "Oyuncu Ekle",
+
+            "name": "İsim"
+          },
+
+          "additem": {
+            "button": "Eşya Ekle",
+            "notifications": {
+              "error_saving_items": "Eşyalar kaydedilirken bir hata oluştu",
+              "items_saved": "Eşyalar kaydedildi",
+              "error_loading_items": "Eşyalar yüklenirken bir hata oluştu"
+            }
+          },
+
+          "addvehicle": {
+            "button": "Araç Ekle",
+
+            "coordinates_tab": "Koordinatlara",
+            "player_tab": "Oyunculara"
+          }
+        }
+      },
+      "options": {
+        "name": "Seçenekler",
+
+        "reload_options": "Ayarları Yenile",
+        "search_options": "Ayar Ara...",
+        "notifications": {
+          "error_exporting_options": "Ayarlar dışarı aktarılırken bir hata oluştu",
+          "options_exported": "Ayarlar dışarı aktarıldı",
+          "error_importing_options": "Ayarlar içe aktarılırken bir hata oluştu"
+        }
+      },
+      "terminal": {
+        "name": "Terminal"
+      },
+      "connection": {
+        "title": "Sunucunuza Bağlanın",
+        "description": "Bağlanmak için sunucu bilgilerinizi girin",
+        "server_ip_or_domain": "Sunucu IP veya Alan Adı",
+        "rcon_port": "RCON Port",
+        "rcon_password": "RCON Şifresi",
+        "save_credentials": "Kimlik Bilgilerini Kaydet",
+        "auto_connect": "Başlangıçta otomatik bağlan",
+        "connect": "Bağlan"
+      }
+    }
+  },
+
+  "item_categories": {
+    "Accessory": "Aksesuar",
+    "Ammo": "Cephane",
+    "Appearance": "Kişisel Bakım",
+    "Badger": "Porsuk",
+    "Bag": "Çanta",
+    "Beaver": "Kunduz",
+    "Bunny": "Tavşan",
+    "Camping": "Kamp",
+    "Cartography": "Kartografya",
+    "Clothing": "Giysi",
+    "Communications": "İletişim",
+    "Container": "Depolama",
+    "Cooking": "Aşçılık",
+    "Corpse": "Ceset",
+    "Electronics": "Elektronik",
+    "Entertainment": "Eğlence",
+    "Explosives": "Patlayıcılar",
+    "First Aid": "İlk Yardım",
+    "Fishing": "Balıkçılık",
+    "Food": "Yiyecek",
+    "Fox": "Tilki",
+    "Furniture": "Mobilya",
+    "Gardening": "Çiftçilik",
+    "Hedgehog": "Kirpi",
+    "Hidden": "Gizli",
+    "Household": "Günlük Ev Eşyaları",
+    "Instrument": "Enstrüman",
+    "Junk": "Hurda",
+    "Light Source": "Işık Kaynağı",
+    "Literature": "Okumalık",
+    "Material": "Malzeme",
+    "Mole": "Köstebek",
+    "Paint": "Boya",
+    "Raccoon": "Rakun",
+    "Security": "Güvenlik",
+    "Skill Book": "Yetenek Kitabı",
+    "Sports": "Spor",
+    "Squirrel": "Sincap",
+    "Tool": "Alet",
+    "Tool / Weapon": "Alet / Silah",
+    "Trapping": "Avcılık",
+    "Vehicle Maintenance": "Tamircilik",
+    "Water": "Su",
+    "Water Container": "Su Konteyneri",
+    "Weapon": "Silah",
+    "Weapon - Crafted": "Silah - Üretilmiş",
+    "Weapon Part": "Silah Parçası"
+  }
+}

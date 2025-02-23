@@ -1,22 +1,9 @@
 import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  GetLoadConfigPath,
-  ReadConfig,
-  RestartApplication,
-  SaveConfigDialog,
-} from "@/wailsjs/go/main/App";
-import {
-  SettingsItem,
-  SettingContent,
-  SettingDescription,
-  SettingLabel,
-} from "@/components/ui/settings-group";
+import { GetLoadConfigPath, ReadConfig, RestartApplication, SaveConfigDialog } from "@/wailsjs/go/main/App";
+import { SettingsItem, SettingContent, SettingDescription, SettingLabel } from "@/components/ui/settings-group";
 import { Button } from "@/components/ui/button";
-import {
-  AreYouSureDialog,
-  AreYouSureDialogRef,
-} from "@/components/ui/are-you-sure";
+import { AreYouSureDialog, AreYouSureDialogRef } from "@/components/ui/are-you-sure";
 import { LogDebug } from "@/wailsjs/runtime/runtime";
 
 export function ImportExportSetting() {
@@ -42,9 +29,7 @@ export function ImportExportSetting() {
     <SettingsItem>
       <div>
         <SettingLabel>{t("settings.setting.import_export.label")}</SettingLabel>
-        <SettingDescription>
-          {t("settings.setting.import_export.description")}
-        </SettingDescription>
+        <SettingDescription>{t("settings.setting.import_export.description")}</SettingDescription>
       </div>
       <SettingContent>
         <div className="flex gap-0.5">
@@ -53,9 +38,7 @@ export function ImportExportSetting() {
             ref={dialogRef}
             onAccept={handleAcceptImport}
             title={t("settings.are_you_sure_you_want_to_import_this_config")}
-            description={t(
-              "settings.the_app_will_restart_to_load_the_new_config"
-            )}
+            description={t("settings.the_app_will_restart_to_load_the_new_config")}
             cancelText={t("cancel")}
             acceptText={t("yes")}
           />

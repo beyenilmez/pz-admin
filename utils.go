@@ -8,10 +8,13 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"os"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
+
+	r "runtime"
 )
 
 func writeJSON(path string, data interface{}) error {
@@ -47,6 +50,14 @@ func create_folder(folder string) error {
 	runtime.LogDebug(appContext, "Created folder: "+folder)
 
 	return nil
+}
+
+func file_exists(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
 }
 
 func generateKey(passphrase string) []byte {
@@ -98,4 +109,47 @@ func Decrypt(encryptedText, key string) (string, error) {
 	stream.XORKeyStream(ciphertext, ciphertext)
 
 	return string(ciphertext), nil
+}
+
+func (app *App) Format(t string, args ...interface{}) string {
+	return fmt.Sprintf(t, args...)
+}
+
+func (a *App) CopyToClipboard(text string, sendNotification bool) {
+	err := runtime.ClipboardSetText(a.ctx, text)
+	if err != nil {
+		runtime.LogErrorf(appContext, "Error copying to clipboard: %s", err.Error())
+		if sendNotification {
+			a.SendNotification(Notification{
+				Message: "notifications.copy_to_clipboard_failed",
+				Variant: "error",
+			})
+		}
+		return
+	}
+
+	if sendNotification {
+		a.SendNotification(Notification{
+			Message: "notifications.copy_to_clipboard",
+			Variant: "success",
+		})
+	}
+}
+
+func GetOs() string {
+	if r.GOOS == "windows" {
+		return "windows"
+	} else if r.GOOS == "darwin" {
+		return "macos"
+	} else {
+		return "linux"
+	}
+}
+
+func (a *App) GetOs() string {
+	return GetOs()
+}
+
+func (a *App) GetArch() string {
+	return r.GOARCH
 }

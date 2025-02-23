@@ -12,6 +12,9 @@ var appFolder string
 
 var logsFolder string
 var savedConfigFolder string
+var savedItemsFolder string
+var savedMessagesFolder string
+var savedOptionsFolder string
 var tempFolder string
 var externalFolder string
 var configPath string
@@ -29,11 +32,14 @@ func path_init() error {
 
 	logsFolder = filepath.Join(appFolder, "logs")
 	savedConfigFolder = filepath.Join(appFolder, "savedconfigs")
+	savedItemsFolder = filepath.Join(appFolder, "saveditems")
+	savedMessagesFolder = filepath.Join(appFolder, "savedmessages")
+	savedOptionsFolder = filepath.Join(appFolder, "savedoptions")
 	tempFolder = filepath.Join(appFolder, "temp")
 	externalFolder = filepath.Join(appFolder, "external")
 
 	configPath = filepath.Join(appFolder, "config.json")
-	appIconPath = filepath.Join(appFolder, "appicon.png")
+	appIconPath = filepath.Join(appFolder, "appicon.ico")
 	credentialsPath = filepath.Join(appFolder, "credentials.json")
 
 	runtime.LogTrace(appContext, "Attempting to create folders")
@@ -47,6 +53,18 @@ func path_init() error {
 		return err
 	}
 	err = create_folder(savedConfigFolder)
+	if err != nil {
+		return err
+	}
+	err = create_folder(savedItemsFolder)
+	if err != nil {
+		return err
+	}
+	err = create_folder(savedMessagesFolder)
+	if err != nil {
+		return err
+	}
+	err = create_folder(savedOptionsFolder)
 	if err != nil {
 		return err
 	}
@@ -66,7 +84,7 @@ func path_init() error {
 	// Create icon from embedded appIcon if it exists
 	if _, err := os.Stat(appIconPath); os.IsNotExist(err) {
 		runtime.LogTrace(appContext, "appicon not found, creating from embedded appIcon")
-		err = os.WriteFile(appIconPath, appIcon, 0o644)
+		err = os.WriteFile(appIconPath, appIconIco, 0o644)
 		if err != nil {
 			return err
 		}

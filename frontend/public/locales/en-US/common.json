@@ -1,0 +1,1559 @@
+{
+  "save": "Save",
+  "cancel": "Cancel",
+  "yes": "Yes",
+  "no": "No",
+  "show_in_explorer": "Show in Explorer",
+  "import": "Import",
+  "export": "Export",
+  "error": "Error",
+  "show": "Show",
+  "create": "Create",
+  "delete": "Delete",
+  "unselect_all": "Unselect all",
+  "clear": "Clear",
+  "copy": "Copy",
+  "back": "Back",
+  "stop": "Stop",
+  "save_and_apply": "Save and Apply",
+
+  "downloading_missing_external_programs": "Downloading missing external programs...",
+  "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
+
+  "nav": {
+    "admin_panel": "Admin Panel",
+    "tools": "Tools",
+    "settings": "Settings"
+  },
+
+  "notifications": {
+    "copy_to_clipboard": "Copied to clipboard",
+    "copy_to_clipboard_failed": "Failed to copy to clipboard"
+  },
+
+  "rcon": {
+    "rcon_connection_failed": "RCON connection failed",
+    "rcon_connection_established": "RCON connection established",
+    "rcon_connection_lost": "RCON connection lost",
+    "error_encrypting_credentials": "Error encrypting credentials",
+    "error_decrypting_credentials": "Error decrypting credentials",
+    "error_saving_credentials": "Error saving credentials",
+    "error_loading_credentials": "Error loading credentials",
+
+    "no_options_to_update": "No options to update",
+    "failed_to_update_n_options": "Failed to update {{n}} options",
+    "options_updated_sync_failed": "Options updated, but failed to sync with the client",
+    "options_saved_and_reloaded": "Options updated and reloaded",
+    "options_updated": "Options updated",
+
+    "addPlayer": {
+      "cant_add_player": "Can't add player",
+      "player_already_in_list": "Player {{name}} is already in list"
+    },
+    "addPlayerToWhitelist": {
+      "single_success": "Successfully added player",
+      "single_fail": "Failed to add player"
+    },
+    "removePlayersFromWhitelist": {
+      "all_success": "Successfully removed {{s}} players",
+      "all_fail": "Failed to remove {{f}} players",
+      "partial": "Successfully removed {{s}} players, failed to remove {{f}} players",
+      "single_success": "Successfully removed player {{name}}",
+      "single_fail": "Failed to remove player {{name}}",
+
+      "cant_remove_player": "Can't remove player",
+      "player_not_found_in_list": "Player {{name}} was not found in list"
+    },
+    "banUsers": {
+      "all_success": "Banned {{s}} users",
+      "all_fail": "Failed to ban {{f}} users",
+      "partial": "Banned {{s}} users, failed to ban {{f}} users",
+      "single_success": "Successfully banned {{name}}",
+      "single_fail": "Failed to ban {{name}}"
+    },
+    "unbanUsers": {
+      "all_success": "Unbanned {{s}} users",
+      "all_fail": "Failed to unban {{f}} users",
+      "partial": "Unbanned {{s}} users, failed to unban {{f}} users",
+      "single_success": "Successfully unbanned {{name}}",
+      "single_fail": "Failed to unban {{name}}"
+    },
+    "kickUsers": {
+      "all_success": "Kicked {{s}} users",
+      "all_fail": "Failed to kick {{f}} users",
+      "partial": "Kicked {{s}} users, failed to kick {{f}} users",
+      "single_success": "Successfully kicked {{name}}",
+      "single_fail": "Failed to kick {{name}}"
+    },
+    "godMode": {
+      "all_success": "Set godmode for {{s}} users",
+      "all_fail": "Failed to set godmode for {{f}} users",
+      "partial": "Set godmode for {{s}} users, failed to set godmode for {{f}} users",
+      "single_success": "Successfully set godmode for {{name}}",
+      "single_fail": "Failed to set godmode for {{name}}"
+    },
+    "teleport": {
+      "all_success": "Teleported {{s}} users",
+      "all_fail": "Failed to teleport {{f}} users",
+      "partial": "Teleported {{s}} users, failed to teleport {{f}} users",
+      "single_success": "Successfully teleported {{name}}",
+      "single_fail": "Failed to teleport {{name}}"
+    },
+    "setAccessLevel": {
+      "all_success": "Set access level for {{s}} users",
+      "all_fail": "Failed to set access level for {{f}} users",
+      "partial": "Set access level for {{s}} users, failed to set access level for {{f}} users",
+      "single_success": "Successfully set access level for {{name}}",
+      "single_fail": "Failed to set access level for {{name}}"
+    },
+    "createHorde": {
+      "all_success": "Created a horde near {{s}} users",
+      "all_fail": "Failed to create a horde near {{f}} users",
+      "partial": "Created a horde near {{s}} users, failed to create a horde near {{f}} users",
+      "single_success": "Successfully created a horde near {{name}}",
+      "single_fail": "Failed to create a horde near {{name}}"
+    },
+    "lightning": {
+      "all_success": "Triggered lightning near {{s}} users",
+      "all_fail": "Failed to trigger lightning near {{f}} users",
+      "partial": "Triggered lightning near {{s}} users, failed to trigger lightning near {{f}} users",
+      "single_success": "Successfully triggered lightning near {{name}}",
+      "single_fail": "Failed to trigger lightning near {{name}}"
+    },
+    "thunder": {
+      "all_success": "Triggered thunder near {{s}} users",
+      "all_fail": "Failed to trigger thunder near {{f}} users",
+      "partial": "Triggered thunder near {{s}} users, failed to trigger thunder near {{f}} users",
+      "single_success": "Successfully triggered thunder near {{name}}",
+      "single_fail": "Failed to trigger thunder near {{name}}"
+    },
+    "addXP": {
+      "success": "Successfully added XP",
+      "fail": "Failed to add XP"
+    },
+    "addVehicle": {
+      "all_success": "Added {{s}} vehicles",
+      "all_fail": "Failed to add {{f}} vehicles",
+      "partial": "Added {{s}} vehicles, failed to add {{f}} vehicles",
+      "single_success": "Successfully added a vehicle to {{name}}",
+      "single_fail": "Failed to add a vehicle to {{name}}"
+    },
+    "addItems": {
+      "success": "Successfully added items",
+      "fail": "Failed to add items"
+    },
+    "saveWorld": {
+      "single_success": "Successfully saved the world",
+      "single_fail": "Failed to save the world"
+    },
+    "stopServer": {
+      "single_success": "Stopping the server",
+      "single_fail": "Failed to stop the server"
+    },
+    "checkModsNeedUpdate": {
+      "single_success": "Checking started. The answer will be written in the log file and in the chat",
+      "single_fail": "Failed to check mods that need update"
+    },
+    "serverMessage": {
+      "single_success": "Successfully sent server message",
+      "single_fail": "Failed to send server message"
+    },
+    "startRain": {
+      "single_success": "Successfully started rain",
+      "single_fail": "Failed to start rain"
+    },
+    "startStorm": {
+      "single_success": "Successfully started a storm",
+      "single_fail": "Failed to start a storm"
+    },
+    "stopRain": {
+      "single_success": "Successfully stopped rain",
+      "single_fail": "Failed to stop rain"
+    },
+    "stopWeather": {
+      "single_success": "Successfully stopped weather",
+      "single_fail": "Failed to stop weather"
+    },
+    "chopper": {
+      "single_success": "Successfully launched chopper",
+      "single_fail": "Failed to launch chopper"
+    },
+    "gunshot": {
+      "single_success": "Successfully fired gunshot",
+      "single_fail": "Failed to fire gunshot"
+    },
+    "triggerAlarm": {
+      "single_success": "Successfully triggered alarm",
+      "single_fail": "Failed to trigger alarm"
+    },
+    "reloadOptions": {
+      "single_success": "Successfully reloaded options",
+      "single_fail": "Failed to reload options"
+    }
+  },
+
+  "settings": {
+    "restart_the_app_for_changes_to_take_effect": "Restart the app for changes to take effect.",
+    "are_you_sure_you_want_to_import_this_config": "Are you sure you want to import this config?",
+    "the_app_will_restart_to_load_the_new_config": "The app will be restarted to load the new config.",
+    "config_saved": "Config saved",
+    "there_was_an_error_saving_the_config": "There was an error saving the config.",
+
+    "categories": {
+      "general": "General",
+      "application": "Application",
+      "advanced": "Advanced",
+      "update": "Update",
+      "rcon": "RCON"
+    },
+
+    "setting": {
+      "language": {
+        "label": "Language",
+        "description": "Select your preferred language.",
+        "select_language": "Select language...",
+        "search_language": "Search language...",
+        "no_languages_found": "No languages found."
+      },
+
+      "theme": {
+        "label": "Theme",
+        "description": "Choose a color scheme for the interface."
+      },
+
+      "color_scheme": {
+        "label": "Color Scheme",
+        "description": "Select your preferred color scheme.",
+        "select_color_scheme": "Select color scheme...",
+        "search_color_scheme": "Search color scheme...",
+        "no_color_schemes_found": "No color schemes found.",
+
+        "color_schemes": {
+          "default": "Default",
+          "midnightAsh": "Midnight Ash",
+          "dawnMist": "Dawn Mist",
+          "forestDawn": "Forest Dawn",
+          "goldenEmber": "Golden Ember"
+        }
+      },
+
+      "window_effect": {
+        "label": "Window Effect",
+        "description": "Select the window effect.",
+
+        "auto": "Auto",
+        "none": "None",
+        "acrylic": "Acrylic",
+        "mica": "Mica",
+        "tabbed": "Tabbed"
+      },
+
+      "window_opacity": {
+        "label": "Window Opacity",
+        "description": "Adjust the window opacity. (This setting is ignored if 'None' is selected for window effect.)"
+      },
+
+      "window_scale": {
+        "label": "Window Scale",
+        "description": "Adjust the window scale."
+      },
+
+      "use_system_title_bar": {
+        "label": "Use System Title Bar",
+        "description": "Use the default system title bar instead of a custom one."
+      },
+
+      "logging": {
+        "label": "Enable Logging",
+        "description": "Enable logging to files."
+      },
+
+      "log_levels": {
+        "label": "Log Levels",
+        "description": "Select the log levels to record."
+      },
+
+      "max_log_files": {
+        "label": "Max Log Files",
+        "description": "Set the maximum number of log files to retain."
+      },
+
+      "import_export": {
+        "label": "Import/Export Settings",
+        "description": "Import or export settings your settings from/to a JSON file."
+      },
+
+      "save_window_status": {
+        "label": "Save Window Status",
+        "description": "Save window size, position, and state."
+      },
+
+      "check_for_updates": {
+        "label": "Check For Updates On Startup",
+        "description": "Check for updates on startup."
+      },
+
+      "update": {
+        "update_available": "Update available",
+        "no_updates_available": "No updates available",
+        "last_checked": "Last checked",
+        "check_for_updates": "Check for updates",
+        "update": "Update",
+        "updating": "Updating...",
+        "failed_to_check_for_updates": "Failed to check for updates. Please try again later.",
+        "failed_to_download_update": "Failed to download update. Please try again later.",
+        "failed_to_apply_update": "Failed to apply update.",
+        "update_applied": "Update applied successfully.",
+        "restarting": "Restarting...",
+        "need_admin_privileges": "Administration privileges are needed to update the application.",
+        "update_successful": "Update was successfully applied."
+      },
+
+      "rcon_check_interval": {
+        "label": "RCON Check Interval",
+        "description": "Set the frequency (in seconds) for checking the connection and active players."
+      },
+
+      "disable_weather_control_buttons": {
+        "label": "Disable Weather Control Buttons",
+        "description": "Disables the weather control buttons at server management panel to prevent misclicks."
+      },
+
+      "disable_random_event_buttons": {
+        "label": "Disable Random Event Buttons",
+        "description": "Disables the random event buttons at server management panel to prevent misclicks."
+      },
+
+      "disable_other_management_buttons": {
+        "label": "Disable Other Management Buttons",
+        "description": "Disables the buttons in the 'Other' category of the server management panel to prevent clicks."
+      },
+
+      "debug_mode": {
+        "label": "Debug Mode",
+        "description": "Enable debug mode."
+      }
+    }
+  },
+
+  "tools": {
+    "message_editor": {
+      "mode": {
+        "tool": {
+          "name": "Message Editor",
+          "copy_formatted_message": "Copy Formatted Message"
+        },
+        "message": {
+          "name": "Send Message",
+          "description": "Send a message to the server.",
+          "send": "Send"
+        },
+        "edit": {
+          "name": "Edit Message",
+          "reset": "Reset",
+          "save_edit": "Save Edit"
+        }
+      },
+      "notifications": {
+        "error_saving_message": "There was an error saving the message",
+        "message_saved": "Message saved",
+        "error_loading_message": "There was an error loading the message"
+      },
+
+      "message": "Message",
+      "message_placeholder": "Enter your message here...",
+      "formatted_message": "Formatted Message",
+      "save_message": "Save Message",
+      "load_message": "Load Message",
+      "bytes": "bytes"
+    },
+    "item_browser": {
+      "mode": {
+        "tool": {
+          "name": "Item Browser"
+        },
+        "add": {
+          "name": "Add Items",
+          "description": "You will add items to {{names}}.",
+          "add_selected_items": "Add Selected Items"
+        },
+        "edit": {
+          "name": "Edit Items",
+          "reset": "Reset",
+          "save_edit": "Save Edit"
+        }
+      },
+
+      "selected_items": "Selected Items",
+      "search_items_placeholder": "Search items...",
+      "show_ids": "Show Item IDs",
+      "save_items": "Save Items",
+      "load_items": "Load Items"
+    },
+    "vehicle_browser": {
+      "mode": {
+        "tool": {
+          "name": "Vehicle Browser"
+        },
+        "add": {
+          "name": "Add Vehicle",
+          "preview_in_map_website": "Preview in Map Website",
+          "player_combobox": {
+            "placeholder": "Select Target Players",
+            "search_placeholder": "Search players...",
+            "search_not_found": "No players found."
+          },
+          "add_vehicle": "Add Vehicle"
+        }
+      },
+
+      "Vehicles": "Vehicles",
+      "Heavy-duty Vehicles": "Heavy-duty Vehicles",
+      "Sport Vehicles": "Sport Vehicles",
+      "Standard Vehicles": "Standard Vehicles",
+      "Trailers": "Trailers",
+
+      "Normal": "Normal",
+      "Police": "Police",
+      "Ambulance": "Ambulance",
+      "Fire": "Fire",
+      "Mail": "Mail",
+      "Ranger": "Ranger",
+      "Ranger_Fossoil": "Ranger/Fossoil",
+      "Taxi (yellow)": "Taxi (yellow)",
+      "Taxi (green)": "Taxi (green)",
+
+      "6-Seater": "6-Seater",
+
+      "Wood Siding": "Wood Siding",
+
+      "Advert Trailer": "Advert Trailer",
+      "Trailer": "Trailer",
+      "Cover": "Cover"
+    }
+  },
+
+  "admin_panel": {
+    "disconnect": "Disconnect",
+    "connected_to": "Connected to {{socket}}",
+
+    "tabs": {
+      "management": {
+        "name": "Management",
+        "send_message": "Send Message",
+
+        "weather": {
+          "title": "Weather",
+          "warning": "Reported to cause problems with weather cycles",
+          "stop_rain": "Stop Rain",
+          "stop_weather": "Stop Weather",
+
+          "start_rain": {
+            "name": "Start Rain",
+            "description": "Starts rain with an optional intensity of 1-100",
+            "intensity": "Intensity"
+          },
+          "start_storm": {
+            "name": "Start Storm",
+            "description": "Starts a storm with an optional duration (in game hours)",
+            "duration": "Duration"
+          }
+        },
+
+        "random": {
+          "title": "Random Events",
+          "description": "Triggers the clicked event on a random player",
+          "online_players": "Online Players: {{players}}",
+          "no_players": "No players online",
+          "chopper": {
+            "name": "Chopper",
+            "tooltip": "Place a helicopter event on a random player"
+          },
+          "gunshot": {
+            "name": "Gunshot",
+            "tooltip": "Place a gunshot event on a random player"
+          },
+          "lightning": {
+            "name": "Lightning",
+            "tooltip": "Trigger a lightning on a random player"
+          },
+          "thunder": {
+            "name": "Thunder",
+            "tooltip": "Trigger a thunder on a random player"
+          }
+        },
+
+        "other": {
+          "title": "Other",
+
+          "check_mod_updates": {
+            "name": "Check Mod Updates",
+            "description": "Checks whether a mod has been updated. Writes answer to log file and the chat."
+          },
+          "alarm": {
+            "name": "Alarm",
+            "description": "Sound a building alarm at the Admin's position. (Must be in a room)"
+          }
+        }
+      },
+      "players": {
+        "name": "Players",
+        "filter_by_name": "Filter By Name...",
+        "god_mode": "God Mode",
+        "events": "Events",
+
+        "columns": {
+          "name": {
+            "name": "Name"
+          },
+          "status": {
+            "name": "Status",
+            "offline": "Offline",
+            "online": "Online",
+            "banned": "Banned"
+          },
+          "access_level": {
+            "name": "Access Level",
+            "admin": "Admin",
+            "moderator": "Moderator",
+            "overseer": "Overseer",
+            "gm": "GM",
+            "observer": "Observer",
+            "player": "Player",
+            "unknown": "Unknown"
+          }
+        },
+
+        "dialogs": {
+          "setaccesslevel": {
+            "button": "Set Access Level",
+            "title": "Set Access Level",
+            "players": "You will set access level for {{players}}.",
+            "submit": "Set Access Level",
+
+            "permissions": {
+              "player": [],
+              "observer": [
+                "Toggle god mode and invisibility (self only)",
+                "View connected players (/players)",
+                "Teleport to players or coordinates",
+                "Use noclip (self only)",
+                "View server settings",
+                "Open locked doors and enter safehouses",
+                "Bypass lag kick and join full servers",
+                "Chat while invisible",
+                "See invisible players",
+                "Immune to player attacks",
+                "Start invisible/invincible",
+                "View player stats (read-only)"
+              ],
+              "gm": [
+                "All Observer permissions",
+                "Toggle god mode, invisibility, and noclip (self and others)",
+                "Teleport players to each other",
+                "Trigger alarms, gunshots, thunder, and choppers",
+                "Control rain",
+                "Add items and XP"
+              ],
+              "overseer": [
+                "All GM permissions",
+                "Create hordes",
+                "Kick users",
+                "Send server-wide messages",
+                "View player connection info",
+                "Disconnect players",
+                "Adjust night length",
+                "Edit player stats",
+                "Ban players from chat"
+              ],
+              "moderator": [
+                "All Overseer permissions",
+                "Ban/unban users (including by Steam ID)",
+                "Manage whitelist",
+                "Assign safehouses",
+                "Change access levels (except admin)"
+              ],
+              "admin": [
+                "All Moderator permissions",
+                "Save and quit the world",
+                "Change any access level",
+                "Reload server settings and Lua files",
+                "Bypass Lua checksum",
+                "Send server pulses"
+              ]
+            }
+          },
+
+          "banuser": {
+            "button": "Ban",
+            "title": "Ban User",
+            "title_multiple": "Ban Users",
+            "players": "You will ban {{players}}.",
+            "submit": "Ban",
+
+            "reason": "Reason",
+            "reason_placeholder": "Spamming, trolling, etc.",
+            "ban_ip": "Ban IP"
+          },
+
+          "unbanuser": {
+            "button": "Unban",
+            "title": "Unban User",
+            "title_multiple": "Unban Users",
+            "players": "You will unban {{players}}.",
+            "submit": "Unban"
+          },
+
+          "kickuser": {
+            "button": "Kick",
+            "title": "Kick User",
+            "title_multiple": "Kick Users",
+            "players": "You will kick {{players}}.",
+            "submit": "Kick",
+
+            "reason": "Reason",
+            "reason_placeholder": "Spamming, trolling, etc."
+          },
+
+          "teleport": {
+            "button": "Teleport",
+            "title": "Teleport User",
+            "title_multiple": "Teleport Users",
+            "players": "You will teleport {{players}}.",
+            "submit": "Teleport",
+
+            "coordinates_tab": "To Coordinates",
+            "player_tab": "To Player",
+
+            "preview_in_map_website": "Preview in Map Website",
+
+            "player_combobox": {
+              "placeholder": "Select Target Players",
+              "search_placeholder": "Search players...",
+              "search_not_found": "No players found."
+            }
+          },
+
+          "createhorde": {
+            "button": "Create Horde",
+            "title": "Create Horde",
+            "players": "You will create a horde near {{players}}.",
+            "submit": "Create Horde",
+
+            "horde_size": "Horde Size"
+          },
+
+          "lightning": {
+            "button": "Lightning",
+            "title": "Trigger Lightning",
+            "players": "You will trigger a lightning near {{players}}.",
+            "submit": "Trigger Lightning"
+          },
+
+          "thunder": {
+            "button": "Thunder",
+            "title": "Trigger Thunder",
+            "players": "You will trigger a thunder near {{players}}.",
+            "submit": "Trigger Thunder"
+          },
+
+          "addxp": {
+            "button": "Add XP",
+            "title": "Add XP",
+            "players": "You will add xp to {{players}}.",
+            "submit": "Add XP",
+
+            "xp_amount": "XP Amount",
+            "max_all": "Max All",
+            "regular_skill": "Regular Skill",
+            "passive_skill": "Passive Skill",
+            "lvl": "Lvl",
+
+            "skills": {
+              "Passive": {
+                "name": "Passive",
+
+                "Fitness": "Fitness",
+                "Strength": "Strength"
+              },
+
+              "Firearm": {
+                "name": "Firearm",
+
+                "Aiming": "Aiming",
+                "Reloading": "Reloading"
+              },
+
+              "Survivalist": {
+                "name": "Survivalist",
+
+                "Fishing": "Fishing",
+                "Trapping": "Trapping",
+                "PlantScavenging": "Foraging"
+              },
+
+              "Combat": {
+                "name": "Combat",
+
+                "Axe": "Axe",
+                "Blunt": "Long Blunt",
+                "SmallBlunt": "Short Blunt",
+                "LongBlade": "Long Blade",
+                "SmallBlade": "Short Blade",
+                "Spear": "Spear",
+                "Maintenance": "Maintenance"
+              },
+
+              "Agility": {
+                "name": "Agility",
+
+                "Sprinting": "Sprinting",
+                "Nimble": "Nimble",
+                "Lightfoot": "Lightfooted",
+                "Sneak": "Sneaking"
+              },
+
+              "Crafting": {
+                "name": "Crafting",
+
+                "Woodwork": "Carpentry",
+                "Cooking": "Cooking",
+                "Farming": "Farming",
+                "Doctor": "First Aid",
+                "Electricity": "Electrical",
+                "MetalWelding": "Metalworking",
+                "Mechanics": "Mechanics",
+                "Tailoring": "Tailoring"
+              }
+            }
+          },
+
+          "addplayertowhitelist": {
+            "button": "Add Player",
+            "title": "Add Player to Whitelist",
+            "submit": "Add Player to Whitelist",
+
+            "name": "Name",
+            "password": "Password"
+          },
+
+          "removeplayersfromwhitelist": {
+            "button": "Remove Players",
+            "dropdown_button": "Remove from Whitelist",
+            "title": "Remove Player from Whitelist",
+            "title_multiple": "Remove Players from Whitelist",
+            "players": "You will remove {{players}} from the whitelist.",
+            "submit": "Remove Player",
+            "submit_multiple": "Remove Players",
+
+            "remove_from_players_list": "Remove players from the player list too"
+          },
+
+          "add_missing_player": {
+            "button": "Missing a player? Add an offline player to the list.",
+            "title": "Add Player",
+            "submit": "Add Player",
+
+            "name": "Name"
+          },
+
+          "additem": {
+            "button": "Add Item",
+            "notifications": {
+              "error_saving_items": "There was an error saving the items",
+              "items_saved": "Items saved",
+              "error_loading_items": "There was an error loading the items"
+            }
+          },
+
+          "addvehicle": {
+            "button": "Add Vehicle",
+
+            "coordinates_tab": "To Coordinates",
+            "player_tab": "To Players"
+          }
+        }
+      },
+      "options": {
+        "name": "Options",
+
+        "reload_options": "Reload Options",
+        "search_options": "Search Options...",
+
+        "notifications": {
+          "error_exporting_options": "There was an error exporting the options",
+          "options_exported": "Options exported",
+          "error_importing_options": "There was an error importing the options"
+        }
+      },
+      "terminal": {
+        "name": "Terminal"
+      },
+      "connection": {
+        "title": "Connect To Your Server",
+        "description": "Enter your server details to connect",
+        "server_ip_or_domain": "Server IP or Domain",
+        "rcon_port": "RCON Port",
+        "rcon_password": "RCON Password",
+        "save_credentials": "Save Credentials",
+        "auto_connect": "Automatically connect on startup",
+        "connect": "Connect"
+      }
+    }
+  },
+
+  "options": {
+    "requires": "Requires {{option}} to be {{value}}.",
+    "requires_2": "Requires {{option1}} to be {{value1}} and {{option2}} to be {{value2}}.",
+    "requires_3": "Requires {{option1}} to be {{value1}}, {{option2}} to be {{value2}} and {{option3}} to be {{value3}}.",
+
+    "AntiCheatProtectionType1": {
+      "display_name": "Anti-Cheat Protection Type 1",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type1"
+    },
+    "AntiCheatProtectionType2": {
+      "display_name": "Anti-Cheat Protection Type 2",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type2"
+    },
+    "AntiCheatProtectionType3": {
+      "display_name": "Anti-Cheat Protection Type 3",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type3"
+    },
+    "AntiCheatProtectionType4": {
+      "display_name": "Anti-Cheat Protection Type 4",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type4"
+    },
+    "AntiCheatProtectionType5": {
+      "display_name": "Anti-Cheat Protection Type 5",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type5"
+    },
+    "AntiCheatProtectionType6": {
+      "display_name": "Anti-Cheat Protection Type 6",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type6"
+    },
+    "AntiCheatProtectionType7": {
+      "display_name": "Anti-Cheat Protection Type 7",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type7"
+    },
+    "AntiCheatProtectionType8": {
+      "display_name": "Anti-Cheat Protection Type 8",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type8"
+    },
+    "AntiCheatProtectionType9": {
+      "display_name": "Anti-Cheat Protection Type 9",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type9"
+    },
+    "AntiCheatProtectionType10": {
+      "display_name": "Anti-Cheat Protection Type 10",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type10"
+    },
+    "AntiCheatProtectionType11": {
+      "display_name": "Anti-Cheat Protection Type 11",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type11"
+    },
+    "AntiCheatProtectionType12": {
+      "display_name": "Anti-Cheat Protection Type 12",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type12"
+    },
+    "AntiCheatProtectionType13": {
+      "display_name": "Anti-Cheat Protection Type 13",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type13"
+    },
+    "AntiCheatProtectionType14": {
+      "display_name": "Anti-Cheat Protection Type 14",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type14"
+    },
+    "AntiCheatProtectionType15": {
+      "display_name": "Anti-Cheat Protection Type 15",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type15"
+    },
+    "AntiCheatProtectionType16": {
+      "display_name": "Anti-Cheat Protection Type 16",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type16"
+    },
+    "AntiCheatProtectionType17": {
+      "display_name": "Anti-Cheat Protection Type 17",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type17"
+    },
+    "AntiCheatProtectionType18": {
+      "display_name": "Anti-Cheat Protection Type 18",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type18"
+    },
+    "AntiCheatProtectionType19": {
+      "display_name": "Anti-Cheat Protection Type 19",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type19"
+    },
+    "AntiCheatProtectionType20": {
+      "display_name": "Anti-Cheat Protection Type 20",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type20"
+    },
+    "AntiCheatProtectionType21": {
+      "display_name": "Anti-Cheat Protection Type 21",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type21"
+    },
+    "AntiCheatProtectionType22": {
+      "display_name": "Anti-Cheat Protection Type 22",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type22"
+    },
+    "AntiCheatProtectionType23": {
+      "display_name": "Anti-Cheat Protection Type 23",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type23"
+    },
+    "AntiCheatProtectionType24": {
+      "display_name": "Anti-Cheat Protection Type 24",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type24"
+    },
+    "AntiCheatProtectionType2ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 2 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type2,threshold,multiplier"
+    },
+    "AntiCheatProtectionType3ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 3 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type3,threshold,multiplier"
+    },
+    "AntiCheatProtectionType4ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 4 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type4,threshold,multiplier"
+    },
+    "AntiCheatProtectionType9ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 9 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type9,threshold,multiplier"
+    },
+    "AntiCheatProtectionType15ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 15 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type15,threshold,multiplier"
+    },
+    "AntiCheatProtectionType20ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 20 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type20,threshold,multiplier"
+    },
+    "AntiCheatProtectionType22ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 22 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type22,threshold,multiplier"
+    },
+    "AntiCheatProtectionType24ThresholdMultiplier": {
+      "display_name": "Anti-Cheat Protection Type 24 Threshold Multiplier",
+      "description": "",
+      "keywords": "anti-cheat,anticheat,cheat,protection,type24,threshold,multiplier"
+    },
+    "DoLuaChecksum": {
+      "display_name": "Enable Lua Checksum Kick",
+      "description": "If enabled, clients whose game files don't match the server's files will be kicked.",
+      "keywords": "anti-cheat,anticheat,cheat,lua,checksum,kick"
+    },
+    "KickFastPlayers": {
+      "display_name": "Kick Fast Players",
+      "description": "If enabled, players that appear to be moving faster than possible will be kicked. May be buggy - use with caution.",
+      "keywords": "anti-cheat,anticheat,cheat,kick,fast players"
+    },
+    "SteamVAC": {
+      "display_name": "Enable Valve Anti-cheat (Steam VAC)",
+      "description": "Enables the Steam VAC anti-cheat system.",
+      "keywords": "anti-cheat,anticheat,VAC,cheat"
+    },
+    "BackupsCount": {
+      "display_name": "Backup Count",
+      "description": "Specifies the number of backups to retain.",
+      "keywords": "backup,count"
+    },
+    "BackupsOnStart": {
+      "display_name": "Enable Backups On Start",
+      "description": "Creates a backup when the server starts.",
+      "keywords": "backup,start"
+    },
+    "BackupsOnVersionChange": {
+      "display_name": "Enable Backups On Version Change",
+      "description": "Creates a backup when the server version changes.",
+      "keywords": "backup,version,change"
+    },
+    "BackupsPeriod": {
+      "display_name": "Backup Period",
+      "description": "Specifies the period between backups.",
+      "disabled": "Disabled",
+      "keywords": "backups,period"
+    },
+    "DiscordEnable": {
+      "display_name": "Enable Discord Integration",
+      "description": "Allows global chat integration with a Discord channel using a valid bot token. Requires a valid bot token to be set under \"Discord Token\".",
+      "disabled": "Disable",
+      "keywords": "discord,integration"
+    },
+    "DiscordToken": {
+      "display_name": "Discord Token",
+      "description": "Sets the bot token to access the Discord servers.",
+      "keywords": "discord,token"
+    },
+    "DiscordChannel": {
+      "display_name": "Discord Channel",
+      "description": "Sets the name of the Discord channel to integrate with. Use \"Discord ID\" if this does not work.",
+      "keywords": "discord,channel"
+    },
+    "DiscordChannelID": {
+      "display_name": "Discord Channel ID",
+      "description": "Sets the ID of the Discord channel to integrate with. Use this if \"Discord Channel\" does not work.",
+      "keywords": "discord,channel id"
+    },
+    "Faction": {
+      "display_name": "Enable Factions",
+      "description": "Enables faction creation and usage.",
+      "keywords": "faction,enable"
+    },
+    "FactionDaySurvivedToCreate": {
+      "display_name": "Game Days For Factions",
+      "description": "Specifies how many in-game days a player must survive to unlock faction creation.",
+      "keywords": "faction,days,create"
+    },
+    "FactionPlayersRequiredForTag": {
+      "display_name": "Faction Players Required For Tag",
+      "description": "Number of players required in a faction to create a tag.",
+      "keywords": "faction,tag,players"
+    },
+    "AllowDestructionBySledgehammer": {
+      "display_name": "Allow Sledgehammer Destruction",
+      "description": "Allows players to destroy world objects using sledgehammers.",
+      "keywords": "sledgehammer,destruction,destroy"
+    },
+    "BloodSplatLifespanDays": {
+      "display_name": "Blood Splats Lifespan Days",
+      "description": "Number of days before old blood splats are removed. Removal happens when map chunks are loaded.",
+      "disabled": "Never",
+      "keywords": "blood,splats,lifespan,days"
+    },
+    "CarEngineAttractionModifier": {
+      "display_name": "Car Engine Attraction Modifier",
+      "description": "Adjusts the range of zombie attraction to cars. Lower values can help lag.",
+      "keywords": "car,engine,zombie,attraction,modifier"
+    },
+    "ConstructionPreventsLootRespawn": {
+      "display_name": "Construction Prevents Loot Spawn",
+      "description": "Prevents loot respawn in buildings with player construction or barricades.",
+      "keywords": "construction,loot,respawn,prevent"
+    },
+    "FastForwardMultiplier": {
+      "display_name": "Sleep Fast Forward Multiplier",
+      "description": "Determines how fast time progresses during player sleep.",
+      "keywords": "fast-forward,sleep,time,multiplier"
+    },
+    "HidePlayersBehindYou": {
+      "display_name": "Hide Players Behind You",
+      "description": "Automatically hides players out of view behind the character (like zombies).",
+      "keywords": "hide,players,behind,view"
+    },
+    "HoursForLootRespawn": {
+      "display_name": "Minimum Period for Loot Respawn",
+      "description": "Number of in-game hours after which looted containers will respawn loot. Loot respawn is not impacted by visibility or subsequent looting.",
+      "disabled": "Never",
+      "keywords": "loot,respawn,hours,minimum"
+    },
+    "ItemNumbersLimitPerContainer": {
+      "display_name": "Item Limit Per Container",
+      "description": "Maximum number of items allowed per container. Includes individual small items like nails.",
+      "disabled": "Unlimited",
+      "keywords": "item,limit,container"
+    },
+    "KnockedDownAllowed": {
+      "display_name": "Allow Knock Down",
+      "description": "Allows players to be knocked down.",
+      "keywords": "knocked,down,allow"
+    },
+    "MaxItemsForLootRespawn": {
+      "display_name": "Maximum Items for Loot Respawn",
+      "description": "Maximum number of items per container to allow loot respawn.",
+      "keywords": "loot,respawn,maximum,items"
+    },
+    "MinutesPerPage": {
+      "display_name": "Minutes Per Book Page",
+      "description": "Number of in-game minutes to read one book page.",
+      "keywords": "minutes,book,page,read"
+    },
+    "NoFire": {
+      "display_name": "Don't Allow Fire",
+      "description": "Prevents any fire (except campfires).",
+      "keywords": "fire,prevent"
+    },
+    "PlayerBumpPlayer": {
+      "display_name": "Enable Player Bump Player",
+      "description": "Players can bump into and knock over each other.",
+      "keywords": "player,bump,knock"
+    },
+    "PlayerRespawnWithOther": {
+      "display_name": "Enable Player Respawn At Other's Location",
+      "description": "Allows respawning at another player's location in splitscreen/remote play.",
+      "keywords": "respawn,location,other,split,screen,remote play,remote-play"
+    },
+    "PlayerRespawnWithSelf": {
+      "display_name": "Enable Player Respawn At Death Coordinates",
+      "description": "Allows respawning at coordinates where the player died.",
+      "keywords": "respawn,death,coordinates"
+    },
+    "RemovePlayerCorpsesOnCorpseRemoval": {
+      "display_name": "Remove Player Corpses On Corpse Removal",
+      "description": "Removes player corpses from the ground when corpse cleanup triggers.",
+      "keywords": "player,corpse,removal,clean"
+    },
+    "SledgehammerOnlyInSafehouse": {
+      "display_name": "Allow Only Safehouse Sledgehammers",
+      "description": "Allows players to use sledgehammers only in their safehouses.",
+      "keywords": "sledgehammer,safehouse,destruction,restriction"
+    },
+    "SleepAllowed": {
+      "display_name": "Allow Sleep",
+      "description": "Allows players to sleep when tired but doesn't enforce it.",
+      "keywords": "sleep,allow,optional"
+    },
+    "SleepNeeded": {
+      "display_name": "Require Sleep",
+      "description": "If enabled, players become tired and need to sleep.",
+      "keywords": "sleep,required,needed"
+    },
+    "SneakModeHideFromOtherPlayers": {
+      "display_name": "Hide From Other Players In Sneak Mode",
+      "description": "Hides players from others when sneaking.",
+      "keywords": "sneak,hide,hidden,players"
+    },
+    "SpeedLimit": {
+      "display_name": "Speed Limit",
+      "description": "Sets the maximum movement speed for players.",
+      "keywords": "speed,limit,maximum"
+    },
+    "TrashDeleteAll": {
+      "display_name": "Enable Trash Delete All",
+      "description": "Allows players to use the 'delete all' button on bins.",
+      "keywords": "trash,delete,all"
+    },
+    "AllowCoop": {
+      "display_name": "Allow Co-op/Splitscreen Players",
+      "description": "Allows co-op/splitscreen gameplay.",
+      "keywords": "co-op,splitscreen,allow"
+    },
+    "AllowNonAsciiUsername": {
+      "display_name": "Allow Non-ASCII Usernames",
+      "description": "Allow use of non-ASCII (cyrillic etc) characters in usernames",
+      "keywords": "non ascii,non-ascii,username,allow"
+    },
+    "AnnounceDeath": {
+      "display_name": "Announce Player Death",
+      "description": "Broadcasts a global message in chat when a player dies.",
+      "keywords": "announce,death,player"
+    },
+    "BanKickGlobalSound": {
+      "display_name": "Enable Ban/Kick Global Sound",
+      "description": "Plays a global sound when players are banned or kicked.",
+      "keywords": "ban,kick,sound,global"
+    },
+    "ClientActionLogs": {
+      "display_name": "Client Action Logs",
+      "description": "Semicolon-separated list of actions that will be written to the ClientActionLogs.txt server log",
+      "keywords": "client,actions,logs"
+    },
+    "ClientCommandFilter": {
+      "display_name": "Client Command Filter",
+      "description": "Semicolon-separated list of commands that will not be written to the cmd.txt server log",
+      "keywords": "client,command,filter,logs"
+    },
+    "DefaultPort": {
+      "display_name": "Default Port",
+      "description": "Default port for server communication.",
+      "keywords": "server,port,default"
+    },
+    "DenyLoginOnOverloadedServer": {
+      "display_name": "Deny Login On Overloaded Server",
+      "description": "Prevents login if the server is overloaded.",
+      "keywords": "server,overload,login,deny"
+    },
+    "Map": {
+      "display_name": "Maps",
+      "description": "Semi-colon separated list of maps to load on the server.",
+      "keywords": "maps,server,load"
+    },
+    "MapRemotePlayerVisibility": {
+      "display_name": "Remote Player Map Visibility",
+      "description": "Controls the display of remote players on the in-game map",
+      "choices": {
+        "Hidden": "Hidden",
+        "Friends": "Friends",
+        "Everyone": "Everyone"
+      },
+      "keywords": "remote,player,map,visibility"
+    },
+    "MaxPlayers": {
+      "display_name": "Max Players",
+      "description": "Maximum number of players allowed on the server (Excluding admins).",
+      "keywords": "server,players,limit,maximum"
+    },
+    "Mods": {
+      "display_name": "Mods",
+      "description": "Semi-colon separated list of mod IDs.",
+      "keywords": "mods,server"
+    },
+    "Open": {
+      "display_name": "Enable Open Server",
+      "description": "Allows players to join without being on the whitelist. Otherwise, admins must manually create username/password combinations.",
+      "keywords": "server,open,whitelist"
+    },
+    "PauseEmpty": {
+      "display_name": "Pause When Empty",
+      "description": "Pauses game time when no players are online.",
+      "keywords": "pause,empty,players"
+    },
+    "PerkLogs": {
+      "display_name": "Enable Perk Logs",
+      "description": "Tracks changes in player perks in the PerkLog.txt file.",
+      "keywords": "perk,logs,tracking"
+    },
+    "Public": {
+      "display_name": "Make Server Public",
+      "description": "Displays the server in the public server browser (Steam-enabled servers are always visible in the Steam server browser).",
+      "keywords": "server,public,browser,steam"
+    },
+    "PublicDescription": {
+      "display_name": "Server Public Description",
+      "description": "Description shown in the server browser.",
+      "keywords": "server,description,public"
+    },
+    "PublicName": {
+      "display_name": "Server Public Name",
+      "description": "Name of the server shown in the server browser and, if applicable, the Steam browser.",
+      "keywords": "server,name,public,steam"
+    },
+    "SaveWorldEveryMinutes": {
+      "display_name": "Auto World Save Interval",
+      "description": "Interval between automatic world saves in real-time minutes (The map is usually saved only after clients leave a loaded area).",
+      "disabled": "Never",
+      "keywords": "save,world,interval,minutes"
+    },
+    "SpawnItems": {
+      "display_name": "Spawn Items",
+      "description": "List of items players spawn with.",
+      "keywords": "spawn,items,players"
+    },
+    "SpawnPoint": {
+      "display_name": "Spawn Point",
+      "description": "Coordinates for player spawn points. See https://map.projectzomboid.com for coordinates.",
+      "disabled": "0,0,0",
+      "keywords": "spawn,point,coordinates,map"
+    },
+    "UDPPort": {
+      "display_name": "UDP Port",
+      "description": "Port used for UDP communication.",
+      "keywords": "port,udp,communication"
+    },
+    "UPnP": {
+      "display_name": "Enable UPnP",
+      "description": "Allows automatic port forwarding on compatible routers.",
+      "keywords": "port,forwarding,router"
+    },
+    "WorkshopItems": {
+      "display_name": "Workshop Items",
+      "description": "Semi-colon separated list of workshop item IDs to install.",
+      "keywords": "workshop,items,mods"
+    },
+    "ServerWelcomeMessage": {
+      "display_name": "Welcome Message",
+      "description": "Message displayed to players upon login.",
+      "keywords": "welcome,message,motd,login"
+    },
+    "ResetID": {
+      "display_name": "Reset ID",
+      "description": "Reset ID determines if the server has undergone a soft-reset. If this number does match the client, the client must create a new character. Used in conjunction with PlayerServerID. It is strongly advised that you backup these IDs somewhere",
+      "keywords": "reset,id,soft-reset,soft reset"
+    },
+    "ServerPlayerID": {
+      "display_name": "Server Player ID",
+      "description": "ServerPlayerID determines if a character is from another server, or single player. This value may be changed by soft resets. If this number does match the client, the client must create a new character. This is used in conjunction with ResetID. It is strongly advised that you backup these IDs somewhere",
+      "keywords": "server,player,id,soft-reset,soft reset"
+    },
+    "PVP": {
+      "display_name": "Allow PvP",
+      "description": "Enables player versus player combat.",
+      "keywords": "pvp,combat,enable"
+    },
+    "PVPFirearmDamageModifier": {
+      "display_name": "PvP Firearm Damage Modifier",
+      "description": "Adjusts firearm damage in PvP.",
+      "keywords": "pvp,firearm,damage,modifier"
+    },
+    "PVPMeleeDamageModifier": {
+      "display_name": "PvP Melee Damage Modifier",
+      "description": "Adjusts melee damage in PvP.",
+      "keywords": "pvp,melee,damage,modifier"
+    },
+    "PVPMeleeWhileHitReaction": {
+      "display_name": "Enable PvP Melee While Hit Reaction",
+      "description": "Allows players to hit again when struck by another player.",
+      "keywords": "pvp,melee,hit,reactions"
+    },
+    "SafetyCooldownTimer": {
+      "display_name": "PvP Cooldown Timer",
+      "description": "Time before a player can re-enter PvP mode.",
+      "keywords": "pvp,cooldown,timer"
+    },
+    "SafetySystem": {
+      "display_name": "Enable PvP Toggle (Safety System)",
+      "description": "Allows toggling PvP mode on and off on an individual basis. A player can only hurt another player when at least one of them is in PvP mode.",
+      "keywords": "pvp,toggle,mode,safety system"
+    },
+    "SafetyToggleTimer": {
+      "display_name": "PvP Toggle Timer",
+      "description": "Time required to toggle PvP mode.",
+      "keywords": "pvp,toggle,timer"
+    },
+    "ShowSafety": {
+      "display_name": "Show Player PvP Status",
+      "description": "Displays a skull icon above the heads of players who have entered PvP mode",
+      "keywords": "pvp,status,indicator,safety system"
+    },
+    "AutoCreateUserInWhiteList": {
+      "display_name": "Automatically Whitelist Players",
+      "description": "Automatically adds new players to the whitelist (for open servers). Players will supply their own username/password on joining.",
+      "keywords": "whitelist,add,auto-create,automatic,players"
+    },
+    "DisplayUserName": {
+      "display_name": "Display Player Usernames",
+      "description": "Shows usernames above players' characters.",
+      "keywords": "username,display,player"
+    },
+    "DropOffWhiteListAfterDeath": {
+      "display_name": "Drop Off Whitelist After Death",
+      "description": "Removes players from the whitelist after death. This prevents players creating a new character after death on non-open servers.",
+      "keywords": "whitelist,drop,death,remove"
+    },
+    "LoginQueueConnectTimeout": {
+      "display_name": "Login Queue Connect Timeout",
+      "description": "Timeout duration for players in the login queue.",
+      "keywords": "login,queue,timeout"
+    },
+    "LoginQueueEnabled": {
+      "display_name": "Enable Login Queue",
+      "description": "Enables a queue for logging into the server.",
+      "keywords": "login,queue,LoginQueueEnabled"
+    },
+    "MaxAccountsPerUser": {
+      "display_name": "Maximum Accounts Per User",
+      "description": "Sets the limit on the number of different accounts a single Steam user may create on the server",
+      "disabled": "Unlimited",
+      "keywords": "maximum,accounts,limit,user,steam"
+    },
+    "MouseOverToSeeDisplayName": {
+      "display_name": "Require Mouse Over To See Display Name",
+      "description": "Requires players to mouse over someone to see their display name.",
+      "keywords": "mouse,over,display,name,mouse-over"
+    },
+    "PingLimit": {
+      "display_name": "Ping Limit",
+      "description": "Sets a maximum ping before a player is kicked.",
+      "disabled": "Unlimited",
+      "keywords": "ping,limit,kick"
+    },
+    "ShowFirstAndLastName": {
+      "display_name": "Display Player Character Names",
+      "description": "Shows first and last names above characters instead of usernames.",
+      "keywords": "display,character,name"
+    },
+    "SteamScoreboard": {
+      "display_name": "Steam Scoreboard",
+      "description": "Displays Steam usernames and avatars in the player list.",
+      "keywords": "steam,scoreboard,display"
+    },
+    "AdminSafehouse": {
+      "display_name": "Allow Admin Safehouses",
+      "description": "Allows admins to claim safehouses.",
+      "keywords": "safehouse,admin,restrict"
+    },
+    "DisableSafehouseWhenPlayerConnected": {
+      "display_name": "Disable Safehouse When Player Connected",
+      "description": "Disables safehouse protections when a player is online, so that it acts like a normal house and is only secure when players are offline.",
+      "keywords": "safehouse,disable,connected"
+    },
+    "PlayerSafehouse": {
+      "display_name": "Allow Player Safehouses",
+      "description": "Allows players and admins to claim safehouses.",
+      "keywords": "safehouse,player,claim"
+    },
+    "SafeHouseRemovalTime": {
+      "display_name": "Safehouse Removal Period",
+      "description": "Players are automatically removed from a safehouse they have not visited for this many real-world hours.",
+      "keywords": "safehouse,removal,period,inactivity"
+    },
+    "SafehouseAllowFire": {
+      "display_name": "Allow Safehouse Fire",
+      "description": "Allows safehouses to be damaged by fire.",
+      "keywords": "safehouse,fire,damage"
+    },
+    "SafehouseAllowLoot": {
+      "display_name": "Allow Safehouse Loot",
+      "description": "Allows non-members to loot items from safehouses.",
+      "keywords": "safehouse,loot,allow"
+    },
+    "SafehouseAllowNonResidential": {
+      "display_name": "Allow Non-Residential Safehouses",
+      "description": "Allows players to claim non-residential buildings (e.g., schools) as safehouses.",
+      "keywords": "safehouse,non-residential,buildings"
+    },
+    "SafehouseAllowRespawn": {
+      "display_name": "Allow Safehouse Respawn",
+      "description": "Allows players to respawn in their safehouse after death.",
+      "keywords": "safehouse,respawn,allow,spawn"
+    },
+    "SafehouseAllowTrepass": {
+      "display_name": "Allow Safehouse Trespass",
+      "description": "Allows non-members to enter a safehouse without being invited.",
+      "keywords": "safehouse,trespass,allow"
+    },
+    "SafehouseDaySurvivedToClaim": {
+      "display_name": "Game Days For Safehouse",
+      "description": "Number of in-game days a player must survive before they can claim a safehouse.",
+      "keywords": "safehouse,days,claim"
+    },
+    "ChatStreams": {
+      "display_name": "Chat Streams",
+      "description": "Enables specific chat streams for communication.",
+      "choices": {
+        "Say": "Say",
+        "Radio": "Radio",
+        "Whisper": "Whisper",
+        "Yell": "Yell",
+        "Safehouse": "Safehouse",
+        "Faction": "Faction",
+        "All": "All"
+      },
+      "keywords": "chat,streams,communication"
+    },
+    "DisableRadioAdmin": {
+      "display_name": "Disable Radio For Admins",
+      "description": "Disables radio transmissions from players with 'admin' access level.",
+      "keywords": "radio,admin,disable"
+    },
+    "DisableRadioGM": {
+      "display_name": "Disable Radio For GMs",
+      "description": "Disables radio transmissions from players with 'gm' access level.",
+      "keywords": "radio,gm,disable"
+    },
+    "DisableRadioInvisible": {
+      "display_name": "Disable Radio For Invisible Players",
+      "description": "Disables radio transmissions from invisible players.",
+      "keywords": "radio,invisible,disable"
+    },
+    "DisableRadioModerator": {
+      "display_name": "Disable Radio For Moderators",
+      "description": "Disables radio transmissions from players with 'moderator' access level.",
+      "keywords": "radio,moderator,disable"
+    },
+    "DisableRadioOverseer": {
+      "display_name": "Disable Radio For Overseers",
+      "description": "Disables radio transmissions from players with 'overseer' access level.",
+      "keywords": "radio,overseer,disable"
+    },
+    "DisableRadioStaff": {
+      "display_name": "Disable Radio For Staff",
+      "description": "Disables radio transmissions from players with an access level.",
+      "keywords": "radio,staff,disable"
+    },
+    "GlobalChat": {
+      "display_name": "Enable Global Chat",
+      "description": "If enabled, players can communicate with everyone (using the /all command in chat).",
+      "keywords": "chat,global,communication"
+    },
+    "Voice3D": {
+      "display_name": "Enable VOIP 3D",
+      "description": "Activates directional audio for VOIP.",
+      "keywords": "voice,3d,voip"
+    },
+    "VoiceEnable": {
+      "display_name": "Enable VOIP",
+      "description": "Enables voice communication for players.",
+      "keywords": "voice,enable,voip"
+    },
+    "VoiceMaxDistance": {
+      "display_name": "Maximum Distance For VOIP",
+      "description": "Specifies the maximum range for VOIP audio.",
+      "keywords": "voice,maximum,maximum,distance,range"
+    },
+    "VoiceMinDistance": {
+      "display_name": "Minimum Distance For VOIP",
+      "description": "Specifies the minimum range for VOIP audio.",
+      "keywords": "voice,minimum,minimum,distance,range"
+    }
+  },
+
+  "item_categories": {
+    "Accessory": "Accessory",
+    "Ammo": "Ammo",
+    "Appearance": "Appearance",
+    "Badger": "Badger",
+    "Bag": "Bag",
+    "Beaver": "Beaver",
+    "Bunny": "Bunny",
+    "Camping": "Camping",
+    "Cartography": "Cartography",
+    "Clothing": "Clothing",
+    "Communications": "Communications",
+    "Container": "Container",
+    "Cooking": "Cooking",
+    "Corpse": "Corpse",
+    "Electronics": "Electronics",
+    "Entertainment": "Entertainment",
+    "Explosives": "Explosives",
+    "First Aid": "First Aid",
+    "Fishing": "Fishing",
+    "Food": "Food",
+    "Fox": "Fox",
+    "Furniture": "Furniture",
+    "Gardening": "Gardening",
+    "Hedgehog": "Hedgehog",
+    "Hidden": "Hidden",
+    "Household": "Household",
+    "Instrument": "Instrument",
+    "Junk": "Junk",
+    "Light Source": "Light Source",
+    "Literature": "Literature",
+    "Material": "Material",
+    "Mole": "Mole",
+    "Paint": "Paint",
+    "Raccoon": "Raccoon",
+    "Security": "Security",
+    "Skill Book": "Skill Book",
+    "Sports": "Sports",
+    "Squirrel": "Squirrel",
+    "Tool": "Tool",
+    "Tool / Weapon": "Tool / Weapon",
+    "Trapping": "Trapping",
+    "Vehicle Maintenance": "Vehicle Maintenance",
+    "Water": "Water",
+    "Water Container": "Water Container",
+    "Weapon": "Weapon",
+    "Weapon - Crafted": "Weapon - Crafted",
+    "Weapon Part": "Weapon Part"
+  }
+}

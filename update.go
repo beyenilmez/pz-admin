@@ -20,6 +20,7 @@ type UpdateInfo struct {
 	Name            string `json:"name"`
 	ReleaseNotes    string `json:"releaseNotes"`
 	DownloadUrl     string `json:"downloadUrl"`
+	ReleaseUrl      string `json:"releaseUrl"`
 }
 
 type Release struct {
@@ -30,12 +31,27 @@ type Release struct {
 }
 
 func (app *App) CheckForUpdate() UpdateInfo {
+	os := app.GetOs()     // windows, linux, macos
+	arch := app.GetArch() // amd64, arm64
+
+	if !(os == "windows" || os == "linux" || os == "macos") {
+		return UpdateInfo{
+			UpdateAvailable: false,
+			CurrentVersion:  version,
+			LatestVersion:   "",
+			ReleaseNotes:    "",
+			DownloadUrl:     "",
+			ReleaseUrl:      "",
+		}
+	}
+
 	var updateInfo UpdateInfo = UpdateInfo{
 		UpdateAvailable: false,
 		CurrentVersion:  version,
 		LatestVersion:   "",
 		ReleaseNotes:    "",
 		DownloadUrl:     "",
+		ReleaseUrl:      "",
 	}
 	updateInfo.CurrentVersion = version
 
@@ -54,7 +70,10 @@ func (app *App) CheckForUpdate() UpdateInfo {
 	resp, err := http.Get(apiUrl)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error sending request: "+err.Error())
-		app.SendNotification("settings.setting.update.failed_to_check_for_updates", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_check_for_updates",
+			Variant: "error",
+		})
 		return updateInfo
 	}
 	defer resp.Body.Close()
@@ -62,7 +81,10 @@ func (app *App) CheckForUpdate() UpdateInfo {
 
 	// Check if response was successful
 	if resp.StatusCode != http.StatusOK {
-		app.SendNotification("settings.setting.update.failed_to_check_for_updates", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_check_for_updates",
+			Variant: "error",
+		})
 		return updateInfo
 	}
 
@@ -87,7 +109,27 @@ func (app *App) CheckForUpdate() UpdateInfo {
 	releaseNotes := release.ReleaseNotes
 	prerelease := release.Prerelease
 	name := release.Name
-	downloadUrl := fmt.Sprintf("https://github.com/%s/%s/releases/download/%s/pz-admin.exe", repoOwner, repoName, latestVersion)
+
+	versionNoPrefix := strings.TrimPrefix(latestVersion, "v")
+
+	// Determine the correct download URL based on OS and architecture
+	var fileName string
+	switch os {
+	case "windows":
+		if arch == "amd64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_windows_amd64.exe"
+		} else if arch == "arm64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_windows_arm64.exe"
+		}
+	case "linux":
+		if arch == "amd64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_linux_amd64"
+		} else if arch == "arm64" {
+			fileName = "pz-admin_" + versionNoPrefix + "_linux_arm64"
+		}
+	}
+
+	downloadUrl := fmt.Sprintf("https://github.com/%s/%s/releases/download/%s/%s", repoOwner, repoName, latestVersion, fileName)
 
 	// Parse current and latest versions
 	parsedVersion, err := semver.ParseTolerant(version)
@@ -119,6 +161,7 @@ func (app *App) CheckForUpdate() UpdateInfo {
 		updateInfo.Name = name
 		updateInfo.ReleaseNotes = releaseNotes
 		updateInfo.DownloadUrl = downloadUrl
+		updateInfo.ReleaseUrl = fmt.Sprintf("https://github.com/%s/%s/releases/latest", repoOwner, repoName)
 	} else {
 		runtime.LogInfo(app.ctx, "You have the latest version.")
 	}
@@ -133,7 +176,10 @@ func (app *App) Update(downloadUrl string) error {
 	resp, err := http.Get(downloadUrl)
 	if err != nil {
 		runtime.LogError(app.ctx, "Error downloading update: "+err.Error())
-		app.SendNotification("settings.setting.update.failed_to_download_update", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_download_update",
+			Variant: "error",
+		})
 		return err
 	}
 	defer resp.Body.Close()
@@ -143,7 +189,10 @@ func (app *App) Update(downloadUrl string) error {
 
 	// Check if the response was successful
 	if resp.StatusCode != http.StatusOK {
-		app.SendNotification("settings.setting.update.failed_to_download_update", "", "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_download_update",
+			Variant: "error",
+		})
 		return err
 	}
 
@@ -151,12 +200,20 @@ func (app *App) Update(downloadUrl string) error {
 	err = selfupdate.Apply(resp.Body, selfupdate.Options{})
 	if err != nil {
 		runtime.LogError(app.ctx, "Error applying update: "+err.Error())
-		app.SendNotification("settings.setting.update.failed_to_apply_update", err.Error(), "", "error")
+		app.SendNotification(Notification{
+			Title:   "settings.setting.update.failed_to_apply_update",
+			Message: err.Error(),
+			Variant: "error",
+		})
 		return err
 	}
 
 	runtime.LogInfo(app.ctx, "Update applied successfully. Restarting.")
-	app.SendNotification("settings.setting.update.update_applied", "settings.setting.update.restarting", "", "success")
+	app.SendNotification(Notification{
+		Title:   "settings.setting.update.update_applied",
+		Message: "settings.setting.update.restarting",
+		Variant: "success",
+	})
 
 	// Restart the application
 	app.RestartApplication([]string{"--goto", "settings__update", "--notify", "settings.setting.update.update_successful", "", "", "success"})

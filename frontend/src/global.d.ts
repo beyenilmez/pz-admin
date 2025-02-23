@@ -5,6 +5,7 @@ declare global {
     sendNotification: sendNotification;
     setProgress: setProgress;
     rconDisconnected: rconDisconnected;
+    updateRcon: updateRcon;
   }
 }
 

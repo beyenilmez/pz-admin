@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useRcon } from "@/contexts/rcon-provider";
-import { ScrollArea } from "@/components/ui/scroll-area"; // ShadCN ScrollArea
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useConfig } from "@/contexts/config-provider";
 
 const commands = [
   "additem",
@@ -15,7 +16,6 @@ const commands = [
   "chopper",
   "clear",
   "createhorde",
-  "createhorde2",
   "godmod",
   "grantadmin",
   "gunshot",
@@ -32,7 +32,6 @@ const commands = [
   "reloadoptions",
   "removeadmin",
   "removeuserfromwhitelist",
-  "removezombies",
   "replay",
   "save",
   "servermsg",
@@ -51,40 +50,197 @@ const commands = [
   "voiceban",
 ];
 
+const options = [
+  "AdminSafehouse",
+  "AllowCoop",
+  "AllowDestructionBySledgehammer",
+  "AllowNonAsciiUsername",
+  "AnnounceDeath",
+  "AntiCheatProtectionType1",
+  "AntiCheatProtectionType10",
+  "AntiCheatProtectionType11",
+  "AntiCheatProtectionType12",
+  "AntiCheatProtectionType13",
+  "AntiCheatProtectionType14",
+  "AntiCheatProtectionType15",
+  "AntiCheatProtectionType15ThresholdMultiplier",
+  "AntiCheatProtectionType16",
+  "AntiCheatProtectionType17",
+  "AntiCheatProtectionType18",
+  "AntiCheatProtectionType19",
+  "AntiCheatProtectionType2",
+  "AntiCheatProtectionType20",
+  "AntiCheatProtectionType20ThresholdMultiplier",
+  "AntiCheatProtectionType21",
+  "AntiCheatProtectionType22",
+  "AntiCheatProtectionType22ThresholdMultiplier",
+  "AntiCheatProtectionType23",
+  "AntiCheatProtectionType24",
+  "AntiCheatProtectionType24ThresholdMultiplier",
+  "AntiCheatProtectionType2ThresholdMultiplier",
+  "AntiCheatProtectionType3",
+  "AntiCheatProtectionType3ThresholdMultiplier",
+  "AntiCheatProtectionType4",
+  "AntiCheatProtectionType4ThresholdMultiplier",
+  "AntiCheatProtectionType5",
+  "AntiCheatProtectionType6",
+  "AntiCheatProtectionType7",
+  "AntiCheatProtectionType8",
+  "AntiCheatProtectionType9",
+  "AntiCheatProtectionType9ThresholdMultiplier",
+  "AutoCreateUserInWhiteList",
+  "BackupsCount",
+  "BackupsOnStart",
+  "BackupsOnVersionChange",
+  "BackupsPeriod",
+  "BanKickGlobalSound",
+  "BloodSplatLifespanDays",
+  "CarEngineAttractionModifier",
+  "ChatStreams",
+  "ClientActionLogs",
+  "ClientCommandFilter",
+  "ConstructionPreventsLootRespawn",
+  "DefaultPort",
+  "DenyLoginOnOverloadedServer",
+  "DisableRadioAdmin",
+  "DisableRadioGM",
+  "DisableRadioInvisible",
+  "DisableRadioModerator",
+  "DisableRadioOverseer",
+  "DisableRadioStaff",
+  "DisableSafehouseWhenPlayerConnected",
+  "DiscordEnable",
+  "DisplayUserName",
+  "DoLuaChecksum",
+  "DropOffWhiteListAfterDeath",
+  "Faction",
+  "FactionDaySurvivedToCreate",
+  "FactionPlayersRequiredForTag",
+  "FastForwardMultiplier",
+  "GlobalChat",
+  "HidePlayersBehindYou",
+  "HoursForLootRespawn",
+  "ItemNumbersLimitPerContainer",
+  "KickFastPlayers",
+  "KnockedDownAllowed",
+  "LoginQueueConnectTimeout",
+  "LoginQueueEnabled",
+  "Map",
+  "MapRemotePlayerVisibility",
+  "MaxAccountsPerUser",
+  "MaxItemsForLootRespawn",
+  "MaxPlayers",
+  "MinutesPerPage",
+  "Mods",
+  "MouseOverToSeeDisplayName",
+  "NoFire",
+  "Open",
+  "PVP",
+  "PVPFirearmDamageModifier",
+  "PVPMeleeDamageModifier",
+  "PVPMeleeWhileHitReaction",
+  "PauseEmpty",
+  "PerkLogs",
+  "PingLimit",
+  "PlayerBumpPlayer",
+  "PlayerRespawnWithOther",
+  "PlayerRespawnWithSelf",
+  "PlayerSafehouse",
+  "Public",
+  "PublicDescription",
+  "PublicName",
+  "RemovePlayerCorpsesOnCorpseRemoval",
+  "ResetID",
+  "SafeHouseRemovalTime",
+  "SafehouseAllowFire",
+  "SafehouseAllowLoot",
+  "SafehouseAllowNonResidential",
+  "SafehouseAllowRespawn",
+  "SafehouseAllowTrepass",
+  "SafehouseDaySurvivedToClaim",
+  "SafetyCooldownTimer",
+  "SafetySystem",
+  "SafetyToggleTimer",
+  "SaveWorldEveryMinutes",
+  "ServerPlayerID",
+  "ShowFirstAndLastName",
+  "ShowSafety",
+  "SledgehammerOnlyInSafehouse",
+  "SleepAllowed",
+  "SleepNeeded",
+  "SneakModeHideFromOtherPlayers",
+  "SpawnItems",
+  "SpawnPoint",
+  "SpeedLimit",
+  "SteamScoreboard",
+  "SteamVAC",
+  "TrashDeleteAll",
+  "UDPPort",
+  "UPnP",
+  "Voice3D",
+  "VoiceEnable",
+  "VoiceMaxDistance",
+  "VoiceMinDistance",
+  "WorkshopItems",
+  "server_browser_announced_ip",
+  "ServerWelcomeMessage",
+];
+
 const TerminalPage: React.FC = () => {
-  const { sendCommand } = useRcon();
+  const { config } = useConfig();
+  const { sendCommand, players } = useRcon();
+
+  const playerNames = players.map((player) => player.name);
+
+  const commandsMap: { [key: string]: string[] } = {
+    empty: commands,
+    help: commands,
+    setaccesslevel: playerNames,
+    banuser: playerNames,
+    unbanuser: playerNames,
+    kick: playerNames,
+    teleport: playerNames,
+    tp: playerNames,
+    createhorde: playerNames,
+    lightning: playerNames,
+    thunder: playerNames,
+    addxp: playerNames,
+    additem: playerNames,
+    addvehicle: playerNames,
+    godmod: playerNames,
+    godmode: playerNames,
+    invisible: playerNames,
+    noclip: playerNames,
+    changeoption: options,
+  };
 
   const [output, setOutput] = useState<{ type: "command" | "response" | "info" | "error"; line: string }[]>([
     { type: "info", line: "Welcome, type 'help' for commands or 'cls' to clear the terminal." },
     { type: "info", line: "You can use tab for auto-completion and up/down keys to navigate command history." },
   ]);
-  const [currentInput, setCurrentInput] = useState<string>(""); // Input command
-  const [commandHistory, setCommandHistory] = useState<string[]>([]); // Stores entered commands
-  const [historyIndex, setHistoryIndex] = useState<number>(-1); // Tracks current position in history
-  const [tabMatches, setTabMatches] = useState<string[]>([]); // Matches for Tab completion
-  const [tabIndex, setTabIndex] = useState<number>(-1); // Tracks current match during Tab traversal
+  const [currentInput, setCurrentInput] = useState<string>("");
+  const [commandHistory, setCommandHistory] = useState<string[]>([]);
+  const [historyIndex, setHistoryIndex] = useState<number>(-1);
+  const [tabMatches, setTabMatches] = useState<string[]>([]);
+  const [tabIndex, setTabIndex] = useState<number>(-1);
 
   const inputRef = useRef<HTMLInputElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // Scroll to bottom of output
   const scrollToBottom = () => {
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Focus input field when terminal is clicked
   useEffect(() => {
     inputRef.current?.focus();
     scrollToBottom();
   }, [output]);
 
-  // Add lines to output with type
   const addOutput = (line: string, type: "command" | "response" | "info" | "error") => {
     const newLines = line.split("\n").map((l) => ({ type, line: l }));
     setOutput((prev) => [...prev, ...newLines]);
   };
 
-  // Move command to the end of the history
   const moveCommandToEnd = (command: string) => {
     setCommandHistory((prev) => {
       const filteredHistory = prev.filter((cmd) => cmd !== command);
@@ -92,58 +248,54 @@ const TerminalPage: React.FC = () => {
     });
   };
 
-  // Handle Tab Auto-Completion Traversal
   const handleTabCompletion = () => {
     const trimmedInput = currentInput.trim();
-
     const words = trimmedInput.split(" ");
-    const lastWord = words[words.length - 1];
+    const baseCommand = words[0]; // The first word is the base command
+    const currentWord = words[words.length - 1];
 
-    // Start a new tab match search
+    const suggestions =
+      words.length === 1
+        ? commandsMap["empty"] // Suggest commands for the base command
+        : commandsMap[baseCommand] || []; // Suggest values for a specific command
+
     if (tabIndex === -1) {
-      const matches = commands.filter((cmd) => cmd.startsWith(lastWord));
+      const matches = suggestions.filter((item) => item.startsWith(currentWord));
       if (matches.length > 0) {
         setTabMatches(matches);
         setTabIndex(0);
-        setCurrentInput((words.slice(0, words.length - 1).join(" ") + " " + matches[0]).trim());
+        setCurrentInput((words.slice(0, -1).join(" ") + " " + matches[0]).trim());
       }
     } else {
-      // Cycle through existing matches
       const newIndex = (tabIndex + 1) % tabMatches.length;
       setTabIndex(newIndex);
-      setCurrentInput((words.slice(0, words.length - 1).join(" ") + " " + tabMatches[newIndex]).trim());
+      setCurrentInput((words.slice(0, -1).join(" ") + " " + tabMatches[newIndex]).trim());
     }
   };
 
-  // Reset Tab Matches when user types
   const resetTabCompletion = (value: string) => {
     setCurrentInput(value);
     setTabMatches([]);
     setTabIndex(-1);
   };
 
-  // Handle key events
   const handleKeyDown = async (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && currentInput.trim()) {
       const command = currentInput.trim();
-
-      // Move command to the end if it's from history
       moveCommandToEnd(command);
-
-      // Display the command entered by the user
       addOutput(`> ${command}`, "command");
-      resetTabCompletion(""); // Clear input and reset Tab matches
-      setHistoryIndex(-1); // Reset history index
+      resetTabCompletion("");
+      setHistoryIndex(-1);
 
       try {
         if (command === "cls") {
           setOutput([]);
         } else {
-          const response = await sendCommand(command);
-          if (response) {
+          const { response, error } = await sendCommand(command);
+          if (response && !error) {
             addOutput(response, "response");
           } else {
-            addOutput("No response.", "error");
+            addOutput(error || "No response.", "error");
           }
         }
       } catch (error) {
@@ -153,7 +305,6 @@ const TerminalPage: React.FC = () => {
       scrollToBottom();
     }
 
-    // Navigate command history with Up/Down keys
     if (e.key === "ArrowUp") {
       e.preventDefault();
       if (commandHistory.length > 0) {
@@ -173,13 +324,11 @@ const TerminalPage: React.FC = () => {
       }
     }
 
-    // Auto-complete on Tab key
     if (e.key === "Tab") {
-      e.preventDefault(); // Prevent default Tab behavior
+      e.preventDefault();
       handleTabCompletion();
     }
 
-    // Clear current input with ESC key
     if (e.key === "Escape") {
       resetTabCompletion("");
       setHistoryIndex(-1);
@@ -188,24 +337,25 @@ const TerminalPage: React.FC = () => {
 
   return (
     <div
-      className="w-full h-[calc(100vh-5.5rem)] dark:bg-black/20 bg-white/20 font-mono p-2 pb-1"
+      className={`w-[calc(100vw-16rem)] ${
+        config?.useSystemTitleBar ? "h-[calc(100vh-3.5rem)]" : "h-[calc(100vh-5.5rem)]"
+      } dark:bg-black/20 bg-white/20 font-mono p-2 pb-1`}
       onClick={() => inputRef.current?.focus()}
     >
-      {/* Scrollable Output */}
-      <ScrollArea className="h-[calc(100%-2rem)] w-full overflow-auto">
+      <ScrollArea className="h-[calc(100%-2rem)] overflow-auto pr-4">
         <div>
           {output.map((entry, index) => (
             <div
               key={index}
-              className={
+              className={`break-words whitespace-pre-wrap w-[calc(100vw-18rem)] ${
                 entry.type === "command"
-                  ? "text-green-400" // Brighter green for commands
+                  ? "dark:text-green-400 text-green-900 font-semibold"
                   : entry.type === "response"
-                  ? "text-green-700"
+                  ? "dark:text-green-700 text-green-600"
                   : entry.type === "info"
                   ? "text-blue-500"
-                  : "text-red-500" // Darker green for responses
-              }
+                  : "text-red-500"
+              }`}
             >
               {entry.line}
             </div>
@@ -213,10 +363,8 @@ const TerminalPage: React.FC = () => {
           <div ref={scrollRef}></div>
         </div>
       </ScrollArea>
-
-      {/* Inline Input */}
       <div className="flex">
-        <span className="text-green-400 mr-2 h-[2rem] flex items-center">$</span>
+        <span className="dark:text-green-400 text-green-900 mr-2 h-[2rem] flex items-center font-semibold">$</span>
         <input
           ref={inputRef}
           type="text"
@@ -224,7 +372,7 @@ const TerminalPage: React.FC = () => {
           value={currentInput}
           onChange={(e) => resetTabCompletion(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="w-full bg-transparent outline-none border-none text-green-400 h-[2rem]"
+          className="w-full bg-transparent outline-none border-none dark:text-green-400 text-green-900 h-[2rem]"
           autoFocus
         />
       </div>
