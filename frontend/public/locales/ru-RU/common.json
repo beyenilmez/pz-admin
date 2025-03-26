@@ -412,6 +412,23 @@
         "Sport Vehicles": "Спортивные машины",
         "Standard Vehicles": "Стандартные машины",
         "Trailers": "Прицепы",
+
+        "Chevalier D6": "Chevalier D6",
+        "Chevalier Step Van": "Chevalier Step Van",
+        "Dash Bulldriver": "Dash Bulldriver",
+        "Franklin All-Terrain": "Franklin All-Terrain",
+        "Franklin Valuline": "Franklin Valuline",
+
+        "Chevalier Cossette": "Chevalier Cossette",
+        "Chevalier Primani": "Chevalier Primani",
+        "Dash Elite": "Dash Elite",
+        "Mercia Lang 4000": "Mercia Lang 4000",
+
+        "Chevalier Cerise Wagon": "Chevalier Cerise Wagon",
+        "Chevalier Dart": "Chevalier Dart",
+        "Chevalier Nyala": "Chevalier Nyala",
+        "Dash Rancher": "Dash Rancher",
+        "Masterson Horizon": "Masterson Horizon",
   
         "Normal": "Обычный",
         "Police": "Полиция",
@@ -419,14 +436,22 @@
         "Fire": "Пожарная",
         "Mail": "Почта",
         "Ranger": "Парковая служба",
+        "Fossoil": "Fossoil",
         "Ranger_Fossoil": "Парковая служба/Фоссойл",
         "Taxi (yellow)": "Такси (желтое)",
         "Taxi (green)": "Такси (зеленое)",
-  
+        "McCoy": "McCoy",
+        "Kentucky Herald": "Kentucky Herald",
+        "Scarlet Oak Distillery": "Scarlet Oak Distillery",
+        "Knox Distillery": "Knox Distillery",
+        "KY Transit": "KY Transit",
+        "LBMW Network Radio": "LBMW Network Radio",
+        "Lectromax Manufacturing": "Lectromax Manufacturing",
+        "Mass-Genfac Co": "Mass-Genfac Co",
+        "Spiffos": "Spiffo's",
+        "Triple-N Radio Van": "Triple-N Radio Van",
         "6-Seater": "6-местный",
-  
         "Wood Siding": "Деревянная обшивка",
-  
         "Advert Trailer": "Рекламный прицеп",
         "Trailer": "Прицеп",
         "Cover": "Крытый"
