@@ -809,6 +809,20 @@
             "error_exporting_options": "Произошла ошибка при экспорте параметров",
             "options_exported": "Параметры экспортированы",
             "error_importing_options": "Произошла ошибка при импорте параметров"
+          },
+
+          "categories": {
+            "General": "General",
+            "Gameplay & Mechanics": "Gameplay & Mechanics",
+            "Safehouse": "Safehouse",
+            "Faction": "Faction",
+            "Player": "Player",
+            "PVP": "PvP",
+            "VOIP & Chat": "VOIP & Chat",
+            "Discord": "Discord",
+            "Backup": "Backup",
+            "Anti-Cheat": "Anti-Cheat",
+            "Miscellaneous": "Miscellaneous"
           }
         },
         "terminal": {

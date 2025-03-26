@@ -809,6 +809,20 @@
           "error_exporting_options": "There was an error exporting the options",
           "options_exported": "Options exported",
           "error_importing_options": "There was an error importing the options"
+        },
+
+        "categories": {
+          "General": "General",
+          "Gameplay & Mechanics": "Gameplay & Mechanics",
+          "Safehouse": "Safehouse",
+          "Faction": "Faction",
+          "Player": "Player",
+          "PVP": "PvP",
+          "VOIP & Chat": "VOIP & Chat",
+          "Discord": "Discord",
+          "Backup": "Backup",
+          "Anti-Cheat": "Anti-Cheat",
+          "Miscellaneous": "Miscellaneous"
         }
       },
       "terminal": {

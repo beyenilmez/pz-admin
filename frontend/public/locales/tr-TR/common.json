@@ -804,10 +804,25 @@
 
         "reload_options": "Ayarları Yenile",
         "search_options": "Ayar Ara...",
+
         "notifications": {
           "error_exporting_options": "Ayarlar dışarı aktarılırken bir hata oluştu",
           "options_exported": "Ayarlar dışarı aktarıldı",
           "error_importing_options": "Ayarlar içe aktarılırken bir hata oluştu"
+        },
+
+        "categories": {
+          "General": "Genel",
+          "Gameplay & Mechanics": "Mekanikler",
+          "Safehouse": "Güvenlik Ev",
+          "Faction": "Faction",
+          "Player": "Oyuncu",
+          "PVP": "PvP",
+          "VOIP & Chat": "VOIP & Sohbet",
+          "Discord": "Discord",
+          "Backup": "Yedekleme",
+          "Anti-Cheat": "Anti-Cheat",
+          "Miscellaneous": "Diğer"
         }
       },
       "terminal": {
