@@ -9,6 +9,11 @@
             "name": "Türkçe",
             "code": "tr-TR",
             "authors": ["Bedirhan Yenilmez"]
+        },
+        {
+            "name": "Русский",
+            "code": "ru-RU",
+            "authors": ["unclide"]
         }
     ]
 }
