@@ -814,7 +814,7 @@
           "categories": {
             "General": "Загальне",
             "Gameplay & Mechanics": "Геймплей та механіки",
-            "Safehouse": "притулок",
+            "Safehouse": "Притулок",
             "Faction": "Фракція",
             "Player": "Гравець",
             "PVP": "PvP",
@@ -1483,7 +1483,7 @@
           "Radio": "Радіо",
           "Whisper": "Шепіт",
           "Yell": "Крик",
-          "Safehouse": "притулок",
+          "Safehouse": "Притулок",
           "Faction": "Фракція",
           "All": "Усі"
         },
