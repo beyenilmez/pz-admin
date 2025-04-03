@@ -437,19 +437,19 @@
         "Mail": "Почта",
         "Ranger": "Парковая служба",
         "Fossoil": "Fossoil",
-        "Ranger_Fossoil": "Парковая служба/Фоссойл",
-        "Taxi (yellow)": "Такси (желтое)",
-        "Taxi (green)": "Такси (зеленое)",
+        "Ranger_Fossoil": "Парковая служба/Fossoil",
+        "Taxi (yellow)": "Такси (жёлтое)",
+        "Taxi (green)": "Такси (зелёное)",
         "McCoy": "McCoy",
         "Kentucky Herald": "Kentucky Herald",
         "Scarlet Oak Distillery": "Scarlet Oak Distillery",
         "Knox Distillery": "Knox Distillery",
         "KY Transit": "KY Transit",
-        "LBMW Network Radio": "LBMW Network Radio",
+        "LBMW Network Radio": "LBMW Сетевое радио",
         "Lectromax Manufacturing": "Lectromax Manufacturing",
         "Mass-Genfac Co": "Mass-Genfac Co",
-        "Spiffos": "Spiffo's",
-        "Triple-N Radio Van": "Triple-N Radio Van",
+        "Spiffos": "Спиффо",
+        "Triple-N Radio Van": "Радиофургон Triple-N",
         "6-Seater": "6-местный",
         "Wood Siding": "Деревянная обшивка",
         "Advert Trailer": "Рекламный прицеп",
@@ -698,57 +698,57 @@
                 "Passive": {
                   "name": "Пассивные",
   
-                  "Fitness": "Физподготовка",
+                  "Fitness": "Фитнес",
                   "Strength": "Сила"
                 },
   
                 "Firearm": {
-                  "name": "Огнестрел",
+                  "name": "Огнестрельное оружие",
   
-                  "Aiming": "Прицеливание",
+                  "Aiming": "Точность",
                   "Reloading": "Перезарядка"
                 },
   
                 "Survivalist": {
                   "name": "Выживание",
   
-                  "Fishing": "Рыбалка",
-                  "Trapping": "Ловля",
+                  "Fishing": "Рыболовство",
+                  "Trapping": "Звероловство",
                   "PlantScavenging": "Собирательство"
                 },
   
                 "Combat": {
-                  "name": "Бой",
+                  "name": "Оружие ближнего боя",
   
-                  "Axe": "Топор",
-                  "Blunt": "Длинное тупое",
-                  "SmallBlunt": "Короткое тупое",
-                  "LongBlade": "Длинное лезвие",
-                  "SmallBlade": "Короткое лезвие",
-                  "Spear": "Копье",
-                  "Maintenance": "Ремонт"
+                  "Axe": "Топоры",
+                  "Blunt": "Длин. дробящее",
+                  "SmallBlunt": "Коротк. дробящее",
+                  "LongBlade": "Длин. режущее",
+                  "SmallBlade": "Коротк. режущее",
+                  "Spear": "Копья",
+                  "Maintenance": "Прочность"
                 },
   
                 "Agility": {
                   "name": "Ловкость",
   
-                  "Sprinting": "Спринт",
-                  "Nimble": "Проворство",
-                  "Lightfoot": "Легкая походка",
+                  "Sprinting": "Бег",
+                  "Nimble": "Проворность",
+                  "Lightfoot": "Лёгкий шаг",
                   "Sneak": "Скрытность"
                 },
   
                 "Crafting": {
-                  "name": "Ремесло",
+                  "name": "Создание",
   
-                  "Woodwork": "Плотничество",
-                  "Cooking": "Готовка",
+                  "Woodwork": "Строительство",
+                  "Cooking": "Кулинария",
                   "Farming": "Фермерство",
                   "Doctor": "Первая помощь",
-                  "Electricity": "Электрика",
-                  "MetalWelding": "Металлообработка",
-                  "Mechanics": "Механика",
-                  "Tailoring": "Портняжное дело"
+                  "Electricity": "Электроника",
+                  "MetalWelding": "Газосварка",
+                  "Mechanics": "Автомеханика",
+                  "Tailoring": "Шитьё"
                 }
               }
             },
@@ -812,17 +812,17 @@
           },
 
           "categories": {
-            "General": "General",
-            "Gameplay & Mechanics": "Gameplay & Mechanics",
-            "Safehouse": "Safehouse",
-            "Faction": "Faction",
-            "Player": "Player",
+            "General": "Общее",
+            "Gameplay & Mechanics": "Геймплей и механики",
+            "Safehouse": "Убежище",
+            "Faction": "Фракция",
+            "Player": "Игрок",
             "PVP": "PvP",
-            "VOIP & Chat": "VOIP & Chat",
+            "VOIP & Chat": "VOIP & Чат",
             "Discord": "Discord",
-            "Backup": "Backup",
-            "Anti-Cheat": "Anti-Cheat",
-            "Miscellaneous": "Miscellaneous"
+            "Backup": "Бэкап",
+            "Anti-Cheat": "Анти-чит",
+            "Miscellaneous": "Разное"
           }
         },
         "terminal": {
@@ -1558,7 +1558,7 @@
       "Cartography": "Картография",
       "Clothing": "Одежда",
       "Communications": "Связь",
-      "Container": "Контейнер",
+      "Container": "Хранилище",
       "Cooking": "Готовка",
       "Corpse": "Труп",
       "Electronics": "Электроника",
@@ -1587,7 +1587,7 @@
       "Squirrel": "Белка",
       "Tool": "Инструмент",
       "Tool / Weapon": "Инструмент / Оружие",
-      "Trapping": "Ловля",
+      "Trapping": "Звероловство",
       "Vehicle Maintenance": "Обслуживание транспорта",
       "Water": "Вода",
       "Water Container": "Емкость для воды",
