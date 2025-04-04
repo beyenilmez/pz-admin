@@ -134,6 +134,10 @@ export function OpenFileInExplorer(arg1) {
   return window['go']['main']['App']['OpenFileInExplorer'](arg1);
 }
 
+export function OpenLogFolder() {
+  return window['go']['main']['App']['OpenLogFolder']();
+}
+
 export function Players() {
   return window['go']['main']['App']['Players']();
 }

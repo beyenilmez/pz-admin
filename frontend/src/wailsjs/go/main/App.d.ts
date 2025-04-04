@@ -68,6 +68,8 @@ export function LoadMessageDialog():Promise<main.ServerMessage>;
 
 export function OpenFileInExplorer(arg1:string):Promise<void>;
 
+export function OpenLogFolder():Promise<void>;
+
 export function Players():Promise<Array<main.Player>>;
 
 export function RandomLightning():Promise<void>;
