@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  SettingsItem,
-  SettingContent,
-  SettingDescription,
-  SettingLabel,
-} from "@/components/ui/settings-group";
+import { SettingsItem, SettingContent, SettingDescription, SettingLabel } from "@/components/ui/settings-group";
 import { Switch } from "@/components/ui/switch";
 import { useConfig } from "@/contexts/config-provider";
 import { main } from "@/wailsjs/go/models";
@@ -15,6 +10,7 @@ interface SwitchConfigProps {
   label: string;
   description?: string;
   requiresRestart?: boolean;
+  children?: React.ReactNode;
 }
 
 export function SwitchConfig({
@@ -22,6 +18,7 @@ export function SwitchConfig({
   label,
   description = "",
   requiresRestart = false,
+  children,
 }: SwitchConfigProps) {
   const { config, setConfigField } = useConfig();
   const { t } = useTranslation();
@@ -42,26 +39,19 @@ export function SwitchConfig({
   };
 
   return (
-    <SettingsItem
-      loading={isLoading}
-      configKey={configKey}
-      requiresRestart={requiresRestart}
-    >
+    <SettingsItem loading={isLoading} configKey={configKey} requiresRestart={requiresRestart}>
       <div>
         <SettingLabel>{label}</SettingLabel>
         {description && (
           <SettingDescription>
             {description}
-            {requiresRestart &&
-              ` (${t("settings.restart_the_app_for_changes_to_take_effect")})`}
+            {requiresRestart && ` (${t("settings.restart_the_app_for_changes_to_take_effect")})`}
           </SettingDescription>
         )}
       </div>
-      <SettingContent>
-        <Switch
-          checked={switchValue}
-          onCheckedChange={() => handleSwitch(!switchValue)}
-        />
+      <SettingContent className="gap-2">
+        {children}
+        <Switch checked={switchValue} onCheckedChange={() => handleSwitch(!switchValue)} />
       </SettingContent>
     </SettingsItem>
   );
