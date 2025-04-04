@@ -16,6 +16,7 @@
   "back": "Geri",
   "stop": "Durdur",
   "save_and_apply": "Kaydet ve Uygula",
+  "restore_to_default": "Varsayılana dön",
 
   "downloading_missing_external_programs": "Eksik dosyalar indiriliyor...",
   "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",

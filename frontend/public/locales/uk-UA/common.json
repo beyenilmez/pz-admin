@@ -16,6 +16,7 @@
     "back": "Назад",
     "stop": "Вимкнути",
     "save_and_apply": "Зберегти та застосувати",
+    "restore_to_default": "Скинути до значення за замовчуванням",
   
     "downloading_missing_external_programs": "Завантаження відсутніх зовнішніх програм...",
     "downloaded_missing_external_programs": "Відсутні зовнішні програми успішно завантажені.",

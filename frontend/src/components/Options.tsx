@@ -219,7 +219,7 @@ export function OptionsTab() {
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Restore to default</p>
+                              <p>{t('restore_to_default')}</p>
                             </TooltipContent>
                           </Tooltip>
                         )}

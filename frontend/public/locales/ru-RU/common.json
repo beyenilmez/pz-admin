@@ -16,6 +16,7 @@
     "back": "Назад",
     "stop": "Выключить",
     "save_and_apply": "Сохранить и применить",
+    "restore_to_default": "Восстановить по умолчанию",
   
     "downloading_missing_external_programs": "Загрузка отсутствующих внешних программ...",
     "downloaded_missing_external_programs": "Отсутствующие внешние программы успешно загружены.",

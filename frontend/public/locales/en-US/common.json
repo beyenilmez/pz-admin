@@ -16,6 +16,7 @@
   "back": "Back",
   "stop": "Stop",
   "save_and_apply": "Save and Apply",
+  "restore_to_default": "Restore to default",
 
   "downloading_missing_external_programs": "Downloading missing external programs...",
   "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
