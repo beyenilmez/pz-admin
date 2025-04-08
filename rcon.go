@@ -447,7 +447,7 @@ func players_update() error {
 
 	for _, playerName := range onlinePlayerNames {
 		playerName = strings.TrimSpace(playerName)
-		if len(playerName) > 1 {
+		if len(playerName) > 1 && playerName[0] == '-' {
 			onlinePlayers[playerName[1:]] = true
 		}
 	}

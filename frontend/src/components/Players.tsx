@@ -431,7 +431,7 @@ export function PlayersTab() {
                   </div>
                 </div>
 
-                <div className="space-x-2">
+                <div className="flex gap-2 flex-wrap">
                   <Button
                     onClick={() => {
                       setAddPlayerToWhitelistDialogOpen(true);

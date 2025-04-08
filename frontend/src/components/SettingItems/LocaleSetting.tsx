@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import {
-  SettingsItem,
-  SettingContent,
-  SettingDescription,
-  SettingLabel,
-} from "@/components/ui/settings-group";
+import { SettingsItem, SettingContent, SettingDescription, SettingLabel } from "@/components/ui/settings-group";
 import { Combobox } from "@/components/ui/combobox";
 import locales from "@/locales.json";
 import { useConfig } from "@/contexts/config-provider";
@@ -34,12 +29,11 @@ export function LocaleSetting() {
     <SettingsItem loading={isLoading}>
       <div>
         <SettingLabel>{t("settings.setting.language.label")}</SettingLabel>
-        <SettingDescription>
-          {t("settings.setting.language.description")}
-        </SettingDescription>
+        <SettingDescription>{t("settings.setting.language.description")}</SettingDescription>
       </div>
       <SettingContent>
         <Combobox
+          disableSearch
           initialValue={language}
           mandatory
           elements={locales.locales.map((locale) => ({
@@ -48,9 +42,7 @@ export function LocaleSetting() {
           }))}
           placeholder={t("settings.setting.language.select_language")}
           searchPlaceholder={t("settings.setting.language.search_language")}
-          nothingFoundMessage={t(
-            "settings.setting.language.no_languages_found"
-          )}
+          nothingFoundMessage={t("settings.setting.language.no_languages_found")}
           onChange={handleLanguageChange}
         />
       </SettingContent>

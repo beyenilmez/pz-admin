@@ -143,7 +143,7 @@ export function OptionsTab() {
                 setTab(category.name);
               }}
             >
-              {category.name}
+              {t(`admin_panel.tabs.options.categories.${category.name}`)}
             </TabsTrigger>
           ))}
         </TabsList>
@@ -185,7 +185,7 @@ export function OptionsTab() {
                   setTab(category.name);
                 }}
               >
-                {category.name}
+                {t(`admin_panel.tabs.options.categories.${category.name}`)}
               </a>
             </div>
             <SettingsGroup className="space-y-0.5">
@@ -219,7 +219,7 @@ export function OptionsTab() {
                               </div>
                             </TooltipTrigger>
                             <TooltipContent>
-                              <p>Restore to default</p>
+                              <p>{t('restore_to_default')}</p>
                             </TooltipContent>
                           </Tooltip>
                         )}

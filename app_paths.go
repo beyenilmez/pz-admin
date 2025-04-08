@@ -122,3 +122,7 @@ func get_config_path() string {
 
 	return configPath
 }
+
+func (app *App) OpenLogFolder() {
+	app.OpenFileInExplorer(logsFolder)
+}

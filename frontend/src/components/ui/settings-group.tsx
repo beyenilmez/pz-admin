@@ -92,7 +92,7 @@ export const SettingDescription: React.FC<SettingsComponentProps> = ({ children,
 );
 
 export const SettingContent: React.FC<SettingsComponentProps> = ({ children, className, ...rest }) => (
-  <div className={`flex flex-col ${className}`} {...rest}>
+  <div className={`flex flex-row items-center justify-center ${className}`} {...rest}>
     {children}
   </div>
 );

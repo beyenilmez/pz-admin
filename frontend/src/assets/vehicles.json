@@ -105,11 +105,11 @@
             ]
           },
           {
-            "name": "McCoy Logging Co",
+            "name": "McCoy",
             "type": "type",
             "id": "Base.PickUpVanMccoy",
             "images": [
-              "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/McCoy Logging Co/Base.PickUpVanMccoy/image.webp"
+              "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/McCoy/Base.PickUpVanMccoy/image.webp"
             ]
           },
           {
@@ -140,7 +140,7 @@
         ],
         "thumbnails": [
           "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/Fire/Base.PickUpVanLightsFire/image.webp",
-          "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/McCoy Logging Co/Base.PickUpVanMccoy/image.webp",
+          "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/McCoy/Base.PickUpVanMccoy/image.webp",
           "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/Normal/Base.PickUpVan/image.webp",
           "/vehicles/Heavy-duty Vehicles/Dash Bulldriver/Police/Base.PickUpVanLightsPolice/image.webp"
         ]

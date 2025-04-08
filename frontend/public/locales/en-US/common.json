@@ -16,6 +16,7 @@
   "back": "Back",
   "stop": "Stop",
   "save_and_apply": "Save and Apply",
+  "restore_to_default": "Restore to default",
 
   "downloading_missing_external_programs": "Downloading missing external programs...",
   "downloaded_missing_external_programs": "Successfully downloaded missing external programs.",
@@ -413,20 +414,45 @@
       "Standard Vehicles": "Standard Vehicles",
       "Trailers": "Trailers",
 
+      "Chevalier D6": "Chevalier D6",
+      "Chevalier Step Van": "Chevalier Step Van",
+      "Dash Bulldriver": "Dash Bulldriver",
+      "Franklin All-Terrain": "Franklin All-Terrain",
+      "Franklin Valuline": "Franklin Valuline",
+
+      "Chevalier Cossette": "Chevalier Cossette",
+      "Chevalier Primani": "Chevalier Primani",
+      "Dash Elite": "Dash Elite",
+      "Mercia Lang 4000": "Mercia Lang 4000",
+
+      "Chevalier Cerise Wagon": "Chevalier Cerise Wagon",
+      "Chevalier Dart": "Chevalier Dart",
+      "Chevalier Nyala": "Chevalier Nyala",
+      "Dash Rancher": "Dash Rancher",
+      "Masterson Horizon": "Masterson Horizon",
+
       "Normal": "Normal",
       "Police": "Police",
       "Ambulance": "Ambulance",
       "Fire": "Fire",
       "Mail": "Mail",
       "Ranger": "Ranger",
+      "Fossoil": "Fossoil",
       "Ranger_Fossoil": "Ranger/Fossoil",
       "Taxi (yellow)": "Taxi (yellow)",
       "Taxi (green)": "Taxi (green)",
-
+      "McCoy": "McCoy",
+      "Kentucky Herald": "Kentucky Herald",
+      "Scarlet Oak Distillery": "Scarlet Oak Distillery",
+      "Knox Distillery": "Knox Distillery",
+      "KY Transit": "KY Transit",
+      "LBMW Network Radio": "LBMW Network Radio",
+      "Lectromax Manufacturing": "Lectromax Manufacturing",
+      "Mass-Genfac Co": "Mass-Genfac Co",
+      "Spiffos": "Spiffo's",
+      "Triple-N Radio Van": "Triple-N Radio Van",
       "6-Seater": "6-Seater",
-
       "Wood Siding": "Wood Siding",
-
       "Advert Trailer": "Advert Trailer",
       "Trailer": "Trailer",
       "Cover": "Cover"
@@ -784,6 +810,20 @@
           "error_exporting_options": "There was an error exporting the options",
           "options_exported": "Options exported",
           "error_importing_options": "There was an error importing the options"
+        },
+
+        "categories": {
+          "General": "General",
+          "Gameplay & Mechanics": "Gameplay & Mechanics",
+          "Safehouse": "Safehouse",
+          "Faction": "Faction",
+          "Player": "Player",
+          "PVP": "PvP",
+          "VOIP & Chat": "VOIP & Chat",
+          "Discord": "Discord",
+          "Backup": "Backup",
+          "Anti-Cheat": "Anti-Cheat",
+          "Miscellaneous": "Miscellaneous"
         }
       },
       "terminal": {

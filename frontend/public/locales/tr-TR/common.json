@@ -16,6 +16,7 @@
   "back": "Geri",
   "stop": "Durdur",
   "save_and_apply": "Kaydet ve Uygula",
+  "restore_to_default": "Varsayılana dön",
 
   "downloading_missing_external_programs": "Eksik dosyalar indiriliyor...",
   "downloaded_missing_external_programs": "Eksik dosyalar başarıyla indirildi.",
@@ -288,11 +289,6 @@
         "description": "Pencere boyutunu, konumunu ve durumunu kaydet."
       },
 
-      "match_by_destination": {
-        "label": "Kısayolları Hedeflerine Göre Eşleştir",
-        "description": "Dosya yolu ile eşleştirme başarısız olursa, kısayolları hedeflerine göre eşleştir."
-      },
-
       "check_for_updates": {
         "label": "Başlangıçta Güncellemeleri Kontrol Et",
         "description": "Başlangıçta güncellemeleri kontrol et."
@@ -418,20 +414,45 @@
       "Standard Vehicles": "Standart Araçlar",
       "Trailers": "Römorklar",
 
+      "Chevalier D6": "Chevalier D6",
+      "Chevalier Step Van": "Chevalier Step Van",
+      "Dash Bulldriver": "Dash Bulldriver",
+      "Franklin All-Terrain": "Franklin All-Terrain",
+      "Franklin Valuline": "Franklin Valuline",
+
+      "Chevalier Cossette": "Chevalier Cossette",
+      "Chevalier Primani": "Chevalier Primani",
+      "Dash Elite": "Dash Elite",
+      "Mercia Lang 4000": "Mercia Lang 4000",
+
+      "Chevalier Cerise Wagon": "Chevalier Cerise Wagon",
+      "Chevalier Dart": "Chevalier Dart",
+      "Chevalier Nyala": "Chevalier Nyala",
+      "Dash Rancher": "Dash Rancher",
+      "Masterson Horizon": "Masterson Horizon",
+
       "Normal": "Normal",
       "Police": "Polis",
       "Ambulance": "Ambulans",
       "Fire": "İtfaiye",
       "Mail": "Posta",
       "Ranger": "Korucu",
+      "Fossoil": "Fossoil",
       "Ranger_Fossoil": "Korucu/Fossoil",
       "Taxi (yellow)": "Taksi (sarı)",
       "Taxi (green)": "Taksi (yeşil)",
-
+      "McCoy": "McCoy",
+      "Kentucky Herald": "Kentucky Herald",
+      "Scarlet Oak Distillery": "Scarlet Oak Distillery",
+      "Knox Distillery": "Knox Distillery",
+      "KY Transit": "KY Transit",
+      "LBMW Network Radio": "LBMW Network Radio",
+      "Lectromax Manufacturing": "Lectromax Manufacturing",
+      "Mass-Genfac Co": "Mass-Genfac Co",
+      "Spiffos": "Spiffo's",
+      "Triple-N Radio Van": "Triple-N Radio Van",
       "6-Seater": "6-Koltuklu",
-
       "Wood Siding": "Ahşap Kaplama",
-
       "Advert Trailer": "Reklam Römorku",
       "Trailer": "Römork",
       "Cover": "Kapalı"
@@ -784,10 +805,25 @@
 
         "reload_options": "Ayarları Yenile",
         "search_options": "Ayar Ara...",
+
         "notifications": {
           "error_exporting_options": "Ayarlar dışarı aktarılırken bir hata oluştu",
           "options_exported": "Ayarlar dışarı aktarıldı",
           "error_importing_options": "Ayarlar içe aktarılırken bir hata oluştu"
+        },
+
+        "categories": {
+          "General": "Genel",
+          "Gameplay & Mechanics": "Mekanikler",
+          "Safehouse": "Güvenlik Ev",
+          "Faction": "Faction",
+          "Player": "Oyuncu",
+          "PVP": "PvP",
+          "VOIP & Chat": "VOIP & Sohbet",
+          "Discord": "Discord",
+          "Backup": "Yedekleme",
+          "Anti-Cheat": "Anti-Cheat",
+          "Miscellaneous": "Diğer"
         }
       },
       "terminal": {

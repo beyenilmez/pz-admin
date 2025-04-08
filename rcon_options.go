@@ -240,7 +240,7 @@ func parseOptions(lines []string, target *PzOptions) error {
 		}
 
 		if err := setFieldValue(field, fieldValue); err != nil {
-			return fmt.Errorf("failed to set field %s: %v", fieldName, err)
+			runtime.LogWarningf(app.ctx, "failed to set field %s: %v", fieldName, err)
 		}
 	}
 
