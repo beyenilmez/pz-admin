@@ -153,7 +153,7 @@ func main() {
 		Linux: &linux.Options{
 			Icon:                appIcon,
 			WindowIsTranslucent: false,
-			WebviewGpuPolicy:    linux.WebviewGpuPolicyAlways,
+			WebviewGpuPolicy:    linux.WebviewGpuPolicyNever,
 			ProgramName:         "pz-admin",
 		},
 	})
