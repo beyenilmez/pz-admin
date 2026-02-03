@@ -128,7 +128,7 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install nsis -y
-          echo "C:\Program Files (x86)\NSIS\Bin" >> $GITHUB_PATH
+          echo "C:\Program Files (x86)\NSIS\bin" >> $GITHUB_PATH
 
       - name: Install dependencies (Linux)
         if: runner.os == 'Linux'
