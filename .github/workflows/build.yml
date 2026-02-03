@@ -135,7 +135,7 @@ jobs:
         run: ${{ matrix.deps }}
 
       - name: Install Wails CLI
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.11.0
 
       - name: Build
         run: wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}

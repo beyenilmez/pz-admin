@@ -433,7 +433,7 @@ export namespace main {
 	    message: string;
 	    path: string;
 	    variant: string;
-	    parameters?: {[key: string]: string};
+	    parameters?: Record<string, string>;
 	
 	    static createFrom(source: any = {}) {
 	        return new Notification(source);
@@ -485,7 +485,7 @@ export namespace main {
 	}
 	export class ServerMessage {
 	    message: string;
-	    lineColors: {[key: number]: string};
+	    lineColors: Record<number, string>;
 	
 	    static createFrom(source: any = {}) {
 	        return new ServerMessage(source);
