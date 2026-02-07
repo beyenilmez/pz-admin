@@ -13,6 +13,7 @@
     "unselect_all": "Зняти виділення",
     "clear": "Очистити",
     "copy": "Копіювати",
+    "add": "Додати",
     "back": "Назад",
     "stop": "Вимкнути",
     "save_and_apply": "Зберегти та застосувати",
@@ -389,7 +390,8 @@
         "search_items_placeholder": "Пошук предметів...",
         "show_ids": "Показувати ID предметів",
         "save_items": "Зберегти предмети",
-        "load_items": "Завантажити предмети"
+        "load_items": "Завантажити предмети",
+        "custom_item_placeholder": "ID предмета..."
       },
       "vehicle_browser": {
         "mode": {

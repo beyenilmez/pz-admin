@@ -4,7 +4,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 import { Input } from "@/components/ui/input";
 import { useState, useEffect, ImgHTMLAttributes, useMemo, useRef } from "react";
 import { Combobox } from "../ui/combobox";
-import { Copy, ListFilter, MinusCircle, PlusCircle, Search, XCircle } from "lucide-react";
+import { Copy, ListFilter, MinusCircle, PackagePlus, PlusCircle, Search, XCircle } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import itemsData from "@/assets/items.json";
@@ -50,6 +50,7 @@ export function AddItemDialog({
   const { t: tc } = useTranslation();
 
   const [showIds, setShowIds] = useState(false);
+  const [customItemId, setCustomItemId] = useState("");
 
   const sortedItemsData = useMemo(
     () => itemsData.sort((a, b) => tc(`item_categories.${a.name}`).localeCompare(tc(`item_categories.${b.name}`))),
@@ -123,6 +124,14 @@ export function AddItemDialog({
     }
   };
 
+  const handleAddCustomItem = () => {
+    const trimmed = customItemId.trim();
+    if (!trimmed) return;
+
+    handleAddItem(trimmed);
+    setCustomItemId("");
+  };
+
   const handleRemoveItem = (itemId: string) => {
     if (mode === "settings") {
       setSelectedItems((prev) => {
@@ -174,6 +183,7 @@ export function AddItemDialog({
     setSelectedItems({});
     setResetNum((prev) => prev + 1);
     setShowIds(false);
+    setCustomItemId("");
 
     if (config?.windowScale! >= 140 && mode !== "tool") {
       if (isOpen) {
@@ -209,26 +219,30 @@ export function AddItemDialog({
     return Object.entries(selectedItems).map(([itemId, count]) => {
       const item = sortedItemsData.flatMap((category: Category) => category.items).find((i) => i.itemId === itemId);
 
-      if (!item) return null;
+      const displayName = item ? translateWithFallback(item.itemId, item.name) : itemId;
 
       return (
         <div key={itemId} className="flex items-center gap-2 p-2 border">
           <Tooltip delayDuration={500}>
             <TooltipTrigger>
-              <ImageSlide
-                images={item.images}
-                name={translateWithFallback(item.itemId, item.name)}
-                className="h-8 w-8 object-contain cursor-default select-none"
-              />
+              {item ? (
+                <ImageSlide
+                  images={item.images}
+                  name={displayName}
+                  className="h-8 w-8 object-contain cursor-default select-none"
+                />
+              ) : (
+                <PackagePlus className="h-8 w-8 text-muted-foreground shrink-0 cursor-default" />
+              )}
             </TooltipTrigger>
-            <TooltipContent>{item.itemId}</TooltipContent>
+            <TooltipContent>{itemId}</TooltipContent>
           </Tooltip>
           <span className="flex-grow text-xs w-2 text-ellipsis overflow-clip">
-            {showIds ? (
-              <>{item.itemId}</>
+            {showIds || !item ? (
+              <>{itemId}</>
             ) : (
               <>
-                {translateWithFallback(item.itemId, item.name)}{" "}
+                {displayName}{" "}
                 {item.name === "Map" || (item.name === "Map (item)" && `(${item.itemId})`)}
               </>
             )}{" "}
@@ -353,7 +367,7 @@ export function AddItemDialog({
         </ScrollArea>
       </div>
       <div className="w-full">
-        <div className="w-full flex justify-between pr-4 mb-4">
+        <div className="w-full flex justify-between pr-4 mb-2">
           <div className="flex gap-6">
             <h3 className="text-lg font-semibold whitespace-nowrap">{tc("tools.item_browser.selected_items")}</h3>
             <div className="flex gap-2 items-center h-8">
@@ -373,7 +387,27 @@ export function AddItemDialog({
             </div>
           </Button>
         </div>
-        <ScrollArea className="pr-4 mb-4" style={{ height: height ? `calc(${height} - 2.5rem)` : "31rem" }}>
+        <div className="relative pr-4 mb-2">
+          <Input
+            className="peer ps-9 pr-9"
+            placeholder={tc("tools.item_browser.custom_item_placeholder")}
+            value={customItemId}
+            onChange={(e) => setCustomItemId(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && handleAddCustomItem()}
+          />
+          <div className="pointer-events-none absolute inset-y-0 start-0 flex items-center justify-center ps-3 text-muted-foreground/80 peer-disabled:opacity-50">
+            <PackagePlus className="w-4 h-4" strokeWidth={2} />
+          </div>
+          <Button
+            className="bg-transparent absolute inset-y-0 end-4 flex h-full w-9 items-center justify-center rounded-e-lg text-muted-foreground transition-colors hover:text-foreground disabled:pointer-events-none disabled:opacity-50"
+            tooltip={tc("add")}
+            onClick={handleAddCustomItem}
+            disabled={!customItemId.trim()}
+          >
+            <PlusCircle strokeWidth={2} aria-hidden="true" className="w-5 h-5 shrink-0" />
+          </Button>
+        </div>
+        <ScrollArea className="pr-4 mb-4" style={{ height: height ? `calc(${height} - 5rem)` : "28.5rem" }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3">{renderSelectedItems()}</div>
           <div ref={scrollRef} />
         </ScrollArea>

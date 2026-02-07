@@ -13,6 +13,7 @@
     "unselect_all": "Снять выделение",
     "clear": "Очистить",
     "copy": "Копировать",
+    "add": "Добавить",
     "back": "Назад",
     "stop": "Выключить",
     "save_and_apply": "Сохранить и применить",
@@ -389,7 +390,8 @@
         "search_items_placeholder": "Поиск предметов...",
         "show_ids": "Показывать ID предметов",
         "save_items": "Сохранить предметы",
-        "load_items": "Загрузить предметы"
+        "load_items": "Загрузить предметы",
+        "custom_item_placeholder": "ID предмета..."
       },
       "vehicle_browser": {
         "mode": {
