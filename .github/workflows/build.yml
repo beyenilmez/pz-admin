@@ -94,7 +94,10 @@ jobs:
             platform: windows/amd64
             name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_amd64.exe
             args: "-nsis"
-            deps: ""
+            deps: |
+              choco install nsis -y
+              New-Item -ItemType SymbolicLink -Path "C:\Windows\system32\makensis.exe" -Target "C:\Program Files (x86)\NSIS\bin\makensis.exe" -Force
+              echo "C:\Program Files (x86)\NSIS\bin" >> $env:GITHUB_PATH
             post-build: "ren ./build/bin/pz-admin-amd64-installer.exe pz-admin_${{ needs.extract-version.outputs.version }}_windows_amd64_installer.exe"
             artifact: "./build/bin"
             artifact-name: "Windows (amd64)"
@@ -102,7 +105,10 @@ jobs:
             platform: windows/arm64
             name: pz-admin_${{ needs.extract-version.outputs.version }}_windows_arm64.exe
             args: "-nsis"
-            deps: ""
+            deps: |
+              choco install nsis -y
+              New-Item -ItemType SymbolicLink -Path "C:\Windows\system32\makensis.exe" -Target "C:\Program Files (x86)\NSIS\bin\makensis.exe" -Force
+              echo "C:\Program Files (x86)\NSIS\bin" >> $env:GITHUB_PATH
             post-build: "ren ./build/bin/pz-admin-arm64-installer.exe pz-admin_${{ needs.extract-version.outputs.version }}_windows_arm64_installer.exe"
             artifact: "./build/bin"
             artifact-name: "Windows (arm64)"
@@ -125,11 +131,10 @@ jobs:
           node-version: 22.x
 
       - name: Install dependencies
-        if: matrix.deps != ''
         run: ${{ matrix.deps }}
 
       - name: Install Wails CLI
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.9.2
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.11.0
 
       - name: Build
         run: wails build --platform ${{ matrix.platform }} -o ${{ matrix.name }} ${{ matrix.args }}

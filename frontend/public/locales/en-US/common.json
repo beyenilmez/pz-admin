@@ -13,6 +13,7 @@
   "unselect_all": "Unselect all",
   "clear": "Clear",
   "copy": "Copy",
+  "add": "Add",
   "back": "Back",
   "stop": "Stop",
   "save_and_apply": "Save and Apply",
@@ -389,7 +390,8 @@
       "search_items_placeholder": "Search items...",
       "show_ids": "Show Item IDs",
       "save_items": "Save Items",
-      "load_items": "Load Items"
+      "load_items": "Load Items",
+      "custom_item_placeholder": "Custom item ID..."
     },
     "vehicle_browser": {
       "mode": {

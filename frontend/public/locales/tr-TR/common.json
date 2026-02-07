@@ -13,6 +13,7 @@
   "unselect_all": "Hepsini kaldır",
   "clear": "Temizle",
   "copy": "Kopyala",
+  "add": "Ekle",
   "back": "Geri",
   "stop": "Durdur",
   "save_and_apply": "Kaydet ve Uygula",
@@ -389,7 +390,8 @@
       "search_items_placeholder": "Eşya ara...",
       "show_ids": "Eşya ID'lerini Göster",
       "save_items": "Eşyaları Kaydet",
-      "load_items": "Eşya Yükle"
+      "load_items": "Eşya Yükle",
+      "custom_item_placeholder": "Özel eşya ID'si..."
     },
     "vehicle_browser": {
       "mode": {
