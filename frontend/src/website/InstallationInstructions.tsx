@@ -17,7 +17,7 @@ const debianVariables = "distro=ubuntu\ncodename=noble";
 const debianCommands = String.raw`sudo apt update
 sudo apt install ca-certificates curl
 sudo install -d -m 0755 /etc/apt/keyrings
-curl -fsSL https://dl.cloudsmith.io/public/beyenilmez/pz-admin/gpg.03280463DB322D3B.key \
+curl -fsSL https://dl.cloudsmith.io/public/beyenilmez/pz-admin/gpg.05F68F53EE637374.key \
   | sudo tee /etc/apt/keyrings/pz-admin.asc > /dev/null
 sudo chmod 0644 /etc/apt/keyrings/pz-admin.asc
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/pz-admin.asc] https://dl.cloudsmith.io/public/beyenilmez/pz-admin/deb/$distro $codename main" \
@@ -32,7 +32,7 @@ enabled=1
 skip_if_unavailable=0
 gpgcheck=1
 repo_gpgcheck=1
-gpgkey=https://dl.cloudsmith.io/public/beyenilmez/pz-admin/gpg.03280463DB322D3B.key
+gpgkey=https://dl.cloudsmith.io/public/beyenilmez/pz-admin/gpg.05F68F53EE637374.key
 sslverify=1
 EOF
 sudo dnf install pz-admin`;
