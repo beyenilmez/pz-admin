@@ -41,7 +41,7 @@ version = "2.0.1"
 backend = "go:github.com/google/go-licenses/v2"
 
 [[tools."go:github.com/wailsapp/wails/v3/cmd/wails3"]]
-version = "3.0.0-beta.25"
+version = "3.0.0-beta.28"
 backend = "go:github.com/wailsapp/wails/v3/cmd/wails3"
 
 [[tools."http:nsis"]]
