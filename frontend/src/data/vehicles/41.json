@@ -1,0 +1,938 @@
+{
+  "version": "41",
+  "categories": [
+    {
+      "name": "Heavy-Duty",
+      "type": "category",
+      "children": [
+        {
+          "name": "Ambulance",
+          "type": "type",
+          "id": "Base.VanAmbulance",
+          "image": "/vehicles/41/Heavy-Duty/Ambulance/Base.VanAmbulance/image.png",
+          "stats": {
+            "lightbar": true,
+            "weight": 816,
+            "enginePower": 490,
+            "topSpeed": 70,
+            "engineLoudness": 110,
+            "suspensionStiffness": 40,
+            "occupantProtection": 1.3,
+            "engineQuality": 75,
+            "seats": 2,
+            "doors": 3,
+            "wheels": 4,
+            "trunkStorage": 130,
+            "totalStorage": 180,
+            "gloveBox": 10
+          }
+        },
+        {
+          "name": "Chevalier D6",
+          "type": "model",
+          "children": [
+            {
+              "name": "Fire Department",
+              "type": "type",
+              "id": "Base.PickUpTruckLightsFire",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier D6/Fire Department/Base.PickUpTruckLightsFire/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 1030,
+                "enginePower": 480,
+                "topSpeed": 70,
+                "engineLoudness": 110,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.4,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 110,
+                "totalStorage": 160,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "McCoy",
+              "type": "type",
+              "id": "Base.PickUpTruckMccoy",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier D6/McCoy/Base.PickUpTruckMccoy/image.png",
+              "stats": {
+                "weight": 1030,
+                "enginePower": 400,
+                "topSpeed": 70,
+                "engineLoudness": 110,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 110,
+                "totalStorage": 160,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.PickUpTruck",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier D6/Base Model/Base.PickUpTruck/image.png",
+              "stats": {
+                "weight": 1030,
+                "enginePower": 400,
+                "topSpeed": 70,
+                "engineLoudness": 110,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 110,
+                "totalStorage": 160,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Ranger_Fossoil",
+              "type": "type",
+              "id": "Base.PickUpTruckLights",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier D6/Ranger_Fossoil/Base.PickUpTruckLights/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 1030,
+                "enginePower": 400,
+                "topSpeed": 70,
+                "engineLoudness": 110,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 110,
+                "totalStorage": 160,
+                "gloveBox": 10
+              }
+            }
+          ]
+        },
+        {
+          "name": "Chevalier Step Van",
+          "type": "model",
+          "children": [
+            {
+              "name": "KY Herald",
+              "type": "type",
+              "id": "Base.StepVan_Heralds",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier Step Van/KY Herald/Base.StepVan_Heralds/image.png",
+              "stats": {
+                "weight": 1160,
+                "enginePower": 370,
+                "topSpeed": 70,
+                "engineLoudness": 100,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 160,
+                "totalStorage": 210,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Mail",
+              "type": "type",
+              "id": "Base.StepVanMail",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier Step Van/Mail/Base.StepVanMail/image.png",
+              "stats": {
+                "weight": 1160,
+                "enginePower": 400,
+                "topSpeed": 70,
+                "engineLoudness": 100,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 75,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 160,
+                "totalStorage": 210,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.StepVan",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier Step Van/Base Model/Base.StepVan/image.png",
+              "stats": {
+                "weight": 1160,
+                "enginePower": 370,
+                "topSpeed": 70,
+                "engineLoudness": 100,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 160,
+                "totalStorage": 210,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Scarlet Oak",
+              "type": "type",
+              "id": "Base.StepVan_Scarlet",
+              "image": "/vehicles/41/Heavy-Duty/Chevalier Step Van/Scarlet Oak/Base.StepVan_Scarlet/image.png",
+              "stats": {
+                "weight": 1160,
+                "enginePower": 370,
+                "topSpeed": 70,
+                "engineLoudness": 100,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 160,
+                "totalStorage": 210,
+                "gloveBox": 10
+              }
+            }
+          ]
+        },
+        {
+          "name": "Dash Bulldriver",
+          "type": "model",
+          "children": [
+            {
+              "name": "Fire Department",
+              "type": "type",
+              "id": "Base.PickUpVanLightsFire",
+              "image": "/vehicles/41/Heavy-Duty/Dash Bulldriver/Fire Department/Base.PickUpVanLightsFire/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 1104,
+                "enginePower": 480,
+                "topSpeed": 60,
+                "engineLoudness": 120,
+                "suspensionStiffness": 20,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "McCoy",
+              "type": "type",
+              "id": "Base.PickUpVanMccoy",
+              "image": "/vehicles/41/Heavy-Duty/Dash Bulldriver/McCoy/Base.PickUpVanMccoy/image.png",
+              "stats": {
+                "weight": 1104,
+                "enginePower": 400,
+                "topSpeed": 60,
+                "engineLoudness": 120,
+                "suspensionStiffness": 20,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.PickUpVan",
+              "image": "/vehicles/41/Heavy-Duty/Dash Bulldriver/Base Model/Base.PickUpVan/image.png",
+              "stats": {
+                "weight": 1104,
+                "enginePower": 400,
+                "topSpeed": 60,
+                "engineLoudness": 120,
+                "suspensionStiffness": 20,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Police",
+              "type": "type",
+              "id": "Base.PickUpVanLightsPolice",
+              "image": "/vehicles/41/Heavy-Duty/Dash Bulldriver/Police/Base.PickUpVanLightsPolice/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 1104,
+                "enginePower": 480,
+                "topSpeed": 60,
+                "engineLoudness": 120,
+                "suspensionStiffness": 20,
+                "occupantProtection": 1.4,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Ranger_Fossoil",
+              "type": "type",
+              "id": "Base.PickUpVanLights",
+              "image": "/vehicles/41/Heavy-Duty/Dash Bulldriver/Ranger_Fossoil/Base.PickUpVanLights/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 1104,
+                "enginePower": 400,
+                "topSpeed": 60,
+                "engineLoudness": 120,
+                "suspensionStiffness": 20,
+                "occupantProtection": 1.3,
+                "engineQuality": 80,
+                "seats": 2,
+                "doors": 2,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            }
+          ]
+        },
+        {
+          "name": "Franklin All-Terrain",
+          "type": "type",
+          "id": "Base.SUV",
+          "image": "/vehicles/41/Heavy-Duty/Franklin All-Terrain/Base.SUV/image.png",
+          "stats": {
+            "weight": 1000,
+            "enginePower": 470,
+            "topSpeed": 90,
+            "engineLoudness": 100,
+            "suspensionStiffness": 40,
+            "occupantProtection": 1.3,
+            "engineQuality": 75,
+            "seats": 4,
+            "doors": 4,
+            "wheels": 4,
+            "gloveBox": 10,
+            "trunkStorage": 85,
+            "totalStorage": 175
+          }
+        },
+        {
+          "name": "Franklin Valuline",
+          "type": "model",
+          "children": [
+            {
+              "name": "Fossoil",
+              "type": "type",
+              "id": "Base.VanSpecial",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/Fossoil/Base.VanSpecial/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 400,
+                "topSpeed": 75,
+                "engineLoudness": 100,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "KY Transit",
+              "type": "type",
+              "id": "Base.Van_Transit",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/KY Transit/Base.Van_Transit/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 370,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Knox Distillery",
+              "type": "type",
+              "id": "Base.Van_KnoxDisti",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/Knox Distillery/Base.Van_KnoxDisti/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 370,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Lectromax",
+              "type": "type",
+              "id": "Base.Van_LectroMax",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/Lectromax/Base.Van_LectroMax/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 370,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Mass GenFac",
+              "type": "type",
+              "id": "Base.Van_MassGenFac",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/Mass GenFac/Base.Van_MassGenFac/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 370,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.Van",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/Base Model/Base.Van/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 370,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Spiffo Van",
+              "type": "type",
+              "id": "Base.VanSpiffo",
+              "image": "/vehicles/41/Heavy-Duty/Franklin Valuline/Spiffo Van/Base.VanSpiffo/image.png",
+              "stats": {
+                "weight": 816,
+                "enginePower": 400,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            }
+          ]
+        },
+        {
+          "name": "Franklin Valuline (6-seater)",
+          "type": "type",
+          "id": "Base.VanSeats",
+          "image": "/vehicles/41/Heavy-Duty/Franklin Valuline (6-seater)/Base Model/Base.VanSeats/image.png",
+          "stats": {
+            "weight": 916,
+            "enginePower": 260,
+            "topSpeed": 60,
+            "engineLoudness": 100,
+            "suspensionStiffness": 50,
+            "occupantProtection": 1.1,
+            "engineQuality": 70,
+            "seats": 6,
+            "doors": 5,
+            "wheels": 4,
+            "trunkStorage": 50,
+            "totalStorage": 180,
+            "gloveBox": 10
+          }
+        },
+        {
+          "name": "LBMW Radio Van",
+          "type": "model",
+          "children": [
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.VanRadio",
+              "image": "/vehicles/41/Heavy-Duty/LBMW Radio Van/Base Model/Base.VanRadio/image.png",
+              "stats": {
+                "weight": 956,
+                "enginePower": 270,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 50,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            },
+            {
+              "name": "Triple-N Van",
+              "type": "type",
+              "id": "Base.VanRadio_3N",
+              "image": "/vehicles/41/Heavy-Duty/LBMW Radio Van/Triple-N Van/Base.VanRadio_3N/image.png",
+              "stats": {
+                "weight": 956,
+                "enginePower": 270,
+                "topSpeed": 65,
+                "engineLoudness": 100,
+                "suspensionStiffness": 50,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 2,
+                "doors": 3,
+                "wheels": 4,
+                "trunkStorage": 130,
+                "totalStorage": 180,
+                "gloveBox": 10
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Sports",
+      "type": "category",
+      "children": [
+        {
+          "name": "Chevalier Cossette",
+          "type": "type",
+          "id": "Base.SportsCar",
+          "image": "/vehicles/41/Sports/Chevalier Cossette/Base.SportsCar/image.png",
+          "stats": {
+            "weight": 800,
+            "enginePower": 570,
+            "topSpeed": 120,
+            "engineLoudness": 90,
+            "suspensionStiffness": 50,
+            "occupantProtection": 0.8,
+            "engineQuality": 90,
+            "seats": 2,
+            "doors": 2,
+            "wheels": 4,
+            "trunkStorage": 50,
+            "totalStorage": 95,
+            "gloveBox": 5
+          }
+        },
+        {
+          "name": "Chevalier Primani",
+          "type": "type",
+          "id": "Base.ModernCar02",
+          "image": "/vehicles/41/Sports/Chevalier Primani/Base.ModernCar02/image.png",
+          "stats": {
+            "weight": 800,
+            "enginePower": 500,
+            "topSpeed": 90,
+            "engineLoudness": 80,
+            "suspensionStiffness": 40,
+            "occupantProtection": 1.1,
+            "engineQuality": 70,
+            "seats": 4,
+            "doors": 4,
+            "wheels": 4,
+            "trunkStorage": 45,
+            "totalStorage": 130,
+            "gloveBox": 5
+          }
+        },
+        {
+          "name": "Dash Elite",
+          "type": "type",
+          "id": "Base.ModernCar",
+          "image": "/vehicles/41/Sports/Dash Elite/Base.ModernCar/image.png",
+          "stats": {
+            "weight": 800,
+            "enginePower": 500,
+            "topSpeed": 90,
+            "engineLoudness": 80,
+            "suspensionStiffness": 40,
+            "occupantProtection": 1.1,
+            "engineQuality": 70,
+            "seats": 4,
+            "doors": 4,
+            "wheels": 4,
+            "gloveBox": 5,
+            "trunkStorage": 45,
+            "totalStorage": 130
+          }
+        },
+        {
+          "name": "Mercia Lang 4000",
+          "type": "type",
+          "id": "Base.CarLuxury",
+          "image": "/vehicles/41/Sports/Mercia Lang 4000/Base.CarLuxury/image.png",
+          "stats": {
+            "weight": 950,
+            "enginePower": 520,
+            "topSpeed": 105,
+            "engineLoudness": 80,
+            "suspensionStiffness": 40,
+            "occupantProtection": 1.1,
+            "engineQuality": 70,
+            "seats": 2,
+            "doors": 2,
+            "wheels": 4,
+            "gloveBox": 5,
+            "trunkStorage": 45,
+            "totalStorage": 90
+          }
+        }
+      ]
+    },
+    {
+      "name": "Standard",
+      "type": "category",
+      "children": [
+        {
+          "name": "Chevalier Cerise Wagon",
+          "type": "model",
+          "children": [
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.CarStationWagon",
+              "image": "/vehicles/41/Standard/Chevalier Cerise Wagon/Base Model/Base.CarStationWagon/image.png",
+              "stats": {
+                "weight": 900,
+                "enginePower": 420,
+                "topSpeed": 70,
+                "engineLoudness": 80,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "trunkStorage": 60,
+                "gloveBox": 5,
+                "totalStorage": 145
+              }
+            },
+            {
+              "name": "Wood paneling",
+              "type": "type",
+              "id": "Base.CarStationWagon2",
+              "image": "/vehicles/41/Standard/Chevalier Cerise Wagon/Wood paneling/Base.CarStationWagon2/image.png",
+              "stats": {
+                "weight": 900,
+                "enginePower": 420,
+                "topSpeed": 70,
+                "engineLoudness": 80,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1.1,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "trunkStorage": 60,
+                "gloveBox": 5,
+                "totalStorage": 145
+              }
+            }
+          ]
+        },
+        {
+          "name": "Chevalier Dart",
+          "type": "type",
+          "id": "Base.SmallCar",
+          "image": "/vehicles/41/Standard/Chevalier Dart/Base.SmallCar/image.png",
+          "stats": {
+            "weight": 650,
+            "enginePower": 360,
+            "topSpeed": 70,
+            "engineLoudness": 55,
+            "suspensionStiffness": 30,
+            "occupantProtection": 0.8,
+            "engineQuality": 60,
+            "seats": 4,
+            "doors": 2,
+            "wheels": 4,
+            "trunkStorage": 40,
+            "totalStorage": 125,
+            "gloveBox": 5
+          }
+        },
+        {
+          "name": "Chevalier Nyala",
+          "type": "model",
+          "children": [
+            {
+              "name": "Base Model",
+              "type": "type",
+              "id": "Base.CarNormal",
+              "image": "/vehicles/41/Standard/Chevalier Nyala/Base Model/Base.CarNormal/image.png",
+              "stats": {
+                "weight": 800,
+                "enginePower": 400,
+                "topSpeed": 90,
+                "engineLoudness": 80,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "gloveBox": 5,
+                "trunkStorage": 55,
+                "totalStorage": 140
+              }
+            },
+            {
+              "name": "Police",
+              "type": "type",
+              "id": "Base.CarLightsPolice",
+              "image": "/vehicles/41/Standard/Chevalier Nyala/Police/Base.CarLightsPolice/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 800,
+                "enginePower": 480,
+                "topSpeed": 100,
+                "engineLoudness": 80,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1.2,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "trunkStorage": 55,
+                "gloveBox": 5,
+                "totalStorage": 140
+              }
+            },
+            {
+              "name": "Ranger",
+              "type": "type",
+              "id": "Base.CarLights",
+              "image": "/vehicles/41/Standard/Chevalier Nyala/Ranger/Base.CarLights/image.png",
+              "stats": {
+                "lightbar": true,
+                "weight": 800,
+                "enginePower": 400,
+                "topSpeed": 70,
+                "engineLoudness": 80,
+                "suspensionStiffness": 30,
+                "occupantProtection": 1,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "gloveBox": 5,
+                "trunkStorage": 55,
+                "totalStorage": 140
+              }
+            },
+            {
+              "name": "Taxi (green)",
+              "type": "type",
+              "id": "Base.CarTaxi2",
+              "image": "/vehicles/41/Standard/Chevalier Nyala/Taxi (green)/Base.CarTaxi2/image.png",
+              "stats": {
+                "weight": 800,
+                "enginePower": 400,
+                "topSpeed": 90,
+                "engineLoudness": 80,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "trunkStorage": 55,
+                "gloveBox": 5,
+                "totalStorage": 140
+              }
+            },
+            {
+              "name": "Taxi (yellow)",
+              "type": "type",
+              "id": "Base.CarTaxi",
+              "image": "/vehicles/41/Standard/Chevalier Nyala/Taxi (yellow)/Base.CarTaxi/image.png",
+              "stats": {
+                "weight": 800,
+                "enginePower": 400,
+                "topSpeed": 90,
+                "engineLoudness": 80,
+                "suspensionStiffness": 40,
+                "occupantProtection": 1,
+                "engineQuality": 70,
+                "seats": 4,
+                "doors": 4,
+                "wheels": 4,
+                "trunkStorage": 55,
+                "gloveBox": 5,
+                "totalStorage": 140
+              }
+            }
+          ]
+        },
+        {
+          "name": "Dash Rancher",
+          "type": "type",
+          "id": "Base.OffRoad",
+          "image": "/vehicles/41/Standard/Dash Rancher/Base.OffRoad/image.png",
+          "stats": {
+            "weight": 900,
+            "enginePower": 440,
+            "topSpeed": 90,
+            "engineLoudness": 90,
+            "suspensionStiffness": 30,
+            "occupantProtection": 0.8,
+            "engineQuality": 70,
+            "seats": 2,
+            "doors": 2,
+            "wheels": 4,
+            "trunkStorage": 40,
+            "gloveBox": 5,
+            "totalStorage": 85
+          }
+        },
+        {
+          "name": "Masterson Horizon",
+          "type": "type",
+          "id": "Base.SmallCar02",
+          "image": "/vehicles/41/Standard/Masterson Horizon/Base.SmallCar02/image.png",
+          "stats": {
+            "weight": 650,
+            "enginePower": 360,
+            "topSpeed": 90,
+            "engineLoudness": 55,
+            "suspensionStiffness": 40,
+            "occupantProtection": 0.8,
+            "engineQuality": 70,
+            "seats": 4,
+            "doors": 2,
+            "wheels": 4,
+            "trunkStorage": 40,
+            "totalStorage": 125,
+            "gloveBox": 5
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trailers",
+      "type": "category",
+      "children": [
+        {
+          "name": "Trailer",
+          "type": "type",
+          "id": "Base.Trailer",
+          "image": "/vehicles/41/Trailers/Trailer/Base.Trailer/image.png",
+          "stats": {
+            "weight": 200,
+            "suspensionStiffness": 40,
+            "occupantProtection": 0.8,
+            "wheels": 2,
+            "trunkStorage": 100,
+            "totalStorage": 100
+          }
+        },
+        {
+          "name": "Trailer (advert)",
+          "type": "type",
+          "id": "Base.TrailerAdvert",
+          "image": "/vehicles/41/Trailers/Trailer (advert)/Base.TrailerAdvert/image.png",
+          "stats": {
+            "weight": 200,
+            "suspensionStiffness": 40,
+            "occupantProtection": 0.8,
+            "wheels": 4
+          }
+        },
+        {
+          "name": "Trailer (cover)",
+          "type": "type",
+          "id": "Base.TrailerCover",
+          "image": "/vehicles/41/Trailers/Trailer (cover)/Base.TrailerCover/image.png",
+          "stats": {
+            "weight": 200,
+            "suspensionStiffness": 40,
+            "occupantProtection": 0.8,
+            "wheels": 2,
+            "trunkStorage": 100,
+            "totalStorage": 100
+          }
+        }
+      ]
+    }
+  ]
+}

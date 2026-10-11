@@ -1,0 +1,29 @@
+[
+  {
+    "name": "PZ Admin application icon",
+    "identifier": "MIT",
+    "source": "https://github.com/beyenilmez/pz-admin",
+    "note": "Copyright © 2026 Bedirhan Yenilmez. Original application icon and platform exports.",
+    "files": ["../../LICENSES/MIT.txt"]
+  },
+  {
+    "name": "PZwiki catalog material",
+    "identifier": "CC-BY-NC-SA-3.0",
+    "source": "https://pzwiki.net/wiki/PZwiki:Copyrights",
+    "note": "Copyright PZwiki contributors; adaptations © 2026 Bedirhan Yenilmez. Covers wiki-derived material and its adaptations; game-owned material retains its separate terms.",
+    "files": [
+      "../../frontend/src/data/README.md",
+      "../../LICENSES/CC-BY-NC-SA-3.0.txt"
+    ]
+  },
+  {
+    "name": "Project Zomboid game assets and data",
+    "identifier": "LicenseRef-Project-Zomboid-Terms-and-Conditions",
+    "source": "https://projectzomboid.com/blog/support/terms-conditions/",
+    "note": "Copyright The Indie Stone. Includes game artwork, extracted translations, and game-derived catalog material. Catalog sources and changes are described in the PZwiki catalog material entry.",
+    "files": [
+      "../../frontend/public/README.md",
+      "../../LICENSES/LicenseRef-Project-Zomboid-Terms-and-Conditions.txt"
+    ]
+  }
+]

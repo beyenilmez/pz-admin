@@ -1,0 +1,21 @@
+[settings]
+lockfile = true
+
+[tools]
+"go:github.com/google/go-licenses/v2" = "2.0.1"
+# Keep the CLI aligned with the Wails dependency in go.mod.
+"go:github.com/wailsapp/wails/v3/cmd/wails3" = "{{ read_file(path=config_root ~ '/go.mod') | regex_replace(pattern='(?s)^.*?github[.]com/wailsapp/wails/v3[[:space:]]+(v[^[:space:]]+).*$', rep='$1') }}"
+"pipx:reuse" = "6.2.0"
+go = "1.26.6"
+node = "24.19.0"
+"npm:pnpm" = { version = "11.25.0", allow_builds = ["pnpm"] }
+uv = "0.12.18"
+
+# Windows installer compiler; retain its bundled includes, plugins, and stubs.
+[tools."http:nsis"]
+version = "3.13"
+os = ["windows"]
+url = "https://downloads.sourceforge.net/project/nsis/NSIS%203/{{ version }}/nsis-{{ version }}.zip"
+checksum = "sha256:ba63dffc4410ee89193e1cb5a41989991bd77c61068da17e3156d136b7b0b3d8"
+strip_components = 1
+bin_path = "."

@@ -1,0 +1,31 @@
+# Generated output and task cache
+.flatpak-builder
+.generated
+.ruff_cache
+.task
+bin
+
+# Local workspace files
+.local
+
+# Frontend dependencies and output
+frontend/coverage
+frontend/dist
+frontend/dist-website
+frontend/node_modules
+frontend/storybook-static
+
+# Windows build artifacts
+/wails_windows_*.syso
+build/windows/nsis/MicrosoftEdgeWebview2Setup.exe
+
+# Mobile generated files (overlays contain machine-specific paths)
+build/ios/xcode/overlay.json
+build/ios/xcode/gen/
+build/android/overlay.json
+build/android/gen/
+
+# Operating system metadata
+.DS_Store
+Thumbs.db
+Desktop.ini

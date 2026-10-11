@@ -1,0 +1,114 @@
+# Feel free to remove those if you don't want/need to use them.
+# Make sure to check the documentation at https://nfpm.goreleaser.com
+#
+# The lines below are called `modelines`. See `:help modeline`
+
+name: "pz-admin"
+arch: ${GOARCH}
+platform: "linux"
+version: "2.0.0" # x-release-please-version
+section: "utils"
+priority: "optional"
+maintainer: "Bedirhan Yenilmez <contact@bedirhanyenilmez.com>"
+description: "Project Zomboid server administration tool"
+vendor: "Bedirhan Yenilmez"
+homepage: "https://beyenilmez.github.io/pz-admin/"
+license: "GPL-3.0-or-later"
+release: "1"
+
+deb:
+  fields:
+    Bugs: "https://github.com/beyenilmez/pz-admin/issues"
+    Vcs-Browser: "https://github.com/beyenilmez/pz-admin"
+
+archlinux:
+  packager: "Bedirhan Yenilmez <contact@bedirhanyenilmez.com>"
+
+contents:
+  - src: "./bin/pz-admin"
+    dst: "/usr/bin/pz-admin"
+  - src: "./build/appicon.svg"
+    dst: "/usr/share/icons/hicolor/scalable/apps/pz-admin.svg"
+  - src: "./build/linux/icons/16x16/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/16x16/apps/pz-admin.png"
+  - src: "./build/linux/icons/24x24/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/24x24/apps/pz-admin.png"
+  - src: "./build/linux/icons/32x32/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/32x32/apps/pz-admin.png"
+  - src: "./build/linux/icons/48x48/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/48x48/apps/pz-admin.png"
+  - src: "./build/linux/icons/64x64/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/64x64/apps/pz-admin.png"
+  - src: "./build/linux/icons/96x96/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/96x96/apps/pz-admin.png"
+  - src: "./build/linux/icons/128x128/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/128x128/apps/pz-admin.png"
+  - src: "./build/linux/icons/256x256/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/256x256/apps/pz-admin.png"
+  - src: "./build/linux/icons/512x512/pz-admin.png"
+    dst: "/usr/share/icons/hicolor/512x512/apps/pz-admin.png"
+  - src: "./build/linux/com.bedirhanyenilmez.pzadmin.desktop"
+    dst: "/usr/share/applications/com.bedirhanyenilmez.pzadmin.desktop"
+  - src: "./.generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml"
+    dst: "/usr/share/metainfo/com.bedirhanyenilmez.pzadmin.metainfo.xml"
+  - src: "./LICENSE"
+    dst: "/usr/share/licenses/pz-admin/GPL-3.0-or-later.txt"
+  - src: "./.generated/licenses/THIRD-PARTY-NOTICES.json"
+    dst: "/usr/share/doc/pz-admin/THIRD-PARTY-NOTICES.json"
+  - src: "./README.md"
+    dst: "/usr/share/doc/pz-admin/README.md"
+
+# Default dependencies for the GTK4 + WebKitGTK 6.0 stack (Ubuntu 24.04+ / Debian 13+)
+depends:
+  - libc6 (>= ${GLIBC_MIN_VERSION})
+  - libgtk-4-1 (>= 4.14)
+  - libwebkitgtk-6.0-4
+
+# Distribution-specific overrides for different package formats
+overrides:
+  # RPM packages for Fedora / RHEL / AlmaLinux / Rocky Linux
+  rpm:
+    depends:
+      - glibc >= ${GLIBC_MIN_VERSION}
+      - gtk4 >= 4.14
+      - webkitgtk6.0
+
+  # Arch Linux packages
+  archlinux:
+    depends:
+      - glibc>=${GLIBC_MIN_VERSION}
+      - gtk4>=4.14
+      - webkitgtk-6.0
+
+# Desktop and icon caches are refreshed by distribution file triggers/hooks
+# when these packaged files are installed, upgraded, or removed. No custom
+# lifecycle scripts are needed. User data and keyring entries are preserved.
+
+# If you build your app with -tags gtk3 (legacy WebKit2GTK 4.1 stack — supported through v3.0.x, removed in v3.1),
+# replace the depends/overrides above with these:
+#
+# depends:
+#   - libgtk-3-0
+#   - libwebkit2gtk-4.1-0
+# overrides:
+#   rpm:
+#     depends:
+#       - gtk3
+#       - webkit2gtk4.1
+#   archlinux:
+#     depends:
+#       - gtk3
+#       - webkit2gtk-4.1
+#
+# replaces:
+#   - foobar
+# provides:
+#   - bar
+# recommends:
+#   - whatever
+# suggests:
+#   - something-else
+# conflicts:
+#   - not-foo
+#   - not-bar
+# changelog: "changelog.yaml"

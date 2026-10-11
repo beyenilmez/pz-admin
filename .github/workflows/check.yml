@@ -1,0 +1,122 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - frontend/website/**
+      - frontend/src/website/**
+      - frontend/vite.website.config.ts
+      - .github/workflows/website.yml
+  pull_request:
+    paths-ignore:
+      - frontend/website/**
+      - frontend/src/website/**
+      - frontend/vite.website.config.ts
+      - .github/workflows/website.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libgtk-4-dev libwebkitgtk-6.0-dev
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        with:
+          install_args: --locked go node npm:pnpm go:github.com/wailsapp/wails/v3/cmd/wails3
+      - name: Locate pnpm store
+        id: pnpm
+        run: |
+          pnpm_store=$(pnpm --dir frontend store path --silent)
+          echo "store=$pnpm_store" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm.outputs.store }}
+          key: pnpm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'frontend/pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-${{ runner.arch }}-
+      - run: wails3 task check:frontend
+
+  backend:
+    name: Backend (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, windows-2025, macos-15]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libgtk-4-dev libwebkitgtk-6.0-dev
+      - name: Configure Go caches
+        run: |
+          echo "GOMODCACHE=$RUNNER_TEMP/go-mod" >> "$GITHUB_ENV"
+          echo "GOCACHE=$RUNNER_TEMP/go-build" >> "$GITHUB_ENV"
+      # Restore before mise's Go tool installs populate the module cache.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ${{ env.GOMODCACHE }}
+            ${{ env.GOCACHE }}
+          key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'go.sum') }}
+          restore-keys: go-${{ runner.os }}-${{ runner.arch }}-
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        with:
+          install_args: --locked go node go:github.com/wailsapp/wails/v3/cmd/wails3
+      - run: wails3 task check:backend
+
+  metadata:
+    name: Linux metadata
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Install metadata validators
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y appstream desktop-file-utils
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        env:
+          CGO_ENABLED: "0"
+        with:
+          cache_key_prefix: mise-nocgo-v1
+          install_args: --locked go node go:github.com/wailsapp/wails/v3/cmd/wails3
+      - run: wails3 task check:metadata
+
+  reuse:
+    name: REUSE
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        with:
+          install_args: --locked uv pipx:reuse
+      - run: reuse lint

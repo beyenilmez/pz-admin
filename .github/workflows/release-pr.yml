@@ -1,0 +1,49 @@
+name: Release PR
+
+on:
+  pull_request:
+    branches: [main]
+    paths-ignore:
+      - frontend/website/**
+      - frontend/src/website/**
+      - frontend/vite.website.config.ts
+      - .github/workflows/website.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-pr-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  prepare:
+    name: Prepare release
+    if: >-
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.repo.full_name == github.repository &&
+       github.head_ref == 'release-please--branches--main') ||
+      (github.event_name == 'workflow_dispatch' &&
+       github.ref == 'refs/heads/release-please--branches--main')
+    uses: ./.github/workflows/prepare-release.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha || github.sha }}
+    secrets:
+      RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
+  package:
+    name: Build native test packages
+    needs: prepare
+    if: needs.prepare.outputs.changed == 'false'
+    uses: ./.github/workflows/package.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha || github.sha }}
+
+  flatpak:
+    name: Build and check test Flatpaks
+    needs: prepare
+    if: needs.prepare.outputs.changed == 'false'
+    uses: ./.github/workflows/flatpak.yml
+    with:
+      ref: ${{ github.event.pull_request.head.sha || github.sha }}

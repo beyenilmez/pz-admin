@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "add": "Добавить",
+    "back": "Назад",
+    "cancel": "Отмена",
+    "clear": "Очистить",
+    "connect": "Подключиться",
+    "copy": "Копировать",
+    "delete": "Удалить",
+    "disconnect": "Отключиться",
+    "reset": "Сбросить"
+  },
+  "fields": {
+    "password": {
+      "label": "Пароль"
+    }
+  },
+  "gameBuild": {
+    "options": {
+      "auto": "Авто"
+    }
+  }
+}

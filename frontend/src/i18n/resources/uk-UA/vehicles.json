@@ -1,0 +1,21 @@
+{
+  "details": {
+    "actions": {
+      "back": "Транспорт"
+    }
+  },
+  "filters": {
+    "boolean": {
+      "options": {
+        "no": "Ні",
+        "yes": "Так"
+      }
+    }
+  },
+  "page": {
+    "title": "Браузер транспорту"
+  },
+  "picker": {
+    "root": "Транспорт"
+  }
+}

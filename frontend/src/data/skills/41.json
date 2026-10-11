@@ -1,0 +1,180 @@
+{
+  "build": "41",
+  "progressions": {
+    "regular": [75, 150, 300, 750, 1500, 3000, 4500, 6000, 7500, 9000],
+    "passive": [
+      1500, 3000, 6000, 9000, 18000, 30000, 60000, 90000, 120000, 150000
+    ]
+  },
+  "categories": [
+    {
+      "id": "passive",
+      "translationId": "Passive",
+      "skills": [
+        {
+          "id": "Fitness",
+          "image": "/skills/41/Fitness.png",
+          "progression": "passive"
+        },
+        {
+          "id": "Strength",
+          "image": "/skills/41/Strength.png",
+          "progression": "passive"
+        }
+      ]
+    },
+    {
+      "id": "agility",
+      "translationId": "Agility",
+      "skills": [
+        {
+          "id": "Sprinting",
+          "image": "/skills/41/Sprinting.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Nimble",
+          "image": "/skills/41/Nimble.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Lightfoot",
+          "image": "/skills/41/Lightfoot.png",
+          "progression": "regular",
+          "translationId": "Lightfooted"
+        },
+        {
+          "id": "Sneak",
+          "image": "/skills/41/Sneak.png",
+          "progression": "regular",
+          "translationId": "Sneaking"
+        }
+      ]
+    },
+    {
+      "id": "combat",
+      "translationId": "Combat",
+      "skills": [
+        {
+          "id": "Axe",
+          "image": "/skills/41/Axe.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Blunt",
+          "image": "/skills/41/Blunt.png",
+          "progression": "regular"
+        },
+        {
+          "id": "SmallBlunt",
+          "image": "/skills/41/SmallBlunt.png",
+          "progression": "regular"
+        },
+        {
+          "id": "LongBlade",
+          "image": "/skills/41/LongBlade.png",
+          "progression": "regular"
+        },
+        {
+          "id": "SmallBlade",
+          "image": "/skills/41/SmallBlade.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Spear",
+          "image": "/skills/41/Spear.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Maintenance",
+          "image": "/skills/41/Maintenance.png",
+          "progression": "regular"
+        }
+      ]
+    },
+    {
+      "id": "crafting",
+      "translationId": "Crafting",
+      "skills": [
+        {
+          "id": "Woodwork",
+          "image": "/skills/41/Woodwork.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Cooking",
+          "image": "/skills/41/Cooking.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Farming",
+          "image": "/skills/41/Farming.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Doctor",
+          "image": "/skills/41/Doctor.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Electricity",
+          "image": "/skills/41/Electricity.png",
+          "progression": "regular"
+        },
+        {
+          "id": "MetalWelding",
+          "image": "/skills/41/MetalWelding.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Mechanics",
+          "image": "/skills/41/Mechanics.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Tailoring",
+          "image": "/skills/41/Tailoring.png",
+          "progression": "regular"
+        }
+      ]
+    },
+    {
+      "id": "firearm",
+      "translationId": "Firearm",
+      "skills": [
+        {
+          "id": "Aiming",
+          "image": "/skills/41/Aiming.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Reloading",
+          "image": "/skills/41/Reloading.png",
+          "progression": "regular"
+        }
+      ]
+    },
+    {
+      "id": "survivalist",
+      "translationId": "Survivalist",
+      "skills": [
+        {
+          "id": "Fishing",
+          "image": "/skills/41/Fishing.png",
+          "progression": "regular"
+        },
+        {
+          "id": "Trapping",
+          "image": "/skills/41/Trapping.png",
+          "progression": "regular"
+        },
+        {
+          "id": "PlantScavenging",
+          "image": "/skills/41/PlantScavenging.png",
+          "progression": "regular",
+          "translationId": "Foraging"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--mantine-spacing-xl);
+  min-height: 72px;
+  padding: var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+  transition:
+    background-color 160ms ease,
+    opacity 120ms ease;
+}
+
+.root:last-child {
+  border-bottom: 0;
+}
+
+.root[data-inactive] {
+  background: color-mix(
+    in srgb,
+    var(--mantine-color-default-hover) 55%,
+    transparent
+  );
+  opacity: 0.65;
+}
+
+.details {
+  min-width: 0;
+}
+
+.control {
+  min-width: 0;
+}
+
+.control[data-size="compact"] {
+  width: 112px;
+}
+
+.control[data-size="medium"] {
+  width: 220px;
+}
+
+.control[data-size="wide"] {
+  width: 300px;
+}
+
+.control[data-special] {
+  width: auto;
+}
+
+.specialControl {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.specialCheckboxLabel {
+  font-size: var(--mantine-font-size-xs);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.control[data-size="compact"] .specialValue {
+  width: 112px;
+}
+
+.control[data-size="medium"] .specialValue {
+  width: 220px;
+}
+
+.control[data-size="wide"] .specialValue {
+  width: 300px;
+}
+
+.control[data-size="intrinsic"] {
+  justify-self: end;
+}

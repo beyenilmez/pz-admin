@@ -1,0 +1,134 @@
+name: Package
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Git ref to package
+        required: true
+        type: string
+      release_tag:
+        description: Release tag for published builds
+        type: string
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    name: Package (${{ matrix.platform }}-${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            platform: linux
+            arch: amd64
+            filename_os: linux
+            filename_arch: x64
+          - runner: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+            filename_os: linux
+            filename_arch: arm64
+          - runner: windows-2025
+            platform: windows
+            arch: amd64
+            filename_os: windows
+            filename_arch: x64
+          - runner: windows-2025
+            platform: windows
+            arch: arm64
+            filename_os: windows
+            filename_arch: arm64
+          - runner: macos-15-intel
+            platform: darwin
+            arch: amd64
+            filename_os: macos
+            filename_arch: x64
+          - runner: macos-15
+            platform: darwin
+            arch: arm64
+            filename_os: macos
+            filename_arch: arm64
+    runs-on: ${{ matrix.runner }}
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.ref || github.sha }}
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y libgtk-4-dev libwebkitgtk-6.0-dev
+      - name: Configure Go caches
+        run: |
+          echo "GOMODCACHE=$RUNNER_TEMP/go-mod" >> "$GITHUB_ENV"
+          echo "GOCACHE=$RUNNER_TEMP/go-build" >> "$GITHUB_ENV"
+      # Restore before mise's Go tool installs populate the module cache.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            ${{ env.GOMODCACHE }}
+            ${{ env.GOCACHE }}
+          key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'go.sum') }}
+          restore-keys: go-${{ runner.os }}-${{ runner.arch }}-
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        with:
+          install_args: --locked go node npm:pnpm go:github.com/wailsapp/wails/v3/cmd/wails3 go:github.com/google/go-licenses/v2 ${{ runner.os == 'Windows' && 'http:nsis' || '' }}
+      - name: Locate pnpm store
+        id: pnpm
+        run: |
+          pnpm_store=$(pnpm --dir frontend store path --silent)
+          echo "store=$pnpm_store" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm.outputs.store }}
+          key: pnpm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'frontend/pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-${{ runner.arch }}-
+      - name: Build packages
+        env:
+          SOURCE_REF: ${{ inputs.release_tag || inputs.ref || (github.ref_type == 'tag' && github.ref_name) || github.sha }}
+          SOURCE_REPOSITORY: ${{ github.server_url }}/${{ github.repository }}
+        run: wails3 package GOOS=${{ matrix.platform }} GOARCH=${{ matrix.arch }}
+      - name: Stage package artifacts
+        env:
+          TARGET_OS: ${{ matrix.platform }}
+          RELEASE_TAG: ${{ inputs.release_tag || (github.ref_type == 'tag' && github.ref_name) || '' }}
+        run: |
+          mkdir -p .generated/artifacts
+          version=$(tr -d '\r\n' < VERSION)
+          if [ -n "$RELEASE_TAG" ] && [ "$RELEASE_TAG" != "v$version" ]; then
+            echo "Release tag does not match VERSION" >&2
+            exit 1
+          fi
+          name="pz-admin-$version-${{ matrix.filename_os }}-${{ matrix.filename_arch }}"
+          case "$TARGET_OS" in
+            linux)
+              cp bin/pz-admin.deb ".generated/artifacts/$name.deb"
+              cp bin/pz-admin.rpm ".generated/artifacts/$name.rpm"
+              cp bin/pz-admin.pkg.tar.zst ".generated/artifacts/$name.pkg.tar.zst"
+              ;;
+            windows)
+              cp bin/pz-admin-installer.exe ".generated/artifacts/$name-installer.exe"
+              cp bin/pz-admin.exe ".generated/artifacts/$name-update.exe"
+              ;;
+            darwin)
+              cp bin/pz-admin.dmg ".generated/artifacts/$name.dmg"
+              ditto -c -k --norsrc --keepParent "bin/PZ Admin.app" ".generated/artifacts/$name-update.zip"
+              ;;
+          esac
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: pz-admin-${{ matrix.filename_os }}-${{ matrix.filename_arch }}
+          path: .generated/artifacts/*
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1

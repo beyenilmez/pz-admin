@@ -1,0 +1,15 @@
+{
+  "navigation": {
+    "search": {
+      "placeholder": "Поиск параметров..."
+    }
+  },
+  "notifications": {
+    "updated": {
+      "title": "Параметры обновлены"
+    }
+  },
+  "page": {
+    "title": "Параметры"
+  }
+}

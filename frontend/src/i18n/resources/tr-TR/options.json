@@ -1,0 +1,65 @@
+{
+  "changes": {
+    "unsaved_one": "{{count}} kaydedilmemiş değişiklik",
+    "unsaved_other": "{{count}} kaydedilmemiş değişiklik"
+  },
+  "errors": {
+    "load": {
+      "title": "Seçenekler yüklenemedi"
+    }
+  },
+  "field": {
+    "numericRange": "En az {{minimum}}, en fazla {{maximum}}",
+    "numericRange_maximum": "En fazla {{maximum}}",
+    "numericRange_minimum": "En az {{minimum}}",
+    "requirement": "{{option}} seçeneği {{value}} olduğunda uygulanır.",
+    "writeOnly": {
+      "description": "Mevcut değer sunucudan okunamaz. Yalnızca bu değeri değiştirmek istiyorsanız yeni bir değer girin.",
+      "label": "Yalnızca yazılabilir"
+    }
+  },
+  "navigation": {
+    "label": "Seçenek bölümleri",
+    "search": {
+      "empty": "Aramanızla eşleşen seçenek bulunamadı.",
+      "label": "Seçenek ara",
+      "placeholder": "Seçenek ara…"
+    }
+  },
+  "notifications": {
+    "partiallyUpdated": {
+      "message": "{{updated}} seçenek güncellendi; {{failed}} seçenek güncellenemedi.",
+      "title": "Bazı seçenekler güncellenemedi"
+    },
+    "refreshFailed": {
+      "message": "Güncelleme tamamlandı ancak güncel sunucu değerleri yeniden yüklenemedi. Düzenlemeleriniz korundu.",
+      "title": "Seçenekler yeniden yüklenemedi"
+    },
+    "updateFailed": {
+      "message_one": "{{count}} seçenek güncellenemedi.",
+      "message_other": "{{count}} seçenek güncellenemedi.",
+      "title": "Seçenekler güncellenemedi"
+    },
+    "updated": {
+      "message_one": "{{count}} seçenek güncellendi.",
+      "message_other": "{{count}} seçenek güncellendi.",
+      "title": "Seçenekler güncellendi"
+    }
+  },
+  "page": {
+    "title": "Seçenekler"
+  },
+  "validation": {
+    "integer": "Tam sayı girin.",
+    "invalidChoice": "Geçerli bir değer seçin.",
+    "maximum": "Değer en fazla {{value}} olmalıdır.",
+    "maximumLength": "En fazla {{value}} karakter kullanın.",
+    "minimum": "Değer en az {{value}} olmalıdır.",
+    "number": "Bir sayı girin.",
+    "required": "Bir değer girin."
+  },
+  "values": {
+    "disabled": "devre dışı",
+    "enabled": "etkin"
+  }
+}

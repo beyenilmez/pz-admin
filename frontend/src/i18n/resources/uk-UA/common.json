@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "add": "Додати",
+    "back": "Назад",
+    "cancel": "Скасувати",
+    "clear": "Очистити",
+    "connect": "Підключитися",
+    "copy": "Копіювати",
+    "delete": "Видалити",
+    "disconnect": "Від'єднатися",
+    "reset": "Скинути"
+  },
+  "fields": {
+    "password": {
+      "label": "Пароль"
+    }
+  },
+  "gameBuild": {
+    "options": {
+      "auto": "Авто"
+    }
+  }
+}

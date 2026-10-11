@@ -1,0 +1,17 @@
+{
+  "common": true,
+  "console": true,
+  "items": true,
+  "messages": true,
+  "optionCatalog": true,
+  "options": true,
+  "players": true,
+  "servers": true,
+  "serverActions": true,
+  "session": true,
+  "settings": true,
+  "skills": true,
+  "tools": true,
+  "vehicleCatalog": true,
+  "vehicles": true
+}

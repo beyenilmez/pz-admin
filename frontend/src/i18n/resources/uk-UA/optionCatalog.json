@@ -1,0 +1,69 @@
+{
+  "categories": {
+    "security": "Безпека"
+  },
+  "choiceSets": {
+    "enforcement": {
+      "ban": "Забанити",
+      "disabled": "Вимкнено"
+    }
+  },
+  "fields": {
+    "AllowDestructionBySledgehammer": {
+      "description": "Дозволяє гравцям руйнувати об'єкти світу за допомогою кувалди.",
+      "label": "Дозволити руйнування кувалдою"
+    },
+    "BackupsOnStart": {
+      "description": "Створює резервну копію при запуску сервера."
+    },
+    "ChatStreams": {
+      "choices": {
+        "admin": "Адміністратор",
+        "faction": "Фракція",
+        "radio": "Радіо",
+        "safehouse": "Притулок",
+        "whisper": "Шепіт",
+        "yell": "Крик"
+      }
+    },
+    "Map": {
+      "label": "Мапи"
+    },
+    "MapRemotePlayerVisibility": {
+      "choices": {
+        "everyone": "Всі"
+      }
+    },
+    "MinutesPerPage": {
+      "label": "Хвилин на сторінку книги"
+    },
+    "PVP": {
+      "label": "Дозволити PvP"
+    },
+    "PauseEmpty": {
+      "label": "Пауза при відсутності гравців"
+    },
+    "PingLimit": {
+      "label": "Ліміт пінгу"
+    },
+    "ResetID": {
+      "label": "ID скидання"
+    },
+    "ServerWelcomeMessage": {
+      "label": "Привітальне повідомлення"
+    },
+    "SteamScoreboard": {
+      "choices": {
+        "everyone": "Всі"
+      }
+    }
+  },
+  "sections": {
+    "vehicles": "Транспорт"
+  },
+  "specialValues": {
+    "disabled": "Вимкнено",
+    "never": "Ніколи",
+    "unlimited": "Без обмежень"
+  }
+}

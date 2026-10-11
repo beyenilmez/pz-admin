@@ -1,0 +1,79 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.typography {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.content {
+  background-color: rgb(0 0 0 / 80%) !important;
+  border-radius: 0;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.content :global(.ProseMirror) {
+  flex: 1;
+  min-height: 14rem;
+  padding: 0.25rem 0.5rem;
+  letter-spacing: normal;
+  background: transparent;
+}
+
+.root[data-game-build="41"] .content :global(.ProseMirror) {
+  font-family: Corbel, "Noto Sans", var(--mantine-font-family);
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.25rem;
+}
+
+.root[data-game-build="42"] .content :global(.ProseMirror) {
+  font-family: "Noto Sans", Corbel, var(--mantine-font-family);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+}
+
+.root[data-game-build="41"]
+  .content
+  :global(.ProseMirror span[style*="font-size: 0.8em"]) {
+  line-height: 0.95rem;
+}
+
+.root[data-game-build="41"]
+  .content
+  :global(.ProseMirror span[style*="font-size: 1.2em"]) {
+  line-height: 1.5rem;
+}
+
+.root[data-game-build="42"]
+  .content
+  :global(.ProseMirror span[style*="font-size: 0.66em"]) {
+  line-height: 0.82rem;
+}
+
+.root[data-game-build="42"]
+  .content
+  :global(.ProseMirror span[style*="font-size: 1.14em"]) {
+  line-height: 1.42rem;
+}
+
+.content :global(.ProseMirror p) {
+  margin: 0;
+}
+
+.content :global(.ProseMirror span[style*="font-size"]) {
+  line-height: normal;
+  vertical-align: top;
+}
+
+[data-mantine-color-scheme="dark"] .content {
+  background-color: rgb(0 0 0 / 40%) !important;
+}

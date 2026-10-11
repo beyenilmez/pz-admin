@@ -1,0 +1,30 @@
+.button {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 2px 1px 1px 2px;
+  border-right: 0;
+  border-bottom: 0;
+  border-radius: var(--mantine-radius-lg) 0 0 0;
+  background: color-mix(in srgb, var(--mantine-color-body) 85%, transparent);
+  transition: background-color 120ms ease;
+}
+
+.button:hover,
+.button:focus-visible,
+.button[aria-expanded="true"] {
+  background: var(--mantine-color-body);
+}
+
+.button:focus-visible {
+  outline-offset: -3px;
+}
+
+.dropdown {
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  user-select: text;
+}

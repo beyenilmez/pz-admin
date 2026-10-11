@@ -1,0 +1,86 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+}
+
+.scroller {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--mantine-spacing-lg) var(--mantine-spacing-xl);
+  scrollbar-gutter: stable;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  min-height: 48px;
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xl);
+  border-top: 1px solid var(--mantine-color-default-border);
+  background: var(--mantine-color-body);
+}
+
+.skeletonNavigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mantine-spacing-xs);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-xl);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.skeletonCategories {
+  display: flex;
+  flex: 1 0 max-content;
+  gap: 4px;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.skeletonSearch {
+  flex: 0 0 360px;
+  max-width: 100%;
+}
+
+.skeletonSection {
+  overflow: hidden;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: var(--mantine-radius-default);
+}
+
+.skeletonOptionRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--mantine-spacing-xl);
+  min-height: 72px;
+  padding: var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.skeletonOptionRow:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 48em) {
+  .skeletonSearch {
+    flex-basis: 100%;
+  }
+
+  .skeletonOptionRow {
+    grid-template-columns: minmax(0, 1fr) 112px;
+    gap: var(--mantine-spacing-md);
+  }
+}

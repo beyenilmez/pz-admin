@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.scrollArea {
+  flex: 1;
+  min-height: 0;
+}
+
+.chevron[data-rotate] {
+  transform: rotate(90deg);
+}

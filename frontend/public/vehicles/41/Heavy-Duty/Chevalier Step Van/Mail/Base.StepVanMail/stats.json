@@ -1,0 +1,15 @@
+{
+  "weight": "1160",
+  "enginePower": "400",
+  "topSpeed": "70",
+  "engineLoudness": "100",
+  "suspensionStiffness": "40",
+  "occupantProtection": "1.1",
+  "engineQuality": "75",
+  "seats": "2",
+  "doors": "3",
+  "wheels": "4",
+  "trunkStorage": "160",
+  "totalStorage": "210",
+  "gloveBox": "10"
+}

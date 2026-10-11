@@ -1,0 +1,121 @@
+.page {
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+.toolbar button {
+  min-width: 8rem;
+}
+
+.sectionTitle {
+  margin-bottom: var(--mantine-spacing-xs);
+  font-size: 1.25rem;
+  line-height: 1.25;
+}
+
+.commandRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(1rem, 4vw, 2.5rem);
+  align-items: center;
+  min-height: 4.75rem;
+  padding-block: var(--mantine-spacing-sm);
+  border-bottom: 1px solid
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
+}
+
+.weatherControl {
+  display: grid;
+  grid-template-columns: 10rem minmax(9rem, 11rem);
+  gap: var(--mantine-spacing-xs);
+  align-items: end;
+}
+
+.weatherControl button {
+  height: 2.25rem;
+}
+
+.stopWeatherRow {
+  display: flex;
+  justify-content: flex-start;
+  gap: var(--mantine-spacing-xs);
+  padding-top: var(--mantine-spacing-sm);
+}
+
+.stopWeatherRow button {
+  width: 11rem;
+}
+
+.eventButtons {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--mantine-spacing-xs);
+  margin-top: var(--mantine-spacing-sm);
+}
+
+.eventButtons button {
+  min-height: 2.5rem;
+}
+
+.playerNames {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: default;
+}
+
+.luaControl {
+  display: grid;
+  grid-template-columns: minmax(14rem, 24rem) auto;
+  gap: var(--mantine-spacing-xs);
+  align-items: end;
+}
+
+.dialogActions button {
+  min-width: 6.5rem;
+}
+
+@media (max-width: 48em) {
+  .commandRow {
+    grid-template-columns: 1fr;
+    gap: var(--mantine-spacing-sm);
+  }
+  .commandRow > button {
+    width: 100%;
+  }
+  .weatherControl,
+  .luaControl {
+    grid-template-columns: minmax(0, 1fr) 10rem;
+  }
+  .eventButtons {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 34em) {
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .toolbar > button {
+    width: 100%;
+  }
+  .weatherControl,
+  .luaControl,
+  .stopWeatherRow {
+    grid-template-columns: 1fr;
+  }
+  .weatherControl button,
+  .luaControl button,
+  .stopWeatherRow button {
+    width: 100%;
+  }
+  .dialogActions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+  .dialogActions button {
+    width: 100%;
+  }
+}

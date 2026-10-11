@@ -1,0 +1,8 @@
+{
+  "weight": "200",
+  "suspensionStiffness": "40",
+  "occupantProtection": "0.8",
+  "wheels": "2",
+  "trunkStorage": "100",
+  "totalStorage": "100"
+}

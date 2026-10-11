@@ -1,0 +1,74 @@
+{
+  "about": {
+    "description": "Project Zomboid sunucu yönetim aracı",
+    "links": {
+      "homepage": "Web sitesi",
+      "issues": "Sorun bildir",
+      "project": "Kaynak kodu"
+    },
+    "title": "Hakkında"
+  },
+  "colorScheme": {
+    "description": "Uygulamanın hangi renk düzenini kullanacağını seçin.",
+    "label": "Renk düzeni",
+    "options": {
+      "dark": "Koyu",
+      "light": "Açık",
+      "system": "Sistem"
+    }
+  },
+  "diagnostics": {
+    "actions": {
+      "copy": "Tanılama bilgilerini kopyala"
+    },
+    "description": "Bir sorun bildirirken bu bilgileri paylaşın.",
+    "errors": {
+      "load": {
+        "title": "Tanılama bilgileri yüklenemedi"
+      }
+    },
+    "title": "Tanılama"
+  },
+  "errors": {
+    "load": {
+      "title": "Ayarlar yüklenemedi"
+    },
+    "save": {
+      "recovery": "Ayarı değiştirmeyi tekrar deneyin.",
+      "title": "Ayarlar kaydedilemedi"
+    }
+  },
+  "language": {
+    "description": "Uygulama dilini seçin.",
+    "label": "Dil"
+  },
+  "notices": {
+    "actions": {
+      "source": "Kaynağı tarayıcıda görüntüle"
+    },
+    "application": "PZ Admin lisansı",
+    "errors": {
+      "load": {
+        "title": "Lisanslar ve bildirimler yüklenemedi"
+      }
+    },
+    "loading": "Bildirimler yükleniyor…",
+    "missingText": "Bu kayıt için lisans metni bulunmuyor.",
+    "search": {
+      "empty": "Aramanızla eşleşen bildirim bulunamadı",
+      "label": "Üçüncü taraf bildirimlerinde ara",
+      "placeholder": "Üçüncü taraf bildirimlerinde ara…"
+    },
+    "title": "Lisanslar ve bildirimler",
+    "unavailable": "Bu derleme için üçüncü taraf bildirimleri oluşturulmamış."
+  },
+  "page": {
+    "title": "Ayarlar"
+  },
+  "updates": {
+    "downloadOnStartup": {
+      "description": "Yeni sürümleri denetler ve mevcut güncellemeleri otomatik olarak indirir.",
+      "label": "Başlangıçta güncellemeleri indir"
+    }
+  }
+}

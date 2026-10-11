@@ -1,0 +1,11 @@
+{
+  "wheels": "4",
+  "weight": "500",
+  "occupantProtection": "0.8",
+  "trunkStorage": "20 / 10",
+  "totalStorage": "30",
+  "animalSize": "500",
+  "rollInfluence": "1",
+  "suspensionStiffness": "40",
+  "offRoadEfficiency": "0.8"
+}

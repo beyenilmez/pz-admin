@@ -1,0 +1,87 @@
+{
+  "card": {
+    "actions": {
+      "label": "Actions for {{serverName}}"
+    }
+  },
+  "dialogs": {
+    "delete": {
+      "description": "Delete {{serverName}}? This cannot be undone.",
+      "error": {
+        "title": "Unable to delete server"
+      },
+      "title": "Delete server"
+    }
+  },
+  "form": {
+    "add": {
+      "submit": "Add server",
+      "title": "Add server"
+    },
+    "edit": {
+      "title": "Edit server"
+    },
+    "errors": {
+      "save": {
+        "title": "Unable to save server"
+      }
+    },
+    "fields": {
+      "connectionMethod": {
+        "label": "Connection method"
+      },
+      "host": {
+        "label": "Host"
+      },
+      "name": {
+        "label": "Server name"
+      },
+      "password": {
+        "create": {
+          "description": "Stored securely in your operating system’s keyring."
+        },
+        "edit": {
+          "description": "Leave blank to keep the saved password."
+        }
+      },
+      "port": {
+        "label": "Port"
+      }
+    },
+    "validation": {
+      "portRange": "Enter a port between 1 and 65535."
+    }
+  },
+  "page": {
+    "title": "Server"
+  },
+  "profiles": {
+    "actions": {
+      "add": "Add server"
+    },
+    "empty": {
+      "description": "Add a server to get started.",
+      "title": "No saved servers"
+    },
+    "errors": {
+      "actions": {
+        "dismiss": "Dismiss error"
+      },
+      "connectionCheck": {
+        "title": "Unable to check connection"
+      },
+      "load": {
+        "title": "Unable to load servers"
+      }
+    },
+    "loading": {
+      "label": "Loading servers…"
+    },
+    "title": "Saved servers"
+  },
+  "workspace": {
+    "navigation": {
+      "label": "Server menu"
+    }
+  }
+}

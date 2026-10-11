@@ -1,0 +1,215 @@
+version: "3"
+
+vars:
+  APP_NAME: "pz-admin"
+  BIN_DIR: "bin"
+  PACKAGE_MANAGER: '{{.PACKAGE_MANAGER | default "pnpm"}}'
+  CI: '{{has (lower (default "false" .CI)) (list "1" "yes" "true")}}'
+  VITE_PORT: "{{.WAILS_VITE_PORT | default 9245}}"
+  # Target OS for build/package/run. Defaults to the host OS, and is overridden
+  # by `wails3 build GOOS=...` (or the GOOS env var) for cross-compilation. The
+  # tasks below dispatch to the matching platform Taskfile via this variable.
+  GOOS: "{{.GOOS | default OS}}"
+
+includes:
+  common: ./build/Taskfile.yml
+  windows: ./build/windows/Taskfile.yml
+  darwin: ./build/darwin/Taskfile.yml
+  linux: ./build/linux/Taskfile.yml
+  ios: ./build/ios/Taskfile.yml
+  android: ./build/android/Taskfile.yml
+
+tasks:
+  screenshots:
+    desc: Exports publication screenshots (use -- --check to validate without capturing)
+    dir: frontend
+    deps:
+      - task: common:install:frontend:browser
+    cmds:
+      - pnpm generate:screenshots {{.CLI_ARGS}}
+
+  licenses:
+    desc: Collects and combines licenses into THIRD-PARTY-NOTICES.json for packaging
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - task: licenses:frontend
+      - task: licenses:backend
+      - task: licenses:combine
+
+  licenses:frontend:
+    desc: Collects Vite's license report and static additional notices under .generated/licenses/frontend
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - task: common:build:frontend
+        vars:
+          DEV: "false"
+          BUILD_FLAGS: '-tags production{{if eq .OBFUSCATED "true"}},wails_obfuscated{{end}}{{if .EXTRA_TAGS}},{{.EXTRA_TAGS}}{{end}}'
+          OBFUSCATED:
+            ref: .OBFUSCATED
+
+  licenses:backend:
+    desc: Collects native production Go dependency licenses under .generated/licenses/backend
+    summary: |
+      Run on each release platform with its native build prerequisites installed.
+      Uses GOOS/ARCH (defaulting to the host) and production tags; accepts EXTRA_TAGS.
+      Collects external Go dependencies, the Go license, and adapted Tailscale code.
+      Native libraries, bundled resources, and build tools need separate review.
+    dir: "{{.ROOT_DIR}}"
+    preconditions:
+      - sh: go-licenses --help
+        msg: Run mise install to install go-licenses.
+    vars:
+      TARGET_OS: "{{.GOOS}}"
+      TARGET_ARCH: "{{.ARCH | default ARCH}}"
+    env:
+      GOOS: "{{.TARGET_OS}}"
+      GOARCH: "{{.TARGET_ARCH}}"
+      CGO_ENABLED: '{{if eq .TARGET_OS "windows"}}0{{else}}1{{end}}'
+      GOFLAGS: "-tags=production{{if .EXTRA_TAGS}},{{.EXTRA_TAGS}}{{end}}"
+    cmds:
+      - task: common:prepare:embed
+      - node scripts/licenses/backend.mjs
+
+  licenses:combine:
+    desc: Combines collected licenses into THIRD-PARTY-NOTICES.json for packaging
+    dir: "{{.ROOT_DIR}}"
+    vars:
+      TARGET_OS: "{{.GOOS}}"
+      TARGET_ARCH: "{{.ARCH | default ARCH}}"
+      TARGET: '{{.TARGET | default (printf "%s-%s" .TARGET_OS .TARGET_ARCH)}}'
+    cmds:
+      - node scripts/licenses/combine.mjs "{{.TARGET}}"
+
+  check:
+    desc: Checks the backend, frontend, Linux metadata, and licenses
+    cmds:
+      - task: check:backend
+      - task: check:frontend
+      - task: check:licenses
+      - task: check:metadata
+
+  check:licenses:
+    desc: Validates REUSE license information
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - reuse lint
+
+  check:metadata:
+    desc: Validates Linux AppStream metadata and the desktop entry
+    platforms: [linux]
+    dir: "{{.ROOT_DIR}}"
+    preconditions:
+      - sh: command -v appstreamcli && command -v desktop-file-validate
+        msg: Install appstream and desktop-file-utils to check Linux metadata.
+    cmds:
+      - task: linux:generate:metainfo
+      - node scripts/appstream/validate.mjs .generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml
+      - desktop-file-validate build/linux/com.bedirhanyenilmez.pzadmin.desktop
+
+  check:backend:
+    desc: Checks and tests the Go backend
+    dir: "{{.ROOT_DIR}}"
+    deps:
+      - task: common:prepare:embed
+    cmds:
+      - go mod tidy -diff
+      - |
+        unformatted=$(gofmt -l main.go internal build) || exit 1
+        if [ -n "$unformatted" ]; then
+          printf 'Run gofmt on:\n%s\n' "$unformatted"
+          exit 1
+        fi
+      - go vet ./...
+      - task: test:backend
+
+  check:frontend:
+    desc: Checks and tests the frontend
+    dir: frontend
+    deps:
+      - task: common:install:frontend:browser
+    cmds:
+      - pnpm check
+
+  format:
+    desc: Formats the backend and frontend
+    deps:
+      - task: format:backend
+      - task: format:frontend
+
+  format:backend:
+    desc: Formats the Go backend
+    cmds:
+      - go fmt ./...
+
+  format:frontend:
+    desc: Formats the frontend
+    dir: frontend
+    cmds:
+      - pnpm format
+
+  test:
+    desc: Tests the backend and frontend
+    cmds:
+      - task: test:backend
+      - task: test:frontend
+
+  test:backend:
+    desc: Tests the Go backend
+    deps:
+      - task: common:prepare:embed
+    cmds:
+      - go test ./...
+
+  test:frontend:
+    desc: Tests the frontend
+    dir: frontend
+    deps:
+      - task: common:install:frontend:browser
+    cmds:
+      - pnpm test:run
+
+  build:
+    summary: Builds the application
+    cmds:
+      - task: "{{.GOOS}}:build"
+
+  package:
+    summary: Packages a production build of the application
+    cmds:
+      - task: licenses
+      - task: "{{.GOOS}}:package"
+
+  run:
+    summary: Runs the application
+    cmds:
+      - task: "{{.GOOS}}:run"
+
+  dev:
+    summary: Runs the application in development mode
+    cmds:
+      - wails3 dev -config ./build/config.yml -port {{.VITE_PORT}}
+
+  setup:docker:
+    summary: Builds Docker image for cross-compilation (~800MB download)
+    cmds:
+      - task: common:setup:docker
+
+  build:server:
+    summary: Builds the application in server mode (no GUI, HTTP server only)
+    cmds:
+      - task: common:build:server
+
+  run:server:
+    summary: Runs the application in server mode
+    cmds:
+      - task: common:run:server
+
+  build:docker:
+    summary: Builds a Docker image for server mode deployment
+    cmds:
+      - task: common:build:docker
+
+  run:docker:
+    summary: Builds and runs the Docker image
+    cmds:
+      - task: common:run:docker

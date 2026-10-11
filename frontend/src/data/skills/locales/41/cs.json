@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Pasivní",
+    "firearm": "Střelné zbraně",
+    "survivalist": "Přežívání",
+    "combat": "Boj",
+    "agility": "Hbitost",
+    "crafting": "Vyrábění"
+  },
+  "names": {
+    "Fitness": "Kondice",
+    "Strength": "Síla",
+    "Aiming": "Míření",
+    "Reloading": "Přebíjení",
+    "Fishing": "Rybaření",
+    "Trapping": "Odchyt zvěře",
+    "PlantScavenging": "Sběr zásob",
+    "Axe": "Sekera",
+    "Blunt": "Dlouhá tupá zbr.",
+    "SmallBlunt": "Krátká tupá zbr.",
+    "LongBlade": "Dlouhá čepel",
+    "SmallBlade": "Krátká čepel",
+    "Spear": "Oštěp",
+    "Maintenance": "Údržba",
+    "Sprinting": "Sprint",
+    "Nimble": "Mrštnost",
+    "Lightfoot": "Tichost",
+    "Sneak": "Plížení",
+    "Woodwork": "Tesařství",
+    "Cooking": "Vaření",
+    "Farming": "Farmaření",
+    "Doctor": "První pomoc",
+    "Electricity": "Elektronika",
+    "MetalWelding": "Obrábění kovů",
+    "Mechanics": "Mechanika",
+    "Tailoring": "Krejčovství"
+  }
+}

@@ -1,0 +1,6 @@
+saveExact: true
+engineStrict: true
+strictPeerDependencies: true
+
+allowBuilds:
+  esbuild: true

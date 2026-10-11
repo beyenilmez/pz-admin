@@ -1,0 +1,73 @@
+name: AUR
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Latest published stable release tag (for example, v2.1.0)
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      release_tag:
+        description: Published stable release tag
+        required: true
+        type: string
+    secrets:
+      AUR_SSH_PRIVATE_KEY:
+        required: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: aur
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Prepare and publish AUR package
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ inputs.release_tag }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Download latest release packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          # An older release must not roll back the AUR package.
+          test "$(gh release view --json tagName --jq .tagName)" = "$RELEASE_TAG"
+          gh release view "$RELEASE_TAG" --json isDraft,isPrerelease \
+            --jq '(.isDraft == false) and (.isPrerelease == false)' | grep -qx true
+          gh release download "$RELEASE_TAG" --dir packages \
+            --pattern "pz-admin-${RELEASE_TAG#v}-linux-*.pkg.tar.zst"
+      - name: Generate PKGBUILD
+        id: package
+        run: |
+          python3 scripts/aur/prepare.py "$RELEASE_TAG" "$GH_REPO" packages .generated/aur
+          echo "version=${RELEASE_TAG#v}-1" >> "$GITHUB_OUTPUT"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: aur-pz-admin-bin
+          path: .generated/aur/PKGBUILD
+          if-no-files-found: error
+          retention-days: 7
+      # Enable publishing after the AUR account and SSH key are configured.
+      # - name: Publish AUR package
+      #   uses: KSXGitHub/github-actions-deploy-aur@2ac5a4c1d7035885d46b10e3193393be8460b6f1 # v4.1.1
+      #   with:
+      #     pkgname: pz-admin-bin
+      #     pkgbuild: .generated/aur/PKGBUILD
+      #     commit_username: Bedirhan Yenilmez
+      #     commit_email: contact@bedirhanyenilmez.com
+      #     ssh_private_key: ${{ secrets.AUR_SSH_PRIVATE_KEY }}
+      #     commit_message: "upgpkg: pz-admin-bin ${{ steps.package.outputs.version }}"
+      #     test: "true"

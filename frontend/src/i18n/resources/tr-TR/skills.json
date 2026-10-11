@@ -1,0 +1,37 @@
+{
+  "errors": {
+    "load": {
+      "title": "Beceriler yüklenemedi"
+    }
+  },
+  "picker": {
+    "actions": {
+      "maxAll": "Tümünü en yüksek değere ayarla",
+      "removeSkill": "{{skill}} becerisini kaldır"
+    },
+    "catalog": {
+      "heading": "Beceriler"
+    },
+    "customXp": {
+      "input": {
+        "label": "{{skill}} için özel XP miktarı",
+        "placeholder": "XP miktarı"
+      },
+      "toggle": {
+        "label": "Özel XP"
+      }
+    },
+    "level": {
+      "label": "{{skill}}, seviye {{level}}: {{amount}} XP",
+      "short": "Sv. {{level}}"
+    },
+    "selection": {
+      "empty": "XP miktarını ayarlamak için bir beceri seçin.",
+      "heading_one": "{{count}} beceri seçildi",
+      "heading_other": "{{count}} beceri seçildi"
+    },
+    "summary": {
+      "total": "{{amount}} XP"
+    }
+  }
+}

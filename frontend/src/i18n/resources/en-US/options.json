@@ -1,0 +1,65 @@
+{
+  "changes": {
+    "unsaved_one": "{{count}} unsaved change",
+    "unsaved_other": "{{count}} unsaved changes"
+  },
+  "errors": {
+    "load": {
+      "title": "Unable to load options"
+    }
+  },
+  "field": {
+    "numericRange": "Minimum {{minimum}}, maximum {{maximum}}",
+    "numericRange_maximum": "Maximum {{maximum}}",
+    "numericRange_minimum": "Minimum {{minimum}}",
+    "requirement": "Applies when {{option}} is {{value}}.",
+    "writeOnly": {
+      "description": "The server does not return the current value. Enter a value only when you want to replace it.",
+      "label": "Write only"
+    }
+  },
+  "navigation": {
+    "label": "Option sections",
+    "search": {
+      "empty": "No options match your search.",
+      "label": "Search options",
+      "placeholder": "Search options…"
+    }
+  },
+  "notifications": {
+    "partiallyUpdated": {
+      "message": "Updated {{updated}} options; {{failed}} failed.",
+      "title": "Some options were not updated"
+    },
+    "refreshFailed": {
+      "message": "The update finished, but the current server values could not be reloaded. Your edits were kept.",
+      "title": "Unable to reload options"
+    },
+    "updateFailed": {
+      "message_one": "{{count}} option could not be updated.",
+      "message_other": "{{count}} options could not be updated.",
+      "title": "Unable to update options"
+    },
+    "updated": {
+      "message_one": "Updated {{count}} option.",
+      "message_other": "Updated {{count}} options.",
+      "title": "Options updated"
+    }
+  },
+  "page": {
+    "title": "Options"
+  },
+  "validation": {
+    "integer": "Enter a whole number.",
+    "invalidChoice": "Select a valid value.",
+    "maximum": "Value must be at most {{value}}.",
+    "maximumLength": "Use no more than {{value}} characters.",
+    "minimum": "Value must be at least {{value}}.",
+    "number": "Enter a number.",
+    "required": "Enter a value."
+  },
+  "values": {
+    "disabled": "disabled",
+    "enabled": "enabled"
+  }
+}

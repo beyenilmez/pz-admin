@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "gunshot": "Постріл",
+    "lightning": "Блискавка",
+    "reloadOptions": "Перезавантажити параметри",
+    "sendMessage": "Надіслати повідомлення",
+    "stopRain": "Зупинити дощ",
+    "thunder": "Грім"
+  },
+  "events": {
+    "players": {
+      "empty": "Немає"
+    }
+  },
+  "fields": {
+    "intensity": {
+      "label": "Інтенсивність"
+    }
+  },
+  "sections": {
+    "weather": "Погода"
+  }
+}

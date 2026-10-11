@@ -1,0 +1,71 @@
+name: Cloudsmith
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Published stable release tag to upload (for example, v2.1.0)
+        required: true
+        type: string
+  workflow_call:
+    inputs:
+      release_tag:
+        description: Published stable release tag to upload
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cloudsmith
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish Linux packages
+    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      id-token: write
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ inputs.release_tag }}
+      CLOUDSMITH_REPOSITORY: beyenilmez/pz-admin
+    steps:
+      - name: Download published release packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "A stable release tag (vX.Y.Z) is required" >&2
+            exit 1
+          fi
+          gh release view "$RELEASE_TAG" --json isDraft,isPrerelease \
+            --jq '(.isDraft == false) and (.isPrerelease == false)' | grep -qx true
+          gh release download "$RELEASE_TAG" --dir packages \
+            --pattern "pz-admin-${RELEASE_TAG#v}-linux-*.deb" \
+            --pattern "pz-admin-${RELEASE_TAG#v}-linux-*.rpm"
+          for arch in x64 arm64; do
+            for format in deb rpm; do
+              test -s "packages/pz-admin-${RELEASE_TAG#v}-linux-$arch.$format"
+            done
+          done
+      - uses: cloudsmith-io/cloudsmith-cli-action@69e169e2ad9bc9a1599c2dff464061a00fe9f8ba # v3.1.1
+        with:
+          oidc-namespace: beyenilmez
+          oidc-service-slug: github-releases-2yp1
+          verify-auth: "true"
+      - name: Upload Debian and RPM packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          for arch in x64 arm64; do
+            for format in deb rpm; do
+              cloudsmith push "$format" "$CLOUDSMITH_REPOSITORY/any-distro/any-version" \
+                "packages/pz-admin-${RELEASE_TAG#v}-linux-$arch.$format" --republish
+            done
+          done

@@ -1,0 +1,82 @@
+{
+  "actions": {
+    "commands": {
+      "addXp": "Додати досвід",
+      "ban": "Забанити",
+      "createHorde": "Створити орду",
+      "unban": "Розбанити"
+    },
+    "groups": {
+      "events": "Події"
+    },
+    "powers": {
+      "godMode": {
+        "label": "Режим бога"
+      }
+    }
+  },
+  "dialogs": {
+    "addLocalPlayer": {
+      "submit": "Додати гравця"
+    },
+    "addXp": {
+      "title": "Додати досвід"
+    },
+    "ban": {
+      "submit": "Забанити"
+    },
+    "createHorde": {
+      "size": {
+        "label": "Розмір орди"
+      },
+      "submit": "Створити орду",
+      "title": "Створити орду"
+    },
+    "lightning": {
+      "submit": "Викликати блискавку"
+    },
+    "teleport": {
+      "mode": {
+        "options": {
+          "player": "Гравець"
+        }
+      }
+    },
+    "thunder": {
+      "submit": "Викликати грім"
+    }
+  },
+  "fields": {
+    "reason": {
+      "label": "Причина"
+    }
+  },
+  "lastSeen": {
+    "online": "Онлайн"
+  },
+  "page": {
+    "title": "Гравці"
+  },
+  "roles": {
+    "admin": "Адміністратор",
+    "banned": "Забанений",
+    "gm": "GM",
+    "moderator": "Модератор",
+    "none": "Немає",
+    "observer": "Спостерігач",
+    "overseer": "Наглядач",
+    "unknown": "Невідомо"
+  },
+  "table": {
+    "actions": {
+      "addPlayer": "Додати гравця"
+    },
+    "columns": {
+      "player": "Гравець"
+    },
+    "label": "Гравці",
+    "search": {
+      "placeholder": "Пошук гравців..."
+    }
+  }
+}

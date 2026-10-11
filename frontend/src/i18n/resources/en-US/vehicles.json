@@ -1,0 +1,93 @@
+{
+  "browser": {
+    "results": {
+      "summary_one": "{{count}} vehicle",
+      "summary_other": "{{count}} vehicles"
+    },
+    "search": {
+      "empty": "No vehicles match your search.",
+      "label": "Search vehicles"
+    }
+  },
+  "details": {
+    "actions": {
+      "back": "Vehicles",
+      "openVariant": "Open {{variant}} variant"
+    },
+    "sections": {
+      "body": "Body and equipment",
+      "capacity": "Capacity",
+      "performance": "Performance"
+    }
+  },
+  "errors": {
+    "load": {
+      "title": "Unable to load vehicles"
+    }
+  },
+  "filters": {
+    "boolean": {
+      "options": {
+        "any": "Any",
+        "no": "No",
+        "yes": "Yes"
+      }
+    },
+    "sections": {
+      "stats": "Specifications",
+      "vehicle": "Vehicle"
+    },
+    "title": "Filters",
+    "vehicle": {
+      "label": "Category or model"
+    }
+  },
+  "page": {
+    "title": "Vehicle browser"
+  },
+  "picker": {
+    "actions": {
+      "selectVariant": "Select {{variant}} variant"
+    },
+    "root": "Vehicles"
+  },
+  "sorting": {
+    "fields": {
+      "name": "Name"
+    }
+  },
+  "stats": {
+    "animalSize": "Animal size",
+    "doors": "Doors",
+    "engineLoudness": "Engine loudness",
+    "enginePower": "Engine power",
+    "engineQuality": "Engine quality",
+    "gloveBox": "Glove box capacity",
+    "lightbar": "Lightbar",
+    "occupantProtection": "Occupant protection",
+    "offRoadEfficiency": "Off-road efficiency",
+    "rollInfluence": "Roll influence",
+    "seats": "Seats",
+    "short": {
+      "enginePower": "Power",
+      "topSpeed": "Speed",
+      "totalStorage": "Storage"
+    },
+    "suspensionStiffness": "Suspension stiffness",
+    "topSpeed": "Top speed",
+    "totalStorage": "Total storage",
+    "trunkStorage": "Trunk capacity",
+    "values": {
+      "enginePower": "{{value}} hp",
+      "seats_one": "{{value}} seat",
+      "seats_other": "{{value}} seats",
+      "storage_one": "{{value}} unit",
+      "storage_other": "{{value}} units"
+    },
+    "weight": "Weight",
+    "wheels": "Wheels"
+  },
+  "variants": {
+    "title": "Variants"
+  }
+}

@@ -1,0 +1,69 @@
+.window {
+  width: 1280px;
+  height: 800px;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid var(--mantine-color-default-border);
+  border-radius: 12px;
+  background: var(--mantine-color-body);
+}
+
+.titlebar {
+  height: 28px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border-bottom: 1px solid var(--mantine-color-default-border);
+  background: var(--mantine-color-default);
+  color: var(--mantine-color-text);
+  font: 500 12px var(--mantine-font-family);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.controls {
+  display: flex;
+  gap: 18px;
+
+  svg {
+    width: 12px;
+    height: 12px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+  }
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+  position: relative;
+  /* Keep fixed overlays and their portal content inside the window body. */
+  transform: translateZ(0);
+  overflow: hidden;
+}
+
+.content :global(.mantine-Modal-inner) {
+  width: 100%;
+  height: 100%;
+  padding: 16px;
+}
+
+/* The app shell normally fills the native viewport; here it fills the frame body. */
+.content > :global(.mantine-Tabs-root) {
+  height: 100% !important;
+}
+
+.content :global(.mantine-Modal-content) {
+  max-height: calc(100cqh - 32px);
+}

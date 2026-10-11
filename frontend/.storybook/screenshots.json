@@ -1,0 +1,144 @@
+{
+  "environment": "gnome",
+  "themes": ["light", "dark"],
+  "main": "players",
+  "outputs": [
+    {
+      "format": "png",
+      "width": 1280
+    },
+    {
+      "format": "webp",
+      "width": 1280,
+      "quality": 90
+    },
+    {
+      "format": "webp",
+      "width": 640,
+      "quality": 90
+    }
+  ],
+  "images": [
+    {
+      "id": "players",
+      "captions": {
+        "en-US": "View and manage players on your server",
+        "tr-TR": "Sunucunuzdaki oyuncuları görüntüleyin ve yönetin"
+      },
+      "alt": {
+        "en-US": "Player list with online status, roles, and player actions",
+        "tr-TR": "Oyuncuların çevrim içi durumlarını, rollerini ve oyuncu işlemlerini gösteren liste"
+      }
+    },
+    {
+      "id": "give-items",
+      "captions": {
+        "en-US": "Give items to players",
+        "tr-TR": "Oyunculara eşya verin"
+      },
+      "alt": {
+        "en-US": "Items selected to be given to a player",
+        "tr-TR": "Bir oyuncuya verilmek üzere seçilen eşyalar"
+      }
+    },
+    {
+      "id": "add-xp",
+      "captions": {
+        "en-US": "Add experience points to player skills",
+        "tr-TR": "Oyuncuların becerilerine deneyim puanı ekleyin"
+      },
+      "alt": {
+        "en-US": "Skill selection and experience amounts for a player",
+        "tr-TR": "Bir oyuncu için seçilen beceriler ve eklenecek deneyim puanları"
+      }
+    },
+    {
+      "id": "spawn-vehicle",
+      "captions": {
+        "en-US": "Spawn vehicles near players",
+        "tr-TR": "Oyuncuların yakınında araç oluşturun"
+      },
+      "alt": {
+        "en-US": "Vehicle selection with a police car chosen",
+        "tr-TR": "Polis aracı seçilmiş araç oluşturma penceresi"
+      }
+    },
+    {
+      "id": "options",
+      "captions": {
+        "en-US": "Adjust your server settings",
+        "tr-TR": "Sunucu ayarlarınızı düzenleyin"
+      },
+      "alt": {
+        "en-US": "Server settings with changes ready to save",
+        "tr-TR": "Kaydedilmeyi bekleyen değişiklikleri içeren sunucu ayarları"
+      }
+    },
+    {
+      "id": "server-actions",
+      "captions": {
+        "en-US": "Manage your server and in-game events",
+        "tr-TR": "Sunucunuzu ve oyun içi olayları yönetin"
+      },
+      "alt": {
+        "en-US": "Server actions for saving the world, changing weather, and starting events",
+        "tr-TR": "Dünyayı kaydetme, hava durumunu değiştirme ve olay başlatma gibi sunucu işlemleri"
+      }
+    },
+    {
+      "id": "console",
+      "captions": {
+        "en-US": "Run server commands",
+        "tr-TR": "Sunucu komutları çalıştırın"
+      },
+      "alt": {
+        "en-US": "Server console with previous commands, responses, and command suggestions",
+        "tr-TR": "Önceki komutları, yanıtları ve komut önerilerini gösteren sunucu konsolu"
+      }
+    },
+    {
+      "id": "items",
+      "captions": {
+        "en-US": "Browse the item catalog",
+        "tr-TR": "Eşya kataloğunu inceleyin"
+      },
+      "alt": {
+        "en-US": "Item catalog with selected items and quantities",
+        "tr-TR": "Seçilen eşyaları ve adetlerini gösteren eşya kataloğu"
+      }
+    },
+    {
+      "id": "vehicles",
+      "captions": {
+        "en-US": "Browse and compare vehicles",
+        "tr-TR": "Araçlara göz atın ve özelliklerini karşılaştırın"
+      },
+      "alt": {
+        "en-US": "Vehicle catalog with police vehicles and their specifications",
+        "tr-TR": "Polis araçlarını ve özelliklerini gösteren araç kataloğu"
+      }
+    },
+    {
+      "id": "vehicle-details",
+      "captions": {
+        "en-US": "View vehicle details and variants",
+        "tr-TR": "Araç özelliklerini ve varyantlarını inceleyin"
+      },
+      "alt": {
+        "en-US": "Selected vehicle details and available variants",
+        "tr-TR": "Seçilen aracın ayrıntıları ve mevcut varyantları"
+      }
+    },
+    {
+      "id": "message-editor",
+      "captions": {
+        "en-US": "Write and format server messages",
+        "tr-TR": "Sunucu mesajları yazın ve biçimlendirin"
+      },
+      "alt": {
+        "en-US": "Message editor with a message preview and formatted output",
+        "tr-TR": "Mesaj önizlemesini ve biçimlendirilmiş çıktıyı gösteren mesaj düzenleyici"
+      }
+    }
+  ]
+}

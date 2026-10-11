@@ -1,0 +1,17 @@
+{
+  "seats": "2",
+  "doors": "3",
+  "wheels": "4",
+  "weight": "1160",
+  "occupantProtection": "1.1",
+  "gloveBox": "10",
+  "trunkStorage": "160",
+  "totalStorage": "210",
+  "enginePower": "370",
+  "engineLoudness": "100",
+  "engineQuality": "70",
+  "topSpeed": "70",
+  "rollInfluence": "0.9",
+  "suspensionStiffness": "40",
+  "offRoadEfficiency": "1"
+}

@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Pasif",
+    "firearm": "Senjata Api",
+    "survivalist": "Bertahan Hidup",
+    "combat": "Senjata",
+    "agility": "Ketangkasan",
+    "crafting": "Kerajinan"
+  },
+  "names": {
+    "Fitness": "Kebugaran",
+    "Strength": "Kekuatan",
+    "Aiming": "Membidik",
+    "Reloading": "Mengisi Ulang",
+    "Fishing": "Memancing",
+    "Trapping": "Menjebak",
+    "PlantScavenging": "Mencari-cari",
+    "Axe": "Kapak",
+    "Blunt": "Tumpul Panjang",
+    "SmallBlunt": "Tumpul Pendek",
+    "LongBlade": "Bilah Panjang",
+    "SmallBlade": "Bilah Pendek",
+    "Spear": "Tombak",
+    "Maintenance": "Perawatan",
+    "Sprinting": "Lari Cepat",
+    "Nimble": "Gesit",
+    "Lightfoot": "Kelincahan",
+    "Sneak": "Menyelinap",
+    "Woodwork": "Kayu",
+    "Cooking": "Memasak",
+    "Farming": "Bertani",
+    "Doctor": "Pertolongan pertama",
+    "Electricity": "Listrik",
+    "MetalWelding": "Keahlian logam",
+    "Mechanics": "Mekanik",
+    "Tailoring": "Penjahitan"
+  }
+}

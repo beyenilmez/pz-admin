@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "被動",
+    "firearm": "槍械",
+    "survivalist": "求生",
+    "combat": "戰鬥",
+    "agility": "敏捷",
+    "crafting": "製作"
+  },
+  "names": {
+    "Fitness": "體態",
+    "Strength": "力量",
+    "Aiming": "瞄準",
+    "Reloading": "裝填子彈",
+    "Fishing": "釣魚",
+    "Trapping": "陷阱",
+    "PlantScavenging": "採集",
+    "Axe": "斧頭",
+    "Blunt": "長鈍器",
+    "SmallBlunt": "短鈍器",
+    "LongBlade": "長刃器",
+    "SmallBlade": "短刃器",
+    "Spear": "長柄武器",
+    "Maintenance": "保養",
+    "Sprinting": "衝刺",
+    "Nimble": "靈活",
+    "Lightfoot": "輕巧",
+    "Sneak": "潛行",
+    "Woodwork": "木工",
+    "Cooking": "烹飪",
+    "Farming": "農耕",
+    "Doctor": "醫療",
+    "Electricity": "電工",
+    "MetalWelding": "金工",
+    "Mechanics": "機工",
+    "Tailoring": "裁縫"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Пассивные",
+    "firearm": "Огнестрельное оружие",
+    "survivalist": "Выживание",
+    "combat": "Оружие ближнего боя",
+    "agility": "Ловкость",
+    "crafting": "Создание"
+  },
+  "names": {
+    "Fitness": "Фитнес",
+    "Strength": "Сила",
+    "Aiming": "Точность",
+    "Reloading": "Перезарядка",
+    "Fishing": "Рыболовство",
+    "Trapping": "Звероловство",
+    "PlantScavenging": "Собирательство",
+    "Axe": "Топоры",
+    "Blunt": "Длин. дробящее",
+    "SmallBlunt": "Коротк. дробящее",
+    "LongBlade": "Длин. режущее",
+    "SmallBlade": "Коротк. режущее",
+    "Spear": "Копья",
+    "Maintenance": "Прочность",
+    "Sprinting": "Бег",
+    "Nimble": "Проворность",
+    "Lightfoot": "Лёгкий шаг",
+    "Sneak": "Скрытность",
+    "Woodwork": "Строительство",
+    "Cooking": "Кулинария",
+    "Farming": "Фермерство",
+    "Doctor": "Первая помощь",
+    "Electricity": "Электроника",
+    "MetalWelding": "Газосварка",
+    "Mechanics": "Автомеханика",
+    "Tailoring": "Шитьё"
+  }
+}

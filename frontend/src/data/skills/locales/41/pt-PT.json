@@ -1,0 +1,20 @@
+{
+  "categories": {
+    "survivalist": "Sobrevivência",
+    "combat": "Combate",
+    "agility": "Agilidade",
+    "crafting": "Artes e ofícios"
+  },
+  "names": {
+    "Aiming": "Pontaria",
+    "Reloading": "Recarregar",
+    "Fishing": "Pesca",
+    "Blunt": "Armas contundentes",
+    "Sprinting": "Rápido",
+    "Nimble": "Ágil",
+    "Lightfoot": "Silencioso",
+    "Sneak": "Furtivo",
+    "Cooking": "Culinária",
+    "Farming": "Agricultura"
+  }
+}

@@ -1,0 +1,41 @@
+.container {
+  container-type: inline-size;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.layout {
+  display: grid;
+  flex: 1;
+  gap: var(--mantine-spacing-md);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  width: 100%;
+}
+
+.layout[data-layout="items"] {
+  grid-template-columns: minmax(17rem, 20rem) minmax(21rem, 1fr);
+}
+
+.layout[data-layout="skills"] {
+  grid-template-columns: minmax(15rem, 18rem) minmax(24rem, 1fr);
+}
+
+@container (max-width: 46rem) {
+  .layout[data-layout="items"] {
+    grid-template-columns: minmax(0, 1fr);
+    overflow-y: auto;
+  }
+}
+
+@container (max-width: 44rem) {
+  .layout[data-layout="skills"] {
+    grid-template-columns: minmax(0, 1fr);
+    overflow-y: auto;
+  }
+}

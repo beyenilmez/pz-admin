@@ -1,0 +1,75 @@
+.pane {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.scrollRegion {
+  flex: 1;
+  min-height: 0;
+}
+
+.skillButton {
+  align-items: center;
+  border-radius: var(--mantine-radius-sm);
+  display: flex;
+  gap: var(--mantine-spacing-xs);
+  min-height: 30px;
+  opacity: 0.65;
+  padding: 3px 5px;
+  width: 100%;
+}
+
+:global([data-mantine-color-scheme="dark"]) .skillButton {
+  opacity: 0.5;
+}
+
+.skillButton:hover,
+.skillButton[data-selected] {
+  background: var(--mantine-color-default-hover);
+  opacity: 1;
+}
+
+.skillButton:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: -2px;
+}
+
+.skillIcon {
+  height: 22px;
+  image-rendering: pixelated;
+  object-fit: contain;
+  width: 22px;
+}
+
+.skillName {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.selectedSkill {
+  border-bottom: 1px solid var(--mantine-color-default-border);
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-sm);
+}
+
+.levelButton {
+  font-variant-numeric: tabular-nums;
+  width: 3.5rem;
+}
+
+.levelLabel {
+  color: var(--mantine-color-dimmed);
+  font-weight: 500;
+}
+
+.levelButton[data-selected] .levelLabel {
+  color: inherit;
+  opacity: 0.75;
+}
+
+@container (max-width: 44rem) {
+  .pane {
+    min-height: 16rem;
+  }
+}

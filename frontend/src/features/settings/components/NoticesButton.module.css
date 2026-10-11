@@ -1,0 +1,53 @@
+.dialog {
+  height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.header {
+  flex-shrink: 0;
+  padding-inline: var(--mantine-spacing-lg);
+}
+
+.toolbar {
+  flex-shrink: 0;
+  padding: 0 var(--mantine-spacing-lg) var(--mantine-spacing-md);
+  border-bottom: 1px solid var(--mantine-color-default-border);
+}
+
+.body {
+  padding: var(--mantine-spacing-lg);
+}
+
+.control {
+  padding-inline: var(--mantine-spacing-md);
+}
+
+.noticeContent {
+  padding: var(--mantine-spacing-xs) var(--mantine-spacing-md)
+    var(--mantine-spacing-lg);
+}
+
+.bodyScroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.text {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+  line-height: 1.65;
+}
+
+.name {
+  overflow-wrap: anywhere;
+}
+
+.source {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: var(--mantine-spacing-xs);
+}

@@ -1,0 +1,77 @@
+version: "3"
+
+tasks:
+  package:
+    summary: Builds an AppImage and its native notices in Ubuntu 24.04
+    dir: "{{.ROOT_DIR}}"
+    preconditions:
+      - sh: 'test "{{.DEV}}" != "true" && test "{{.OBFUSCATED}}" != "true"'
+        msg: The AppImage container builds production binaries without obfuscation.
+      - sh: 'test "{{.TARGET_ARCH}}" = amd64 || test "{{.TARGET_ARCH}}" = arm64'
+        msg: AppImage supports amd64 and arm64.
+      - sh: "{{.ENGINE}} info >/dev/null"
+        msg: A running Docker or Podman engine is required.
+    vars:
+      ENGINE: '{{.CONTAINER_ENGINE | default "docker"}}'
+      TARGET_ARCH: "{{.ARCH | default ARCH}}"
+      IMAGE: "pz-admin-appimage-builder:{{.TARGET_ARCH}}"
+      OUTPUT_DIR: "{{.ROOT_DIR}}/.generated/appimage/{{.TARGET_ARCH}}"
+    cmds:
+      - |
+        set -eu
+        go_version=$(mise current go)
+        node_version=$(mise current node)
+        pnpm_version=$(mise current npm:pnpm)
+        go_licenses_version=$(mise current go:github.com/google/go-licenses/v2)
+        wails_version=$(mise current go:github.com/wailsapp/wails/v3/cmd/wails3)
+        {{.ENGINE}} build --platform linux/{{.TARGET_ARCH}} -t {{.IMAGE}} \
+          --build-arg "GO_VERSION=$go_version" \
+          --build-arg "NODE_VERSION=$node_version" \
+          --build-arg "PNPM_VERSION=$pnpm_version" \
+          --build-arg "GO_LICENSES_VERSION=v$go_licenses_version" \
+          --build-arg "WAILS_VERSION=v$wails_version" \
+          build/linux/appimage
+      - mkdir -p '{{.OUTPUT_DIR}}' '{{.ROOT_DIR}}/bin'
+      # Include working-tree changes and untracked files, using Git's ignore rules.
+      - |
+        bash <<'BASH'
+        set -euo pipefail
+        git ls-files --cached --others --exclude-standard --deduplicate -z |
+          while IFS= read -r -d '' path; do
+            if [ -f "$path" ] || [ -L "$path" ]; then printf '%s\0' "$path"; fi
+          done > '{{.OUTPUT_DIR}}/source-files.list'
+        BASH
+      # Keep host ownership under rootless Podman; do not relabel the checkout on SELinux.
+      - |
+        set -eu
+        set -- --user "$(id -u):$(id -g)"
+        if {{.ENGINE}} --version | grep -qi podman; then set -- "$@" --userns=keep-id; fi
+        {{.ENGINE}} run --rm --platform linux/{{.TARGET_ARCH}} --security-opt label=disable "$@" \
+          -v '{{.ROOT_DIR}}:/source:ro' -v '{{.OUTPUT_DIR}}:/output:rw' \
+          -e EXTRA_TAGS {{.IMAGE}}
+      - cp '{{.OUTPUT_DIR}}/pz-admin.AppImage' '{{.ROOT_DIR}}/bin/pz-admin.AppImage'
+    env:
+      EXTRA_TAGS: "{{.EXTRA_TAGS}}"
+
+  build:container:
+    summary: Builds and packages inside the AppImage container
+    preconditions:
+      - test -d /source -a -d /output
+    vars:
+      WORK:
+        sh: mktemp -d /tmp/pz-admin-appimage.XXXXXX
+    env:
+      GOPATH: /output/cache/go
+      GOCACHE: /output/cache/go-build
+      pnpm_config_store_dir: /output/cache/pnpm
+      pnpm_config_frozen_lockfile: "true"
+    cmds:
+      # Work on a fresh copy; generated bindings and frontend output stay off the host.
+      - |
+        set -euo pipefail
+        tar -C /source --null --no-recursion -T /output/source-files.list \
+          -cf - | tar -xf - -C '{{.WORK}}'
+      - mkdir -p '{{.WORK}}/pz-admin.AppDir/usr/bin'
+      - cd '{{.WORK}}' && wails3 task licenses GOOS=linux ARCH={{ARCH}} EXTRA_TAGS='{{.EXTRA_TAGS}}'
+      - cd '{{.WORK}}' && wails3 task linux:build OUTPUT='{{.WORK}}/pz-admin.AppDir/usr/bin/pz-admin' DEV=false EXTRA_TAGS='{{.EXTRA_TAGS}}'
+      - cd '{{.WORK}}' && python3 build/linux/appimage/package.py '{{.WORK}}/pz-admin.AppDir' /output

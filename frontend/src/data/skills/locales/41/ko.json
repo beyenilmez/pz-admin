@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "신체 능력",
+    "firearm": "총기",
+    "survivalist": "생존 능력",
+    "combat": "전투 능력",
+    "agility": "운동능력",
+    "crafting": "제작 능력"
+  },
+  "names": {
+    "Fitness": "체력",
+    "Strength": "근력",
+    "Aiming": "조준",
+    "Reloading": "재장전",
+    "Fishing": "낚시",
+    "Trapping": "함정",
+    "PlantScavenging": "채집",
+    "Axe": "도끼",
+    "Blunt": "긴 둔기",
+    "SmallBlunt": "짧은 둔기",
+    "LongBlade": "장검",
+    "SmallBlade": "단검",
+    "Spear": "창",
+    "Maintenance": "물건관리",
+    "Sprinting": "능숙한 달리기",
+    "Nimble": "조준시 발걸음",
+    "Lightfoot": "조용한 발걸음",
+    "Sneak": "은밀한 움직임",
+    "Woodwork": "목공예",
+    "Cooking": "요리",
+    "Farming": "농사",
+    "Doctor": "의료",
+    "Electricity": "전기공학",
+    "MetalWelding": "금속용접",
+    "Mechanics": "차량정비",
+    "Tailoring": "재단술"
+  }
+}

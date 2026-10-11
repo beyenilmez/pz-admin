@@ -1,0 +1,13 @@
+{
+  "overrides": [
+    {
+      "files": "frontend/src/i18n/resources/**/*.json",
+      "options": {
+        "parser": "json-stringify",
+        "tabWidth": 2,
+        "useTabs": false,
+        "endOfLine": "lf"
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passiv",
+    "firearm": "Skytevåpen",
+    "survivalist": "Overlevelseekspert",
+    "combat": "Kamp",
+    "agility": "Smidighet",
+    "crafting": "Håndverk"
+  },
+  "names": {
+    "Fitness": "Fitness",
+    "Strength": "Styrke",
+    "Aiming": "Sikte",
+    "Reloading": "Laster på nytt",
+    "Fishing": "Fiske",
+    "Trapping": "Felleekspert",
+    "PlantScavenging": "Sanking",
+    "Axe": "Øks",
+    "Blunt": "Lange stumpe",
+    "SmallBlunt": "Korte stumpe",
+    "LongBlade": "Lange blad",
+    "SmallBlade": "Korte blad",
+    "Spear": "Spyd",
+    "Maintenance": "Vedlikehold",
+    "Sprinting": "Sprinting",
+    "Nimble": "Rask",
+    "Lightfoot": "Lett på tå",
+    "Sneak": "Sniking",
+    "Woodwork": "Snekker",
+    "Cooking": "Matlaging",
+    "Farming": "Landbruk",
+    "Doctor": "Førstehjelp",
+    "Electricity": "Ekeltrisitet",
+    "MetalWelding": "Metallbearbeiding",
+    "Mechanics": "Mekanikk",
+    "Tailoring": "Syying"
+  }
+}

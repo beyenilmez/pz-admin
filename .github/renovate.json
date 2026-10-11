@@ -1,0 +1,52 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration",
+    ":semanticCommits"
+  ],
+  "enabledManagers": ["npm", "gomod", "github-actions", "mise"],
+  "prHourlyLimit": 0,
+  "postUpdateOptions": ["gomodTidy"],
+  "packageRules": [
+    {
+      "matchManagers": ["npm"],
+      "minimumReleaseAge": "1 day"
+    },
+    {
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Frontend dependencies (non-major)"
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Go dependencies (non-major)"
+    },
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "GitHub Actions",
+      "separateMajorMinor": false
+    },
+    {
+      "matchManagers": ["mise"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupName": "Mise tools (non-major)"
+    },
+    {
+      "matchPackageNames": ["github.com/wailsapp/wails/v3", "@wailsio/runtime"],
+      "groupName": "Wails",
+      "separateMajorMinor": false,
+      "postUpgradeTasks": {
+        "commands": [
+          "mise trust",
+          "mise lock go:github.com/wailsapp/wails/v3/cmd/wails3"
+        ],
+        "fileFilters": ["mise.lock"],
+        "executionMode": "branch",
+        "installTools": { "mise": {} }
+      }
+    }
+  ]
+}

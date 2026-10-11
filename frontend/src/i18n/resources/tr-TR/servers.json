@@ -1,0 +1,87 @@
+{
+  "card": {
+    "actions": {
+      "label": "{{serverName}} için işlemler"
+    }
+  },
+  "dialogs": {
+    "delete": {
+      "description": "{{serverName}} sunucusu silinsin mi? Bu işlem geri alınamaz.",
+      "error": {
+        "title": "Sunucu silinemedi"
+      },
+      "title": "Sunucuyu sil"
+    }
+  },
+  "form": {
+    "add": {
+      "submit": "Sunucu ekle",
+      "title": "Sunucu ekle"
+    },
+    "edit": {
+      "title": "Sunucuyu düzenle"
+    },
+    "errors": {
+      "save": {
+        "title": "Sunucu kaydedilemedi"
+      }
+    },
+    "fields": {
+      "connectionMethod": {
+        "label": "Bağlantı yöntemi"
+      },
+      "host": {
+        "label": "Sunucu adresi"
+      },
+      "name": {
+        "label": "Sunucu adı"
+      },
+      "password": {
+        "create": {
+          "description": "İşletim sisteminizin anahtarlığında güvenle saklanır."
+        },
+        "edit": {
+          "description": "Kayıtlı parolayı korumak için boş bırakın."
+        }
+      },
+      "port": {
+        "label": "Port"
+      }
+    },
+    "validation": {
+      "portRange": "1 ile 65535 arasında bir port numarası girin."
+    }
+  },
+  "page": {
+    "title": "Sunucu"
+  },
+  "profiles": {
+    "actions": {
+      "add": "Sunucu ekle"
+    },
+    "empty": {
+      "description": "Başlamak için bir sunucu ekleyin.",
+      "title": "Kayıtlı sunucu yok"
+    },
+    "errors": {
+      "actions": {
+        "dismiss": "Hatayı kapat"
+      },
+      "connectionCheck": {
+        "title": "Bağlantı kontrol edilemedi"
+      },
+      "load": {
+        "title": "Sunucular yüklenemedi"
+      }
+    },
+    "loading": {
+      "label": "Sunucular yükleniyor…"
+    },
+    "title": "Kayıtlı sunucular"
+  },
+  "workspace": {
+    "navigation": {
+      "label": "Sunucu menüsü"
+    }
+  }
+}

@@ -1,0 +1,105 @@
+{
+  "actions": {
+    "gunshot": "Gunshot",
+    "helicopter": "Helicopter",
+    "lightning": "Lightning",
+    "reloadAllLua": "Reload all Lua files",
+    "reloadFile": "Reload file",
+    "reloadLua": "Reload Lua file",
+    "reloadOptions": "Reload options",
+    "saveWorld": "Save world",
+    "sendMessage": "Send message",
+    "startRain": "Start rain",
+    "startStorm": "Start storm",
+    "stopRain": "Stop rain",
+    "stopServer": "Stop server",
+    "stopWeather": "Stop weather",
+    "thunder": "Thunder"
+  },
+  "descriptions": {
+    "events": "Targets a randomly selected online player with the chosen event.",
+    "reloadAllLua": "Reloads all currently loaded Lua files.",
+    "reloadLua": "Reloads the first loaded Lua file matching the specified file name or path suffix.",
+    "reloadOptions": "Reloads the server options from disk.",
+    "startRain": "Starts rain. Intensity is optional and ranges from 1 to 100.",
+    "startStorm": "Starts a storm. Duration is optional and measured in game hours."
+  },
+  "dialogs": {
+    "message": {
+      "title": "Send server message"
+    },
+    "stop": {
+      "description": "This saves the world, disconnects all players, and stops the server.",
+      "title": "Stop server"
+    }
+  },
+  "events": {
+    "players": {
+      "empty": "None",
+      "label": "Online players:"
+    }
+  },
+  "fields": {
+    "duration": {
+      "label": "Duration (game hours)"
+    },
+    "intensity": {
+      "label": "Intensity"
+    },
+    "luaFile": {
+      "label": "File name"
+    }
+  },
+  "notifications": {
+    "allLuaReloaded": {
+      "message": "Lua files reloaded."
+    },
+    "gunshot": {
+      "message": "Gunshot triggered."
+    },
+    "helicopter": {
+      "message": "Helicopter event triggered."
+    },
+    "lightning": {
+      "message": "Triggered lightning on {{target}}."
+    },
+    "luaReloaded": {
+      "message": "Lua file reloaded."
+    },
+    "messageSent": {
+      "message": "Message sent to all online players."
+    },
+    "optionsReloaded": {
+      "message": "Options reloaded."
+    },
+    "rainStarted": {
+      "message": "Rain started."
+    },
+    "rainStopped": {
+      "message": "Rain stopped."
+    },
+    "serverStopped": {
+      "message": "Server stopped."
+    },
+    "stormStarted": {
+      "message": "Storm started."
+    },
+    "thunder": {
+      "message": "Triggered thunder on {{target}}."
+    },
+    "weatherStopped": {
+      "message": "All weather effects stopped."
+    },
+    "worldSaved": {
+      "message": "World saved."
+    }
+  },
+  "page": {
+    "title": "Server actions"
+  },
+  "sections": {
+    "events": "World events",
+    "reload": "Reload commands",
+    "weather": "Weather"
+  }
+}

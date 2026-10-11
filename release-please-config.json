@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "packages": {
+    ".": {
+      "release-type": "simple",
+      "version-file": "VERSION",
+      "initial-version": "2.0.0",
+      "include-component-in-tag": false,
+      "draft": true,
+      "force-tag-creation": true,
+      "extra-files": [
+        {
+          "type": "generic",
+          "path": "build/config.yml"
+        },
+        {
+          "type": "generic",
+          "path": "build/linux/nfpm/nfpm.yaml"
+        },
+        {
+          "type": "json",
+          "path": "build/windows/info.json",
+          "jsonpath": "$.fixed.file_version"
+        },
+        {
+          "type": "json",
+          "path": "build/windows/info.json",
+          "jsonpath": "$.info.*.ProductVersion"
+        },
+        {
+          "type": "xml",
+          "path": "build/windows/wails.exe.manifest",
+          "xpath": "/*[local-name()='assembly']/*[local-name()='assemblyIdentity']/@version"
+        },
+        {
+          "type": "generic",
+          "path": "build/windows/nsis/wails_tools.nsh"
+        },
+        {
+          "type": "xml",
+          "path": "build/darwin/Info.plist",
+          "xpath": "//key[.='CFBundleShortVersionString' or .='CFBundleVersion']/following-sibling::string[1]"
+        },
+        {
+          "type": "xml",
+          "path": "build/darwin/Info.dev.plist",
+          "xpath": "//key[.='CFBundleShortVersionString' or .='CFBundleVersion']/following-sibling::string[1]"
+        }
+      ]
+    }
+  }
+}

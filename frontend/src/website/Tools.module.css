@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  height: max(35rem, calc(100dvh - 11rem));
+  min-width: 0;
+}
+
+.panel {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

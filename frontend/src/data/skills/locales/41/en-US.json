@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passive",
+    "firearm": "Firearm",
+    "survivalist": "Survivalist",
+    "combat": "Combat",
+    "agility": "Agility",
+    "crafting": "Crafting"
+  },
+  "names": {
+    "Fitness": "Fitness",
+    "Strength": "Strength",
+    "Aiming": "Aiming",
+    "Reloading": "Reloading",
+    "Fishing": "Fishing",
+    "Trapping": "Trapping",
+    "PlantScavenging": "Foraging",
+    "Axe": "Axe",
+    "Blunt": "Long Blunt",
+    "SmallBlunt": "Short Blunt",
+    "LongBlade": "Long Blade",
+    "SmallBlade": "Short Blade",
+    "Spear": "Spear",
+    "Maintenance": "Maintenance",
+    "Sprinting": "Sprinting",
+    "Nimble": "Nimble",
+    "Lightfoot": "Lightfooted",
+    "Sneak": "Sneaking",
+    "Woodwork": "Carpentry",
+    "Cooking": "Cooking",
+    "Farming": "Farming",
+    "Doctor": "First Aid",
+    "Electricity": "Electrical",
+    "MetalWelding": "Metalworking",
+    "Mechanics": "Mechanics",
+    "Tailoring": "Tailoring"
+  }
+}

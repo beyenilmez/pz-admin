@@ -1,0 +1,8 @@
+LICENSE	https://raw.githubusercontent.com/AppImage/type2-runtime/dd6cebedcbddde9c82f89b011e8e1d40b6e43868/LICENSE
+musl-COPYRIGHT	https://raw.githubusercontent.com/ifduyue/musl/v1.2.5/COPYRIGHT
+libfuse-LGPL2.txt	https://raw.githubusercontent.com/libfuse/libfuse/fuse-3.15.0/LGPL2.txt
+squashfuse-LICENSE	https://raw.githubusercontent.com/vasi/squashfuse/0.5.2/LICENSE
+zstd-LICENSE	https://raw.githubusercontent.com/facebook/zstd/v1.5.7/LICENSE
+zlib-README	https://raw.githubusercontent.com/madler/zlib/v1.3.1/README
+linuxdeploy-LICENSE.txt	https://raw.githubusercontent.com/linuxdeploy/linuxdeploy/1-alpha-20251107-1/LICENSE.txt
+gtk-plugin-LICENSE.txt	https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/7a3fbc31a9e5075073ff8790f26effbac5f84453/LICENSE.txt

@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Пасивні",
+    "firearm": "Вогнепальна зброя",
+    "survivalist": "Виживання",
+    "combat": "Зброя ближнього бою",
+    "agility": "Спритність",
+    "crafting": "Створення"
+  },
+  "names": {
+    "Fitness": "Фітнес",
+    "Strength": "Сила",
+    "Aiming": "Точність",
+    "Reloading": "Перезарядження",
+    "Fishing": "Рибальство",
+    "Trapping": "Звіроловство",
+    "PlantScavenging": "Збиральництво",
+    "Axe": "Сокири",
+    "Blunt": "Довг. дробяще",
+    "SmallBlunt": "Коротк. дробяще",
+    "LongBlade": "Довг. ріжуче",
+    "SmallBlade": "Коротк. ріжуче",
+    "Spear": "Списи",
+    "Maintenance": "Міцність",
+    "Sprinting": "Біг",
+    "Nimble": "Спритність",
+    "Lightfoot": "Легкий крок",
+    "Sneak": "Скритність",
+    "Woodwork": "Будівництво",
+    "Cooking": "Кулінарія",
+    "Farming": "Фермерство",
+    "Doctor": "Перша допомога",
+    "Electricity": "Електроніка",
+    "MetalWelding": "Газозварка",
+    "Mechanics": "Автомеханіка",
+    "Tailoring": "Шиття"
+  }
+}

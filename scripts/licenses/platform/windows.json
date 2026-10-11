@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Microsoft Edge WebView2 Bootstrapper",
+    "identifier": "LicenseRef-Microsoft-WebView2",
+    "file": "texts/LICENSE-webview2",
+    "source": "https://developer.microsoft.com/microsoft-edge/api/eula/webview2?locale=en-us",
+    "note": "The Windows installer includes Microsoft's Evergreen Bootstrapper, which downloads and installs the WebView2 Runtime if it is not already installed. The runtime itself is not bundled with PZ Admin."
+  }
+]

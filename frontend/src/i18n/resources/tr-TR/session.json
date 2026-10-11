@@ -1,0 +1,17 @@
+{
+  "connectionLost": {
+    "message": "Sunucuyla bağlantı kesildi. Devam etmek için yeniden bağlanın.",
+    "title": "Bağlantı kesildi"
+  },
+  "errors": {
+    "connect": {
+      "title": "Bağlanılamadı"
+    },
+    "disconnect": {
+      "title": "Bağlantı kesilemedi"
+    }
+  },
+  "loading": {
+    "label": "Oturum yükleniyor…"
+  }
+}

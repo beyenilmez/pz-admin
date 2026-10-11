@@ -1,0 +1,351 @@
+{
+  "actions": {
+    "bulk": {
+      "label": "Selected player actions",
+      "restrictions": {
+        "onlineOnly": "All selected players must be online."
+      }
+    },
+    "commands": {
+      "addXp": "Add XP",
+      "applyVoiceBan": "Apply voice ban",
+      "ban": "Ban",
+      "createHorde": "Create horde",
+      "giveItems": "Give items",
+      "kick": "Kick",
+      "lightningStrike": "Lightning strike",
+      "removeFromWhitelist": "Remove from whitelist",
+      "removeVoiceBan": "Remove voice ban",
+      "setPassword": "Change password",
+      "setRole": "Set role",
+      "spawnVehicle": "Spawn vehicle",
+      "teleport": "Teleport",
+      "thunderStrike": "Thunder strike",
+      "unban": "Unban"
+    },
+    "groups": {
+      "events": "Events",
+      "give": "Give",
+      "moderation": "Moderation",
+      "powers": "Powers"
+    },
+    "menu": {
+      "label": "Open actions for {{username}}",
+      "restrictions": {
+        "onlineOnly": "This action requires the player to be online.",
+        "protectedRoles": "Admins and moderators cannot be banned or kicked."
+      }
+    },
+    "powers": {
+      "godMode": {
+        "disable": "Disable god mode",
+        "enable": "Enable god mode",
+        "label": "God mode"
+      },
+      "invisible": {
+        "disable": "Disable invisibility",
+        "enable": "Enable invisibility",
+        "label": "Invisibility"
+      },
+      "noClip": {
+        "disable": "Disable no clip",
+        "enable": "Enable no clip",
+        "label": "No clip"
+      },
+      "states": {
+        "disabled": "disabled",
+        "enabled": "enabled",
+        "unknown": "unknown"
+      }
+    }
+  },
+  "dialogs": {
+    "addLocalPlayer": {
+      "submit": "Add player",
+      "title": "Add local player"
+    },
+    "addServerUser": {
+      "submit": "Add to whitelist",
+      "title": "Add player to whitelist"
+    },
+    "addXp": {
+      "description_one": "Choose the skills and XP amounts to add to {{username}}.",
+      "description_other": "Choose the skills and XP amounts to add to each of {{count}} players.",
+      "title": "Add XP"
+    },
+    "ban": {
+      "banIp": {
+        "label": "Also ban the current IP address"
+      },
+      "description_one": "Ban {{username}} from the server.",
+      "description_other": "Ban {{count}} players from the server.",
+      "submit": "Ban",
+      "title_one": "Ban player",
+      "title_other": "Ban players"
+    },
+    "createHorde": {
+      "description_one": "Create a horde near {{username}}.",
+      "description_other": "Create a horde near each of {{count}} players.",
+      "size": {
+        "label": "Horde size"
+      },
+      "submit": "Create horde",
+      "title": "Create horde",
+      "validation": {
+        "sizeRange": "Enter a whole number greater than zero."
+      }
+    },
+    "giveItems": {
+      "description_one": "Choose items to give to {{username}}.",
+      "description_other": "Choose items to give to each of {{count}} players.",
+      "submit": "Give",
+      "title": "Give items"
+    },
+    "kick": {
+      "description_one": "Kick {{username}} from the server.",
+      "description_other": "Kick {{count}} players from the server.",
+      "submit": "Kick",
+      "title_one": "Kick player",
+      "title_other": "Kick players"
+    },
+    "lightning": {
+      "description_one": "Trigger a lightning strike on {{username}}?",
+      "description_other": "Trigger a lightning strike on {{count}} players?",
+      "submit": "Trigger lightning",
+      "title": "Lightning strike"
+    },
+    "removeFromWhitelist": {
+      "description_one": "Remove {{username}} from the server whitelist?",
+      "description_other": "Remove {{count}} players from the server whitelist?",
+      "title_one": "Remove player from whitelist",
+      "title_other": "Remove players from whitelist"
+    },
+    "setPassword": {
+      "description_one": "Enter a new password for {{username}}.",
+      "description_other": "Enter a new password for {{count}} players.",
+      "submit": "Change password",
+      "title_one": "Change player password",
+      "title_other": "Change player passwords"
+    },
+    "setRole": {
+      "description_one": "Choose a role for {{username}}.",
+      "description_other": "Choose a role for {{count}} players.",
+      "role": {
+        "label": "Role"
+      },
+      "submit": "Set",
+      "title": "Set role"
+    },
+    "spawnVehicle": {
+      "description_one": "Choose a vehicle to spawn near {{username}}.",
+      "description_other": "Choose a vehicle to spawn near each of {{count}} players.",
+      "submit": "Spawn",
+      "title": "Spawn vehicle"
+    },
+    "teleport": {
+      "actions": {
+        "openMap": "Open map in browser"
+      },
+      "coordinates": {
+        "x": {
+          "label": "X"
+        },
+        "y": {
+          "label": "Y"
+        },
+        "z": {
+          "label": "Z"
+        }
+      },
+      "description_one": "Choose where to teleport {{username}}.",
+      "description_other": "Choose where to teleport {{count}} players.",
+      "destinationPlayer": {
+        "empty": "No other online players found",
+        "label": "Destination player",
+        "placeholder": "Select a player"
+      },
+      "mode": {
+        "options": {
+          "coordinates": "Coordinates",
+          "player": "Player"
+        }
+      },
+      "submit": "Teleport",
+      "title_one": "Teleport player",
+      "title_other": "Teleport players"
+    },
+    "thunder": {
+      "description_one": "Trigger a thunder strike on {{username}}?",
+      "description_other": "Trigger a thunder strike on {{count}} players?",
+      "submit": "Trigger thunder",
+      "title": "Thunder strike"
+    }
+  },
+  "errors": {
+    "load": {
+      "title": "Unable to load players"
+    }
+  },
+  "fields": {
+    "reason": {
+      "label": "Reason",
+      "placeholder": "Optional"
+    },
+    "username": {
+      "label": "Username"
+    }
+  },
+  "lastSeen": {
+    "neverSeen": "Never seen",
+    "online": "Online"
+  },
+  "notifications": {
+    "addLocalPlayer": {
+      "success": "Added {{username}} to the player list."
+    },
+    "addServerUser": {
+      "success": "Added {{username}} to the server whitelist."
+    },
+    "addXp": {
+      "success_one": "Added XP to {{username}}.",
+      "success_other": "Added XP to {{count}} players."
+    },
+    "ban": {
+      "success_one": "Banned {{username}}.",
+      "success_other": "Banned {{count}} players."
+    },
+    "createHorde": {
+      "success_one": "Created a horde near {{username}}.",
+      "success_other": "Created a horde near each of {{count}} players."
+    },
+    "failure": {
+      "message": "The action could not be completed: {{error}}"
+    },
+    "giveItems": {
+      "success_one": "Gave items to {{username}}.",
+      "success_other": "Gave items to {{count}} players."
+    },
+    "godMode": {
+      "disable": {
+        "success_one": "Disabled god mode for {{username}}.",
+        "success_other": "Disabled god mode for {{count}} players."
+      },
+      "enable": {
+        "success_one": "Enabled god mode for {{username}}.",
+        "success_other": "Enabled god mode for {{count}} players."
+      }
+    },
+    "invisible": {
+      "disable": {
+        "success_one": "Disabled invisibility for {{username}}.",
+        "success_other": "Disabled invisibility for {{count}} players."
+      },
+      "enable": {
+        "success_one": "Enabled invisibility for {{username}}.",
+        "success_other": "Enabled invisibility for {{count}} players."
+      }
+    },
+    "kick": {
+      "success_one": "Kicked {{username}}.",
+      "success_other": "Kicked {{count}} players."
+    },
+    "lightning": {
+      "success_one": "Triggered lightning on {{username}}.",
+      "success_other": "Triggered lightning on {{count}} players."
+    },
+    "noClip": {
+      "disable": {
+        "success_one": "Disabled no-clip mode for {{username}}.",
+        "success_other": "Disabled no-clip mode for {{count}} players."
+      },
+      "enable": {
+        "success_one": "Enabled no-clip mode for {{username}}.",
+        "success_other": "Enabled no-clip mode for {{count}} players."
+      }
+    },
+    "partialFailure": {
+      "message": "The action succeeded for {{succeededCount}} of {{totalCount}} players. {{failedCount}} failed: {{error}}",
+      "title": "Action partially completed"
+    },
+    "removeFromWhitelist": {
+      "success_one": "Removed {{username}} from the whitelist.",
+      "success_other": "Removed {{count}} players from the whitelist."
+    },
+    "role": {
+      "success_one": "Updated {{username}}'s role.",
+      "success_other": "Updated roles for {{count}} players."
+    },
+    "setPassword": {
+      "success_one": "Changed {{username}}'s password.",
+      "success_other": "Changed passwords for {{count}} players."
+    },
+    "spawnVehicle": {
+      "success_one": "Spawned {{vehicle}} near {{username}}.",
+      "success_other": "Spawned {{vehicle}} near each of {{count}} players."
+    },
+    "teleport": {
+      "success_one": "Teleported {{username}}.",
+      "success_other": "Teleported {{count}} players."
+    },
+    "thunder": {
+      "success_one": "Triggered thunder on {{username}}.",
+      "success_other": "Triggered thunder on {{count}} players."
+    },
+    "unban": {
+      "success_one": "Unbanned {{username}}.",
+      "success_other": "Unbanned {{count}} players."
+    },
+    "voiceBan": {
+      "apply": {
+        "success_one": "Disabled voice chat for {{username}}.",
+        "success_other": "Disabled voice chat for {{count}} players."
+      },
+      "remove": {
+        "success_one": "Enabled voice chat for {{username}}.",
+        "success_other": "Enabled voice chat for {{count}} players."
+      }
+    }
+  },
+  "page": {
+    "title": "Players"
+  },
+  "roles": {
+    "admin": "Admin",
+    "banned": "Banned",
+    "gm": "GM",
+    "moderator": "Moderator",
+    "none": "None",
+    "observer": "Observer",
+    "overseer": "Overseer",
+    "priority": "Priority",
+    "unknown": "Unknown",
+    "user": "User"
+  },
+  "selection": {
+    "clear": "Clear player selection",
+    "selectAll": "Select all visible players",
+    "selectPlayer": "Select {{username}}",
+    "summary_one": "{{count}} selected",
+    "summary_other": "{{count}} selected"
+  },
+  "table": {
+    "actions": {
+      "addLocalPlayer": "Missing a player? Add an offline player to the list.",
+      "addPlayer": "Add player"
+    },
+    "columns": {
+      "lastSeen": "Last seen",
+      "player": "Player",
+      "role": "Role"
+    },
+    "empty": {
+      "default": "No players to show.",
+      "search": "No players match your search."
+    },
+    "label": "Players",
+    "search": {
+      "label": "Search players",
+      "placeholder": "Search players…"
+    }
+  }
+}

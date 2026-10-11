@@ -1,0 +1,145 @@
+version = 1
+
+# Default for original project files.
+[[annotations]]
+path = "**"
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Exclude mixed-source directories from the default; reviewed subsets follow.
+[[annotations]]
+path = [
+  "build/**",
+  "frontend/bindings/**",
+  "frontend/public/**",
+  "frontend/src/data/**"
+]
+
+# Attribution notes for catalogs and game assets.
+[[annotations]]
+path = ["frontend/public/README.md", "frontend/src/data/README.md"]
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Bindings generated from our Go definitions and Wails templates.
+[[annotations]]
+path = "frontend/bindings/**"
+SPDX-FileCopyrightText = [
+  "2026 Bedirhan Yenilmez",
+  "2018-Present Lea Anthony",
+]
+SPDX-License-Identifier = "GPL-3.0-or-later AND MIT"
+
+# Wails-derived build scripts, templates and platform scaffolding.
+[[annotations]]
+path = [
+  "Taskfile.yml",
+  "build/Taskfile.yml",
+  "build/android/**",
+  "build/config.yml",
+  "build/darwin/Info.dev.plist",
+  "build/darwin/Info.plist",
+  "build/darwin/Taskfile.yml",
+  "build/docker/**",
+  "build/ios/**",
+  "build/linux/Taskfile.yml",
+  "build/linux/nfpm/nfpm.yaml",
+  "build/windows/**",
+]
+SPDX-FileCopyrightText = "2018-Present Lea Anthony"
+SPDX-License-Identifier = "MIT"
+
+# Project-authored Linux packaging files.
+[[annotations]]
+path = [
+    "build/linux/appimage/**",
+    "build/linux/aur/**",
+    "build/linux/flatpak/**",
+]
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# Gradle wrapper, distributed with the Wails Android scaffold.
+[[annotations]]
+path = [
+  "build/android/gradle/wrapper/gradle-wrapper.jar",
+  "build/android/gradlew",
+  "build/android/gradlew.bat",
+]
+SPDX-FileCopyrightText = "Gradle contributors"
+SPDX-License-Identifier = "Apache-2.0"
+
+# Project-authored Linux desktop entry.
+[[annotations]]
+path = "build/linux/com.bedirhanyenilmez.pzadmin.desktop"
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# AppStream metadata, permissively licensed for software catalogs.
+[[annotations]]
+path = "build/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml"
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "MIT"
+
+# Original app icon and its platform exports.
+[[annotations]]
+path = [
+  "build/appicon.icon/**",
+  "build/appicon.png",
+  "build/appicon.svg",
+  "build/darwin/Assets.car",
+  "build/darwin/icons.icns",
+  "build/linux/icons/**",
+  "build/windows/icon.ico",
+]
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "MIT"
+
+# Adapted Tailscale code with retained upstream notices.
+[[annotations]]
+path = ["internal/third_party/tailscale.com/**"]
+SPDX-FileCopyrightText = "2020 Tailscale Inc & contributors"
+SPDX-License-Identifier = "BSD-3-Clause"
+
+# Project-authored tests and documentation, not imported Tailscale code.
+[[annotations]]
+path = [
+  "internal/third_party/tailscale.com/atomicfile/atomicfile_test.go",
+  "internal/third_party/tailscale.com/README.md",
+]
+SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
+SPDX-License-Identifier = "GPL-3.0-or-later"
+
+# PZwiki skill data organized into application catalogs.
+[[annotations]]
+path = "frontend/src/data/skills/*.json"
+SPDX-FileCopyrightText = ["PZwiki contributors", "2026 Bedirhan Yenilmez"]
+SPDX-License-Identifier = "CC-BY-NC-SA-3.0"
+
+# Mixed wiki/game catalogs with local adaptations and in-game stat corrections.
+# CC BY-NC-SA covers wiki material and adaptations; game material retains its terms.
+[[annotations]]
+path = [
+  "frontend/public/vehicles/**/stats.json",
+  "frontend/src/data/items/*.json",
+  "frontend/src/data/vehicles/*.json",
+]
+SPDX-FileCopyrightText = [
+  "PZwiki contributors",
+  "The Indie Stone",
+  "2026 Bedirhan Yenilmez",
+]
+SPDX-License-Identifier = "CC-BY-NC-SA-3.0 AND LicenseRef-Project-Zomboid-Terms-and-Conditions"
+
+# Game-extracted translations and artwork, including wiki-hosted game images,
+# vehicle renders and stat icons.
+[[annotations]]
+path = [
+  "frontend/public/items/**/*.png",
+  "frontend/public/skills/**/*.png",
+  "frontend/public/vehicles/**/*.png",
+  "frontend/src/data/items/locales/**",
+  "frontend/src/data/skills/locales/**",
+]
+SPDX-FileCopyrightText = "The Indie Stone"
+SPDX-License-Identifier = "LicenseRef-Project-Zomboid-Terms-and-Conditions"

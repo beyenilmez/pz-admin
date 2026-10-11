@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.bedirhanyenilmez.pzadmin</id>
+  <metadata_license>MIT</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <name>PZ Admin</name>
+  <summary>Project Zomboid server administration tool</summary>
+  <summary xml:lang="tr">Project Zomboid sunucu yönetim aracı</summary>
+  <description>
+    <p>
+      PZ Admin is a desktop application for managing Project Zomboid servers.
+      Manage players, edit server options, and run console commands from one interface.
+    </p>
+    <p xml:lang="tr">
+      PZ Admin, Project Zomboid sunucularını yönetmek için bir masaüstü uygulamasıdır.
+      Oyuncu yönetimini, sunucu ayarlarını ve konsol komutlarını tek bir arayüzde sunar.
+    </p>
+    <ul>
+      <li>Manage players: assign roles, grant XP, teleport, and perform moderation actions.</li>
+      <li xml:lang="tr">Oyuncu yönetimi, rol atama, XP verme, ışınlama ve moderasyon işlemleri.</li>
+      <li>Give items to players and spawn vehicles using searchable catalogs.</li>
+      <li xml:lang="tr">Aranabilir kataloglarla oyunculara eşya verme ve araç oluşturma.</li>
+      <li>Edit server options and run console commands.</li>
+      <li xml:lang="tr">Sunucu ayarlarını düzenleme ve konsol komutlarını çalıştırma.</li>
+      <li>Compose messages with a rich text editor that supports Project Zomboid formatting.</li>
+      <li xml:lang="tr">Project Zomboid formatını destekleyen zengin metin düzenleyiciyle mesaj oluşturma.</li>
+      <li>Control the weather, trigger server events, and save the world.</li>
+      <li xml:lang="tr">Hava durumunu kontrol etme, sunucu olaylarını tetikleme ve dünyayı kaydetme.</li>
+      <li>Connect to your servers through RCON and save connection profiles.</li>
+      <li xml:lang="tr">Sunuculara RCON üzerinden bağlanma ve bağlantı profilleri kaydetme.</li>
+    </ul>
+    <p>
+      Server management requires a running Project Zomboid server with RCON enabled.
+    </p>
+    <p xml:lang="tr">
+      Yönetmek istediğiniz Project Zomboid sunucusunun çalışıyor ve RCON özelliğinin etkin olması gerekir.
+    </p>
+    <p>
+      The item browser, vehicle browser, and message editor can also be used without
+      connecting to a server. PZ Admin includes catalogs and options for Builds 41 and 42.
+    </p>
+    <p xml:lang="tr">
+      Eşya kataloğu, araç kataloğu ve mesaj düzenleyici bir sunucuya bağlanmadan da
+      kullanılabilir. PZ Admin, Build 41 ve 42’ye uygun içerik ve ayarlar sunar.
+    </p>
+    <p>
+      Thanks to The Indie Stone for creating Project Zomboid (https://projectzomboid.com/),
+      which made this possible. This is an unofficial fan production for non-commercial
+      purposes made under the Indie Stone Terms (https://projectzomboid.com/blog/support/terms-conditions/).
+    </p>
+    <p xml:lang="tr">
+      Thanks to The Indie Stone for creating Project Zomboid (https://projectzomboid.com/),
+      which made this possible. This is an unofficial fan production for non-commercial
+      purposes made under the Indie Stone Terms (https://projectzomboid.com/blog/support/terms-conditions/).
+    </p>
+  </description>
+  <content_rating type="oars-1.1">
+    <content_attribute id="violence-bloodshed">mild</content_attribute>
+    <content_attribute id="violence-desecration">mild</content_attribute>
+    <content_attribute id="drugs-alcohol">mild</content_attribute>
+    <content_attribute id="drugs-tobacco">mild</content_attribute>
+    <content_attribute id="sex-themes">mild</content_attribute>
+    <content_attribute id="social-chat">intense</content_attribute>
+  </content_rating>
+  <branding>
+    <color type="primary" scheme_preference="light">#357c61</color>
+    <color type="primary" scheme_preference="dark">#357c61</color>
+  </branding>
+  <developer id="com.bedirhanyenilmez">
+    <name>Bedirhan Yenilmez</name>
+  </developer>
+  <url type="homepage">https://beyenilmez.github.io/pz-admin/</url>
+  <url type="vcs-browser">https://github.com/beyenilmez/pz-admin</url>
+  <url type="bugtracker">https://github.com/beyenilmez/pz-admin/issues</url>
+  <launchable type="desktop-id">com.bedirhanyenilmez.pzadmin.desktop</launchable>
+  <provides>
+    <binary>pz-admin</binary>
+  </provides>
+  <requires>
+    <control>keyboard</control>
+    <control>pointing</control>
+    <!-- Keep display requirements aligned with the minimum window size in main.go. -->
+    <display_length compare="ge" side="longest">992</display_length>
+    <display_length compare="ge" side="shortest">568</display_length>
+  </requires>
+  <categories>
+    <category>Utility</category>
+  </categories>
+</component>

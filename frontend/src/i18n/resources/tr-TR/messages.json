@@ -1,0 +1,46 @@
+{
+  "actions": {
+    "edit": "Mesajı düzenle"
+  },
+  "dialog": {
+    "title": "Mesajı düzenle"
+  },
+  "editor": {
+    "actions": {
+      "align": {
+        "center": "Ortala",
+        "left": "Sola hizala",
+        "right": "Sağa hizala"
+      },
+      "clearFormatting": "Biçimlendirmeyi temizle"
+    },
+    "color": {
+      "actions": {
+        "useDefault": "Varsayılan rengi kullan"
+      },
+      "label": "Metin rengi"
+    },
+    "colorPicker": {
+      "hue": {
+        "label": "Renk tonu"
+      },
+      "saturation": {
+        "label": "Doygunluk"
+      }
+    },
+    "size": {
+      "options": {
+        "large": "Büyük",
+        "medium": "Orta",
+        "small": "Küçük"
+      }
+    }
+  },
+  "page": {
+    "title": "Mesaj düzenleyici"
+  },
+  "preview": {
+    "empty": "Biçimlendirilmiş mesaj burada görüntülenecek.",
+    "title": "Biçimlendirilmiş mesaj"
+  }
+}

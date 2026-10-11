@@ -1,0 +1,93 @@
+{
+  "browser": {
+    "results": {
+      "summary_one": "{{count}} araç",
+      "summary_other": "{{count}} araç"
+    },
+    "search": {
+      "empty": "Aramanızla eşleşen araç bulunamadı.",
+      "label": "Araç ara"
+    }
+  },
+  "details": {
+    "actions": {
+      "back": "Araçlar",
+      "openVariant": "{{variant}} varyantını aç"
+    },
+    "sections": {
+      "body": "Gövde ve donanım",
+      "capacity": "Kapasite",
+      "performance": "Performans"
+    }
+  },
+  "errors": {
+    "load": {
+      "title": "Araçlar yüklenemedi"
+    }
+  },
+  "filters": {
+    "boolean": {
+      "options": {
+        "any": "Tümü",
+        "no": "Hayır",
+        "yes": "Evet"
+      }
+    },
+    "sections": {
+      "stats": "Teknik özellikler",
+      "vehicle": "Araç"
+    },
+    "title": "Filtreler",
+    "vehicle": {
+      "label": "Kategori veya model"
+    }
+  },
+  "page": {
+    "title": "Araç kataloğu"
+  },
+  "picker": {
+    "actions": {
+      "selectVariant": "{{variant}} varyantını seç"
+    },
+    "root": "Araçlar"
+  },
+  "sorting": {
+    "fields": {
+      "name": "Ad"
+    }
+  },
+  "stats": {
+    "animalSize": "Hayvan boyutu",
+    "doors": "Kapı sayısı",
+    "engineLoudness": "Motor ses düzeyi",
+    "enginePower": "Motor gücü",
+    "engineQuality": "Motor kalitesi",
+    "gloveBox": "Torpido kapasitesi",
+    "lightbar": "Tepe lambası",
+    "occupantProtection": "Yolcu koruması",
+    "offRoadEfficiency": "Arazi verimliliği",
+    "rollInfluence": "Yana yatma etkisi",
+    "seats": "Koltuk sayısı",
+    "short": {
+      "enginePower": "Güç",
+      "topSpeed": "Hız",
+      "totalStorage": "Depolama"
+    },
+    "suspensionStiffness": "Süspansiyon sertliği",
+    "topSpeed": "Azami hız",
+    "totalStorage": "Toplam depolama kapasitesi",
+    "trunkStorage": "Bagaj kapasitesi",
+    "values": {
+      "enginePower": "{{value}} bg",
+      "seats_one": "{{value}} koltuk",
+      "seats_other": "{{value}} koltuk",
+      "storage_one": "{{value}} birim",
+      "storage_other": "{{value}} birim"
+    },
+    "weight": "Ağırlık",
+    "wheels": "Tekerlek sayısı"
+  },
+  "variants": {
+    "title": "Varyantlar"
+  }
+}

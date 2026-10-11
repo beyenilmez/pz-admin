@@ -1,0 +1,22 @@
+name: Support / Question
+description: Ask for help with installation, connections or usage
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you need help with, and what have you tried?
+    validations:
+      required: true
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Diagnostics
+      description: If relevant, copy diagnostic information from Settings → Diagnostics. If the app cannot open, provide the app version and OS instead.
+      render: text
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional Context
+      description: Include relevant configuration, logs or screenshots, how you installed the app, and the Project Zomboid server build if applicable. Remove passwords, tokens and other private information.

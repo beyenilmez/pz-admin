@@ -1,0 +1,23 @@
+{
+  "actions": {
+    "gunshot": "Выстрел",
+    "lightning": "Молния",
+    "reloadOptions": "Перезагрузить параметры",
+    "sendMessage": "Отправить сообщение",
+    "stopRain": "Остановить дождь",
+    "thunder": "Гром"
+  },
+  "events": {
+    "players": {
+      "empty": "Нет"
+    }
+  },
+  "fields": {
+    "intensity": {
+      "label": "Интенсивность"
+    }
+  },
+  "sections": {
+    "weather": "Погода"
+  }
+}

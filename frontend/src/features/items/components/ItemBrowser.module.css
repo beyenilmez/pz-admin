@@ -1,0 +1,150 @@
+.pane {
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.catalogPane {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.scrollRegion {
+  flex: 1;
+  min-height: 0;
+}
+
+.accordionItem {
+  border-bottom-color: var(--mantine-color-default-border);
+}
+
+.accordionControl {
+  min-height: 32px;
+  padding-block: 0;
+  padding-inline: 4px;
+}
+
+.accordionLabel {
+  padding: 4px 0;
+}
+
+.accordionChevron {
+  margin-inline-end: 2px;
+  margin-inline-start: 0;
+  width: 14px;
+}
+
+.accordionChevron[data-rotate] {
+  transform: rotate(90deg);
+}
+
+.accordionContent {
+  padding: 0 0 4px 16px;
+}
+
+.catalogItem {
+  align-items: center;
+  border-radius: var(--mantine-radius-sm);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 26px;
+  display: flex;
+  gap: 4px;
+  min-height: 26px;
+  opacity: 0.65;
+  padding: 1px 4px 1px 0;
+  width: 100%;
+}
+
+:global([data-mantine-color-scheme="dark"]) .catalogItem {
+  opacity: 0.5;
+}
+
+.catalogItem:hover,
+.catalogItem[data-selected] {
+  opacity: 1;
+}
+
+.catalogItem:hover .itemName {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.catalogItem:focus-visible {
+  outline: 2px solid var(--mantine-primary-color-filled);
+  outline-offset: -2px;
+}
+
+.itemName {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.thumbnail {
+  align-items: center;
+  color: var(--mantine-color-dimmed);
+  display: flex;
+  flex: 0 0 40px;
+  height: 40px;
+  justify-content: center;
+  width: 40px;
+}
+
+.thumbnail img {
+  height: 40px;
+  object-fit: contain;
+  width: 40px;
+}
+
+.catalogItem .thumbnail {
+  flex-basis: 24px;
+  height: 24px;
+  width: 24px;
+}
+
+.catalogItem .thumbnail img {
+  height: 24px;
+  width: 24px;
+}
+
+.itemCount {
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  min-width: 1.25rem;
+  text-align: end;
+}
+
+.itemText {
+  flex: 1;
+  min-width: 0;
+}
+
+.selectedItem {
+  border: 1px solid var(--mantine-color-default-border);
+  gap: 4px;
+  margin-block-end: -1px;
+  margin-inline-end: -1px;
+  min-height: 48px;
+  padding: 4px 6px;
+}
+
+.selectedItemsGrid {
+  display: grid;
+  gap: 0;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  min-width: 0;
+  padding-block-end: 1px;
+  padding-inline-end: 1px;
+}
+
+@container (max-width: 46rem) {
+  .pane {
+    min-height: 22rem;
+  }
+
+  .catalogPane {
+    min-height: 22rem;
+  }
+}

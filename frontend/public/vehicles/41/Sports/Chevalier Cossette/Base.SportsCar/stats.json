@@ -1,0 +1,15 @@
+{
+  "weight": "800",
+  "enginePower": "570",
+  "topSpeed": "120",
+  "engineLoudness": "90",
+  "suspensionStiffness": "50",
+  "occupantProtection": "0.8",
+  "engineQuality": "90",
+  "seats": "2",
+  "doors": "2",
+  "wheels": "4",
+  "trunkStorage": "50",
+  "totalStorage": "95",
+  "gloveBox": "5"
+}

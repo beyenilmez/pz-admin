@@ -1,0 +1,43 @@
+import i18n from "@/i18n";
+import { useArgs } from "storybook/preview-api";
+import { Button } from "@mantine/core";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { fn } from "storybook/test";
+import { KickPlayerModal } from "./KickPlayerModal";
+import { makePlayers } from "../../../../../.storybook/mocks/fixtures";
+
+const meta = {
+  title: "Features/Players/KickPlayerModal",
+  component: KickPlayerModal,
+  args: {
+    opened: true,
+    onClose: fn(),
+    onKick: fn(async () => true),
+    players: makePlayers("sawyer"),
+  },
+  render: function Dialog(args) {
+    const [{ opened }, updateArgs] = useArgs<typeof args>();
+    const t = i18n.getFixedT(null, "players");
+    return (
+      <>
+        <Button m="xl" onClick={() => updateArgs({ opened: true })}>
+          {t("dialogs.kick.title", { count: args.players.length })}
+        </Button>
+        <KickPlayerModal
+          {...args}
+          opened={opened}
+          onClose={() => {
+            args.onClose();
+            updateArgs({ opened: false });
+          }}
+        />
+      </>
+    );
+  },
+} satisfies Meta<typeof KickPlayerModal>;
+export default meta;
+type Story = StoryObj<typeof meta>;
+export const SinglePlayer: Story = {};
+export const MultiplePlayers: Story = {
+  args: { players: makePlayers("sawyer", "hurley") },
+};

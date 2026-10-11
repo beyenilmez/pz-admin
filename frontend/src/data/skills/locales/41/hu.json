@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passzív",
+    "firearm": "Lőfegyver",
+    "survivalist": "Túlélés",
+    "combat": "Közelharc",
+    "agility": "Gyorsaság",
+    "crafting": "Ügyesség"
+  },
+  "names": {
+    "Fitness": "Állóképesség",
+    "Strength": "Erőnlét",
+    "Aiming": "Célzás",
+    "Reloading": "Újratöltés",
+    "Fishing": "Horgászás",
+    "Trapping": "Vadászat",
+    "PlantScavenging": "Gyűjtögetés",
+    "Axe": "Balta",
+    "Blunt": "Ütőfegyver",
+    "SmallBlunt": "Rövid ütőfegyver",
+    "LongBlade": "Hosszú szúrófegyver",
+    "SmallBlade": "Rövid szúrófegyver",
+    "Spear": "Dárda",
+    "Maintenance": "Eszközkezelés",
+    "Sprinting": "Futás",
+    "Nimble": "Mozgékonyság",
+    "Lightfoot": "Fürgeség",
+    "Sneak": "Lopakodás",
+    "Woodwork": "Famegmunkálás",
+    "Cooking": "Főzés",
+    "Farming": "Gazdálkodás",
+    "Doctor": "Gyógyítás",
+    "Electricity": "Villanyszerelés",
+    "MetalWelding": "Lakatosság",
+    "Mechanics": "Szerelés",
+    "Tailoring": "Szabászat"
+  }
+}

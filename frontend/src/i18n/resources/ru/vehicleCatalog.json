@@ -1,0 +1,34 @@
+{
+  "categories": {
+    "Trailers": "Прицепы"
+  },
+  "models": {
+    "Chevalier Cerise Wagon": "Chevalier Cerise Wagon",
+    "Chevalier Cossette": "Chevalier Cossette",
+    "Chevalier D6": "Chevalier D6",
+    "Chevalier Dart": "Chevalier Dart",
+    "Chevalier Nyala": "Chevalier Nyala",
+    "Chevalier Primani": "Chevalier Primani",
+    "Chevalier Step Van": "Chevalier Step Van",
+    "Dash Bulldriver": "Dash Bulldriver",
+    "Dash Elite": "Dash Elite",
+    "Dash Rancher": "Dash Rancher",
+    "Franklin All-Terrain": "Franklin All-Terrain",
+    "Franklin Valuline": "Franklin Valuline",
+    "Masterson Horizon": "Masterson Horizon",
+    "Mercia Lang 4000": "Mercia Lang 4000",
+    "Trailer": "Прицеп"
+  },
+  "variants": {
+    "Fossoil": "Fossoil",
+    "Franklin Valuline": "Franklin Valuline",
+    "KY Transit": "KY Transit",
+    "Knox Distillery": "Knox Distillery",
+    "Mail": "Почта",
+    "McCoy": "McCoy",
+    "Police": "Полиция",
+    "Ranger": "Парковая служба",
+    "Taxi (green)": "Такси (зелёное)",
+    "Taxi (yellow)": "Такси (жёлтое)"
+  }
+}

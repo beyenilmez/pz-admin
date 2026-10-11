@@ -1,0 +1,69 @@
+{
+  "categories": {
+    "security": "Безопасность"
+  },
+  "choiceSets": {
+    "enforcement": {
+      "ban": "Забанить",
+      "disabled": "Отключено"
+    }
+  },
+  "fields": {
+    "AllowDestructionBySledgehammer": {
+      "description": "Позволяет игрокам разрушать объекты мира с помощью кувалды.",
+      "label": "Разрешить разрушение кувалдой"
+    },
+    "BackupsOnStart": {
+      "description": "Создает резервную копию при запуске сервера."
+    },
+    "ChatStreams": {
+      "choices": {
+        "admin": "Администратор",
+        "faction": "Фракция",
+        "radio": "Радио",
+        "safehouse": "Убежище",
+        "whisper": "Шепот",
+        "yell": "Крик"
+      }
+    },
+    "Map": {
+      "label": "Карты"
+    },
+    "MapRemotePlayerVisibility": {
+      "choices": {
+        "everyone": "Все"
+      }
+    },
+    "MinutesPerPage": {
+      "label": "Минут на страницу книги"
+    },
+    "PVP": {
+      "label": "Разрешить PvP"
+    },
+    "PauseEmpty": {
+      "label": "Пауза при отсутствии игроков"
+    },
+    "PingLimit": {
+      "label": "Лимит пинга"
+    },
+    "ResetID": {
+      "label": "ID сброса"
+    },
+    "ServerWelcomeMessage": {
+      "label": "Приветственное сообщение"
+    },
+    "SteamScoreboard": {
+      "choices": {
+        "everyone": "Все"
+      }
+    }
+  },
+  "sections": {
+    "vehicles": "Транспорт"
+  },
+  "specialValues": {
+    "disabled": "Отключено",
+    "never": "Никогда",
+    "unlimited": "Без ограничений"
+  }
+}

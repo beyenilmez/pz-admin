@@ -1,0 +1,72 @@
+{
+  "actions": {
+    "add": "Add",
+    "apply": "Apply",
+    "back": "Back",
+    "cancel": "Cancel",
+    "clear": "Clear",
+    "clearAll": "Clear all",
+    "close": "Close",
+    "collapseNamed": "Collapse {{name}}",
+    "connect": "Connect",
+    "copied": "Copied",
+    "copy": "Copy",
+    "delete": "Delete",
+    "disconnect": "Disconnect",
+    "edit": "Edit",
+    "expandNamed": "Expand {{name}}",
+    "label": "Actions",
+    "redo": "Redo",
+    "remove": "Remove",
+    "reset": "Reset",
+    "restoreDefault": "Restore default",
+    "retry": "Try again",
+    "saveChanges": "Save changes",
+    "undo": "Undo"
+  },
+  "attribution": {
+    "label": "Attribution"
+  },
+  "errors": {
+    "unexpected": "Something went wrong. Please try again."
+  },
+  "fields": {
+    "password": {
+      "label": "Password"
+    }
+  },
+  "gameBuild": {
+    "label": "Game build",
+    "options": {
+      "auto": "Auto"
+    },
+    "unknown": "Unknown build",
+    "value": "Build {{version}}"
+  },
+  "notifications": {
+    "action": {
+      "failure": {
+        "title": "Action failed"
+      },
+      "success": {
+        "title": "Action completed"
+      }
+    }
+  },
+  "search": {
+    "clear": "Clear search",
+    "nameOrId": {
+      "placeholder": "Search by name or ID…"
+    }
+  },
+  "sorting": {
+    "actions": {
+      "changeDirection": "Change sort direction. Current direction: {{direction}}."
+    },
+    "directions": {
+      "ascending": "Ascending",
+      "descending": "Descending"
+    },
+    "label": "Sort by"
+  }
+}

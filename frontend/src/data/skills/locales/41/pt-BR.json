@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passivo",
+    "firearm": "Armas de Fogo",
+    "survivalist": "Sobrevivência",
+    "combat": "Combate",
+    "agility": "Mobilidade",
+    "crafting": "Criação"
+  },
+  "names": {
+    "Fitness": "Aptidão Física",
+    "Strength": "Força",
+    "Aiming": "Mira",
+    "Reloading": "Recarga",
+    "Fishing": "Pescaria",
+    "Trapping": "Caça",
+    "PlantScavenging": "Coleta",
+    "Axe": "Machados",
+    "Blunt": "Contundentes Longos",
+    "SmallBlunt": "Contundentes Curtos",
+    "LongBlade": "Lâminas Longas",
+    "SmallBlade": "Lâminas Curtas",
+    "Spear": "Lanças",
+    "Maintenance": "Manutenção",
+    "Sprinting": "Corrida",
+    "Nimble": "Agilidade",
+    "Lightfoot": "Discrição",
+    "Sneak": "Furtividade",
+    "Woodwork": "Carpintaria",
+    "Cooking": "Culinária",
+    "Farming": "Agricultura",
+    "Doctor": "Primeiros Socorros",
+    "Electricity": "Elétrica",
+    "MetalWelding": "Metalurgia",
+    "Mechanics": "Mecânica",
+    "Tailoring": "Costura"
+  }
+}

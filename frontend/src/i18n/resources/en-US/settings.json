@@ -1,0 +1,74 @@
+{
+  "about": {
+    "description": "Project Zomboid server administration tool",
+    "links": {
+      "homepage": "Homepage",
+      "issues": "Report an issue",
+      "project": "Source code"
+    },
+    "title": "About"
+  },
+  "colorScheme": {
+    "description": "Choose how the application selects its colors.",
+    "label": "Color scheme",
+    "options": {
+      "dark": "Dark",
+      "light": "Light",
+      "system": "System"
+    }
+  },
+  "diagnostics": {
+    "actions": {
+      "copy": "Copy diagnostic information"
+    },
+    "description": "Share this information when reporting a problem.",
+    "errors": {
+      "load": {
+        "title": "Unable to load diagnostic information"
+      }
+    },
+    "title": "Diagnostics"
+  },
+  "errors": {
+    "load": {
+      "title": "Unable to load settings"
+    },
+    "save": {
+      "recovery": "Try changing the setting again.",
+      "title": "Unable to save settings"
+    }
+  },
+  "language": {
+    "description": "Choose the application language.",
+    "label": "Language"
+  },
+  "notices": {
+    "actions": {
+      "source": "View source in browser"
+    },
+    "application": "PZ Admin license",
+    "errors": {
+      "load": {
+        "title": "Unable to load licenses and notices"
+      }
+    },
+    "loading": "Loading notices…",
+    "missingText": "No license text is included for this entry.",
+    "search": {
+      "empty": "No matching notices",
+      "label": "Search third-party notices",
+      "placeholder": "Search third-party notices…"
+    },
+    "title": "Licenses and notices",
+    "unavailable": "Third-party notices have not been generated for this build."
+  },
+  "page": {
+    "title": "Settings"
+  },
+  "updates": {
+    "downloadOnStartup": {
+      "description": "Checks for new versions and downloads available updates automatically.",
+      "label": "Download updates on startup"
+    }
+  }
+}

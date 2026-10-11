@@ -1,0 +1,42 @@
+{
+  "browser": {
+    "actions": {
+      "addItem": "Add {{name}}"
+    },
+    "search": {
+      "empty": "No items match your search.",
+      "label": "Search items"
+    }
+  },
+  "editor": {
+    "actions": {
+      "edit": "Edit items"
+    },
+    "empty": "No items selected",
+    "summary_one": "{{count}} item selected",
+    "summary_other": "{{count}} items selected",
+    "title": "Edit starting items"
+  },
+  "errors": {
+    "load": {
+      "title": "Unable to load items"
+    }
+  },
+  "page": {
+    "title": "Item browser"
+  },
+  "selection": {
+    "customItem": {
+      "actions": {
+        "add": "Add custom item"
+      },
+      "label": "Custom item ID",
+      "placeholder": "Enter a custom item ID…"
+    },
+    "empty": "Select items from the catalog to build a list.",
+    "quantity": {
+      "label": "Quantity of {{name}}"
+    },
+    "title": "Selected items"
+  }
+}

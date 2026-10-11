@@ -1,0 +1,18 @@
+{
+  "seats": "4",
+  "doors": "4",
+  "wheels": "4",
+  "lightbar": "True",
+  "weight": "800",
+  "occupantProtection": "1",
+  "gloveBox": "5",
+  "trunkStorage": "55",
+  "totalStorage": "140",
+  "enginePower": "400",
+  "engineLoudness": "80",
+  "engineQuality": "70",
+  "topSpeed": "70",
+  "rollInfluence": "1",
+  "suspensionStiffness": "30",
+  "offRoadEfficiency": "1"
+}

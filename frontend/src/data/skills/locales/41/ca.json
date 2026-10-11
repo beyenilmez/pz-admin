@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passiu",
+    "firearm": "Armes de foc",
+    "survivalist": "Supervivència",
+    "combat": "Combat",
+    "agility": "Agilitat",
+    "crafting": "Elaboració"
+  },
+  "names": {
+    "Fitness": "Estat físic",
+    "Strength": "Força",
+    "Aiming": "Punteria",
+    "Reloading": "Recarregar",
+    "Fishing": "Pesca",
+    "Trapping": "Trampes",
+    "PlantScavenging": "Exploració",
+    "Axe": "Destral",
+    "Blunt": "Arma llarga contundent",
+    "SmallBlunt": "Arma curta contundent",
+    "LongBlade": "Fulla llarga",
+    "SmallBlade": "Fulla curta",
+    "Spear": "Llança",
+    "Maintenance": "Manteniment",
+    "Sprinting": "Córrer",
+    "Nimble": "Destresa",
+    "Lightfoot": "Peus lleugers",
+    "Sneak": "Sigil",
+    "Woodwork": "Fusteria",
+    "Cooking": "Cuina",
+    "Farming": "Agricultura",
+    "Doctor": "Primers auxilis",
+    "Electricity": "Electricitat",
+    "MetalWelding": "Metal·listeria",
+    "Mechanics": "Mecànica",
+    "Tailoring": "Costura"
+  }
+}

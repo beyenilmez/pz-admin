@@ -1,0 +1,82 @@
+{
+  "actions": {
+    "commands": {
+      "addXp": "Добавить опыт",
+      "ban": "Забанить",
+      "createHorde": "Создать орду",
+      "unban": "Разбанить"
+    },
+    "groups": {
+      "events": "События"
+    },
+    "powers": {
+      "godMode": {
+        "label": "Режим бога"
+      }
+    }
+  },
+  "dialogs": {
+    "addLocalPlayer": {
+      "submit": "Добавить игрока"
+    },
+    "addXp": {
+      "title": "Добавить опыт"
+    },
+    "ban": {
+      "submit": "Забанить"
+    },
+    "createHorde": {
+      "size": {
+        "label": "Размер орды"
+      },
+      "submit": "Создать орду",
+      "title": "Создать орду"
+    },
+    "lightning": {
+      "submit": "Вызвать молнию"
+    },
+    "teleport": {
+      "mode": {
+        "options": {
+          "player": "Игрок"
+        }
+      }
+    },
+    "thunder": {
+      "submit": "Вызвать гром"
+    }
+  },
+  "fields": {
+    "reason": {
+      "label": "Причина"
+    }
+  },
+  "lastSeen": {
+    "online": "Онлайн"
+  },
+  "page": {
+    "title": "Игроки"
+  },
+  "roles": {
+    "admin": "Администратор",
+    "banned": "Забанен",
+    "gm": "GM",
+    "moderator": "Модератор",
+    "none": "Нет",
+    "observer": "Наблюдатель",
+    "overseer": "Смотритель",
+    "unknown": "Неизвестно"
+  },
+  "table": {
+    "actions": {
+      "addPlayer": "Добавить игрока"
+    },
+    "columns": {
+      "player": "Игрок"
+    },
+    "label": "Игроки",
+    "search": {
+      "placeholder": "Поиск игроков..."
+    }
+  }
+}

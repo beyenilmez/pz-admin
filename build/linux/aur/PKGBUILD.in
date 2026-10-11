@@ -1,0 +1,24 @@
+# Maintainer: Bedirhan Yenilmez <contact@bedirhanyenilmez.com>
+pkgname=pz-admin-bin
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='Project Zomboid server administration tool'
+arch=('x86_64' 'aarch64')
+url='https://beyenilmez.github.io/pz-admin/'
+license=('GPL-3.0-or-later')
+depends_x86_64=(@DEPENDS_X86_64@)
+depends_aarch64=(@DEPENDS_AARCH64@)
+provides=("pz-admin=$pkgver")
+conflicts=('pz-admin')
+options=('!strip' '!debug')
+
+_release="https://github.com/@REPOSITORY@/releases/download/v$pkgver"
+source_x86_64=("$_release/pz-admin-$pkgver-linux-x64.pkg.tar.zst")
+source_aarch64=("$_release/pz-admin-$pkgver-linux-arm64.pkg.tar.zst")
+sha256sums_x86_64=('@SHA256_X86_64@')
+sha256sums_aarch64=('@SHA256_AARCH64@')
+
+package() {
+  # Preserve the release payload; makepkg generates fresh package metadata.
+  cp -a "$srcdir/usr" "$pkgdir/"
+}

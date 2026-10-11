@@ -1,0 +1,77 @@
+name: Prepare release
+
+on:
+  workflow_call:
+    inputs:
+      ref:
+        description: Release PR ref to prepare
+        required: true
+        type: string
+    secrets:
+      RELEASE_PLEASE_TOKEN:
+        required: true
+    outputs:
+      changed:
+        description: Whether preparation created a commit
+        value: ${{ jobs.prepare.outputs.changed }}
+
+permissions:
+  contents: read
+
+jobs:
+  prepare:
+    name: Update screenshots and download links
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
+    env:
+      PR_BRANCH: release-please--branches--main
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+          ref: ${{ inputs.ref }}
+      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+        env:
+          CGO_ENABLED: "0"
+        with:
+          cache_key_prefix: mise-nocgo-v1
+          install_args: --locked go node npm:pnpm go:github.com/wailsapp/wails/v3/cmd/wails3
+      - name: Locate pnpm store
+        id: pnpm
+        run: |
+          pnpm_store=$(pnpm --dir frontend store path --silent)
+          echo "store=$pnpm_store" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ${{ steps.pnpm.outputs.store }}
+          key: pnpm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'frontend/pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-${{ runner.arch }}-
+      - name: Generate screenshots
+        run: wails3 task screenshots
+      - name: Update README download links
+        run: node scripts/update-download-links.mjs
+      - name: Commit updated release assets
+        id: commit
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          pr_state=$(gh pr view "$PR_BRANCH" --json state,headRefOid --jq '.state + " " + .headRefOid')
+          if [ "$pr_state" != "OPEN $(git rev-parse HEAD)" ]; then
+            echo "Release PR changed during preparation; rerun the Release PR workflow." >&2
+            exit 1
+          fi
+          git add -- assets/screenshots README.md
+          if git diff --cached --quiet; then
+            echo "Screenshots and download links are unchanged."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git commit -m "chore: update release assets"
+            gh auth setup-git
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git push origin "HEAD:refs/heads/$PR_BRANCH"
+          fi

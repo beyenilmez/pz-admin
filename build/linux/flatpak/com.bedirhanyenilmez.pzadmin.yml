@@ -1,0 +1,77 @@
+id: com.bedirhanyenilmez.pzadmin
+runtime: org.gnome.Platform
+runtime-version: "51"
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.golang
+  - org.freedesktop.Sdk.Extension.node24
+command: pz-admin
+rename-icon: pz-admin
+
+build-options:
+  append-path: /usr/lib/sdk/golang/bin:/usr/lib/sdk/node24/bin
+  env:
+    CGO_ENABLED: "1"
+    GOTOOLCHAIN: local
+    GOROOT: /usr/lib/sdk/golang
+    GOFLAGS: -mod=vendor -tags=production
+
+finish-args:
+  # X11 + XShm access
+  - --share=ipc
+  - --socket=fallback-x11
+  # Wayland access
+  - --socket=wayland
+  # GPU acceleration
+  - --device=dri
+  # Network access
+  - --share=network
+  # Secrets API access
+  - --talk-name=org.freedesktop.secrets
+
+modules:
+  - name: pz-admin
+    buildsystem: simple
+    license-files:
+      - LICENSE
+      - .generated/licenses/THIRD-PARTY-NOTICES.json
+    build-commands:
+      # Install frontend dependencies and build the frontend. This also
+      # generates the frontend third-party notices file.
+      - >-
+        node .flatpak/pnpm/bin/pnpm.cjs --dir frontend install
+        --store-dir="$PWD/flatpak-node/pnpm-store" --offline --frozen-lockfile
+        --ignore-scripts --trust-lockfile --engine-strict
+      - node .flatpak/pnpm/bin/pnpm.cjs --dir frontend build
+
+      # Collect backend notices, combine them with frontend notices,
+      # and compile the executable.
+      - |
+        set -eu
+        export GOCACHE="$PWD/.flatpak/go-cache"
+        export PATH="$PWD/.flatpak/bin:$PATH"
+
+        mkdir -p .flatpak/bin .generated/licenses
+        touch .generated/licenses/THIRD-PARTY-NOTICES.json
+        (
+          cd .flatpak/go-licenses-source
+          go build -trimpath -ldflags='-w -s' -o ../bin/go-licenses .
+        )
+        node scripts/licenses/backend.mjs
+        node scripts/licenses/combine.mjs linux-$(go env GOARCH)
+        go build -trimpath -buildvcs=false -ldflags='-w -s' -o /app/bin/pz-admin .
+
+      # Generate AppStream metadata and copy desktop integration files.
+      - SOURCE_REF="$(cat SOURCE_REF)" SOURCE_REPOSITORY="$(cat SOURCE_REPOSITORY)" node scripts/appstream/generate.mjs
+      - install -Dm644 "build/linux/$FLATPAK_ID.desktop" "/app/share/applications/$FLATPAK_ID.desktop"
+      - install -Dm644 ".generated/linux/$FLATPAK_ID.metainfo.xml" "/app/share/metainfo/$FLATPAK_ID.metainfo.xml"
+      - install -Dm644 build/appicon.svg /app/share/icons/hicolor/scalable/apps/pz-admin.svg
+      - |
+        for icon in build/linux/icons/*/pz-admin.png; do
+          size=$(basename "$(dirname "$icon")")
+          install -Dm644 "$icon" "/app/share/icons/hicolor/$size/apps/pz-admin.png" || exit 1
+        done
+      - install -Dm644 README.md /app/share/doc/pz-admin/README.md
+    sources:
+      - app-sources.json
+      - dependency-sources.json

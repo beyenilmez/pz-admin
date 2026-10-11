@@ -1,0 +1,57 @@
+name: PR metadata
+
+on:
+  pull_request_target:
+    types: [opened, reopened, edited, synchronize]
+
+permissions:
+  pull-requests: write
+
+concurrency:
+  group: pr-metadata-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  metadata:
+    name: Validate title and label
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      # Read PR metadata only; never check out or execute contributor code.
+      - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6
+        id: title
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      - name: Update type label
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          PR_TYPE: ${{ steps.title.outputs.type }}
+        with:
+          script: |
+            const labels = {
+              feat: 'feature',
+              fix: 'bug',
+              docs: 'documentation',
+              style: 'style',
+              refactor: 'refactor',
+              perf: 'performance',
+              test: 'tests',
+              build: 'build',
+              ci: 'ci',
+              chore: 'maintenance',
+              revert: 'revert',
+            };
+            const desired = labels[process.env.PR_TYPE];
+            if (!desired) return;
+
+            const issue = { ...context.repo, issue_number: context.issue.number };
+            const current = await github.paginate(github.rest.issues.listLabelsOnIssue, issue);
+            const managed = new Set(Object.values(labels));
+            if (!current.some(label => label.name === desired)) {
+              await github.rest.issues.addLabels({ ...issue, labels: [desired] });
+            }
+            for (const { name } of current) {
+              if (managed.has(name) && name !== desired) {
+                await github.rest.issues.removeLabel({ ...issue, name });
+              }
+            }

@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passiivinen",
+    "firearm": "Tuliase",
+    "survivalist": "Survivalisti",
+    "combat": "Taistele",
+    "agility": "Ketteryys",
+    "crafting": "Käsityö"
+  },
+  "names": {
+    "Fitness": "kunto",
+    "Strength": "Vahvuus",
+    "Aiming": "Tähtääminen",
+    "Reloading": "Lattaus",
+    "Fishing": "Kalastus",
+    "Trapping": "Ansainti",
+    "PlantScavenging": "rehustaa",
+    "Axe": "Kirves",
+    "Blunt": "Pitkä Tylppä",
+    "SmallBlunt": "Lyhyt Tylppä",
+    "LongBlade": "Pitkä Terä",
+    "SmallBlade": "Lyhyt Terä",
+    "Spear": "Keihäs",
+    "Maintenance": "Huolto",
+    "Sprinting": "Sprintti",
+    "Nimble": "Ketterä",
+    "Lightfoot": "Kevytjalkainen",
+    "Sneak": "Salainen",
+    "Woodwork": "kirvesmiehentyö",
+    "Cooking": "Ruoanlaitto",
+    "Farming": "Maanviljely",
+    "Doctor": "Ensiapu",
+    "Electricity": "Sähkö",
+    "MetalWelding": "Metallintyöstö",
+    "Mechanics": "Mekaniikka",
+    "Tailoring": "Räätälöinti"
+  }
+}

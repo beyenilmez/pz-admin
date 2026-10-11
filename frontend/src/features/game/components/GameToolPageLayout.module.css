@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.root[data-hidden] {
+  display: none;
+}
+
+.content {
+  flex: 1;
+  min-height: 0;
+}
+
+.content[data-clip-content] {
+  overflow: hidden;
+}

@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Passief",
+    "firearm": "Vuurwapen",
+    "survivalist": "Overlever ",
+    "combat": "Vechten ",
+    "agility": "Behendigheid ",
+    "crafting": "Handwerk "
+  },
+  "names": {
+    "Fitness": "Conditie ",
+    "Strength": "Kracht ",
+    "Aiming": "Richten ",
+    "Reloading": "Herladen ",
+    "Fishing": "Vissen ",
+    "Trapping": "Vallen zetten ",
+    "PlantScavenging": "Voedsel zoeken ",
+    "Axe": "Bijl",
+    "Blunt": "Bot ",
+    "SmallBlunt": "Kort Blunt",
+    "LongBlade": "Lang Mes",
+    "SmallBlade": "Kort Mes",
+    "Spear": "Speer",
+    "Maintenance": "Onderhoud ",
+    "Sprinting": "Sprinten ",
+    "Nimble": "Lenig ",
+    "Lightfoot": "Lichtvoetig ",
+    "Sneak": "Sluipen ",
+    "Woodwork": "Timmerwerk",
+    "Cooking": "Koken ",
+    "Farming": "Landbouw ",
+    "Doctor": "EHBO ",
+    "Electricity": "Elektronica ",
+    "MetalWelding": "Metaalbewerking",
+    "Mechanics": "Mechanica",
+    "Tailoring": "Kleermakerswerk"
+  }
+}

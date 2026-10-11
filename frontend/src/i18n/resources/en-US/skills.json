@@ -1,0 +1,37 @@
+{
+  "errors": {
+    "load": {
+      "title": "Unable to load skills"
+    }
+  },
+  "picker": {
+    "actions": {
+      "maxAll": "Maximize all",
+      "removeSkill": "Remove {{skill}}"
+    },
+    "catalog": {
+      "heading": "Skills"
+    },
+    "customXp": {
+      "input": {
+        "label": "Custom XP amount for {{skill}}",
+        "placeholder": "XP amount"
+      },
+      "toggle": {
+        "label": "Custom XP"
+      }
+    },
+    "level": {
+      "label": "{{skill}}, level {{level}}: {{amount}} XP",
+      "short": "Lv {{level}}"
+    },
+    "selection": {
+      "empty": "Select a skill to configure its XP.",
+      "heading_one": "{{count}} skill selected",
+      "heading_other": "{{count}} skills selected"
+    },
+    "summary": {
+      "total": "{{amount}} XP"
+    }
+  }
+}

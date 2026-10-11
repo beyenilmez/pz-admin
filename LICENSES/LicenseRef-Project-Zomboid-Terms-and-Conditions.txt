@@ -1,0 +1,124 @@
+The Indie Stone — Project Zomboid Terms and Conditions
+Source: https://projectzomboid.com/blog/support/terms-conditions/
+Retrieved: 2026-09-23
+HTML converted to plain text; link destinations retained in parentheses.
+
+Last updated: 6th October, 2022
+
+Hello survivor! Here’s the scoop on what you are allowed to do, and what you’re not allowed to do, through the purchase and continuing use of our game, website and forums! Hooray!
+
+(Looking for rules for our forums? They are here (https://theindiestone.com/forums/topic/108-forum-rules/).)
+
+Introduction:
+
+(a) These are the (legally binding) rules for Project Zomboid.
+(b) There are rules what you can and cannot do with Project Zomboid (e.g. don’t cheat)!
+(c) We own Project Zomboid, our forums and website, you only have a personal licence to play / use them.
+(d) There are rules on liability and disputes – take a look at the bottom of these Terms.
+(e) If you break these rules, we may suspend or cancel your access to Project Zomboid / our forums.
+
+1. First off:
+
+1.1. Hello, we’re The Indie Stone Limited (our address is Northern Design Centre, Abbott’s Hill, Baltic Business Quarter, Gateshead, Tyne & Wear, UK)! This legally binding agreement (“Terms”) applies to Project Zomboid, our forums at https://theindiestone.com (https://theindiestone.com) our websites at https://projectzomboid.com (https://projectzomboid.com), https://pzwiki.net (https://pzwiki.net) as well as our social media and customer support (together, the “Services”). If you don’t agree to these Terms, please don’t access our Services.
+
+1.2. You must be at least 13 years old to access our Services. If you are between 13 and 18, ask your parent or guardian to review and approve these Terms.
+
+1.3. Project Zomboid is currently in Early Access (before its full commercial release) to test its features, capabilities, performance and to achieve our full wide-ranging vision for the game. Early Access versions of Project Zomboid may contain bugs and experimentation, and we might add or remove features or conduct server / progress resets. The Indie Stone is planning to continue working on Project Zomboid for many years to come, but your purchase is the game ‘as is’, rather than for future milestone builds in the PZ road-map.
+
+1.4. All purchases apply to PC, Mac and Linux desktop versions of the current game only – and not any potential future sequels or offshoots or ports related to the game.
+
+1.5. We reserve the right to change these Terms or our Services for various reasons (e.g. to reflect changes in applicable laws and / or to implement technical changes or improvements). If we make minor changes, these should not impact you. If we make more significant changes, we’ll post the amended Terms on our site (and anywhere else relevant) and they’ll take effect a reasonable period afterwards.  If you have any questions about the changes, please contact us ASAP at info@theindiestone.com (mailto:info@theindiestone.com).
+
+——————
+
+By purchasing Project Zomboid or using our forums or website, this document explains what you are permitted to do.
+
+The golden rule is that you can do what you want with our Services as long as it promotes Project Zomboid / The Indie Stone and is not for commercial purposes (i.e. for your own profit – unless we approved that in advance) or for malicious/illegal purposes.
+
+Some examples of what we mean are below.  If you have any doubts or questions about whether you can or can’t do something, contact us first at info@theindiestone.com (mailto:info@theindiestone.com) instead of just doing/not doing it!
+
+If you’re not sure what any of this means, please ask us first – and our reasonable determination is final!
+
+——————
+
+2. We give you a licence to:
+
+2.1. Change or distribute the base files or contents in any way you like, provided that those changes do not result in you making Project Zomboid available to play or download (this includes making it available open source), or are for the purposes of cheating, unauthorised hacking, exploits or griefing other people or are malicious or illegal in intent or practice.
+
+2.2. Use art, music, video footage or other assets of Project Zomboid for creative purposes in any way you like providing the end result is related in some way to promoting Project Zomboid or The Indie Stone, is for non-commercial use only (unless we agreed otherwise with you) and states Project Zomboid as its influence and origin by supplying the following wording prominently with the assets:
+“Thanks to The Indie Stone for creating Project Zomboid https://projectzomboid.com/), which made this possible. This is an unofficial fan production for non-commercial purposes made under the Indie Stone Terms (https://projectzomboid.com/blog/support/terms-conditions/) [link to these terms]“
+
+2.3. If you use any third party contents, IP, software or tools together with Project Zomboid then it’s your responsibility to make sure you have all the necessary licences and permissions etc. We can’t be responsible for you.
+
+2.4. If you are concerned that your intellectual property rights may have been infringed, please see our IP Rights Policy (https://projectzomboid.com/blog/ip-rights-policy/).
+
+2.5. We are not responsible for any user-generated content you create or post. You can make gameplay footage or “Let’s Play” type videos on YouTube or other online video platforms, and monetise them if you like too (https://projectzomboid.com/blog/youtube-terms/). Again, you’re responsible for them.
+
+2.6. We permit mods if they comply with the Project Zomboid Modding Policy which is available here (https://projectzomboid.com/blog/modding-policy/). Please note the Modding Policy may be updated from time to time, so we recommend you check it periodically.
+
+2.7. Your licence to use our Services is non-exclusive, non-transferable and for personal use only. All rights in Project Zomboid are reserved to us except as explained in these Terms.
+
+2.8. This means that we still own our Services and everything in it. It’s just that we’re giving you the right to play around with the game and access our forums and website, as explained above.
+
+3. In case it wasn’t clear from earlier, you are not permitted to:
+
+3.1. Modify the base files of Project Zomboid or otherwise hack our Services to include malicious code or other naughtiness.
+
+3.2. Distribute Project Zomboid yourself, or host its download. In order to ensure the game’s integrity we recommend it should only ever be downloaded from established portals on which we’ve placed it (e.g. Steam or GOG).
+
+3.3. Create, use, make available, distribute and/or direct users to: (i) hacks and/or cheats for Project Zomboid (unless permitted under the Modding Policy); (ii) unauthorised websites distributing pirated versions of Project Zomboid.
+
+3.4. Maliciously target other users, such as disrupting another player’s server through a DDOS attack, or making any other deliberately disruptive attack.
+
+3.5. Do or say anything on our Services (including where aimed at our staff or at other users) that is or may be considered threatening, harassing, racist, sexist, discriminatory, abusive, defamatory or otherwise offensive or illegal.
+
+3.6. Breaking these rules could result in suspension or cancellation (temporary or permanent) of your access to our Services.
+
+4. People running PZ servers should also read this bit:
+
+4.1. If you are a server owner then charging those who play on it is, of course, totally fine. You can clearly run whatever mods you like on it too, so long as they fit within our Modding Policy (https://projectzomboid.com/blog/modding-policy/).
+
+4.2. The Indie Stone, however, does NOT encourage or allow server owners to charge for specific items, mods or gameplay that is made and distributed exclusively for said server. Beyond server access, we do not approve of monetising any aspect of the game.
+
+Explanation: although we recognise that most server owners wouldn’t allow for ‘pay to win’ mods such as ‘a shotgun with infinite ammo for $40’ – we have to guard against this, as some server owners could. As such a blanket policy against this sort of server is our chosen course of action.
+
+Our Modding Policy (https://projectzomboid.com/blog/modding-policy/) also states that we do not allow mods to be sold (unless we gave our approval first) – and, although a slightly different set-up, server-specific game modifications alongside a financial exchange fall far enough inside this bracket to create a grey area. Given time this could be exploited, and as such we feel that from the outset we shouldn’t allow, encourage or support it.
+
+5. Working with contributors:
+
+5.1. Project Zomboid is a passion project for both its developers and a community with whom we often work hand-in-hand. Examples of this includes internal build testing, translation and advice from platform experts. This is done in return for our gratitude, a game credit and a shared sense of Zomboid loveliness.
+
+5.2. Any other form of remuneration for contributions from outside of The Indie Stone will always be officially agreed in writing – away from the forum and public community channels – before any work takes place on the part of either developer or contributor. This covers all development up to this point, and everything in future Zomboid builds.
+
+5.3. Should The Indie Stone and a contributor join forces to bring a user modification into the official Project Zomboid build all remuneration will be discussed at that time. There is no automatic entitlement to any past, current or future revenue of Project Zomboid or for any other payments from The Indie Stone to a contributor unless they’ve agreed it expressly in writing.
+
+6. Responsibility to you:
+
+6.1. We will be responsible or liable for losses or damages you suffer where it would be unlawful for us to exclude or limit our liability. We only supply our Services for domestic and private use. If you use our Services for any commercial, business or re-sale purposes we will have no liability to you for any loss of profits, loss of business, business interruption or loss of business opportunity.
+
+6.2. Subject to 6.1 above: (a) the total liability of The Indie Stone arising out of or in connection with these Terms will not exceed the amount equal to the amount you have paid to us under these Terms during the twelve (12) months immediately prior to the event which caused the liability; and (b) we provide our Services on an “as is” basis and we make no specific warranty or representation in relation to the quality, completeness or accuracy of any of our Services.
+
+7. Termination:
+
+7.1. You can terminate these Terms at any time by permanently stopping accessing our Services. Termination will not affect already existing rights or obligations of either us or you.
+
+7.2. In the unlikely event we suspend or permanently discontinue any of our Services, we will notify you in advance, and we may discuss any appropriate next steps with you.
+
+7.3. We may also suspend or terminate (temporarily or permanently) your access to our Services if you breach these terms (including – for example – if you hack or cheat Project Zomboid). If we do this, we will not have any obligations or liabilities to you at all, but we will explain why we have done this where reasonably possible and what (if anything) you can do as a result.
+
+8. Any other business:
+
+8.1. If you have a dispute with us, you agree to make an effort to resolve any dispute between us informally for 30 days. After this, you have the legal right to commence legal claims against us if necessary. If you decide to bring a legal claim against The Indie Stone, you should send it to legal@theindiestone.com. The Indie Stone is based in the UK so if there’s any kind of legal stuff or dispute about our Services – they’ll be governed by English Law under the jurisdiction of the English Courts (this does not exclude any mandatorily applicable rules or remedies which would be available to you in a legal claim brought under the laws of your country of residence).
+
+8.2. We can assign, subcontract or transfer these Terms to a third party or another member of our group (as part of any reorganisation or merger or for other business reasons), provided that this does not affect your legal rights (or with your consent).
+
+8.3. If any part of these Terms is found not to be legally enforceable, this will not affect any other part of it.
+
+8.4. Our Privacy Policy (https://projectzomboid.com/blog/privacy-policy/) explains what information we collect and how we protect it.
+
+8.5. That’s pretty much it. We don’t want a million rules, but this document should make it clear what our promises to you are. That said these rules are here for a reason – so if you break any of them we reserve the right to suspend or take away your access to our Services, or do anything else we deem necessary to protect ourselves, our players or our Services.
+
+If you have any questions feel free to get touch with us at info@theindiestone.com (mailto:info@theindiestone.com).
+
+You can find the old version of our terms and conditions here: 
+https://projectzomboid.com/blog/news/2013/09/terms-conditions/ (https://projectzomboid.com/blog/news/2013/09/terms-conditions/)

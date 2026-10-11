@@ -1,0 +1,17 @@
+{
+  "connectionLost": {
+    "message": "The server connection was closed. Connect again to continue.",
+    "title": "Connection lost"
+  },
+  "errors": {
+    "connect": {
+      "title": "Unable to connect"
+    },
+    "disconnect": {
+      "title": "Unable to disconnect"
+    }
+  },
+  "loading": {
+    "label": "Loading session…"
+  }
+}

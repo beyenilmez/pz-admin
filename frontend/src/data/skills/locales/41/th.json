@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "ร่างกาย",
+    "firearm": "อาวุธปืน",
+    "survivalist": "การเอาตัวรอด",
+    "combat": "การต่อสู้",
+    "agility": "ความคล่องแคล่วว่องไว",
+    "crafting": "การประดิษฐ์"
+  },
+  "names": {
+    "Fitness": "ความฟิต",
+    "Strength": "พละกำลัง",
+    "Aiming": "การเล็ง",
+    "Reloading": "การบรรจุกระสุน",
+    "Fishing": "การตกปลา",
+    "Trapping": "การวางกับดัก",
+    "PlantScavenging": "การหาของ",
+    "Axe": "ขวาน",
+    "Blunt": "อาวุธทื่อยาว",
+    "SmallBlunt": "อาวุธทื่อสั้น",
+    "LongBlade": "อาวุธมีคมยาว",
+    "SmallBlade": "อาวุธมีคมสั้น",
+    "Spear": "หอก",
+    "Maintenance": "การดูแลรักษาอาวุธ",
+    "Sprinting": "การวิ่ง",
+    "Nimble": "ความปราดเปรียว",
+    "Lightfoot": "การเดินเสียงเบา",
+    "Sneak": "การลอบเร้น",
+    "Woodwork": "งานช่างไม้",
+    "Cooking": "การทำอาหาร",
+    "Farming": "การเพาะปลูก",
+    "Doctor": "การปฐมพยาบาล",
+    "Electricity": "งานไฟฟ้า",
+    "MetalWelding": "งานช่างเชื่อมเหล็ก",
+    "Mechanics": "งานช่างยนต์",
+    "Tailoring": "งานตัดเย็บ"
+  }
+}

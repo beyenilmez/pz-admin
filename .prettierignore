@@ -1,0 +1,32 @@
+# Generated output and task cache
+.flatpak-builder
+.generated
+.ruff_cache
+.task
+bin
+
+# Frontend output
+frontend/coverage/
+frontend/dist/
+frontend/dist-website/
+frontend/storybook-static/
+frontend/bindings/
+
+# Generated/imported assets
+frontend/public/items/
+frontend/public/skills/
+frontend/public/vehicles/
+frontend/src/data/items/
+frontend/src/data/skills/
+frontend/src/data/vehicles/
+
+# Dependency manager-owned files
+node_modules/
+frontend/pnpm-lock.yaml
+
+# Generated screenshots
+assets/screenshots/
+
+# Release Please-generated files
+/CHANGELOG.md
+/.release-please-manifest.json

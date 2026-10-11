@@ -1,0 +1,1211 @@
+{
+  "inputHash": "f508f25e59807988cc002558e8d5112e5f8f90fc6b122f6df7a5126665f451e0",
+  "environment": "gnome",
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "main": "players",
+  "defaultLanguage": "en-US",
+  "images": [
+    {
+      "id": "players",
+      "captions": {
+        "en-US": "View and manage players on your server",
+        "tr-TR": "Sunucunuzdaki oyuncuları görüntüleyin ve yönetin"
+      },
+      "alt": {
+        "en-US": "Player list with online status, roles, and player actions",
+        "tr-TR": "Oyuncuların çevrim içi durumlarını, rollerini ve oyuncu işlemlerini gösteren liste"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "players/en-US/players-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "players/en-US/players-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "players/en-US/players-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "players/en-US/players-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "players/en-US/players-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "players/en-US/players-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "players/tr-TR/players-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "players/tr-TR/players-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "players/tr-TR/players-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "players/tr-TR/players-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "players/tr-TR/players-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "players/tr-TR/players-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "give-items",
+      "captions": {
+        "en-US": "Give items to players",
+        "tr-TR": "Oyunculara eşya verin"
+      },
+      "alt": {
+        "en-US": "Items selected to be given to a player",
+        "tr-TR": "Bir oyuncuya verilmek üzere seçilen eşyalar"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/en-US/give-items-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/en-US/give-items-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "give-items/en-US/give-items-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/en-US/give-items-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/en-US/give-items-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "give-items/en-US/give-items-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/tr-TR/give-items-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/tr-TR/give-items-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "give-items/tr-TR/give-items-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/tr-TR/give-items-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "give-items/tr-TR/give-items-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "give-items/tr-TR/give-items-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "add-xp",
+      "captions": {
+        "en-US": "Add experience points to player skills",
+        "tr-TR": "Oyuncuların becerilerine deneyim puanı ekleyin"
+      },
+      "alt": {
+        "en-US": "Skill selection and experience amounts for a player",
+        "tr-TR": "Bir oyuncu için seçilen beceriler ve eklenecek deneyim puanları"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/en-US/add-xp-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/en-US/add-xp-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "add-xp/en-US/add-xp-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/en-US/add-xp-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/en-US/add-xp-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "add-xp/en-US/add-xp-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/tr-TR/add-xp-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/tr-TR/add-xp-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "add-xp/tr-TR/add-xp-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "spawn-vehicle",
+      "captions": {
+        "en-US": "Spawn vehicles near players",
+        "tr-TR": "Oyuncuların yakınında araç oluşturun"
+      },
+      "alt": {
+        "en-US": "Vehicle selection with a police car chosen",
+        "tr-TR": "Polis aracı seçilmiş araç oluşturma penceresi"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "options",
+      "captions": {
+        "en-US": "Adjust your server settings",
+        "tr-TR": "Sunucu ayarlarınızı düzenleyin"
+      },
+      "alt": {
+        "en-US": "Server settings with changes ready to save",
+        "tr-TR": "Kaydedilmeyi bekleyen değişiklikleri içeren sunucu ayarları"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "options/en-US/options-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "options/en-US/options-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "options/en-US/options-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "options/en-US/options-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "options/en-US/options-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "options/en-US/options-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "options/tr-TR/options-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "options/tr-TR/options-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "options/tr-TR/options-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "options/tr-TR/options-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "options/tr-TR/options-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "options/tr-TR/options-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "server-actions",
+      "captions": {
+        "en-US": "Manage your server and in-game events",
+        "tr-TR": "Sunucunuzu ve oyun içi olayları yönetin"
+      },
+      "alt": {
+        "en-US": "Server actions for saving the world, changing weather, and starting events",
+        "tr-TR": "Dünyayı kaydetme, hava durumunu değiştirme ve olay başlatma gibi sunucu işlemleri"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/en-US/server-actions-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/en-US/server-actions-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "server-actions/en-US/server-actions-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/en-US/server-actions-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/en-US/server-actions-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "server-actions/en-US/server-actions-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/tr-TR/server-actions-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/tr-TR/server-actions-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "server-actions/tr-TR/server-actions-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "console",
+      "captions": {
+        "en-US": "Run server commands",
+        "tr-TR": "Sunucu komutları çalıştırın"
+      },
+      "alt": {
+        "en-US": "Server console with previous commands, responses, and command suggestions",
+        "tr-TR": "Önceki komutları, yanıtları ve komut önerilerini gösteren sunucu konsolu"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "console/en-US/console-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "console/en-US/console-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "console/en-US/console-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "console/en-US/console-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "console/en-US/console-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "console/en-US/console-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "console/tr-TR/console-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "console/tr-TR/console-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "console/tr-TR/console-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "console/tr-TR/console-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "console/tr-TR/console-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "console/tr-TR/console-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "items",
+      "captions": {
+        "en-US": "Browse the item catalog",
+        "tr-TR": "Eşya kataloğunu inceleyin"
+      },
+      "alt": {
+        "en-US": "Item catalog with selected items and quantities",
+        "tr-TR": "Seçilen eşyaları ve adetlerini gösteren eşya kataloğu"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "items/en-US/items-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "items/en-US/items-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "items/en-US/items-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "items/en-US/items-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "items/en-US/items-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "items/en-US/items-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "items/tr-TR/items-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "items/tr-TR/items-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "items/tr-TR/items-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "items/tr-TR/items-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "items/tr-TR/items-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "items/tr-TR/items-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "vehicles",
+      "captions": {
+        "en-US": "Browse and compare vehicles",
+        "tr-TR": "Araçlara göz atın ve özelliklerini karşılaştırın"
+      },
+      "alt": {
+        "en-US": "Vehicle catalog with police vehicles and their specifications",
+        "tr-TR": "Polis araçlarını ve özelliklerini gösteren araç kataloğu"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/en-US/vehicles-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/en-US/vehicles-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicles/en-US/vehicles-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/en-US/vehicles-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/en-US/vehicles-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicles/en-US/vehicles-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/tr-TR/vehicles-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/tr-TR/vehicles-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicles/tr-TR/vehicles-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "vehicle-details",
+      "captions": {
+        "en-US": "View vehicle details and variants",
+        "tr-TR": "Araç özelliklerini ve varyantlarını inceleyin"
+      },
+      "alt": {
+        "en-US": "Selected vehicle details and available variants",
+        "tr-TR": "Seçilen aracın ayrıntıları ve mevcut varyantları"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/en-US/vehicle-details-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/en-US/vehicle-details-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicle-details/en-US/vehicle-details-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-640x400.webp"
+        }
+      ]
+    },
+    {
+      "id": "message-editor",
+      "captions": {
+        "en-US": "Write and format server messages",
+        "tr-TR": "Sunucu mesajları yazın ve biçimlendirin"
+      },
+      "alt": {
+        "en-US": "Message editor with a message preview and formatted output",
+        "tr-TR": "Mesaj önizlemesini ve biçimlendirilmiş çıktıyı gösteren mesaj düzenleyici"
+      },
+      "files": [
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/en-US/message-editor-en-US-light-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/en-US/message-editor-en-US-light-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "message-editor/en-US/message-editor-en-US-light-640x400.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/en-US/message-editor-en-US-dark-1280x800.png"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/en-US/message-editor-en-US-dark-1280x800.webp"
+        },
+        {
+          "language": "en-US",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "message-editor/en-US/message-editor-en-US-dark-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/tr-TR/message-editor-tr-TR-light-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/tr-TR/message-editor-tr-TR-light-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "light",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "message-editor/tr-TR/message-editor-tr-TR-light-640x400.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "png",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-1280x800.png"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 1280,
+          "height": 800,
+          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-1280x800.webp"
+        },
+        {
+          "language": "tr-TR",
+          "theme": "dark",
+          "format": "webp",
+          "width": 640,
+          "height": 400,
+          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-640x400.webp"
+        }
+      ]
+    }
+  ]
+}

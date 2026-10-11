@@ -1,0 +1,6 @@
+{
+  "weight": "200",
+  "suspensionStiffness": "40",
+  "occupantProtection": "0.8",
+  "wheels": "4"
+}

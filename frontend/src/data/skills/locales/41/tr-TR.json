@@ -1,0 +1,38 @@
+{
+  "categories": {
+    "passive": "Pasif",
+    "firearm": "Ateşli Silahlar",
+    "survivalist": "Hayatta Kalma",
+    "combat": "Mücadele",
+    "agility": "Çeviklik",
+    "crafting": "Üretkenlik"
+  },
+  "names": {
+    "Fitness": "Fitness",
+    "Strength": "Güç",
+    "Aiming": "Nişan Alma",
+    "Reloading": "Şarjör Doldurma",
+    "Fishing": "Balıkçılık",
+    "Trapping": "Avcılık",
+    "PlantScavenging": "Araştırma",
+    "Axe": "Balta",
+    "Blunt": "Yakın Dövüş Silahları",
+    "SmallBlunt": "Kısa Ezici",
+    "LongBlade": "Uzun Kesici",
+    "SmallBlade": "Kısa Kesici",
+    "Spear": "Mızrak",
+    "Maintenance": "Onarma",
+    "Sprinting": "Koşuculuk",
+    "Nimble": "Atiklik",
+    "Lightfoot": "Zariflik",
+    "Sneak": "Gizlilik",
+    "Woodwork": "Marangozluk",
+    "Cooking": "Aşçılık",
+    "Farming": "Çiftçilik",
+    "Doctor": "İlk Yardım",
+    "Electricity": "Elektrikçilik",
+    "MetalWelding": "Metal İşleme",
+    "Mechanics": "Tamircilik",
+    "Tailoring": "Terzilik"
+  }
+}

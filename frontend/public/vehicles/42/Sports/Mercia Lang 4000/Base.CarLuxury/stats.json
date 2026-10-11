@@ -1,0 +1,17 @@
+{
+  "seats": "2",
+  "doors": "2",
+  "wheels": "4",
+  "weight": "950",
+  "occupantProtection": "1.1",
+  "gloveBox": "5",
+  "trunkStorage": "45",
+  "totalStorage": "90",
+  "enginePower": "520",
+  "engineLoudness": "80",
+  "engineQuality": "70",
+  "topSpeed": "105",
+  "rollInfluence": "1",
+  "suspensionStiffness": "40",
+  "offRoadEfficiency": "1"
+}

@@ -1,0 +1,9 @@
+# Normalize text files and keep LF in working directories.
+* text=auto eol=lf
+
+# Windows command scripts.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Generated Wails bindings.
+frontend/bindings/** linguist-generated

@@ -1,0 +1,18 @@
+{
+  "categories": {
+    "combat": "Kamp",
+    "agility": "Adræt",
+    "crafting": "Håndværk"
+  },
+  "names": {
+    "Aiming": "Sigte",
+    "Reloading": "Ladning af våben",
+    "Blunt": "Stump",
+    "Sprinting": "Løb",
+    "Nimble": "Smidig",
+    "Lightfoot": "Let på tå",
+    "Sneak": "Snig/list",
+    "Cooking": "Madlavning",
+    "Farming": "Havebrug"
+  }
+}

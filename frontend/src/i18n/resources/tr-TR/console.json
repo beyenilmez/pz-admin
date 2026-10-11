@@ -1,0 +1,20 @@
+{
+  "command": {
+    "label": "Sunucu komutu",
+    "placeholder": "Bir sunucu komutu girin"
+  },
+  "help": {
+    "cls": "Konsolda görüntülenen tüm çıktıyı temizler."
+  },
+  "introduction": {
+    "usage": "Öneriler için Tab tuşunu, komut geçmişinde gezinmek için Yukarı ve Aşağı ok tuşlarını kullanın.",
+    "welcome": "Hoş geldiniz. Sunucu komutları için 'help', konsolu temizlemek için 'cls' yazın."
+  },
+  "output": {
+    "empty": "Komut çıktı üretmeden tamamlandı.",
+    "label": "Konsol çıktısı"
+  },
+  "page": {
+    "title": "Konsol"
+  }
+}

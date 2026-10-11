@@ -1,0 +1,105 @@
+{
+  "actions": {
+    "gunshot": "Silah sesi",
+    "helicopter": "Helikopter",
+    "lightning": "Yıldırım",
+    "reloadAllLua": "Tüm Lua dosyalarını yeniden yükle",
+    "reloadFile": "Dosyayı yeniden yükle",
+    "reloadLua": "Lua dosyasını yeniden yükle",
+    "reloadOptions": "Seçenekleri yeniden yükle",
+    "saveWorld": "Dünyayı kaydet",
+    "sendMessage": "Mesaj gönder",
+    "startRain": "Yağmur başlat",
+    "startStorm": "Fırtına başlat",
+    "stopRain": "Yağmuru durdur",
+    "stopServer": "Sunucuyu durdur",
+    "stopWeather": "Hava olaylarını durdur",
+    "thunder": "Gök gürültüsü"
+  },
+  "descriptions": {
+    "events": "Seçilen olay için çevrim içi oyunculardan birini rastgele hedef alır.",
+    "reloadAllLua": "Yüklü tüm Lua dosyalarını yeniden yükler.",
+    "reloadLua": "Yüklü Lua dosyaları arasından adı eşleşen ilk dosyayı yeniden yükler.",
+    "reloadOptions": "Sunucu seçeneklerini diskten yeniden yükler.",
+    "startRain": "Yağmur başlatır. Yoğunluk isteğe bağlıdır ve 1 ile 100 arasındadır.",
+    "startStorm": "Fırtına başlatır. Süre isteğe bağlıdır ve oyun saati cinsindendir."
+  },
+  "dialogs": {
+    "message": {
+      "title": "Sunucu mesajı gönder"
+    },
+    "stop": {
+      "description": "Dünyayı kaydeder, tüm oyuncuların bağlantısını keser ve sunucuyu durdurur.",
+      "title": "Sunucuyu durdur"
+    }
+  },
+  "events": {
+    "players": {
+      "empty": "Yok",
+      "label": "Çevrim içi oyuncular:"
+    }
+  },
+  "fields": {
+    "duration": {
+      "label": "Süre (oyun saati)"
+    },
+    "intensity": {
+      "label": "Yoğunluk"
+    },
+    "luaFile": {
+      "label": "Dosya adı"
+    }
+  },
+  "notifications": {
+    "allLuaReloaded": {
+      "message": "Lua dosyaları yeniden yüklendi."
+    },
+    "gunshot": {
+      "message": "Silah sesi tetiklendi."
+    },
+    "helicopter": {
+      "message": "Helikopter olayı tetiklendi."
+    },
+    "lightning": {
+      "message": "{{target}} adlı oyuncunun üzerine yıldırım düşürüldü."
+    },
+    "luaReloaded": {
+      "message": "Lua dosyası yeniden yüklendi."
+    },
+    "messageSent": {
+      "message": "Mesaj çevrim içi tüm oyunculara gönderildi."
+    },
+    "optionsReloaded": {
+      "message": "Seçenekler yeniden yüklendi."
+    },
+    "rainStarted": {
+      "message": "Yağmur başlatıldı."
+    },
+    "rainStopped": {
+      "message": "Yağmur durduruldu."
+    },
+    "serverStopped": {
+      "message": "Sunucu durduruldu."
+    },
+    "stormStarted": {
+      "message": "Fırtına başlatıldı."
+    },
+    "thunder": {
+      "message": "{{target}} adlı oyuncunun bulunduğu yerde gök gürültüsü oluşturuldu."
+    },
+    "weatherStopped": {
+      "message": "Tüm hava olayları durduruldu."
+    },
+    "worldSaved": {
+      "message": "Dünya kaydedildi."
+    }
+  },
+  "page": {
+    "title": "Sunucu işlemleri"
+  },
+  "sections": {
+    "events": "Dünya olayları",
+    "reload": "Yeniden yükleme komutları",
+    "weather": "Hava durumu"
+  }
+}

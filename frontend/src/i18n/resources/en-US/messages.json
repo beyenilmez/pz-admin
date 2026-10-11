@@ -1,0 +1,46 @@
+{
+  "actions": {
+    "edit": "Edit message"
+  },
+  "dialog": {
+    "title": "Edit message"
+  },
+  "editor": {
+    "actions": {
+      "align": {
+        "center": "Align center",
+        "left": "Align left",
+        "right": "Align right"
+      },
+      "clearFormatting": "Clear formatting"
+    },
+    "color": {
+      "actions": {
+        "useDefault": "Use default color"
+      },
+      "label": "Text color"
+    },
+    "colorPicker": {
+      "hue": {
+        "label": "Hue"
+      },
+      "saturation": {
+        "label": "Saturation"
+      }
+    },
+    "size": {
+      "options": {
+        "large": "Large",
+        "medium": "Medium",
+        "small": "Small"
+      }
+    }
+  },
+  "page": {
+    "title": "Message editor"
+  },
+  "preview": {
+    "empty": "The formatted message will appear here.",
+    "title": "Formatted message"
+  }
+}

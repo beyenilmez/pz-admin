@@ -1,0 +1,10 @@
+{
+  "wheels": "2",
+  "weight": "200",
+  "occupantProtection": "0.8",
+  "trunkStorage": "100",
+  "totalStorage": "100",
+  "rollInfluence": "1",
+  "suspensionStiffness": "40",
+  "offRoadEfficiency": "0.8"
+}

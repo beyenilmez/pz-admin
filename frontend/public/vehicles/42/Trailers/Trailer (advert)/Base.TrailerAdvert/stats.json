@@ -1,0 +1,8 @@
+{
+  "wheels": "4",
+  "weight": "200",
+  "occupantProtection": "0.8",
+  "rollInfluence": "1",
+  "suspensionStiffness": "40",
+  "offRoadEfficiency": "0.8"
+}

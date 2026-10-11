@@ -1,0 +1,72 @@
+{
+  "actions": {
+    "add": "Ekle",
+    "apply": "Uygula",
+    "back": "Geri dön",
+    "cancel": "İptal",
+    "clear": "Temizle",
+    "clearAll": "Tümünü temizle",
+    "close": "Kapat",
+    "collapseNamed": "{{name}} öğesini daralt",
+    "connect": "Bağlan",
+    "copied": "Kopyalandı",
+    "copy": "Kopyala",
+    "delete": "Sil",
+    "disconnect": "Bağlantıyı kes",
+    "edit": "Düzenle",
+    "expandNamed": "{{name}} öğesini genişlet",
+    "label": "İşlemler",
+    "redo": "Yinele",
+    "remove": "Kaldır",
+    "reset": "Sıfırla",
+    "restoreDefault": "Varsayılana döndür",
+    "retry": "Tekrar dene",
+    "saveChanges": "Değişiklikleri kaydet",
+    "undo": "Geri al"
+  },
+  "attribution": {
+    "label": "Atıf"
+  },
+  "errors": {
+    "unexpected": "Bir sorun oluştu. Lütfen tekrar deneyin."
+  },
+  "fields": {
+    "password": {
+      "label": "Parola"
+    }
+  },
+  "gameBuild": {
+    "label": "Oyun sürümü",
+    "options": {
+      "auto": "Otomatik"
+    },
+    "unknown": "Bilinmeyen sürüm",
+    "value": "Sürüm {{version}}"
+  },
+  "notifications": {
+    "action": {
+      "failure": {
+        "title": "İşlem başarısız"
+      },
+      "success": {
+        "title": "İşlem tamamlandı"
+      }
+    }
+  },
+  "search": {
+    "clear": "Aramayı temizle",
+    "nameOrId": {
+      "placeholder": "Ad veya kimlik ile ara…"
+    }
+  },
+  "sorting": {
+    "actions": {
+      "changeDirection": "Sıralama yönünü değiştir. Mevcut yön: {{direction}}."
+    },
+    "directions": {
+      "ascending": "Artan",
+      "descending": "Azalan"
+    },
+    "label": "Sıralama ölçütü"
+  }
+}

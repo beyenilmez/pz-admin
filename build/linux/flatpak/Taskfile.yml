@@ -1,0 +1,83 @@
+version: "3"
+
+tasks:
+  setup:
+    summary: Installs the Flatpak build environment
+    platforms: [linux]
+    cmds:
+      - flatpak remote-add --user --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+      - flatpak install --user --assumeyes flathub org.flatpak.Builder org.gnome.Sdk//51 org.gnome.Platform//51
+      - flatpak install --user --assumeyes flathub org.freedesktop.Sdk.Extension.golang//26.08 org.freedesktop.Sdk.Extension.node24//26.08
+
+  install:
+    summary: Installs the built Flatpak for the current user
+    dir: "{{.ROOT_DIR}}"
+    platforms: [linux]
+    preconditions:
+      - test -f bin/pz-admin.flatpak
+    cmds:
+      - flatpak install --user --assumeyes bin/pz-admin.flatpak
+
+  run:
+    summary: Runs the installed Flatpak
+    platforms: [linux]
+    cmds:
+      - flatpak run com.bedirhanyenilmez.pzadmin
+
+  install:run:
+    summary: Installs and runs the built Flatpak
+    platforms: [linux]
+    cmds:
+      - task: install
+      - task: run
+
+  package:
+    summary: Builds a Flatpak bundle
+    dir: "{{.ROOT_DIR}}"
+    platforms: [linux]
+    cmds:
+      - task: build
+      - mkdir -p bin
+      - flatpak build-bundle .generated/flatpak/repo bin/pz-admin.flatpak com.bedirhanyenilmez.pzadmin --runtime-repo=https://dl.flathub.org/repo/flathub.flatpakrepo
+
+  build:
+    internal: true
+    dir: "{{.ROOT_DIR}}"
+    platforms: [linux]
+    deps:
+      - task: prepare:build
+    preconditions:
+      - flatpak info org.flatpak.Builder
+      - flatpak info org.gnome.Sdk//51
+      - flatpak info org.gnome.Platform//51
+      - flatpak info org.freedesktop.Sdk.Extension.golang//26.08
+      - flatpak info org.freedesktop.Sdk.Extension.node24//26.08
+    cmds:
+      - flatpak run org.flatpak.Builder --force-clean --sandbox --build-only --state-dir=.generated/flatpak/cache .generated/flatpak/app .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
+      - flatpak run org.flatpak.Builder --finish-only --disable-cache --sandbox {{if eq (default "false" .MIRROR_SCREENSHOTS) "true"}}--mirror-screenshots-url=https://dl.flathub.org/media --compose-url-policy=full{{end}} --repo=.generated/flatpak/repo --state-dir=.generated/flatpak/cache .generated/flatpak/app .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
+
+  prepare:build:
+    summary: Prepares the Flatpak manifest and sources
+    run: once
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - node scripts/flatpak/generate-dependencies.mjs
+      - node scripts/flatpak/prepare-build.mjs {{if eq (default "false" .PINNED) "true"}}--git{{end}}
+
+  check:
+    summary: Builds with mirrored screenshots and runs Flathub checks
+    dir: "{{.ROOT_DIR}}"
+    platforms: [linux]
+    cmds:
+      - task: build
+        vars:
+          MIRROR_SCREENSHOTS: "true"
+      - task: lint
+
+  lint:
+    summary: Runs Flathub checks on the prepared manifest and built repository
+    dir: "{{.ROOT_DIR}}"
+    platforms: [linux]
+    cmds:
+      - flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions --user-exceptions build/linux/flatpak/lint-exceptions.json manifest .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
+      - flatpak run --command=flatpak-builder-lint org.flatpak.Builder --exceptions --user-exceptions build/linux/flatpak/lint-exceptions.json repo .generated/flatpak/repo

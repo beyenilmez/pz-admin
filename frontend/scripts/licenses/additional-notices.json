@@ -1,0 +1,46 @@
+[
+  {
+    "name": "@wailsio/runtime",
+    "version": "3.0.0-beta.25",
+    "identifier": "MIT",
+    "file": "texts/LICENSE-wails-runtime",
+    "source": "https://github.com/wailsapp/wails/blob/2e3e15359106686c1f9e5c11b7a84025169cea5d/LICENSE",
+    "note": "Repository license at the gitHead recorded by npm for this release."
+  },
+  {
+    "name": "is-callable",
+    "identifier": "MIT",
+    "file": "texts/LICENSE-is-callable",
+    "source": "https://github.com/wailsapp/wails/blob/f5457ed12f5c53883c4820437d106d48f4340f1e/v3/internal/runtime/desktop/@wailsio/runtime/src/callable.ts",
+    "note": "Notice retained in Wails' copied is-callable implementation."
+  },
+  {
+    "name": "Nano ID",
+    "identifier": "MIT",
+    "file": "texts/LICENSE-nanoid",
+    "source": "https://github.com/wailsapp/wails/blob/f5457ed12f5c53883c4820437d106d48f4340f1e/v3/internal/runtime/desktop/@wailsio/runtime/src/nanoid.ts",
+    "note": "Notice retained in Wails' adapted Nano ID implementation."
+  },
+  {
+    "name": "HTMX",
+    "identifier": "BSD-2-Clause",
+    "file": "texts/LICENSE-htmx",
+    "source": "https://github.com/wailsapp/wails/blob/f5457ed12f5c53883c4820437d106d48f4340f1e/v3/internal/runtime/desktop/@wailsio/runtime/src/utils.ts",
+    "note": "Notice retained for Wails' HTMX-derived load detection."
+  },
+  {
+    "name": "core-js",
+    "identifier": "MIT",
+    "file": "texts/LICENSE-core-js",
+    "source": "https://github.com/zloirock/core-js/blob/2d69cf5f99ab3ea3463c395df81e5a15b68f49d9/LICENSE",
+    "note": "License at the core-js revision referenced by Linkify's stringToArray implementation in dist/linkify.mjs."
+  },
+  {
+    "name": "react-remove-scroll-bar",
+    "version": "2.3.8",
+    "identifier": "MIT",
+    "file": "texts/LICENSE-react-remove-scroll-bar",
+    "source": "https://github.com/theKashey/react-remove-scroll-bar/blob/7301c160fda44cb8cf2b9fdfde61efad35736196/LICENSE",
+    "note": "Release commit b3b1287aad81def2e2ae707274b74531b61ddbaf declares MIT but has no license file. This unchanged upstream notice was added on 2025-05-21, after the release."
+  }
+]
