@@ -26,17 +26,17 @@ concurrency:
 jobs:
   frontend:
     name: Frontend
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Install Linux dependencies
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y libgtk-4-dev libwebkitgtk-6.0-dev
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5
         with:
           install_args: --locked go node npm:pnpm go:github.com/wailsapp/wails/v3/cmd/wails3
       - name: Locate pnpm store
@@ -63,7 +63,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Install Linux dependencies
@@ -83,24 +83,24 @@ jobs:
             ${{ env.GOCACHE }}
           key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'go.sum') }}
           restore-keys: go-${{ runner.os }}-${{ runner.arch }}-
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5
         with:
           install_args: --locked go node go:github.com/wailsapp/wails/v3/cmd/wails3
       - run: wails3 task check:backend
 
   metadata:
     name: Linux metadata
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Install metadata validators
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y appstream desktop-file-utils
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5
         env:
           CGO_ENABLED: "0"
         with:
@@ -110,13 +110,13 @@ jobs:
 
   reuse:
     name: REUSE
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5
         with:
           install_args: --locked uv pipx:reuse
       - run: reuse lint
