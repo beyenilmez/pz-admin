@@ -2,19 +2,11 @@ id: com.bedirhanyenilmez.pzadmin
 runtime: org.gnome.Platform
 runtime-version: "51"
 sdk: org.gnome.Sdk
+command: pz-admin
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.golang
   - org.freedesktop.Sdk.Extension.node24
-command: pz-admin
 rename-icon: pz-admin
-
-build-options:
-  append-path: /usr/lib/sdk/golang/bin:/usr/lib/sdk/node24/bin
-  env:
-    CGO_ENABLED: "1"
-    GOTOOLCHAIN: local
-    GOROOT: /usr/lib/sdk/golang
-    GOFLAGS: -mod=vendor -tags=production
 
 finish-args:
   # X11 + XShm access
@@ -28,6 +20,14 @@ finish-args:
   - --share=network
   # Secrets API access
   - --talk-name=org.freedesktop.secrets
+
+build-options:
+  append-path: /usr/lib/sdk/golang/bin:/usr/lib/sdk/node24/bin
+  env:
+    CGO_ENABLED: "1"
+    GOTOOLCHAIN: local
+    GOROOT: /usr/lib/sdk/golang
+    GOFLAGS: -mod=vendor -tags=production
 
 modules:
   - name: pz-admin
