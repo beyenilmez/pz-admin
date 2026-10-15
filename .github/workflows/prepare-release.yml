@@ -21,18 +21,18 @@ permissions:
 jobs:
   prepare:
     name: Update screenshots and download links
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     outputs:
       changed: ${{ steps.commit.outputs.changed }}
     env:
       PR_BRANCH: release-please--branches--main
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           ref: ${{ inputs.ref }}
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5
         env:
           CGO_ENABLED: "0"
         with:
