@@ -57,8 +57,8 @@ importers:
         specifier: 3.30.3
         version: 3.30.3
       '@wailsio/runtime':
-        specifier: 3.0.0-beta.31
-        version: 3.0.0-beta.31
+        specifier: 3.0.0-beta.32
+        version: 3.0.0-beta.32
       embla-carousel:
         specifier: 8.6.0
         version: 8.6.0
@@ -1681,8 +1681,8 @@ packages:
   '@vitest/utils@4.1.11':
     resolution: {integrity: sha512-zTCVGpyFsGWBhllOyKlTw/vnr6D9qxsfSDyfbyZmTyjHw5N/VuvzHpHoQjm2ZJzn4RJgx5w4r7V0er69CmLgPQ==}
 
-  '@wailsio/runtime@3.0.0-beta.31':
-    resolution: {integrity: sha512-z9X/oxUGc4YHzbP7BkJa6/PwMhX9GgTim1CP3AI6MtjrwjnX82696wAHrFVgScoMj8amdxGEOyC/vFB06GMqCQ==}
+  '@wailsio/runtime@3.0.0-beta.32':
+    resolution: {integrity: sha512-lZgs1KgUSedSvPkGGEmjLwCkHwpEZKr3B9hr/ZL0sz5ipYM9kN8WpWPZOVLCFllrJhtmtNygR/h4VbmiELi4tQ==}
 
   '@webcontainer/env@1.1.1':
     resolution: {integrity: sha512-6aN99yL695Hi9SuIk1oC88l9o0gmxL1nGWWQ/kNy81HigJ0FoaoTXpytCj6ItzgyCEwA9kF1wixsTuv5cjsgng==}
@@ -4100,7 +4100,7 @@ snapshots:
       convert-source-map: 2.0.0
       tinyrainbow: 3.1.1
 
-  '@wailsio/runtime@3.0.0-beta.31': {}
+  '@wailsio/runtime@3.0.0-beta.32': {}
 
   '@webcontainer/env@1.1.1': {}
 
