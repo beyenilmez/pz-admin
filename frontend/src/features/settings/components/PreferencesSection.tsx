@@ -1,4 +1,4 @@
-import { useId } from "react";
+import { useId, type ReactNode } from "react";
 import {
   Alert,
   Badge,
@@ -23,6 +23,19 @@ import {
   languageCoverage,
   languageOptions,
 } from "@/features/settings/lib/languages";
+import rowClasses from "./SettingRow.module.css";
+
+function renderControl(children: ReactNode) {
+  return <div className={rowClasses.control}>{children}</div>;
+}
+
+function renderLanguageControl(input: ReactNode) {
+  return (
+    <div className={`${rowClasses.control} ${rowClasses.language}`}>
+      {input}
+    </div>
+  );
+}
 
 export function PreferencesSection() {
   const updateInputId = useId();
@@ -80,6 +93,8 @@ export function PreferencesSection() {
 
           <Skeleton visible={loading}>
             <Radio.Group
+              classNames={rowClasses}
+              inputContainer={renderControl}
               name="theme"
               label={t("colorScheme.label")}
               description={t("colorScheme.description")}
@@ -87,7 +102,7 @@ export function PreferencesSection() {
               disabled={loading}
               onChange={handleThemeChange}
             >
-              <Group mt="xs">
+              <Group gap="sm">
                 <Radio value="system" label={t("colorScheme.options.system")} />
                 <Radio value="light" label={t("colorScheme.options.light")} />
                 <Radio value="dark" label={t("colorScheme.options.dark")} />
@@ -97,6 +112,8 @@ export function PreferencesSection() {
 
           <Skeleton visible={loading}>
             <Select
+              classNames={rowClasses}
+              inputContainer={renderLanguageControl}
               label={t("language.label")}
               description={t("language.description")}
               data={languageOptions}
@@ -122,16 +139,17 @@ export function PreferencesSection() {
           {(System.IsWindows() || System.IsMac()) && (
             <Skeleton visible={loading}>
               <Input.Wrapper
+                classNames={rowClasses}
                 id={updateInputId}
                 label={t("updates.downloadOnStartup.label")}
                 description={t("updates.downloadOnStartup.description")}
               >
                 <Switch
+                  className={rowClasses.control}
                   id={updateInputId}
                   name="downloadUpdatesOnStartup"
                   aria-labelledby={`${updateInputId}-label`}
                   aria-describedby={`${updateInputId}-description`}
-                  mt="xs"
                   checked={config?.downloadUpdatesOnStartup ?? true}
                   disabled={loading}
                   onChange={(event) =>

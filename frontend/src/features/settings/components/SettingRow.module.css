@@ -1,0 +1,39 @@
+.root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--mantine-spacing-xl);
+  align-items: center;
+}
+
+.label {
+  grid-column: 1;
+  align-self: end;
+}
+
+.description {
+  grid-column: 1;
+  align-self: start;
+}
+
+.control {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  min-width: 0;
+}
+
+.language {
+  width: 16rem;
+  max-width: 100%;
+}
+
+@container (max-width: 40rem) {
+  .root {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .control {
+    grid-column: 1;
+    grid-row: auto;
+    margin-top: var(--mantine-spacing-xs);
+  }
+}
