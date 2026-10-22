@@ -73,7 +73,7 @@ jobs:
           echo "GOMODCACHE=$RUNNER_TEMP/go-mod" >> "$GITHUB_ENV"
           echo "GOCACHE=$RUNNER_TEMP/go-build" >> "$GITHUB_ENV"
       # Restore before mise's Go tool installs populate the module cache.
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: |
             ${{ env.GOMODCACHE }}
@@ -88,7 +88,7 @@ jobs:
         run: |
           pnpm_store=$(pnpm --dir frontend store path --silent)
           echo "store=$pnpm_store" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6
         with:
           path: ${{ steps.pnpm.outputs.store }}
           key: pnpm-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'frontend/pnpm-lock.yaml') }}
@@ -125,7 +125,7 @@ jobs:
               ditto -c -k --norsrc --keepParent "bin/PZ Admin.app" ".generated/artifacts/$name-update.zip"
               ;;
           esac
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: pz-admin-${{ matrix.filename_os }}-${{ matrix.filename_arch }}
           path: .generated/artifacts/*

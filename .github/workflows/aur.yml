@@ -54,7 +54,7 @@ jobs:
         run: |
           python3 scripts/aur/prepare.py "$RELEASE_TAG" "$GH_REPO" packages .generated/aur
           echo "version=${RELEASE_TAG#v}-1" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: aur-pz-admin-bin
           path: .generated/aur/PKGBUILD
@@ -62,7 +62,7 @@ jobs:
           retention-days: 7
       # Enable publishing after the AUR account and SSH key are configured.
       # - name: Publish AUR package
-      #   uses: KSXGitHub/github-actions-deploy-aur@2ac5a4c1d7035885d46b10e3193393be8460b6f1 # v4.1.1
+      #   uses: KSXGitHub/github-actions-deploy-aur@2ac5a4c1d7035885d46b10e3193393be8460b6f1 # v4
       #   with:
       #     pkgname: pz-admin-bin
       #     pkgbuild: .generated/aur/PKGBUILD

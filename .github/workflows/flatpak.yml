@@ -67,14 +67,14 @@ jobs:
           mkdir -p .generated/artifacts
           version=$(tr -d '\r\n' < VERSION)
           cp bin/pz-admin.flatpak ".generated/artifacts/pz-admin-$version-linux-${{ matrix.filename_arch }}.flatpak"
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: pz-admin-flatpak-${{ matrix.arch }}
           path: .generated/artifacts/*.flatpak
           if-no-files-found: error
           compression-level: 0
           retention-days: 1
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
         with:
           name: flathub-manifest-${{ matrix.arch }}
           path: |

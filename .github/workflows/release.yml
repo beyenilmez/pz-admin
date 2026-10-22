@@ -27,7 +27,7 @@ jobs:
       created: ${{ steps.release.outputs.release_created }}
       tag: ${{ steps.release.outputs.tag_name }}
     steps:
-      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5
         id: release
         with:
           token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
@@ -68,7 +68,7 @@ jobs:
         with:
           cache_key_prefix: mise-nocgo-v1
           install_args: --locked go go:github.com/wailsapp/wails/v3/cmd/wails3
-      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           pattern: pz-admin-*
           path: packages
