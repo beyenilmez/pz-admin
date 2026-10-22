@@ -35,7 +35,7 @@ jobs:
       GH_REPO: ${{ github.repository }}
       RELEASE_TAG: ${{ inputs.release_tag }}
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Download latest release packages
@@ -54,7 +54,7 @@ jobs:
         run: |
           python3 scripts/aur/prepare.py "$RELEASE_TAG" "$GH_REPO" packages .generated/aur
           echo "version=${RELEASE_TAG#v}-1" >> "$GITHUB_OUTPUT"
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: aur-pz-admin-bin
           path: .generated/aur/PKGBUILD

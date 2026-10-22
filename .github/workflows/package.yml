@@ -59,7 +59,7 @@ jobs:
       run:
         shell: bash
     steps:
-      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
           ref: ${{ inputs.ref || github.sha }}
@@ -80,7 +80,7 @@ jobs:
             ${{ env.GOCACHE }}
           key: go-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('mise.lock', 'go.sum') }}
           restore-keys: go-${{ runner.os }}-${{ runner.arch }}-
-      - uses: jdx/mise-action@c2a87611a18de5b3828c5652fe268e992400cb5c # v4
+      - uses: jdx/mise-action@8418fedb1110381a0d3ba51a7a415d7c1b884550 # v5
         with:
           install_args: --locked go node npm:pnpm go:github.com/wailsapp/wails/v3/cmd/wails3 go:github.com/google/go-licenses/v2 ${{ runner.os == 'Windows' && 'http:nsis' || '' }}
       - name: Locate pnpm store
@@ -125,7 +125,7 @@ jobs:
               ditto -c -k --norsrc --keepParent "bin/PZ Admin.app" ".generated/artifacts/$name-update.zip"
               ;;
           esac
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: pz-admin-${{ matrix.filename_os }}-${{ matrix.filename_arch }}
           path: .generated/artifacts/*
