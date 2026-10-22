@@ -74,6 +74,7 @@ export function InstallationInstructions({
       ) : null}
       {platform === "macos" ? (
         <Stack gap="sm">
+          <Text size="sm">Requires macOS 13 Ventura or later.</Text>
           <Text size="sm">
             Open the DMG and drag PZ Admin into Applications.
           </Text>
