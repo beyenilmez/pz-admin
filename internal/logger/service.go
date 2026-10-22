@@ -4,6 +4,9 @@ import (
 	"log/slog"
 	"regexp"
 	"strings"
+
+	"github.com/beyenilmez/pz-admin/internal/config"
+	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
 const (
@@ -27,16 +30,24 @@ type FrontendError struct {
 	Route          string `json:"route"`
 }
 
-// Service accepts unexpected frontend errors for the application log.
-type Service struct{}
+const LogWindowName = "application-logs"
 
-// NewService creates the frontend logging boundary.
-func NewService() *Service {
-	return &Service{}
+// Service exposes application logging to the frontend.
+type Service struct {
+	bundle *Bundle
+	config *config.Service
+}
+
+func NewService(bundle *Bundle, configService *config.Service) *Service {
+	return &Service{bundle: bundle, config: configService}
 }
 
 // ReportFrontendError writes a bounded and redacted frontend error.
 func (s *Service) ReportFrontendError(report FrontendError) {
+	reportFrontendError(report)
+}
+
+func reportFrontendError(report FrontendError) {
 	report.Source = cleanFrontendField(report.Source, maxFrontendSourceLength)
 	report.Name = cleanFrontendField(report.Name, maxFrontendNameLength)
 	report.Message = cleanFrontendField(report.Message, maxFrontendMessageLength)
@@ -62,6 +73,48 @@ func (s *Service) ReportFrontendError(report FrontendError) {
 		return
 	}
 	slog.Error("frontend failure", attrs...)
+}
+
+func (s *Service) Read(afterID int64) Update {
+	return s.bundle.History.Read(afterID)
+}
+
+func (s *Service) OpenWindow() {
+	application.InvokeAsync(func() {
+		// Show current window if already opened
+		app := application.Get()
+		if window, ok := app.Window.GetByName(LogWindowName); ok {
+			window.UnMinimise()
+			window.Show()
+			window.Focus()
+			return
+		}
+
+		// Choose which background color to show before frontend loads
+		theme := s.config.Config().Theme
+		background := application.NewRGB(255, 255, 255)
+		if theme == config.ThemeDark || (theme == config.ThemeSystem && app.Env.IsDarkMode()) {
+			background = application.NewRGB(36, 36, 36)
+		}
+
+		app.Window.NewWithOptions(application.WebviewWindowOptions{
+			Name:             LogWindowName,
+			Title:            "PZ Admin — Application logs",
+			Width:            960,
+			Height:           640,
+			MinWidth:         320,
+			MinHeight:        320,
+			BackgroundColour: background,
+			URL:              "/?view=logs",
+			Permissions: map[application.PermissionType]application.Permission{
+				application.PermissionMicrophone:    application.PermissionDeny,
+				application.PermissionCamera:        application.PermissionDeny,
+				application.PermissionGeolocation:   application.PermissionDeny,
+				application.PermissionNotifications: application.PermissionDeny,
+				application.PermissionClipboardRead: application.PermissionDeny,
+			},
+		})
+	})
 }
 
 func cleanFrontendField(value string, limit int) string {

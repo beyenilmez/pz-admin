@@ -17,7 +17,7 @@ export function formatDiagnostics(
     version: APP_VERSION,
     os: info.OS,
     arch: info.Arch,
-    debug: info.Debug,
+    debug_build: info.Debug,
   };
   if (info.OSInfo) {
     fields["os_details.name"] = info.OSInfo.Name;

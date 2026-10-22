@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import "@fontsource-variable/inter";
 import "@fontsource-variable/jetbrains-mono";
@@ -8,11 +8,19 @@ import "@mantine/tiptap/styles.css";
 import "@mantine/notifications/styles.css";
 import "@/i18n";
 import { App } from "./app/App";
-import { AppProviders } from "./app/AppProviders";
+import { AppAppearanceProviders, AppProviders } from "./app/AppProviders";
 import {
   installFrontendErrorReporting,
   reportFrontendError,
 } from "./app/lib/frontendErrorReporting";
+
+const LogWindow = lazy(() =>
+  import("./features/logs/LogWindow").then((module) => ({
+    default: module.LogWindow,
+  })),
+);
+const isLogWindow =
+  new URLSearchParams(window.location.search).get("view") === "logs";
 
 installFrontendErrorReporting();
 
@@ -42,8 +50,16 @@ ReactDOM.createRoot(rootElement, {
   },
 }).render(
   <React.StrictMode>
-    <AppProviders>
-      <App />
-    </AppProviders>
+    {isLogWindow ? (
+      <AppAppearanceProviders>
+        <Suspense fallback={null}>
+          <LogWindow />
+        </Suspense>
+      </AppAppearanceProviders>
+    ) : (
+      <AppProviders>
+        <App />
+      </AppProviders>
+    )}
   </React.StrictMode>,
 );

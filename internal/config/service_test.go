@@ -212,3 +212,49 @@ func readConfigFile(t *testing.T, path string) []byte {
 	}
 	return data
 }
+
+func TestService_DebugLoggingStartup(t *testing.T) {
+	service := newStartedConfigService(t)
+	for _, enabled := range []bool{true, false} {
+		if err := service.SetDebugLogging(enabled); err != nil {
+			t.Fatal(err)
+		}
+		if service.Config().DebugLogging != enabled || startupDebugLogging(service.dir) != enabled {
+			t.Fatalf("debug logging = %t was not saved", enabled)
+		}
+	}
+	dir := t.TempDir()
+	if startupDebugLogging(dir) {
+		t.Fatal("missing config enables debug")
+	}
+	if _, err := os.Stat(filepath.Join(dir, configFileName)); !errors.Is(err, os.ErrNotExist) {
+		t.Fatal("early read created config before migration")
+	}
+	invalid := newConfigServiceWithFile(t, []byte(`{"debugLogging":true,"theme":"invalid"}`))
+	if startupDebugLogging(invalid.dir) {
+		t.Fatal("invalid config should use safe defaults")
+	}
+	// An existing file cannot serve as the config directory.
+	service.dir = configPath(service)
+	if err := service.SetDebugLogging(true); err == nil {
+		t.Fatal("expected persistence failure")
+	}
+	if service.Config().DebugLogging {
+		t.Fatal("failed save changed setting")
+	}
+}
+
+func TestStartupRecoversDebugLoggingPreference(t *testing.T) {
+	service := newConfigServiceWithFile(t, []byte(`{"theme":"system","debugLogging":true}`))
+	startConfigService(t, service)
+	if !service.Config().DebugLogging {
+		t.Fatal("startup did not load debug logging")
+	}
+	if err := os.WriteFile(configPath(service), []byte("invalid json"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	startConfigService(t, service)
+	if service.Config().DebugLogging {
+		t.Fatal("recovery did not restore the default debug preference")
+	}
+}

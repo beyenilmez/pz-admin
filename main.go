@@ -6,6 +6,7 @@ import (
 	"log/slog"
 	"os"
 	"strings"
+	"sync"
 	"sync/atomic"
 
 	"github.com/beyenilmez/pz-admin/internal/config"
@@ -54,22 +55,16 @@ func main() {
 }
 
 func run() error {
-	lg, err := logger.New(logger.Options{})
+	initialLevel := slog.LevelInfo
+	if config.StartupDebugLogging() {
+		initialLevel = slog.LevelDebug
+	}
+	lg, err := logger.New(logger.Options{FileLevel: initialLevel})
 	if err != nil {
 		return fmt.Errorf("initialize logger: %w", err)
 	}
 	defer lg.Close()
 	slog.SetDefault(lg.Logger)
-
-	if lvl := os.Getenv("PZ_ADMIN_LOG"); lvl != "" {
-		var level slog.Level
-		if err := level.UnmarshalText([]byte(lvl)); err != nil {
-			lg.Logger.Warn("invalid file log level", "setting", "PZ_ADMIN_LOG", "value", lvl, "err", err)
-		} else {
-			lg.LevelVar.Set(level)
-			lg.Logger.Info("file log level overridden", "level", level)
-		}
-	}
 
 	lg.Logger.Info("pz-admin starting",
 		"version", buildVersion(),
@@ -81,7 +76,7 @@ func run() error {
 
 	// Service instances
 	configSvc := config.NewService()
-	frontendLogSvc := logger.NewService()
+	loggerSvc := logger.NewService(lg, configSvc)
 	noticesSvc := notices.NewService(applicationLicense, thirdPartyNotices)
 	playerSvc := player.NewService()
 	profileSvc := profile.NewService(playerSvc)
@@ -95,7 +90,7 @@ func run() error {
 	app := application.New(application.Options{
 		Name:        "PZ Admin",
 		Description: "Project Zomboid server administration tool",
-		Logger:      lg.Logger,
+		Logger:      lg.FrameworkLogger(),
 		SingleInstance: &application.SingleInstanceOptions{
 			UniqueID: "com.bedirhanyenilmez.pzadmin",
 			OnSecondInstanceLaunch: func(_ application.SecondInstanceData) {
@@ -115,7 +110,7 @@ func run() error {
 		Services: []application.Service{
 			application.NewService(&diagnostics.Service{}),
 			application.NewService(configSvc),
-			application.NewService(frontendLogSvc),
+			application.NewService(loggerSvc),
 			application.NewService(noticesSvc),
 			application.NewService(playerSvc),
 			application.NewService(profileSvc),
@@ -136,10 +131,23 @@ func run() error {
 			ApplicationID: "com.bedirhanyenilmez.pzadmin",
 		},
 	})
+
+	var logLevelMu sync.Mutex
+	applyLogLevel := func() {
+		logLevelMu.Lock()
+		defer logLevelMu.Unlock()
+		lg.SetDebugLogging(configSvc.Config().DebugLogging)
+	}
+	app.Event.On(config.ChangedEvent, func(_ *application.CustomEvent) {
+		applyLogLevel()
+	})
+
 	if err := update.Setup(app, buildVersion(), configSvc); err != nil {
 		return fmt.Errorf("updater setup: %w", err)
 	}
+
 	app.Event.OnApplicationEvent(events.Common.ApplicationStarted, func(_ *application.ApplicationEvent) {
+		applyLogLevel()
 		application.InvokeAsync(func() {
 			envInfo := app.Env.Info()
 			attributes := []any{
@@ -156,7 +164,7 @@ func run() error {
 			if len(envInfo.PlatformInfo) > 0 {
 				attributes = append(attributes, "platform", envInfo.PlatformInfo)
 			}
-			app.Logger.Info("environment information", attributes...)
+			lg.Logger.Info("environment information", attributes...)
 
 			// Native theme detection and saved settings are ready only after startup.
 			theme := configSvc.Config().Theme
@@ -167,7 +175,7 @@ func run() error {
 			}
 
 			// Use a named, resizable main window with native window decorations.
-			app.Window.NewWithOptions(application.WebviewWindowOptions{
+			mainWindow := app.Window.NewWithOptions(application.WebviewWindowOptions{
 				Name:      mainWindowName,
 				Title:     "PZ Admin",
 				Width:     1200,
@@ -187,6 +195,12 @@ func run() error {
 					application.PermissionNotifications: application.PermissionDeny,
 					application.PermissionClipboardRead: application.PermissionDeny,
 				},
+			})
+			// Avoid leaving the app running with only the log window open.
+			mainWindow.OnWindowEvent(events.Common.WindowClosing, func(_ *application.WindowEvent) {
+				if window, ok := app.Window.GetByName(logger.LogWindowName); ok {
+					window.Close()
+				}
 			})
 			started.Store(true)
 		})

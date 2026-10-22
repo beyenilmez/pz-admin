@@ -8,6 +8,9 @@ import { Create as $Create } from "@wailsio/runtime";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import * as config$0 from "../../../../beyenilmez/pz-admin/internal/config/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import * as player$0 from "../../../../beyenilmez/pz-admin/internal/player/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -15,13 +18,15 @@ import * as session$0 from "../../../../beyenilmez/pz-admin/internal/session/mod
 
 function configure() {
     Object.freeze(Object.assign($Create.Events, {
-        "players:changed": $$createType0,
-        "session:changed": $$createType1,
+        "config:changed": $$createType0,
+        "players:changed": $$createType1,
+        "session:changed": $$createType2,
     }));
 }
 
 // Private type creation functions
-const $$createType0 = player$0.Update.createFrom;
-const $$createType1 = session$0.Snapshot.createFrom;
+const $$createType0 = config$0.Config.createFrom;
+const $$createType1 = player$0.Update.createFrom;
+const $$createType2 = session$0.Snapshot.createFrom;
 
 configure();

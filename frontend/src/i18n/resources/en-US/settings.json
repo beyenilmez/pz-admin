@@ -18,9 +18,6 @@
     }
   },
   "diagnostics": {
-    "actions": {
-      "copy": "Copy diagnostic information"
-    },
     "description": "Share this information when reporting a problem.",
     "errors": {
       "load": {
@@ -41,6 +38,26 @@
   "language": {
     "description": "Choose the application language.",
     "label": "Language"
+  },
+  "logs": {
+    "actions": {
+      "open": "View logs"
+    },
+    "debug": {
+      "description": "Record extra detail to help investigate problems.",
+      "label": "Debug logging"
+    },
+    "errors": {
+      "open": "Could not open logs",
+      "read": "Could not load logs"
+    },
+    "output": {
+      "empty": "No log entries yet.",
+      "label": "Log entries",
+      "loading": "Loading logs…",
+      "truncated": "[truncated]"
+    },
+    "title": "Application logs"
   },
   "notices": {
     "actions": {

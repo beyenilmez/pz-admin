@@ -25,6 +25,13 @@ export function Config(): $CancellablePromise<$models.Config> {
 }
 
 /**
+ * SetDebugLogging persists the logging preference.
+ */
+export function SetDebugLogging(enabled: boolean): $CancellablePromise<void> {
+    return $Call.ByID(3178329397, enabled);
+}
+
+/**
  * SetDownloadUpdatesOnStartup controls automatic update downloads at startup.
  */
 export function SetDownloadUpdatesOnStartup(enabled: boolean): $CancellablePromise<void> {

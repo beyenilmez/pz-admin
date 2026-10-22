@@ -132,10 +132,16 @@ function vehicleCatalog(
 
 function mockLanguage(language: LanguageSetting) {
   vi.mocked(useAppConfig).mockReturnValue({
-    config: { language, theme: "system", downloadUpdatesOnStartup: true },
+    config: {
+      language,
+      theme: "system",
+      debugLogging: false,
+      downloadUpdatesOnStartup: true,
+    },
     error: null,
     loading: false,
     reload: vi.fn(),
+    setDebugLogging: vi.fn(async () => undefined),
     setDownloadUpdatesOnStartup: vi.fn(async () => undefined),
     setLanguage: vi.fn(async () => undefined),
     setTheme: vi.fn(async () => undefined),

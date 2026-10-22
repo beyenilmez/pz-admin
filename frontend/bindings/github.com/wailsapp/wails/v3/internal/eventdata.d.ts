@@ -7,6 +7,9 @@ import type { Events } from "@wailsio/runtime";
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
+import type * as config$0 from "../../../../beyenilmez/pz-admin/internal/config/models.js";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore: Unused imports
 import type * as player$0 from "../../../../beyenilmez/pz-admin/internal/player/models.js";
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore: Unused imports
@@ -15,6 +18,7 @@ import type * as session$0 from "../../../../beyenilmez/pz-admin/internal/sessio
 declare module "@wailsio/runtime" {
     namespace Events {
         interface CustomEvents {
+            "config:changed": config$0.Config;
             "players:changed": player$0.Update;
             "session:changed": session$0.Snapshot;
         }

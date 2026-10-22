@@ -15,6 +15,7 @@ import { useTranslation } from "react-i18next";
 import { errorMessage } from "@/shared/lib/errors";
 import { CopyValueButton } from "@/shared/components/CopyValueButton";
 import { formatDiagnostics } from "@/features/settings/lib/diagnostics";
+import { LoggingControls } from "./LoggingControls";
 
 export function DiagnosticsSection() {
   const { t } = useTranslation(["settings", "common"]);
@@ -81,12 +82,13 @@ export function DiagnosticsSection() {
             <CopyValueButton
               variant="subtle"
               value={report}
-              copyLabel={t("diagnostics.actions.copy")}
+              copyLabel={t("actions.copy", { ns: "common" })}
               copiedLabel={t("actions.copied", { ns: "common" })}
             />
           </Box>
         </Box>
       )}
+      <LoggingControls />
     </Stack>
   );
 }

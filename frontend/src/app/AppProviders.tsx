@@ -13,7 +13,7 @@ interface AppProvidersProps {
   children: ReactNode;
 }
 
-export function AppProviders({ children }: AppProvidersProps) {
+export function AppAppearanceProviders({ children }: AppProvidersProps) {
   const { t } = useTranslation("common");
   const closeButtonLabel = t("actions.close");
   const theme = useMemo(
@@ -29,11 +29,17 @@ export function AppProviders({ children }: AppProvidersProps) {
     >
       <NativeWindowTheme />
       <Notifications />
-      <AppConfigProvider>
-        <SessionProvider>
-          <PlayersProvider>{children}</PlayersProvider>
-        </SessionProvider>
-      </AppConfigProvider>
+      <AppConfigProvider>{children}</AppConfigProvider>
     </MantineProvider>
+  );
+}
+
+export function AppProviders({ children }: AppProvidersProps) {
+  return (
+    <AppAppearanceProviders>
+      <SessionProvider>
+        <PlayersProvider>{children}</PlayersProvider>
+      </SessionProvider>
+    </AppAppearanceProviders>
   );
 }

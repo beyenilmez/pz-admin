@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestService_ReportFrontendErrorLevel(t *testing.T) {
+func TestReportFrontendErrorLevel(t *testing.T) {
 	for _, test := range []struct {
 		source string
 		level  string
@@ -18,7 +18,7 @@ func TestService_ReportFrontendErrorLevel(t *testing.T) {
 	} {
 		t.Run(test.source, func(t *testing.T) {
 			output := captureFrontendLog(t)
-			NewService().ReportFrontendError(FrontendError{Source: test.source, Message: "failure"})
+			reportFrontendError(FrontendError{Source: test.source, Message: "failure"})
 			if logged := output.String(); !strings.Contains(logged, test.level) {
 				t.Errorf("log = %q, want %s", logged, test.level)
 			}
@@ -26,9 +26,9 @@ func TestService_ReportFrontendErrorLevel(t *testing.T) {
 	}
 }
 
-func TestService_ReportFrontendErrorSanitizesEveryField(t *testing.T) {
+func TestReportFrontendErrorSanitizesEveryField(t *testing.T) {
 	output := captureFrontendLog(t)
-	NewService().ReportFrontendError(FrontendError{
+	reportFrontendError(FrontendError{
 		Source:         "password=source-secret",
 		Name:           "password=name-secret",
 		Message:        "password=message-secret",

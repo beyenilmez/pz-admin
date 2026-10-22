@@ -18,9 +18,6 @@
     }
   },
   "diagnostics": {
-    "actions": {
-      "copy": "Tanılama bilgilerini kopyala"
-    },
     "description": "Bir sorun bildirirken bu bilgileri paylaşın.",
     "errors": {
       "load": {
@@ -41,6 +38,26 @@
   "language": {
     "description": "Uygulama dilini seçin.",
     "label": "Dil"
+  },
+  "logs": {
+    "actions": {
+      "open": "Günlükleri görüntüle"
+    },
+    "debug": {
+      "description": "Sorunları araştırmaya yardımcı olmak için daha fazla ayrıntı kaydeder.",
+      "label": "Hata ayıklama günlüğü"
+    },
+    "errors": {
+      "open": "Günlükler açılamadı",
+      "read": "Günlükler yüklenemedi"
+    },
+    "output": {
+      "empty": "Henüz bir günlük kaydı yok.",
+      "label": "Günlük kayıtları",
+      "loading": "Günlükler yükleniyor…",
+      "truncated": "[kısaltıldı]"
+    },
+    "title": "Uygulama günlükleri"
   },
   "notices": {
     "actions": {

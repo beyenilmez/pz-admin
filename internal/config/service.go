@@ -18,7 +18,10 @@ import (
 const (
 	configFileName = "config.json"
 	configBakExt   = ".bak"
+	ChangedEvent   = "config:changed"
 )
+
+func init() { application.RegisterEvent[Config](ChangedEvent) }
 
 // Service is the Wails v3 service for application configuration. It loads the
 // configuration at startup and persists every update atomically.
@@ -60,6 +63,30 @@ func (s *Service) SetDownloadUpdatesOnStartup(enabled bool) error {
 	return s.update(func(c *Config) { c.DownloadUpdatesOnStartup = enabled })
 }
 
+// SetDebugLogging persists the logging preference.
+func (s *Service) SetDebugLogging(enabled bool) error {
+	return s.update(func(c *Config) { c.DebugLogging = enabled })
+}
+
+// StartupDebugLogging reads the preference without creating configuration or
+// running service startup. In particular, v1 migration must run before a new
+// configuration is created. The service handles invalid files and recovery later.
+func StartupDebugLogging() bool {
+	return startupDebugLogging(appdata.ConfigDir())
+}
+
+func startupDebugLogging(dir string) bool {
+	data, err := os.ReadFile(filepath.Join(dir, configFileName))
+	if err != nil {
+		return false
+	}
+	cfg := defaults()
+	if json.Unmarshal(data, &cfg) != nil || cfg.Validate() != nil {
+		return false
+	}
+	return cfg.DebugLogging
+}
+
 // update validates and persists a copy before committing it to memory. A
 // failed write restores the previous state so Config never reports unpersisted
 // data.
@@ -81,6 +108,9 @@ func (s *Service) update(mutate func(*Config)) error {
 		s.cfg = prev
 		return err
 	}
+	if app := application.Get(); app != nil {
+		app.Event.Emit(ChangedEvent, s.cfg)
+	}
 	return nil
 }
 
@@ -89,9 +119,10 @@ func (s *Service) update(mutate func(*Config)) error {
 func (s *Service) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
-	s.dir = s.resolveDir()
 
+	s.dir = s.resolveDir()
 	s.cfg = defaults()
+
 	data, err := os.ReadFile(filepath.Join(s.dir, configFileName))
 	if errors.Is(err, os.ErrNotExist) {
 		if err := s.save(); err != nil {

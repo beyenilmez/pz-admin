@@ -1,12 +1,14 @@
-import { StrictMode, type ReactNode } from "react";
+import { Events } from "@wailsio/runtime";
+import { StrictMode } from "react";
 import { act, render, waitFor } from "@/test/render";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Config as ConfigModel } from "@bindings/internal/config/models";
 import {
   Config,
   SetLanguage,
   SetTheme,
   SetDownloadUpdatesOnStartup,
+  SetDebugLogging,
 } from "@bindings/internal/config/service";
 import i18n from "@/i18n";
 import { defaultLanguage } from "@/i18n/locales";
@@ -29,6 +31,7 @@ vi.mock("@bindings/internal/config/service", () => ({
   SetLanguage: vi.fn(),
   SetTheme: vi.fn(),
   SetDownloadUpdatesOnStartup: vi.fn(),
+  SetDebugLogging: vi.fn(),
 }));
 
 let appConfig: ReturnType<typeof useAppConfig>;
@@ -38,9 +41,29 @@ function ConfigProbe() {
   return null;
 }
 
-function renderProvider(children: ReactNode = <ConfigProbe />) {
-  return render(<AppConfigProvider>{children}</AppConfigProvider>);
+function renderProvider() {
+  return render(
+    <AppConfigProvider>
+      <ConfigProbe />
+    </AppConfigProvider>,
+  );
 }
+
+beforeEach(() => {
+  vi.mocked(Config).mockResolvedValue(
+    new ConfigModel({
+      language: defaultLanguage,
+      theme: "system",
+      debugLogging: false,
+      downloadUpdatesOnStartup: true,
+    }),
+  );
+  vi.mocked(SetLanguage).mockResolvedValue(undefined);
+  vi.mocked(SetTheme).mockResolvedValue(undefined);
+  vi.mocked(SetDebugLogging).mockResolvedValue(undefined);
+  vi.mocked(SetDownloadUpdatesOnStartup).mockResolvedValue(undefined);
+  vi.mocked(Events.On).mockImplementation(() => vi.fn());
+});
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -49,29 +72,6 @@ afterEach(() => {
 });
 
 describe("AppConfigProvider", () => {
-  it("persists the update preference and preserves it after a failed save", async () => {
-    vi.mocked(Config).mockResolvedValue(
-      new ConfigModel({
-        language: defaultLanguage,
-        theme: "system",
-        downloadUpdatesOnStartup: true,
-      }),
-    );
-    vi.mocked(SetDownloadUpdatesOnStartup).mockResolvedValue(undefined);
-    renderProvider();
-    await waitFor(() => expect(appConfig.loading).toBe(false));
-    expect(appConfig.config?.downloadUpdatesOnStartup).toBe(true);
-    await act(async () => appConfig.setDownloadUpdatesOnStartup(false));
-    expect(SetDownloadUpdatesOnStartup).toHaveBeenCalledWith(false);
-    expect(appConfig.config?.downloadUpdatesOnStartup).toBe(false);
-    vi.mocked(SetDownloadUpdatesOnStartup).mockRejectedValue(
-      new Error("write-failure"),
-    );
-    await act(async () => appConfig.setDownloadUpdatesOnStartup(true));
-    expect(appConfig.config?.downloadUpdatesOnStartup).toBe(false);
-    expect(appConfig.error).toBe("write-failure");
-  });
-
   it("detects and saves the initial language once under StrictMode", async () => {
     vi.spyOn(navigator, "languages", "get").mockReturnValue(["tr"]);
     vi.mocked(Config)
@@ -79,8 +79,6 @@ describe("AppConfigProvider", () => {
       .mockResolvedValue(
         new ConfigModel({ language: "tr-TR", theme: "system" }),
       );
-    vi.mocked(SetLanguage).mockResolvedValue(undefined);
-
     render(
       <StrictMode>
         <AppConfigProvider>
@@ -103,7 +101,6 @@ describe("AppConfigProvider", () => {
     vi.mocked(Config).mockResolvedValue(
       new ConfigModel({ language: "", theme: "system" }),
     );
-    vi.mocked(SetLanguage).mockResolvedValue(undefined);
     renderProvider();
     await waitFor(() => expect(appConfig.loading).toBe(false));
     expect(SetLanguage).toHaveBeenCalledExactlyOnceWith(defaultLanguage);
@@ -171,6 +168,7 @@ describe("AppConfigProvider", () => {
       await waitFor(() => expect(i18n.language).toBe(expectedLanguage));
 
       expect(appConfig.config).toEqual({
+        debugLogging: false,
         downloadUpdatesOnStartup: false,
         language: expectedLanguage,
         theme,
@@ -181,17 +179,6 @@ describe("AppConfigProvider", () => {
       expect(SetLanguage).not.toHaveBeenCalled();
     },
   );
-
-  it("exposes a configuration load failure", async () => {
-    vi.mocked(Config).mockRejectedValue(new Error("config-load-failure"));
-
-    renderProvider();
-    await waitFor(() => expect(appConfig.loading).toBe(false));
-
-    expect(appConfig.config).toBeNull();
-    expect(appConfig.error).toBe("config-load-failure");
-    expect(setColorScheme).not.toHaveBeenCalled();
-  });
 
   it("retries a failed configuration load", async () => {
     vi.mocked(Config)
@@ -209,6 +196,7 @@ describe("AppConfigProvider", () => {
     await waitFor(() => expect(appConfig.loading).toBe(false));
     expect(Config).toHaveBeenCalledTimes(2);
     expect(appConfig.config).toEqual({
+      debugLogging: false,
       downloadUpdatesOnStartup: false,
       language: defaultLanguage,
       theme: "dark",
@@ -216,74 +204,85 @@ describe("AppConfigProvider", () => {
     expect(appConfig.error).toBeNull();
   });
 
-  it("saves and applies language and theme changes", async () => {
-    vi.mocked(Config).mockResolvedValue(
-      new ConfigModel({ language: defaultLanguage, theme: "dark" }),
-    );
-    vi.mocked(SetLanguage).mockResolvedValue(undefined);
-    vi.mocked(SetTheme).mockResolvedValue(undefined);
-    renderProvider();
+  it.each([
+    {
+      setting: "theme",
+      save: SetTheme,
+      change: () => appConfig.setTheme("dark"),
+      revert: () => appConfig.setTheme("system"),
+      patch: { theme: "dark" },
+      argument: "dark",
+    },
+    {
+      setting: "language",
+      save: SetLanguage,
+      change: () => appConfig.setLanguage("tr-TR"),
+      revert: () => appConfig.setLanguage(defaultLanguage),
+      patch: { language: "tr-TR" },
+      argument: "tr-TR",
+    },
+    {
+      setting: "debug logging",
+      save: SetDebugLogging,
+      change: () => appConfig.setDebugLogging(true),
+      revert: () => appConfig.setDebugLogging(false),
+      patch: { debugLogging: true },
+      argument: true,
+    },
+    {
+      setting: "automatic updates",
+      save: SetDownloadUpdatesOnStartup,
+      change: () => appConfig.setDownloadUpdatesOnStartup(false),
+      revert: () => appConfig.setDownloadUpdatesOnStartup(true),
+      patch: { downloadUpdatesOnStartup: false },
+      argument: false,
+    },
+  ])(
+    "saves $setting and preserves it if the next save fails",
+    async ({ save, change, revert, patch, argument }) => {
+      renderProvider();
+      await waitFor(() => expect(appConfig.loading).toBe(false));
+      const initial = appConfig.config;
+
+      await act(change);
+      expect(save).toHaveBeenCalledWith(argument);
+      expect(appConfig.config).toEqual({ ...initial, ...patch });
+      expect(appConfig.error).toBeNull();
+      if (patch.theme) expect(setColorScheme).toHaveBeenLastCalledWith("dark");
+      if (patch.language) {
+        expect(i18n.language).toBe("tr-TR");
+        expect(document.documentElement.lang).toBe("tr-TR");
+      }
+
+      vi.mocked(save).mockRejectedValueOnce(new Error("write failed"));
+      await act(revert);
+      expect(appConfig.config).toEqual({ ...initial, ...patch });
+      expect(appConfig.error).toBe("write failed");
+    },
+  );
+
+  it("applies configuration events and unsubscribes on unmount", async () => {
+    const { unmount } = renderProvider();
     await waitFor(() => expect(appConfig.loading).toBe(false));
-
-    await act(async () => {
-      await appConfig.setLanguage("tr-TR");
-    });
-    await waitFor(() => expect(i18n.language).toBe("tr-TR"));
-
-    expect(SetLanguage).toHaveBeenCalledOnce();
-    expect(SetLanguage).toHaveBeenCalledWith("tr-TR");
-    expect(appConfig.config).toEqual({
-      language: "tr-TR",
+    const [eventName, onChange] = vi.mocked(Events.On).mock.calls[0];
+    const unsubscribe = vi.mocked(Events.On).mock.results[0].value;
+    expect(eventName).toBe("config:changed");
+    const saved = new ConfigModel({
       theme: "dark",
+      language: "tr-TR",
+      debugLogging: true,
       downloadUpdatesOnStartup: false,
     });
+
+    act(() => onChange({ name: "config:changed", data: saved }));
+
+    expect(appConfig.config).toEqual(saved);
+    expect(setColorScheme).toHaveBeenLastCalledWith("dark");
+    expect(i18n.language).toBe("tr-TR");
     expect(document.documentElement.lang).toBe("tr-TR");
-
-    await act(async () => {
-      await appConfig.setTheme("system");
-    });
-
-    expect(SetTheme).toHaveBeenCalledOnce();
-    expect(SetTheme).toHaveBeenCalledWith("system");
-    expect(appConfig.config).toEqual({
-      language: "tr-TR",
-      theme: "system",
-      downloadUpdatesOnStartup: false,
-    });
-    expect(setColorScheme).toHaveBeenLastCalledWith("auto");
-    expect(appConfig.error).toBeNull();
-  });
-
-  it("preserves loaded settings and exposes failed writes", async () => {
-    const initialConfig = {
-      language: defaultLanguage,
-      theme: "dark",
-      downloadUpdatesOnStartup: false,
-    } as const;
-    vi.mocked(Config).mockResolvedValue(new ConfigModel(initialConfig));
-    vi.mocked(SetLanguage).mockRejectedValue(
-      new Error("language-write-failure"),
-    );
-    vi.mocked(SetTheme).mockRejectedValue(new Error("theme-write-failure"));
-    renderProvider();
-    await waitFor(() => expect(appConfig.loading).toBe(false));
-
-    await act(async () => {
-      await expect(appConfig.setLanguage("tr-TR")).resolves.toBeUndefined();
-    });
-
-    expect(appConfig.config).toEqual(initialConfig);
-    expect(appConfig.error).toBe("language-write-failure");
-    expect(document.documentElement.lang).toBe(defaultLanguage);
-    expect(i18n.language).toBe(defaultLanguage);
-
-    await act(async () => {
-      await expect(appConfig.setTheme("light")).resolves.toBeUndefined();
-    });
-
-    expect(appConfig.config).toEqual(initialConfig);
-    expect(appConfig.error).toBe("theme-write-failure");
-    expect(setColorScheme).toHaveBeenCalledOnce();
-    expect(setColorScheme).toHaveBeenCalledWith("dark");
+    expect(SetTheme).not.toHaveBeenCalled();
+    expect(SetLanguage).not.toHaveBeenCalled();
+    unmount();
+    expect(unsubscribe).toHaveBeenCalledOnce();
   });
 });

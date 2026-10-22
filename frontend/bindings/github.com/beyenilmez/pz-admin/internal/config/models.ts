@@ -12,6 +12,7 @@ export class Config {
     "theme": string;
     "language": string;
     "downloadUpdatesOnStartup": boolean;
+    "debugLogging": boolean;
 
     /** Creates a new Config instance. */
     constructor($$source: Partial<Config> = {}) {
@@ -23,6 +24,9 @@ export class Config {
         }
         if (!("downloadUpdatesOnStartup" in $$source)) {
             this["downloadUpdatesOnStartup"] = false;
+        }
+        if (!("debugLogging" in $$source)) {
+            this["debugLogging"] = false;
         }
 
         Object.assign(this, $$source);

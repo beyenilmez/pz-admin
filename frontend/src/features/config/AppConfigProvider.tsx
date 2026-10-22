@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { Events } from "@wailsio/runtime";
 import { useMantineColorScheme } from "@mantine/core";
 import type { Config as ConfigModel } from "@bindings/internal/config/models";
 import {
@@ -15,6 +16,7 @@ import {
   SetLanguage,
   SetTheme,
   SetDownloadUpdatesOnStartup,
+  SetDebugLogging,
 } from "@bindings/internal/config/service";
 import { errorMessage } from "@/shared/lib/errors";
 import i18n from "@/i18n";
@@ -29,6 +31,7 @@ export type ThemeSetting = "system" | "dark" | "light";
 export type LanguageSetting = SupportedLanguage;
 
 interface AppConfig {
+  debugLogging: boolean;
   downloadUpdatesOnStartup: boolean;
   language: LanguageSetting;
   theme: ThemeSetting;
@@ -38,11 +41,7 @@ export function isThemeSetting(theme: string): theme is ThemeSetting {
   return theme === "system" || theme === "dark" || theme === "light";
 }
 
-function appConfigFromBinding(config: {
-  downloadUpdatesOnStartup: boolean;
-  language: string;
-  theme: string;
-}): AppConfig {
+function appConfigFromBinding(config: ConfigModel): AppConfig {
   if (!isThemeSetting(config.theme)) {
     throw new Error(`Unsupported theme: ${config.theme}`);
   }
@@ -52,6 +51,7 @@ function appConfigFromBinding(config: {
   else if (language === "zh-TW") language = "zh-Hant";
 
   return {
+    debugLogging: config.debugLogging,
     downloadUpdatesOnStartup: config.downloadUpdatesOnStartup,
     language: isSupportedLanguage(language) ? language : defaultLanguage,
     theme: config.theme,
@@ -65,6 +65,7 @@ interface AppConfigContextValue {
   reload: () => void;
   setLanguage: (language: LanguageSetting) => Promise<void>;
   setTheme: (theme: ThemeSetting) => Promise<void>;
+  setDebugLogging: (enabled: boolean) => Promise<void>;
   setDownloadUpdatesOnStartup: (enabled: boolean) => Promise<void>;
 }
 
@@ -85,11 +86,8 @@ function loadConfig() {
       navigator.languages.length ? navigator.languages : [navigator.language],
     );
     await SetLanguage(language);
-    return {
-      theme: config.theme,
-      language,
-      downloadUpdatesOnStartup: config.downloadUpdatesOnStartup,
-    };
+    config.language = language;
+    return config;
   });
   configRequest = request;
 
@@ -104,32 +102,37 @@ function loadConfig() {
 
 export function AppConfigProvider({ children }: AppConfigProviderProps) {
   const { setColorScheme } = useMantineColorScheme();
-  const applyColorScheme = useEffectEvent(setColorScheme);
   const [config, setConfig] = useState<AppConfig | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [loadRevision, setLoadRevision] = useState(0);
+  const [attempt, setAttempt] = useState(0);
+  const applyConfig = useEffectEvent((saved: ConfigModel) => {
+    const nextConfig = appConfigFromBinding(saved);
+    setConfig(nextConfig);
+    setColorScheme(nextConfig.theme === "system" ? "auto" : nextConfig.theme);
+    setError(null);
+    setLoading(false);
+  });
   const activeLanguage = config?.language;
-  const reload = useCallback(
-    () => setLoadRevision((revision) => revision + 1),
-    [],
-  );
+  const reload = useCallback(() => setAttempt((current) => current + 1), []);
 
   useEffect(() => {
     let active = true;
     setError(null);
     setLoading(true);
+    const unsubscribe = Events.On("config:changed", ({ data }) => {
+      if (!active) return;
+      try {
+        applyConfig(data);
+      } catch (cause) {
+        setError(errorMessage(cause));
+      }
+    });
 
     async function initialize() {
       try {
         const loadedConfig = await loadConfig();
-        if (!active) return;
-
-        const nextConfig = appConfigFromBinding(loadedConfig);
-        setConfig(nextConfig);
-        applyColorScheme(
-          nextConfig.theme === "system" ? "auto" : nextConfig.theme,
-        );
+        if (active) applyConfig(loadedConfig);
       } catch (loadError) {
         if (active) setError(errorMessage(loadError));
       } finally {
@@ -141,8 +144,9 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
 
     return () => {
       active = false;
+      unsubscribe();
     };
-  }, [loadRevision]);
+  }, [attempt]);
 
   useEffect(() => {
     if (!activeLanguage) return;
@@ -150,44 +154,20 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
     void i18n.changeLanguage(activeLanguage);
   }, [activeLanguage]);
 
-  const updateTheme = useCallback(
-    async (theme: ThemeSetting) => {
+  const updateConfig = useCallback(
+    async (save: () => Promise<unknown>, patch: Partial<AppConfig>) => {
       setError(null);
       try {
-        await SetTheme(theme);
-        setConfig((current) => current && { ...current, theme });
-        setColorScheme(theme === "system" ? "auto" : theme);
+        await save();
+        setConfig((current) => current && { ...current, ...patch });
+        if (patch.theme) {
+          setColorScheme(patch.theme === "system" ? "auto" : patch.theme);
+        }
       } catch (saveError) {
         setError(errorMessage(saveError));
       }
     },
     [setColorScheme],
-  );
-
-  const updateLanguage = useCallback(async (nextLanguage: LanguageSetting) => {
-    setError(null);
-    try {
-      await SetLanguage(nextLanguage);
-      setConfig((current) => current && { ...current, language: nextLanguage });
-    } catch (saveError) {
-      setError(errorMessage(saveError));
-    }
-  }, []);
-
-  const updateDownloadUpdatesOnStartup = useCallback(
-    async (enabled: boolean) => {
-      setError(null);
-      try {
-        await SetDownloadUpdatesOnStartup(enabled);
-        setConfig(
-          (current) =>
-            current && { ...current, downloadUpdatesOnStartup: enabled },
-        );
-      } catch (saveError) {
-        setError(errorMessage(saveError));
-      }
-    },
-    [],
   );
 
   const value = useMemo<AppConfigContextValue>(
@@ -196,19 +176,17 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
       error,
       loading,
       reload,
-      setLanguage: updateLanguage,
-      setTheme: updateTheme,
-      setDownloadUpdatesOnStartup: updateDownloadUpdatesOnStartup,
+      setLanguage: (language) =>
+        updateConfig(() => SetLanguage(language), { language }),
+      setTheme: (theme) => updateConfig(() => SetTheme(theme), { theme }),
+      setDebugLogging: (enabled) =>
+        updateConfig(() => SetDebugLogging(enabled), { debugLogging: enabled }),
+      setDownloadUpdatesOnStartup: (enabled) =>
+        updateConfig(() => SetDownloadUpdatesOnStartup(enabled), {
+          downloadUpdatesOnStartup: enabled,
+        }),
     }),
-    [
-      config,
-      error,
-      loading,
-      reload,
-      updateLanguage,
-      updateTheme,
-      updateDownloadUpdatesOnStartup,
-    ],
+    [config, error, loading, reload, updateConfig],
   );
 
   return (

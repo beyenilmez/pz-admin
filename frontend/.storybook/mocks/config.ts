@@ -17,3 +17,6 @@ export const SetTheme = fn(async (_theme: string) => {}).mockName("SetTheme");
 export const SetDownloadUpdatesOnStartup = fn(
   async (_enabled: boolean) => {},
 ).mockName("SetDownloadUpdatesOnStartup");
+export const SetDebugLogging = fn(async (_enabled: boolean) => {}).mockName(
+  "SetDebugLogging",
+);

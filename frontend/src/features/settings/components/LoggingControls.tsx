@@ -1,0 +1,63 @@
+import { Alert, Button, Input, Stack, Switch } from "@mantine/core";
+import { useTranslation } from "react-i18next";
+import { OpenWindow } from "@bindings/internal/logger/service";
+import { useId, useState } from "react";
+import { errorMessage } from "@/shared/lib/errors";
+import { useAppConfig } from "@/features/config/AppConfigProvider";
+import classes from "./LoggingControls.module.css";
+
+export function LoggingControls() {
+  const debugInputId = useId();
+  const { t } = useTranslation("settings");
+  const { config, loading, setDebugLogging } = useAppConfig();
+  const [saving, setSaving] = useState(false);
+  const [openError, setOpenError] = useState<string | null>(null);
+
+  async function handleDebugLoggingChange(enabled: boolean) {
+    setSaving(true);
+    await setDebugLogging(enabled);
+    setSaving(false);
+  }
+
+  async function handleOpenLogs() {
+    setOpenError(null);
+    try {
+      await OpenWindow();
+    } catch (cause) {
+      setOpenError(errorMessage(cause));
+    }
+  }
+
+  return (
+    <Stack gap="xs">
+      <div className={classes.row}>
+        <Input.Wrapper
+          id={debugInputId}
+          label={t("logs.debug.label")}
+          description={t("logs.debug.description")}
+        >
+          <Switch
+            id={debugInputId}
+            name="debugLogging"
+            aria-labelledby={`${debugInputId}-label`}
+            aria-describedby={`${debugInputId}-description`}
+            mt="xs"
+            checked={config?.debugLogging ?? false}
+            disabled={loading || !config || saving}
+            onChange={(event) =>
+              void handleDebugLoggingChange(event.currentTarget.checked)
+            }
+          />
+        </Input.Wrapper>
+        <Button variant="default" onClick={() => void handleOpenLogs()}>
+          {t("logs.actions.open")}
+        </Button>
+      </div>
+      {openError && (
+        <Alert color="red" title={t("logs.errors.open")}>
+          {openError}
+        </Alert>
+      )}
+    </Stack>
+  );
+}

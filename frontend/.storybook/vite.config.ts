@@ -16,6 +16,7 @@ export default defineConfig({
       ),
       "@wailsio/runtime": local("./mocks/runtime.ts"),
       // Service overrides must precede the general bindings alias.
+      "@bindings/internal/logger/service": local("./mocks/logger.ts"),
       "@bindings/internal/diagnostics/service": local("./mocks/diagnostics.ts"),
       "@bindings/internal/player/service": local("./mocks/players.ts"),
       "@bindings/internal/session/service": local("./mocks/session.ts"),

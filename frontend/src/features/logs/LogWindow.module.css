@@ -1,0 +1,7 @@
+.window {
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+  overflow: auto;
+}

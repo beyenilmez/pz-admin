@@ -1,6 +1,10 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { System } from "@wailsio/runtime";
 import { Flatpak } from "@bindings/internal/diagnostics/service";
+import { OpenWindow } from "@bindings/internal/logger/service";
+import { Config, SetDebugLogging } from "@bindings/internal/config/service";
+import { Config as ConfigModel } from "@bindings/internal/config/models";
+import { AppConfigProvider } from "@/features/config/AppConfigProvider";
 import { FlatpakInfo } from "@bindings/internal/diagnostics/models";
 import i18n from "@/i18n";
 import { fireEvent, render, screen } from "@/test/render";
@@ -9,9 +13,27 @@ import { formatDiagnostics } from "@/features/settings/lib/diagnostics";
 
 vi.mock("@wailsio/runtime", () => ({
   System: { Environment: vi.fn() },
+  Events: { On: vi.fn(() => () => {}) },
 }));
 
 vi.mock("@bindings/internal/diagnostics/service", () => ({ Flatpak: vi.fn() }));
+
+vi.mock("@bindings/internal/logger/service", () => ({ OpenWindow: vi.fn() }));
+vi.mock("@bindings/internal/config/service", () => ({
+  Config: vi.fn(),
+  SetDebugLogging: vi.fn(),
+  SetLanguage: vi.fn(),
+  SetTheme: vi.fn(),
+  SetDownloadUpdatesOnStartup: vi.fn(),
+}));
+
+function renderDiagnostics() {
+  return render(
+    <AppConfigProvider>
+      <DiagnosticsSection />
+    </AppConfigProvider>,
+  );
+}
 
 const environment: System.EnvironmentInfo = {
   OS: "linux",
@@ -23,6 +45,11 @@ const environment: System.EnvironmentInfo = {
 
 describe("DiagnosticsSection", () => {
   beforeEach(() => {
+    vi.mocked(Config).mockResolvedValue(
+      new ConfigModel({ theme: "system", language: "en-US" }),
+    );
+    vi.mocked(SetDebugLogging).mockReset();
+    vi.mocked(OpenWindow).mockReset();
     vi.mocked(System.Environment).mockReset();
     vi.mocked(System.Environment).mockResolvedValue(environment);
     vi.mocked(Flatpak).mockReset();
@@ -31,7 +58,7 @@ describe("DiagnosticsSection", () => {
 
   it("formats environment data including false flags and sorted platform fields", () => {
     const report = formatDiagnostics(environment);
-    expect(report).toContain("os: linux\narch: arm64\ndebug: false");
+    expect(report).toContain("os: linux\narch: arm64\ndebug_build: false");
     expect(report).toContain("flatpak: false");
     expect(report).toContain(
       "os_details.name: Example OS\nos_details.version: 1",
@@ -49,13 +76,13 @@ describe("DiagnosticsSection", () => {
   });
 
   it("shows the report and enables copying after loading", async () => {
-    render(<DiagnosticsSection />);
+    renderDiagnostics();
     expect(
       await screen.findByText(/platform\.wayland: true/),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", {
-        name: i18n.t("diagnostics.actions.copy", { ns: "settings" }),
+        name: i18n.t("actions.copy", { ns: "common" }),
       }),
     ).toBeEnabled();
   });
@@ -71,7 +98,7 @@ describe("DiagnosticsSection", () => {
         runtimeCommit: "runtime-hash",
       }),
     );
-    render(<DiagnosticsSection />);
+    renderDiagnostics();
     const report = await screen.findByText(/flatpak\.app_id:/);
     expect(report).toHaveTextContent("flatpak: true");
     expect(report).toHaveTextContent("flatpak.version: 1.18.2");
@@ -82,11 +109,24 @@ describe("DiagnosticsSection", () => {
     expect(report).toHaveTextContent("flatpak.runtime_commit: runtime-hash");
   });
 
+  it("keeps debug logging off when saving fails", async () => {
+    vi.mocked(SetDebugLogging).mockRejectedValue(new Error("disk full"));
+    renderDiagnostics();
+    const control = await screen.findByRole("switch", {
+      name: i18n.t("logs.debug.label", { ns: "settings" }),
+    });
+    await vi.waitFor(() => expect(control).toBeEnabled());
+    fireEvent.click(control);
+    await vi.waitFor(() => expect(SetDebugLogging).toHaveBeenCalledWith(true));
+    await vi.waitFor(() => expect(control).toBeEnabled());
+    expect(control).not.toBeChecked();
+  });
+
   it("allows retrying a failed environment request", async () => {
     vi.mocked(System.Environment).mockRejectedValueOnce(
       new Error("Unavailable"),
     );
-    render(<DiagnosticsSection />);
+    renderDiagnostics();
     expect(await screen.findByText("Unavailable")).toBeInTheDocument();
     fireEvent.click(
       screen.getByRole("button", {
@@ -98,4 +138,15 @@ describe("DiagnosticsSection", () => {
     ).toBeInTheDocument();
     expect(System.Environment).toHaveBeenCalledTimes(2);
   });
+});
+
+it("shows an error when the log window cannot be opened", async () => {
+  vi.mocked(OpenWindow).mockRejectedValue(new Error("window failed"));
+  renderDiagnostics();
+  fireEvent.click(
+    screen.getByRole("button", {
+      name: i18n.t("logs.actions.open", { ns: "settings" }),
+    }),
+  );
+  expect(await screen.findByText("window failed")).toBeInTheDocument();
 });

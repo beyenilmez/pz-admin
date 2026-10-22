@@ -32,3 +32,7 @@ export const System = {
     PlatformInfo: { DesktopEnvironment: "GNOME" },
   })),
 };
+
+export const Window = {
+  SetTitle: fn(async (_title: string) => {}),
+};

@@ -7,5 +7,7 @@ export {
 };
 
 export {
-    FrontendError
+    Entry,
+    FrontendError,
+    Update
 } from "./models.js";

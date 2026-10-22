@@ -5,6 +5,39 @@
 // @ts-ignore: Unused imports
 import { Create as $Create } from "@wailsio/runtime";
 
+export class Entry {
+    "id": number;
+    "text": string;
+    "level": string;
+    "truncated": boolean;
+
+    /** Creates a new Entry instance. */
+    constructor($$source: Partial<Entry> = {}) {
+        if (!("id" in $$source)) {
+            this["id"] = 0;
+        }
+        if (!("text" in $$source)) {
+            this["text"] = "";
+        }
+        if (!("level" in $$source)) {
+            this["level"] = "";
+        }
+        if (!("truncated" in $$source)) {
+            this["truncated"] = false;
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new Entry instance from a string or object.
+     */
+    static createFrom($$source: any = {}): Entry {
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        return new Entry($$parsedSource as Partial<Entry>);
+    }
+}
+
 /**
  * FrontendError contains diagnostic context for an unexpected frontend error.
  */
@@ -48,3 +81,39 @@ export class FrontendError {
         return new FrontendError($$parsedSource as Partial<FrontendError>);
     }
 }
+
+/**
+ * Update contains new entries and the oldest ID still retained by the backend.
+ */
+export class Update {
+    "entries": Entry[];
+    "firstID": number;
+
+    /** Creates a new Update instance. */
+    constructor($$source: Partial<Update> = {}) {
+        if (!("entries" in $$source)) {
+            this["entries"] = [];
+        }
+        if (!("firstID" in $$source)) {
+            this["firstID"] = 0;
+        }
+
+        Object.assign(this, $$source);
+    }
+
+    /**
+     * Creates a new Update instance from a string or object.
+     */
+    static createFrom($$source: any = {}): Update {
+        const $$createField0_0 = $$createType1;
+        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
+        if ("entries" in $$parsedSource) {
+            $$parsedSource["entries"] = $$createField0_0($$parsedSource["entries"]);
+        }
+        return new Update($$parsedSource as Partial<Update>);
+    }
+}
+
+// Private type creation functions
+const $$createType0 = Entry.createFrom;
+const $$createType1 = $Create.Array($$createType0);

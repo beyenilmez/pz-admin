@@ -22,3 +22,7 @@ export const Call = {
     throw new Error(`Unit test has no mock for Wails method ${id}`);
   },
 };
+
+export const Window = {
+  SetTitle: vi.fn(async (_title: string) => {}),
+};

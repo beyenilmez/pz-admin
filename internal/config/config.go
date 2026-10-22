@@ -14,6 +14,7 @@ type Config struct {
 	Theme                    string `json:"theme"`
 	Language                 string `json:"language"`
 	DownloadUpdatesOnStartup bool   `json:"downloadUpdatesOnStartup"`
+	DebugLogging             bool   `json:"debugLogging"`
 }
 
 // Theme values.

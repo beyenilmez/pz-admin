@@ -58,11 +58,13 @@ beforeEach(() => {
     config: {
       language: "en-US",
       theme: "system",
+      debugLogging: false,
       downloadUpdatesOnStartup: true,
     },
     error: null,
     loading: false,
     reload: vi.fn(),
+    setDebugLogging: vi.fn(async () => undefined),
     setDownloadUpdatesOnStartup: vi.fn(async () => undefined),
     setLanguage: vi.fn(),
     setTheme: vi.fn(),

@@ -116,3 +116,30 @@ func readLog(t *testing.T, dir string) []byte {
 	}
 	return data
 }
+
+func TestRuntimeDebugLogging(t *testing.T) {
+	bundle, _, _ := newTestLogger(t, Options{})
+	bundle.SetDebugLogging(true)
+	if bundle.LevelVar.Level() != slog.LevelDebug {
+		t.Fatal("debug level was not applied")
+	}
+	bundle.Logger.Debug("captured detail")
+	bundle.SetDebugLogging(false)
+	if bundle.LevelVar.Level() != slog.LevelInfo {
+		t.Fatal("info level was not restored")
+	}
+	bundle.Logger.Debug("hidden detail")
+	snapshot := bundle.History.Read(0)
+	found := false
+	for _, entry := range snapshot.Entries {
+		if strings.Contains(entry.Text, "captured detail") {
+			found = true
+		}
+		if strings.Contains(entry.Text, "hidden detail") {
+			t.Fatal("disabled debug log was retained")
+		}
+	}
+	if !found {
+		t.Fatal("enabled debug log was not retained")
+	}
+}

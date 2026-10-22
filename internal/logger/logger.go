@@ -3,6 +3,7 @@
 package logger
 
 import (
+	"context"
 	"fmt"
 	"io"
 	"log/slog"
@@ -14,6 +15,25 @@ import (
 	"github.com/beyenilmez/pz-admin/internal/appdata"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
+
+// FrameworkLogger excludes verbose runtime RPC traces, which contain complete
+// binding arguments/results (including credentials) and the viewer's own reads.
+// Application debug records still use Logger directly.
+func (b *Bundle) FrameworkLogger() *slog.Logger {
+	return slog.New(&frameworkHandler{Handler: b.Logger.Handler()})
+}
+
+type frameworkHandler struct{ slog.Handler }
+
+func (h *frameworkHandler) Enabled(ctx context.Context, level slog.Level) bool {
+	return level >= slog.LevelInfo && h.Handler.Enabled(ctx, level)
+}
+func (h *frameworkHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
+	return &frameworkHandler{Handler: h.Handler.WithAttrs(attrs)}
+}
+func (h *frameworkHandler) WithGroup(name string) slog.Handler {
+	return &frameworkHandler{Handler: h.Handler.WithGroup(name)}
+}
 
 const (
 	logFileName = "latest.log"
@@ -33,6 +53,7 @@ type Options struct {
 type Bundle struct {
 	Logger   *slog.Logger
 	LevelVar *slog.LevelVar
+	History  *History
 
 	closer io.Closer
 }
@@ -71,18 +92,33 @@ func newLogger(stderr io.Writer, stateDir string, options Options) (*Bundle, err
 		Compress:   true,
 	}
 
+	history := &History{}
 	ew := &errorWriter{w: lj, path: logPath, errw: stderr}
+	writer := &sessionWriter{history: history, file: ew}
 
 	logger := slog.New(slog.NewMultiHandler(
 		slog.NewTextHandler(stderr, handlerOpts(slog.LevelDebug)),
-		slog.NewTextHandler(ew, handlerOpts(levelVar)),
+		slog.NewTextHandler(writer, handlerOpts(levelVar)),
 	))
 
 	return &Bundle{
 		Logger:   logger,
 		LevelVar: levelVar,
+		History:  history,
 		closer:   lj,
 	}, nil
+}
+
+// SetDebugLogging changes the minimum level captured in the file and session log.
+func (b *Bundle) SetDebugLogging(enabled bool) {
+	level := slog.LevelInfo
+	if enabled {
+		level = slog.LevelDebug
+	}
+	if b.LevelVar.Level() != level {
+		b.LevelVar.Set(level)
+		b.Logger.Info("log level changed", "level", level)
+	}
 }
 
 // Close flushes and closes the rotating file log. It is safe to call when the
