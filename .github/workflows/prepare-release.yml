@@ -21,7 +21,7 @@ permissions:
 jobs:
   prepare:
     name: Update screenshots and download links
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     outputs:
       changed: ${{ steps.commit.outputs.changed }}

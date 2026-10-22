@@ -28,7 +28,7 @@ jobs:
   publish:
     name: Prepare and publish AUR package
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     env:
       GH_TOKEN: ${{ github.token }}

@@ -21,7 +21,7 @@ jobs:
   release:
     name: Prepare release
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     outputs:
       created: ${{ steps.release.outputs.release_created }}
@@ -53,7 +53,7 @@ jobs:
   publish:
     name: Publish release
     needs: [release, package, flatpak]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     permissions:
       contents: write

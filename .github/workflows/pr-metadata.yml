@@ -14,7 +14,7 @@ concurrency:
 jobs:
   metadata:
     name: Validate title and label
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
       # Read PR metadata only; never check out or execute contributor code.
