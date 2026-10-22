@@ -62,7 +62,7 @@ jobs:
           retention-days: 7
       # Enable publishing after the AUR account and SSH key are configured.
       # - name: Publish AUR package
-      #   uses: KSXGitHub/github-actions-deploy-aur@2ac5a4c1d7035885d46b10e3193393be8460b6f1 # v4
+      #   uses: KSXGitHub/github-actions-deploy-aur@2ac5a4c1d7035885d46b10e3193393be8460b6f1 # v4.1.1
       #   with:
       #     pkgname: pz-admin-bin
       #     pkgbuild: .generated/aur/PKGBUILD
