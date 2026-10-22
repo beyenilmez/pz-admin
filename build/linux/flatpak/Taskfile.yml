@@ -53,8 +53,9 @@ tasks:
       - flatpak info org.freedesktop.Sdk.Extension.golang//26.08
       - flatpak info org.freedesktop.Sdk.Extension.node24//26.08
     cmds:
-      - flatpak run org.flatpak.Builder --force-clean --sandbox --build-only --state-dir=.generated/flatpak/cache .generated/flatpak/app .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
-      - flatpak run org.flatpak.Builder --finish-only --disable-cache --sandbox {{if eq (default "false" .MIRROR_SCREENSHOTS) "true"}}--mirror-screenshots-url=https://dl.flathub.org/media --compose-url-policy=full{{end}} --repo=.generated/flatpak/repo --state-dir=.generated/flatpak/cache .generated/flatpak/app .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
+      # Avoid FUSE cache mounts, which fail on some CI hosts.
+      - flatpak run org.flatpak.Builder --disable-rofiles-fuse --force-clean --sandbox --build-only --state-dir=.generated/flatpak/cache .generated/flatpak/app .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
+      - flatpak run org.flatpak.Builder --disable-rofiles-fuse --finish-only --disable-cache --sandbox {{if eq (default "false" .MIRROR_SCREENSHOTS) "true"}}--mirror-screenshots-url=https://dl.flathub.org/media --compose-url-policy=full{{end}} --repo=.generated/flatpak/repo --state-dir=.generated/flatpak/cache .generated/flatpak/app .generated/flatpak/com.bedirhanyenilmez.pzadmin.yml
 
   prepare:build:
     summary: Prepares the Flatpak manifest and sources
