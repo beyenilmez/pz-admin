@@ -35,6 +35,13 @@
       "groupName": "Mise tools (non-major)"
     },
     {
+      "matchManagers": ["npm", "mise"],
+      "matchPackageNames": ["pnpm"],
+      "groupName": "pnpm",
+      "minimumReleaseAge": "1 day",
+      "separateMajorMinor": false
+    },
+    {
       "matchPackageNames": ["github.com/wailsapp/wails/v3", "@wailsio/runtime"],
       "groupName": "Wails",
       "separateMajorMinor": false,
