@@ -1,0 +1,42 @@
+name: Package checks
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - mise.toml
+      - mise.lock
+      - go.mod
+      - go.sum
+      - frontend/package.json
+      - frontend/pnpm-lock.yaml
+      - frontend/pnpm-workspace.yaml
+      - scripts/**
+      - build/**
+      - Taskfile.yml
+      - VERSION
+      - .github/workflows/**
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: package-checks-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  native:
+    name: Build native test packages
+    # Release PRs already build packages after preparing release assets.
+    if: github.head_ref != 'release-please--branches--main'
+    uses: ./.github/workflows/package.yml
+    with:
+      ref: ${{ github.sha }}
+
+  flatpak:
+    name: Build and check test Flatpaks
+    if: github.head_ref != 'release-please--branches--main'
+    uses: ./.github/workflows/flatpak.yml
+    with:
+      ref: ${{ github.sha }}
