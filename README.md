@@ -81,6 +81,7 @@ Choose the download for your operating system and processor.
 ### Windows
 
 Run the installer.
+
 Windows releases are unsigned. If SmartScreen shows **Windows protected your PC**,
 choose **More info → Run anyway**, if available, only if you trust the download
 from this project's GitHub Releases.
@@ -88,7 +89,9 @@ from this project's GitHub Releases.
 ### macOS
 
 Requires macOS 13 Ventura or later.
+
 Open the DMG and drag PZ Admin into **Applications**.
+
 The app is not signed with an Apple Developer ID or notarized. If macOS blocks
 it because the developer cannot be verified, try opening it once, then go to
 **System Settings → Privacy & Security → Open Anyway**. Only approve a download
