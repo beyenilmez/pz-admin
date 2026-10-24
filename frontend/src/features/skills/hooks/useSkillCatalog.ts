@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type { GameBuild } from "@/features/game/types";
 import { canonicalLanguage } from "@/i18n/locales";
 import { errorMessage } from "@/shared/lib/errors";
@@ -25,29 +25,45 @@ export function useSkillCatalog(
   build: GameBuild,
   language: string,
 ): SkillCatalogResult {
-  const [state, setState] = useState(initialState);
   const [reloadRevision, setReloadRevision] = useState(0);
   const reload = useCallback(
     () => setReloadRevision((revision) => revision + 1),
     [],
   );
 
+  const request = useMemo(
+    () => ({ build, language, reloadRevision }),
+    [build, language, reloadRevision],
+  );
+  const [settled, setSettled] = useState<{
+    request: typeof request;
+    state: SkillCatalogState;
+  } | null>(null);
+
   useEffect(() => {
     let active = true;
-    setState(initialState);
 
     async function loadCatalog() {
       try {
-        const loadedCatalog = await loadSkillCatalog(build, language);
+        const loadedCatalog = await loadSkillCatalog(
+          request.build,
+          request.language,
+        );
         if (active) {
-          setState({ catalog: loadedCatalog, error: null, loading: false });
+          setSettled({
+            request,
+            state: { catalog: loadedCatalog, error: null, loading: false },
+          });
         }
       } catch (loadError) {
         if (active) {
-          setState({
-            catalog: null,
-            error: errorMessage(loadError),
-            loading: false,
+          setSettled({
+            request,
+            state: {
+              catalog: null,
+              error: errorMessage(loadError),
+              loading: false,
+            },
           });
         }
       }
@@ -58,7 +74,9 @@ export function useSkillCatalog(
     return () => {
       active = false;
     };
-  }, [build, language, reloadRevision]);
+  }, [request]);
+
+  const state = settled?.request === request ? settled.state : initialState;
 
   const languageTag = canonicalLanguage(language);
   if (

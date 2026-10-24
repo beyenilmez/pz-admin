@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GameBuild } from "@/features/game/types";
 import { canonicalLanguage } from "@/i18n/locales";
@@ -25,29 +25,45 @@ const initialState: VehicleCatalogState = {
 export function useVehicleCatalog(build: GameBuild): VehicleCatalogResult {
   const { i18n } = useTranslation();
   const language = canonicalLanguage(i18n.language);
-  const [state, setState] = useState(initialState);
   const [reloadRevision, setReloadRevision] = useState(0);
   const reload = useCallback(
     () => setReloadRevision((revision) => revision + 1),
     [],
   );
 
+  const request = useMemo(
+    () => ({ build, language, reloadRevision }),
+    [build, language, reloadRevision],
+  );
+  const [settled, setSettled] = useState<{
+    request: typeof request;
+    state: VehicleCatalogState;
+  } | null>(null);
+
   useEffect(() => {
     let active = true;
-    setState(initialState);
 
     async function loadCatalog() {
       try {
-        const loadedCatalog = await loadVehicleCatalog(build, language);
+        const loadedCatalog = await loadVehicleCatalog(
+          request.build,
+          request.language,
+        );
         if (active) {
-          setState({ catalog: loadedCatalog, error: null, loading: false });
+          setSettled({
+            request,
+            state: { catalog: loadedCatalog, error: null, loading: false },
+          });
         }
       } catch (loadError) {
         if (active) {
-          setState({
-            catalog: null,
-            error: errorMessage(loadError),
-            loading: false,
+          setSettled({
+            request,
+            state: {
+              catalog: null,
+              error: errorMessage(loadError),
+              loading: false,
+            },
           });
         }
       }
@@ -58,7 +74,9 @@ export function useVehicleCatalog(build: GameBuild): VehicleCatalogResult {
     return () => {
       active = false;
     };
-  }, [build, language, reloadRevision]);
+  }, [request]);
+
+  const state = settled?.request === request ? settled.state : initialState;
 
   if (
     state.catalog &&

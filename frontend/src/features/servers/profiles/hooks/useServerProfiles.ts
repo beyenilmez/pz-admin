@@ -24,21 +24,26 @@ export function useServerProfiles(language?: string) {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
 
-  const load = useCallback(async () => {
+  const fetchProfiles = useCallback(
+    () =>
+      listProfiles()
+        .then(
+          (loadedProfiles) => setProfiles(loadedProfiles),
+          (error) => setLoadError(errorMessage(error)),
+        )
+        .finally(() => setLoading(false)),
+    [],
+  );
+
+  const load = useCallback(() => {
     setLoading(true);
     setLoadError(null);
-    try {
-      setProfiles(await listProfiles());
-    } catch (error) {
-      setLoadError(errorMessage(error));
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+    return fetchProfiles();
+  }, [fetchProfiles]);
 
   useEffect(() => {
-    void load();
-  }, [load]);
+    void fetchProfiles();
+  }, [fetchProfiles]);
 
   const sortedProfiles = useMemo(
     () => [...profiles].sort((a, b) => a.name.localeCompare(b.name, language)),

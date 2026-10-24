@@ -114,12 +114,14 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
     setLoading(false);
   });
   const activeLanguage = config?.language;
-  const reload = useCallback(() => setAttempt((current) => current + 1), []);
+  const reload = useCallback(() => {
+    setError(null);
+    setLoading(true);
+    setAttempt((current) => current + 1);
+  }, []);
 
   useEffect(() => {
     let active = true;
-    setError(null);
-    setLoading(true);
     const unsubscribe = Events.On("config:changed", ({ data }) => {
       if (!active) return;
       try {
@@ -146,6 +148,7 @@ export function AppConfigProvider({ children }: AppConfigProviderProps) {
       active = false;
       unsubscribe();
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Retrying must replace the subscription and discard the previous initialization.
   }, [attempt]);
 
   useEffect(() => {

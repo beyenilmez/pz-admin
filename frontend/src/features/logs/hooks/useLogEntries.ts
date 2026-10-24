@@ -13,9 +13,6 @@ export function useLogEntries() {
     let active = true;
     let timer: ReturnType<typeof setTimeout>;
     let afterID = 0;
-    setEntries([]);
-    setLoading(true);
-    setError(null);
 
     const poll = async () => {
       if (!document.hidden) {
@@ -45,12 +42,18 @@ export function useLogEntries() {
       active = false;
       clearTimeout(timer);
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- A retry restarts polling from ID zero and cancels the previous read.
   }, [attempt]);
 
   return {
     entries,
     loading,
     error,
-    reload: () => setAttempt((value) => value + 1),
+    reload: () => {
+      setEntries([]);
+      setLoading(true);
+      setError(null);
+      setAttempt((value) => value + 1);
+    },
   };
 }

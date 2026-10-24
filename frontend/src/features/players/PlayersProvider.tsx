@@ -51,29 +51,48 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
   const profileId = state === "connected" ? (profile?.id ?? null) : null;
   const eventRevisionRef = useRef(0);
   const [players, setPlayers] = useState<Player[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(profileId !== null);
   const [error, setError] = useState<string | null>(null);
+  const [previousProfileId, setPreviousProfileId] = useState(profileId);
+
+  if (previousProfileId !== profileId) {
+    setPreviousProfileId(profileId);
+    setPlayers([]);
+    setError(null);
+    setLoading(profileId !== null);
+  }
+
+  const fetchPlayers = useCallback(() => {
+    if (!profileId) return Promise.resolve();
+
+    const requestRevision = eventRevisionRef.current;
+
+    return listPlayers(profileId)
+      .then(
+        (loadedPlayers) => {
+          // Backend events are authoritative over older in-flight snapshots.
+          if (eventRevisionRef.current === requestRevision) {
+            setPlayers(loadedPlayers);
+          }
+          return undefined;
+        },
+        (loadError) => {
+          if (eventRevisionRef.current === requestRevision) {
+            setError(errorMessage(loadError));
+          }
+        },
+      )
+      .finally(() => {
+        if (eventRevisionRef.current === requestRevision) setLoading(false);
+      });
+  }, [profileId]);
 
   const refresh = useCallback(async () => {
     if (!profileId) return;
-
-    const requestRevision = eventRevisionRef.current;
     setError(null);
     setLoading(true);
-
-    try {
-      const loadedPlayers = await listPlayers(profileId);
-      // Backend events are authoritative over older in-flight snapshots.
-      if (eventRevisionRef.current !== requestRevision) return;
-      setPlayers(loadedPlayers);
-    } catch (loadError) {
-      if (eventRevisionRef.current === requestRevision) {
-        setError(errorMessage(loadError));
-      }
-    } finally {
-      if (eventRevisionRef.current === requestRevision) setLoading(false);
-    }
-  }, [profileId]);
+    await fetchPlayers();
+  }, [profileId, fetchPlayers]);
 
   useEffect(() => {
     return Events.On("players:changed", ({ data: update }) => {
@@ -88,12 +107,12 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
 
   useEffect(() => {
     eventRevisionRef.current += 1;
-    setPlayers([]);
-    setError(null);
-    setLoading(false);
 
-    if (profileId) void refresh();
-  }, [profileId, refresh]);
+    if (profileId) void fetchPlayers();
+    return () => {
+      eventRevisionRef.current += 1;
+    };
+  }, [profileId, fetchPlayers]);
 
   const value = useMemo(
     () => ({ error, loading, players, refresh }),
