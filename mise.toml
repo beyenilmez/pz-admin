@@ -8,7 +8,7 @@ lockfile = true
 "pipx:reuse" = "6.2.0"
 go = "1.27.3"
 node = "24.22.1"
-"npm:pnpm" = { version = "11.25.0", allow_builds = ["pnpm"] }
+"npm:pnpm" = { version = "12.15.0", allow_builds = ["pnpm"] }
 uv = "0.13.5"
 
 # Windows installer compiler; retain its bundled includes, plugins, and stubs.
