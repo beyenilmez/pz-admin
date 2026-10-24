@@ -6,7 +6,18 @@
     ":configMigration",
     ":semanticCommits"
   ],
-  "enabledManagers": ["npm", "gomod", "github-actions", "mise"],
+  "enabledManagers": ["npm", "gomod", "github-actions", "mise", "custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["scripts/flatpak/generate-dependencies.mjs"],
+      "matchStrings": [
+        "git\\+https://github\\.com/(?<depName>flatpak/flatpak-builder-tools)\\.git@(?<currentDigest>[a-f0-9]{40})#subdirectory=node"
+      ],
+      "datasourceTemplate": "github-digest",
+      "currentValueTemplate": "master"
+    }
+  ],
   "prHourlyLimit": 0,
   "postUpdateOptions": ["gomodTidy"],
   "packageRules": [

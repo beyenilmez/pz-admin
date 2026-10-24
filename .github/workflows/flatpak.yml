@@ -51,7 +51,7 @@ jobs:
           CGO_ENABLED: "0"
         with:
           cache_key_prefix: mise-nocgo-v1
-          install_args: --locked go node npm:pnpm go:github.com/wailsapp/wails/v3/cmd/wails3
+          install_args: --locked go node npm:pnpm uv go:github.com/wailsapp/wails/v3/cmd/wails3
       - name: Install Flatpak SDKs
         run: wails3 task linux:flatpak:setup
       - name: Package and check

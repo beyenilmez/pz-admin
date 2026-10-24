@@ -18,6 +18,8 @@ import { fileURLToPath } from "node:url";
 const root = fileURLToPath(new URL("../../", import.meta.url));
 const output = path.join(root, ".generated/flatpak");
 const goGenerator = "github.com/dennwc/flatpak-go-mod@v0.1.0";
+const nodeGenerator =
+  "git+https://github.com/flatpak/flatpak-builder-tools.git@3d6ff6697785b52ae34db8078e0ad5188a710b1f#subdirectory=node";
 
 function run(command, args, options = {}) {
   return execFileSync(command, args, {
@@ -169,13 +171,16 @@ async function pnpmSource(version) {
 
 async function frontendSources(storeVersion, filename) {
   run(
-    "flatpak",
+    "uv",
     [
+      "tool",
       "run",
-      "--command=flatpak-node-generator",
-      "org.flatpak.Builder",
+      "--from",
+      nodeGenerator,
+      "flatpak-node-generator",
       "pnpm",
       path.join(root, "frontend/pnpm-lock.yaml"),
+      "--no-playwright-browsers",
       "--pnpm-store-version",
       storeVersion,
       "-o",
