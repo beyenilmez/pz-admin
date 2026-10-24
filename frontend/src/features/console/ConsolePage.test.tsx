@@ -43,7 +43,9 @@ async function submitExactCommand(
 ) {
   await user.type(input, command);
   const option = await screen.findByRole("option", { name: suggestion });
-  await waitFor(() => expect(option).toHaveAttribute("aria-selected", "true"));
+  await waitFor(() =>
+    expect(option).toHaveAttribute("data-combobox-selected", "true"),
+  );
   await user.keyboard("{Enter}");
 }
 

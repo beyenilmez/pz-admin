@@ -89,7 +89,7 @@ describe("ConsoleInput", () => {
       name: clearConsoleCommand,
     });
     await waitFor(() =>
-      expect(exactOption).toHaveAttribute("aria-selected", "true"),
+      expect(exactOption).toHaveAttribute("data-combobox-selected", "true"),
     );
 
     await user.keyboard("{Enter}");
