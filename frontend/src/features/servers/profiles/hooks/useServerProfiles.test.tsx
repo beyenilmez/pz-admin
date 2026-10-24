@@ -34,6 +34,36 @@ afterEach(() => {
 });
 
 describe("useServerProfiles", () => {
+  it("handles synchronous service errors on initial load and retry", async () => {
+    vi.mocked(List)
+      .mockImplementationOnce(() => {
+        throw new Error("bridge unavailable");
+      })
+      .mockImplementationOnce(() => {
+        throw new Error("bridge still unavailable");
+      })
+      .mockResolvedValueOnce([alphaProfile]);
+    const { result } = renderHook(() => useServerProfiles());
+
+    await waitFor(() =>
+      expect(result.current.loadError).toBe("bridge unavailable"),
+    );
+    expect(result.current.loading).toBe(false);
+
+    await act(async () => {
+      await expect(result.current.load()).resolves.toBeUndefined();
+    });
+    expect(result.current.loadError).toBe("bridge still unavailable");
+    expect(result.current.loading).toBe(false);
+
+    await act(async () => {
+      await result.current.load();
+    });
+    expect(result.current.loadError).toBeNull();
+    expect(result.current.profiles).toEqual([alphaProfile]);
+    expect(result.current.loading).toBe(false);
+  });
+
   it("loads profiles through the Wails service and presents them by name", async () => {
     vi.mocked(List).mockResolvedValue([zuluProfile, alphaProfile]);
 

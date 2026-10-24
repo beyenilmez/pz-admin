@@ -82,6 +82,38 @@ afterEach(() => {
 });
 
 describe("PlayersProvider", () => {
+  it("handles synchronous service errors on initial load and refresh", async () => {
+    vi.mocked(List)
+      .mockImplementationOnce(() => {
+        throw new Error("bridge unavailable");
+      })
+      .mockImplementationOnce(() => {
+        throw new Error("bridge still unavailable");
+      })
+      .mockResolvedValueOnce([alpha]);
+    const { result } = renderHook(() => usePlayers(), { wrapper });
+
+    await waitFor(() =>
+      expect(result.current.error).toBe("bridge unavailable"),
+    );
+    expect(result.current.loading).toBe(false);
+
+    await act(async () => {
+      await expect(result.current.refresh()).resolves.toBeUndefined();
+    });
+    expect(result.current.error).toBe("bridge still unavailable");
+    expect(result.current.loading).toBe(false);
+
+    await act(async () => {
+      await result.current.refresh();
+    });
+    expect(result.current).toMatchObject({
+      error: null,
+      loading: false,
+      players: [alpha],
+    });
+  });
+
   it("does not load players while disconnected", () => {
     currentSession = sessionValue(firstProfile, "disconnected");
 

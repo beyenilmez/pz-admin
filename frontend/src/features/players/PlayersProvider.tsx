@@ -67,7 +67,8 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
 
     const requestRevision = eventRevisionRef.current;
 
-    return listPlayers(profileId)
+    return Promise.resolve()
+      .then(() => listPlayers(profileId))
       .then(
         (loadedPlayers) => {
           // Backend events are authoritative over older in-flight snapshots.

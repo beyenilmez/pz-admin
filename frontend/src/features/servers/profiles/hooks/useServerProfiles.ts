@@ -26,7 +26,8 @@ export function useServerProfiles(language?: string) {
 
   const fetchProfiles = useCallback(
     () =>
-      listProfiles()
+      Promise.resolve()
+        .then(() => listProfiles())
         .then(
           (loadedProfiles) => setProfiles(loadedProfiles),
           (error) => setLoadError(errorMessage(error)),
