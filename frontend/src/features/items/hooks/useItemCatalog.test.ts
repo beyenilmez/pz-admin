@@ -37,6 +37,50 @@ afterEach(() => {
 });
 
 describe("useItemCatalog", () => {
+  it("starts a fresh request when returning to a previous build", async () => {
+    const original = catalog("41", "en-US");
+    const otherBuild = deferred<ItemCatalog>();
+    const returningBuild = deferred<ItemCatalog>();
+    vi.mocked(loadItemCatalog)
+      .mockResolvedValueOnce(original)
+      .mockReturnValueOnce(otherBuild.promise)
+      .mockReturnValueOnce(returningBuild.promise);
+    const { result, rerender } = renderHook(
+      ({ build }: { build: "41" | "42" }) => useItemCatalog(build, "en-US"),
+      { initialProps: { build: "41" } },
+    );
+    await waitFor(() => expect(result.current.catalog).toBe(original));
+
+    rerender({ build: "41" });
+    expect(loadItemCatalog).toHaveBeenCalledTimes(1);
+    expect(result.current.catalog).toBe(original);
+
+    rerender({ build: "42" });
+    rerender({ build: "41" });
+    expect(loadItemCatalog).toHaveBeenCalledTimes(3);
+    expect(result.current).toMatchObject({
+      catalog: null,
+      error: null,
+      loading: true,
+    });
+
+    const latest = catalog("41", "en-US");
+    await act(async () => {
+      returningBuild.resolve(latest);
+      await returningBuild.promise;
+    });
+    expect(result.current.catalog).toBe(latest);
+    expect(result.current.loading).toBe(false);
+
+    await act(async () => {
+      otherBuild.resolve(catalog("42", "en-US"));
+      await otherBuild.promise;
+    });
+    expect(result.current.catalog).toBe(latest);
+    expect(result.current.loading).toBe(false);
+    expect(loadItemCatalog).toHaveBeenCalledTimes(3);
+  });
+
   it("clears a failed request when switching languages", async () => {
     const nextRequest = deferred<ItemCatalog>();
     vi.mocked(loadItemCatalog)

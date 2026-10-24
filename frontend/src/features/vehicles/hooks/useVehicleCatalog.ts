@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GameBuild } from "@/features/game/types";
 import { canonicalLanguage } from "@/i18n/locales";
@@ -25,16 +25,18 @@ const initialState: VehicleCatalogState = {
 export function useVehicleCatalog(build: GameBuild): VehicleCatalogResult {
   const { i18n } = useTranslation();
   const language = canonicalLanguage(i18n.language);
-  const [reloadRevision, setReloadRevision] = useState(0);
+  const [request, setRequest] = useState({ build, language });
   const reload = useCallback(
-    () => setReloadRevision((revision) => revision + 1),
+    () => setRequest((current) => ({ ...current })),
     [],
   );
 
-  const request = useMemo(
-    () => ({ build, language, reloadRevision }),
-    [build, language, reloadRevision],
-  );
+  // Keep each request in state so returning to an earlier build or language
+  // starts a fresh load without exposing that request's previous result.
+  if (request.build !== build || request.language !== language) {
+    setRequest({ build, language });
+  }
+
   const [settled, setSettled] = useState<{
     request: typeof request;
     state: VehicleCatalogState;

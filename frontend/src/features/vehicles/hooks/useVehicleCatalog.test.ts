@@ -1,4 +1,4 @@
-import { act, renderHook } from "@/test/render";
+import { act, renderHook, waitFor } from "@/test/render";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { loadVehicleCatalog } from "../catalog";
 import type { VehicleCatalog } from "../types";
@@ -57,6 +57,50 @@ afterEach(() => {
 });
 
 describe("useVehicleCatalog", () => {
+  it("starts a fresh request when returning to a previous build", async () => {
+    const original = catalog("41", "en-US");
+    const otherBuild = deferred<VehicleCatalog>();
+    const returningBuild = deferred<VehicleCatalog>();
+    vi.mocked(loadVehicleCatalog)
+      .mockResolvedValueOnce(original)
+      .mockReturnValueOnce(otherBuild.promise)
+      .mockReturnValueOnce(returningBuild.promise);
+    const { result, rerender } = renderHook(
+      ({ build }: { build: "41" | "42" }) => useVehicleCatalog(build),
+      { initialProps: { build: "41" } },
+    );
+    await waitFor(() => expect(result.current.catalog).toBe(original));
+
+    rerender({ build: "41" });
+    expect(loadVehicleCatalog).toHaveBeenCalledTimes(1);
+    expect(result.current.catalog).toBe(original);
+
+    rerender({ build: "42" });
+    rerender({ build: "41" });
+    expect(loadVehicleCatalog).toHaveBeenCalledTimes(3);
+    expect(result.current).toMatchObject({
+      catalog: null,
+      error: null,
+      loading: true,
+    });
+
+    const latest = catalog("41", "en-US");
+    await act(async () => {
+      returningBuild.resolve(latest);
+      await returningBuild.promise;
+    });
+    expect(result.current.catalog).toBe(latest);
+    expect(result.current.loading).toBe(false);
+
+    await act(async () => {
+      otherBuild.resolve(catalog("42", "en-US"));
+      await otherBuild.promise;
+    });
+    expect(result.current.catalog).toBe(latest);
+    expect(result.current.loading).toBe(false);
+    expect(loadVehicleCatalog).toHaveBeenCalledTimes(3);
+  });
+
   it("loads for the active build and ignores a stale request", async () => {
     const oldRequest = deferred<VehicleCatalog>();
     const buildRequest = deferred<VehicleCatalog>();
