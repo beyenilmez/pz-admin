@@ -76,6 +76,7 @@ func run() error {
 
 	// Service instances
 	configSvc := config.NewService()
+	diagnosticsSvc := diagnostics.NewService(buildVersion())
 	loggerSvc := logger.NewService(lg, configSvc)
 	noticesSvc := notices.NewService(applicationLicense, thirdPartyNotices)
 	playerSvc := player.NewService()
@@ -108,7 +109,7 @@ func run() error {
 			},
 		},
 		Services: []application.Service{
-			application.NewService(&diagnostics.Service{}),
+			application.NewService(diagnosticsSvc),
 			application.NewService(configSvc),
 			application.NewService(loggerSvc),
 			application.NewService(noticesSvc),
@@ -148,23 +149,14 @@ func run() error {
 
 	app.Event.OnApplicationEvent(events.Common.ApplicationStarted, func(_ *application.ApplicationEvent) {
 		applyLogLevel()
+
 		application.InvokeAsync(func() {
-			envInfo := app.Env.Info()
-			attributes := []any{
-				"os", envInfo.OS,
-				"arch", envInfo.Arch,
-				"debug", envInfo.Debug,
+			// Log diagnostics
+			report, err := diagnosticsSvc.Report()
+			if err != nil {
+				lg.Logger.Warn("could not collect complete diagnostics", "err", err)
 			}
-			if envInfo.OSInfo != nil {
-				attributes = append(attributes, slog.Group("os_details",
-					"name", envInfo.OSInfo.Name,
-					"version", envInfo.OSInfo.Version,
-				))
-			}
-			if len(envInfo.PlatformInfo) > 0 {
-				attributes = append(attributes, "platform", envInfo.PlatformInfo)
-			}
-			lg.Logger.Info("environment information", attributes...)
+			lg.Logger.Info("environment information", "diagnostics", report)
 
 			// Native theme detection and saved settings are ready only after startup.
 			theme := configSvc.Config().Theme

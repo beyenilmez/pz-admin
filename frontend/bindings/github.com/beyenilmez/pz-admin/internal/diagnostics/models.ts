@@ -5,43 +5,8 @@
 // @ts-ignore: Unused imports
 import { Create as $Create } from "@wailsio/runtime";
 
-export class FlatpakInfo {
-    "appId": string;
-    "version": string;
-    "branch": string;
-    "runtime": string;
-    "appCommit": string;
-    "runtimeCommit": string;
-
-    /** Creates a new FlatpakInfo instance. */
-    constructor($$source: Partial<FlatpakInfo> = {}) {
-        if (!("appId" in $$source)) {
-            this["appId"] = "";
-        }
-        if (!("version" in $$source)) {
-            this["version"] = "";
-        }
-        if (!("branch" in $$source)) {
-            this["branch"] = "";
-        }
-        if (!("runtime" in $$source)) {
-            this["runtime"] = "";
-        }
-        if (!("appCommit" in $$source)) {
-            this["appCommit"] = "";
-        }
-        if (!("runtimeCommit" in $$source)) {
-            this["runtimeCommit"] = "";
-        }
-
-        Object.assign(this, $$source);
-    }
-
-    /**
-     * Creates a new FlatpakInfo instance from a string or object.
-     */
-    static createFrom($$source: any = {}): FlatpakInfo {
-        let $$parsedSource = typeof $$source === 'string' ? JSON.parse($$source) : $$source;
-        return new FlatpakInfo($$parsedSource as Partial<FlatpakInfo>);
-    }
-}
+/**
+ * Report contains the same diagnostic fields for the Settings view and logs.
+ * Platform-specific fields use dotted names, matching the copyable report.
+ */
+export type Report = { [_ in string]?: any };

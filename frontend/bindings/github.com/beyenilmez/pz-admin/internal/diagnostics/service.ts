@@ -10,14 +10,20 @@ import { Call as $Call, CancellablePromise as $CancellablePromise, Create as $Cr
 import * as $models from "./models.js";
 
 /**
- * Flatpak returns nil for native installs.
+ * Report collects the current environment and installation details. On error,
+ * it still returns the available fields so startup logging can retain them.
  */
-export function Flatpak(): $CancellablePromise<$models.FlatpakInfo | null> {
-    return $Call.ByID(1837695234).then(($result: any) => {
-        return $$createType1($result);
+export function Report(): $CancellablePromise<$models.Report> {
+    return $Call.ByID(1240195099).then(($result: any) => {
+        return $$createType0($result);
     });
 }
 
 // Private type creation functions
-const $$createType0 = $models.FlatpakInfo.createFrom;
-const $$createType1 = $Create.Nullable($$createType0);
+var $$createType0 = (function $$initCreateType0(...args: any[]): any {
+    if ($$createType0 === $$initCreateType0) {
+        $$createType0 = $$createType1;
+    }
+    return $$createType0(...args);
+});
+const $$createType1 = $Create.Map($Create.Any, $Create.Any);

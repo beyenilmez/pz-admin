@@ -1,22 +1,20 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { System } from "@wailsio/runtime";
-import { Flatpak } from "@bindings/internal/diagnostics/service";
+import { Report } from "@bindings/internal/diagnostics/service";
 import { OpenWindow } from "@bindings/internal/logger/service";
 import { Config, SetDebugLogging } from "@bindings/internal/config/service";
 import { Config as ConfigModel } from "@bindings/internal/config/models";
 import { AppConfigProvider } from "@/features/config/AppConfigProvider";
-import { FlatpakInfo } from "@bindings/internal/diagnostics/models";
+import type { Report as DiagnosticReport } from "@bindings/internal/diagnostics/models";
 import i18n from "@/i18n";
 import { fireEvent, render, screen } from "@/test/render";
 import { DiagnosticsSection } from "@/features/settings/components/DiagnosticsSection";
 import { formatDiagnostics } from "@/features/settings/lib/diagnostics";
 
 vi.mock("@wailsio/runtime", () => ({
-  System: { Environment: vi.fn() },
   Events: { On: vi.fn(() => () => {}) },
 }));
 
-vi.mock("@bindings/internal/diagnostics/service", () => ({ Flatpak: vi.fn() }));
+vi.mock("@bindings/internal/diagnostics/service", () => ({ Report: vi.fn() }));
 
 vi.mock("@bindings/internal/logger/service", () => ({ OpenWindow: vi.fn() }));
 vi.mock("@bindings/internal/config/service", () => ({
@@ -35,12 +33,15 @@ function renderDiagnostics() {
   );
 }
 
-const environment: System.EnvironmentInfo = {
-  OS: "linux",
-  Arch: "arm64",
-  Debug: false,
-  OSInfo: { Name: "Example OS", Version: "1", ID: "example", Branding: "" },
-  PlatformInfo: { wayland: true, "gtk4-runtime": "4.20.0" },
+const diagnostics: DiagnosticReport = {
+  version: "2.0.1-backend",
+  os: "linux",
+  arch: "arm64",
+  debug_build: false,
+  "os_details.name": "Example OS",
+  "os_details.version": "1",
+  "platform.wayland": true,
+  "platform.gtk4-runtime": "4.20.0",
 };
 
 describe("DiagnosticsSection", () => {
@@ -50,29 +51,29 @@ describe("DiagnosticsSection", () => {
     );
     vi.mocked(SetDebugLogging).mockReset();
     vi.mocked(OpenWindow).mockReset();
-    vi.mocked(System.Environment).mockReset();
-    vi.mocked(System.Environment).mockResolvedValue(environment);
-    vi.mocked(Flatpak).mockReset();
-    vi.mocked(Flatpak).mockResolvedValue(null);
+    vi.mocked(Report).mockReset();
+    vi.mocked(Report).mockResolvedValue(diagnostics);
   });
 
-  it("formats environment data including false flags and sorted platform fields", () => {
-    const report = formatDiagnostics(environment);
-    expect(report).toContain("os: linux\narch: arm64\ndebug_build: false");
-    expect(report).toContain("flatpak: false");
-    expect(report).toContain(
-      "os_details.name: Example OS\nos_details.version: 1",
-    );
-    expect(report).toContain(
-      "platform.gtk4-runtime: 4.20.0\nplatform.wayland: true",
-    );
+  it("formats all backend fields, including false flags and new platform details", () => {
     expect(
       formatDiagnostics({
-        ...environment,
-        OSInfo: null,
-        PlatformInfo: null,
+        ...diagnostics,
+        "platform.extra": { enabled: false },
       }),
-    ).not.toContain("os_details");
+    ).toBe(
+      [
+        "arch: arm64",
+        "debug_build: false",
+        "os: linux",
+        "os_details.name: Example OS",
+        "os_details.version: 1",
+        'platform.extra: {"enabled":false}',
+        "platform.gtk4-runtime: 4.20.0",
+        "platform.wayland: true",
+        "version: 2.0.1-backend",
+      ].join("\n"),
+    );
   });
 
   it("shows the report and enables copying after loading", async () => {
@@ -88,16 +89,16 @@ describe("DiagnosticsSection", () => {
   });
 
   it("includes Flatpak details in the displayed report", async () => {
-    vi.mocked(Flatpak).mockResolvedValue(
-      new FlatpakInfo({
-        appId: "com.bedirhanyenilmez.pzadmin",
-        version: "1.18.2",
-        branch: "master",
-        runtime: "runtime/org.gnome.Platform/aarch64/51",
-        appCommit: "app-hash",
-        runtimeCommit: "runtime-hash",
-      }),
-    );
+    vi.mocked(Report).mockResolvedValue({
+      ...diagnostics,
+      flatpak: true,
+      "flatpak.app_id": "com.bedirhanyenilmez.pzadmin",
+      "flatpak.version": "1.18.2",
+      "flatpak.branch": "master",
+      "flatpak.runtime": "runtime/org.gnome.Platform/aarch64/51",
+      "flatpak.app_commit": "app-hash",
+      "flatpak.runtime_commit": "runtime-hash",
+    });
     renderDiagnostics();
     const report = await screen.findByText(/flatpak\.app_id:/);
     expect(report).toHaveTextContent("flatpak: true");
@@ -123,9 +124,7 @@ describe("DiagnosticsSection", () => {
   });
 
   it("allows retrying a failed environment request", async () => {
-    vi.mocked(System.Environment).mockRejectedValueOnce(
-      new Error("Unavailable"),
-    );
+    vi.mocked(Report).mockRejectedValueOnce(new Error("Unavailable"));
     renderDiagnostics();
     expect(await screen.findByText("Unavailable")).toBeInTheDocument();
     fireEvent.click(
@@ -136,7 +135,7 @@ describe("DiagnosticsSection", () => {
     expect(
       await screen.findByText(/platform\.wayland: true/),
     ).toBeInTheDocument();
-    expect(System.Environment).toHaveBeenCalledTimes(2);
+    expect(Report).toHaveBeenCalledTimes(2);
   });
 });
 

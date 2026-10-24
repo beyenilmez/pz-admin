@@ -1,7 +1,6 @@
 import i18n from "@/i18n";
 import { System } from "../../../.storybook/mocks/runtime";
-import { Flatpak } from "../../../.storybook/mocks/diagnostics";
-import { FlatpakInfo } from "@bindings/internal/diagnostics/models";
+import { Report } from "../../../.storybook/mocks/diagnostics";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Box } from "@mantine/core";
 import { expect, within, waitFor } from "storybook/test";
@@ -12,12 +11,10 @@ import {
 } from "../../../.storybook/decorators/withAppConfig";
 const meta = {
   beforeEach: () => {
-    Flatpak.mockReset();
-    System.Environment.mockReset();
+    Report.mockReset();
     System.IsWindows.mockReset();
     return () => {
-      Flatpak.mockReset();
-      System.Environment.mockReset();
+      Report.mockReset();
       System.IsWindows.mockReset();
     };
   },
@@ -48,36 +45,20 @@ export const Default: Story = {
 export const AutomaticUpdates: Story = {
   beforeEach: () => {
     System.IsWindows.mockReturnValue(true);
-    System.Environment.mockResolvedValue({
-      OS: "windows",
-      Arch: "amd64",
-      Debug: false,
-      OSInfo: { Name: "Windows", Version: "11" },
-      PlatformInfo: { DesktopEnvironment: "Windows" },
+    Report.mockResolvedValue({
+      version: APP_VERSION,
+      os: "windows",
+      arch: "amd64",
+      debug_build: false,
+      "os_details.name": "Windows",
+      "os_details.version": "11",
     });
-  },
-};
-export const FlatpakInstallation: Story = {
-  beforeEach: () => {
-    Flatpak.mockResolvedValue(
-      new FlatpakInfo({
-        appId: "com.bedirhanyenilmez.pzadmin",
-        version: "1.18.2",
-        branch: "stable",
-        runtime: "runtime/org.gnome.Platform/x86_64/51",
-      }),
-    );
-  },
-  play: async ({ canvasElement }) => {
-    await expect(
-      within(canvasElement).findByText(/flatpak: true/),
-    ).resolves.toBeVisible();
   },
 };
 export const DiagnosticsError: Story = {
   beforeEach: () => {
     // A runtime failure without details exercises the translated fallback.
-    System.Environment.mockRejectedValue(new Error());
+    Report.mockRejectedValue(new Error());
   },
   play: async ({ canvasElement }) => {
     await waitFor(async () => {

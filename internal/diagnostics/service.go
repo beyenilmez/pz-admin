@@ -4,9 +4,12 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
+	"log/slog"
 	"os"
-	"runtime"
+	"slices"
 	"strings"
+
+	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
 type FlatpakInfo struct {
@@ -18,14 +21,77 @@ type FlatpakInfo struct {
 	RuntimeCommit string `json:"runtimeCommit"`
 }
 
-type Service struct{}
+// Report contains the same diagnostic fields for the Settings view and logs.
+type Report map[string]any
 
-// Flatpak returns nil for native installs.
-func (s *Service) Flatpak() (*FlatpakInfo, error) {
-	if runtime.GOOS != "linux" {
-		return nil, nil
+func (r Report) LogValue() slog.Value {
+	keys := make([]string, 0, len(r))
+	for key := range r {
+		keys = append(keys, key)
 	}
-	return readFlatpakInfo("/.flatpak-info")
+	slices.Sort(keys)
+	attrs := make([]slog.Attr, 0, len(keys))
+	for _, key := range keys {
+		attrs = append(attrs, slog.Any(key, r[key]))
+	}
+	return slog.GroupValue(attrs...)
+}
+
+type Service struct {
+	version string
+}
+
+func NewService(version string) *Service {
+	return &Service{version: version}
+}
+
+// Report collects the current environment and installation details. On error,
+// it still returns the available fields so startup logging can retain them.
+func (s *Service) Report() (Report, error) {
+	return collectReport(s.version, application.Get().Env.Info(), "/.flatpak-info")
+}
+
+func collectReport(version string, environment application.EnvironmentInfo, flatpakPath string) (Report, error) {
+	report := Report{
+		"version":     version,
+		"os":          environment.OS,
+		"arch":        environment.Arch,
+		"debug_build": environment.Debug,
+	}
+	if environment.OSInfo != nil {
+		report["os_details.name"] = environment.OSInfo.Name
+		report["os_details.version"] = environment.OSInfo.Version
+		report["os_details.id"] = environment.OSInfo.ID
+		report["os_details.branding"] = environment.OSInfo.Branding
+	}
+	for key, value := range environment.PlatformInfo {
+		report["platform."+key] = value
+	}
+
+	var flatpak *FlatpakInfo
+	if environment.OS == "linux" {
+		var err error
+		flatpak, err = readFlatpakInfo(flatpakPath)
+		if err != nil {
+			return report, err
+		}
+	}
+	if flatpak != nil {
+		report["flatpak"] = true
+		for key, value := range map[string]string{
+			"app_id":         flatpak.AppID,
+			"version":        flatpak.Version,
+			"branch":         flatpak.Branch,
+			"runtime":        flatpak.Runtime,
+			"app_commit":     flatpak.AppCommit,
+			"runtime_commit": flatpak.RuntimeCommit,
+		} {
+			if value != "" {
+				report["flatpak."+key] = value
+			}
+		}
+	}
+	return report, nil
 }
 
 func readFlatpakInfo(filename string) (*FlatpakInfo, error) {

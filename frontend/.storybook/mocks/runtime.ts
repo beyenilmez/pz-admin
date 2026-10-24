@@ -24,13 +24,6 @@ export const Call = {
 export const System = {
   IsWindows: fn(() => false),
   IsMac: fn(() => false),
-  Environment: fn(async () => ({
-    OS: "linux",
-    Arch: "amd64",
-    Debug: false,
-    OSInfo: { Name: "Example Linux", Version: "1.0" },
-    PlatformInfo: { DesktopEnvironment: "GNOME" },
-  })),
 };
 
 export const Window = {

@@ -9,8 +9,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import { System } from "@wailsio/runtime";
-import { Flatpak } from "@bindings/internal/diagnostics/service";
+import { Report } from "@bindings/internal/diagnostics/service";
 import { useTranslation } from "react-i18next";
 import { errorMessage } from "@/shared/lib/errors";
 import { CopyValueButton } from "@/shared/components/CopyValueButton";
@@ -27,11 +26,8 @@ export function DiagnosticsSection() {
     let active = true;
     async function load() {
       try {
-        const [info, flatpak] = await Promise.all([
-          System.Environment(),
-          Flatpak(),
-        ]);
-        if (active) setReport(formatDiagnostics(info, flatpak));
+        const diagnostics = await Report();
+        if (active) setReport(formatDiagnostics(diagnostics));
       } catch (cause) {
         if (active) setError(errorMessage(cause));
       }

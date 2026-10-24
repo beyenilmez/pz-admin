@@ -6,6 +6,6 @@ export {
     Service
 };
 
-export {
-    FlatpakInfo
+export type {
+    Report
 } from "./models.js";
