@@ -73,6 +73,7 @@ export function useConsoleInput({
     }
     const frame = requestAnimationFrame(() => combobox.selectFirstOption());
     return () => cancelAnimationFrame(frame);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Moving the caret or editing the command replaces the options that need selection.
   }, [caretPosition, combobox, command, showSuggestions]);
 
   useLayoutEffect(() => {

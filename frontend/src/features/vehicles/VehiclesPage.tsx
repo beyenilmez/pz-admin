@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Stack } from "@mantine/core";
 import { IconAlertCircle } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { GameBuild } from "@/features/game/types";
 import { GameToolPageLayout } from "@/features/game/components/GameToolPageLayout";
@@ -19,14 +19,16 @@ export function VehiclesPage({ build, onBuildChange }: VehiclesPageProps) {
   const { t } = useTranslation(["vehicles", "common"]);
   const [selectedVehicle, setSelectedVehicle] =
     useState<VehicleCatalogEntry | null>(null);
+  const [previousBuild, setPreviousBuild] = useState(build);
   const { catalog, error, loading, reload } = useVehicleCatalog(build);
   const vehicleVariants = selectedVehicle
     ? (catalog?.variantsByVehicleId.get(selectedVehicle.id) ?? [])
     : [];
 
-  useEffect(() => {
+  if (previousBuild !== build) {
+    setPreviousBuild(build);
     setSelectedVehicle(null);
-  }, [build]);
+  }
 
   function handleBack() {
     if (!selectedVehicle) return;

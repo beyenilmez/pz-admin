@@ -164,6 +164,7 @@ export function OptionsPage({ active }: { active: boolean }) {
     // Category content replaces the current list; retaining its scroll offset
     // would open the next category at an arbitrary position.
     scrollerRef.current?.scrollTo({ top: 0 });
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- The category ID determines when the replaced DOM content needs a scroll reset.
   }, [activeCategory?.id]);
 
   async function handleSave() {

@@ -29,6 +29,7 @@ export const LogOutput = memo(function LogOutput({
   useLayoutEffect(() => {
     const element = viewport.current;
     if (element && following.current) element.scrollTop = element.scrollHeight;
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- New entries change the rendered height; scroll only while following the tail.
   }, [entries]);
 
   // Keep the bottom visible when resizing rewraps lines.

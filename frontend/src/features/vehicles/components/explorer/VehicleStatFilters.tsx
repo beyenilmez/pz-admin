@@ -6,7 +6,7 @@ import {
   Stack,
   Text,
 } from "@mantine/core";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { vehicleStatIcons } from "@/features/vehicles/lib/statIcons";
 import {
@@ -41,12 +41,14 @@ function VehicleStatFilterControl({
   value,
 }: VehicleStatFilterControlProps) {
   const [draft, setDraft] = useState(value);
+  const [previousValue, setPreviousValue] = useState(value);
   const [minimum, maximum] = value;
   const icon = vehicleStatIcons[stat];
 
-  useEffect(() => {
-    setDraft([minimum, maximum]);
-  }, [maximum, minimum]);
+  if (previousValue[0] !== minimum || previousValue[1] !== maximum) {
+    setPreviousValue(value);
+    setDraft(value);
+  }
 
   return (
     <Stack gap={6}>

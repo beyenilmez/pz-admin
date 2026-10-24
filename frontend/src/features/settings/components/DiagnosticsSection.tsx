@@ -40,6 +40,7 @@ export function DiagnosticsSection() {
     return () => {
       active = false;
     };
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- A retry must start a fresh diagnostics request and cancel the previous result.
   }, [attempt]);
 
   return (

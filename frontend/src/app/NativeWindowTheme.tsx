@@ -9,6 +9,7 @@ export function NativeWindowTheme() {
   useEffect(() => {
     const { r, g, b } = toRgba(getComputedStyle(document.body).backgroundColor);
     void Window.SetBackgroundColour(r, g, b, 255);
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Mantine updates the body's computed background when its color scheme changes.
   }, [colorScheme]);
 
   return null;

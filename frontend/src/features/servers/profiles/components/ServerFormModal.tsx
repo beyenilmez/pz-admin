@@ -62,6 +62,7 @@ export function ServerFormModal({
 
   useLayoutEffect(() => {
     if (!opened) return;
+    // oxlint-disable-next-line react/set-state-in-effect -- Reset Mantine's form and validation state before painting each newly opened profile.
     resetForm(profile);
   }, [opened, profile]);
 

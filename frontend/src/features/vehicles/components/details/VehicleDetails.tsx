@@ -27,6 +27,7 @@ export function VehicleDetails({
 
   useEffect(() => {
     titleRef.current?.focus();
+    // oxlint-disable-next-line react/exhaustive-effect-dependencies -- Refocus the heading when a different vehicle is rendered in the same panel.
   }, [vehicle.id]);
 
   useEffect(() => {
