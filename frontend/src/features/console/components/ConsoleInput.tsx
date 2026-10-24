@@ -11,7 +11,7 @@ interface ConsoleInputProps {
 
 export function ConsoleInput({ executing, onExecute }: ConsoleInputProps) {
   const { t } = useTranslation("console");
-  const input = useConsoleInput({ executing, onExecute });
+  const { inputRef, ...input } = useConsoleInput({ executing, onExecute });
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -45,7 +45,7 @@ export function ConsoleInput({ executing, onExecute }: ConsoleInputProps) {
           withKeyboardNavigation={input.combobox.dropdownOpened}
         >
           <input
-            ref={input.inputRef}
+            ref={inputRef}
             type="text"
             value={input.command}
             onChange={input.handleChange}

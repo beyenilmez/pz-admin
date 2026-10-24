@@ -104,7 +104,11 @@ function hybridCatalog(wikiCatalog, gameItems, itemNames, categoryNames) {
     itemsByCategory.set(item.categoryId, categoryItems);
   }
   const categories = Array.from(itemsByCategory, ([id, categoryItems]) => {
-    const sortedItems = categoryItems.map(({ categoryId: _, ...item }) => item);
+    const sortedItems = categoryItems.map(({ id: itemId, images, name }) => ({
+      id: itemId,
+      images,
+      name,
+    }));
     sortedItems.sort((left, right) =>
       left.name.localeCompare(right.name, "en-US"),
     );

@@ -1,4 +1,4 @@
-import { memo, useRef, useSyncExternalStore } from "react";
+import { memo, useState, useSyncExternalStore } from "react";
 import { IconPackage } from "@tabler/icons-react";
 
 const listeners = new Set<() => void>();
@@ -37,7 +37,7 @@ const CyclingImage = memo(function CyclingImage({
   images,
   size,
 }: Pick<ItemThumbnailProps, "images" | "size">) {
-  const initialTick = useRef(tick).current;
+  const [initialTick] = useState(() => tick);
   const currentTick = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
   const image = images[(currentTick - initialTick) % images.length];
 

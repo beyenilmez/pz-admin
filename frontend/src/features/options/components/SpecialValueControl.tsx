@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import { Checkbox } from "@mantine/core";
 import type {
   OptionDefinition,
@@ -48,7 +48,9 @@ export function SpecialValueControl({
   const ordinaryValue = useRef<ScalarOptionValue | undefined>(
     active || Array.isArray(value) ? undefined : value,
   );
-  if (!active && !Array.isArray(value)) ordinaryValue.current = value;
+  useLayoutEffect(() => {
+    if (!active && !Array.isArray(value)) ordinaryValue.current = value;
+  }, [active, value]);
 
   return (
     <div className={classes.specialControl}>

@@ -34,7 +34,10 @@ export function VehicleExplorer({
   onVehicleSelect,
 }: VehicleExplorerProps) {
   const { i18n, t } = useTranslation(["vehicles", "common"]);
-  const explorer = useVehicleExplorer(catalog, i18n.language);
+  const { searchInputRef, ...explorer } = useVehicleExplorer(
+    catalog,
+    i18n.language,
+  );
 
   return (
     <Grid
@@ -60,14 +63,14 @@ export function VehicleExplorer({
                 explorer.setSearch(event.currentTarget.value);
               }}
               placeholder={t("search.nameOrId.placeholder", { ns: "common" })}
-              ref={explorer.searchInputRef}
+              ref={searchInputRef}
               rightSection={
                 explorer.search ? (
                   <CloseButton
                     aria-label={t("search.clear", { ns: "common" })}
                     onClick={() => {
                       explorer.setSearch("");
-                      explorer.searchInputRef.current?.focus();
+                      searchInputRef.current?.focus();
                     }}
                     size="sm"
                   />

@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useLayoutEffect, type ReactNode } from "react";
 import { act, render, waitFor } from "@/test/render";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { CancellablePromise, Events } from "@wailsio/runtime";
@@ -61,7 +61,10 @@ let sessionChanged: ((snapshot: Snapshot) => void) | undefined;
 let unsubscribe: ReturnType<typeof vi.fn<() => void>>;
 
 function SessionProbe() {
-  session = useSession();
+  const value = useSession();
+  useLayoutEffect(() => {
+    session = value;
+  });
   return null;
 }
 

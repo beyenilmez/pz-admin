@@ -43,6 +43,16 @@ const relativeTime = {
   })),
 } satisfies Intl.RelativeTimeFormat;
 
+function offlineLabel(elapsed: number) {
+  return lastSeenLabel(
+    player("Offline", {
+      lastKnownOfflineAt: new Date(now),
+      lastSeenOnlineAt: new Date(now - elapsed),
+    }),
+    relativeTime,
+  );
+}
+
 beforeEach(() => {
   vi.useFakeTimers();
   vi.setSystemTime(now);
@@ -108,18 +118,8 @@ describe("lastSeenLabel", () => {
   });
 
   it("formats offline time in useful minute, hour, and day units", () => {
-    function label(elapsed: number) {
-      return lastSeenLabel(
-        player("Offline", {
-          lastKnownOfflineAt: new Date(now),
-          lastSeenOnlineAt: new Date(now - elapsed),
-        }),
-        relativeTime,
-      );
-    }
-
-    expect(label(1)).toBe("-1:minute");
-    expect(label(2 * 60 * 60_000)).toBe("-2:hour");
-    expect(label(3 * 24 * 60 * 60_000)).toBe("-3:day");
+    expect(offlineLabel(1)).toBe("-1:minute");
+    expect(offlineLabel(2 * 60 * 60_000)).toBe("-2:hour");
+    expect(offlineLabel(3 * 24 * 60 * 60_000)).toBe("-3:day");
   });
 });

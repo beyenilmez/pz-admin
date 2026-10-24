@@ -25,6 +25,10 @@ import {
 } from "@/features/settings/lib/languages";
 import rowClasses from "./SettingRow.module.css";
 
+function supportsStartupUpdates() {
+  return System.IsWindows() || System.IsMac();
+}
+
 function renderControl(children: ReactNode) {
   return <div className={rowClasses.control}>{children}</div>;
 }
@@ -136,7 +140,7 @@ export function PreferencesSection() {
               onChange={handleLanguageChange}
             />
           </Skeleton>
-          {(System.IsWindows() || System.IsMac()) && (
+          {supportsStartupUpdates() && (
             <Skeleton visible={loading}>
               <Input.Wrapper
                 classNames={rowClasses}

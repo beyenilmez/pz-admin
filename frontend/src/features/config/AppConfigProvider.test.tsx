@@ -1,5 +1,5 @@
 import { Events } from "@wailsio/runtime";
-import { StrictMode } from "react";
+import { StrictMode, useLayoutEffect } from "react";
 import { act, render, waitFor } from "@/test/render";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { Config as ConfigModel } from "@bindings/internal/config/models";
@@ -37,7 +37,10 @@ vi.mock("@bindings/internal/config/service", () => ({
 let appConfig: ReturnType<typeof useAppConfig>;
 
 function ConfigProbe() {
-  appConfig = useAppConfig();
+  const value = useAppConfig();
+  useLayoutEffect(() => {
+    appConfig = value;
+  });
   return null;
 }
 
