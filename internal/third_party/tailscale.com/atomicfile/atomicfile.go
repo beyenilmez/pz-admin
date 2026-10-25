@@ -38,8 +38,9 @@ func WriteFile(filename string, data []byte, perm os.FileMode) (err error) {
 	tmpName := f.Name()
 	defer func() {
 		if err != nil {
-			f.Close()
-			os.Remove(tmpName)
+			// Cleanup is best-effort; preserve the original failure.
+			_ = f.Close()
+			_ = os.Remove(tmpName)
 		}
 	}()
 	if _, err := f.Write(data); err != nil {

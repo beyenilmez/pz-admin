@@ -103,9 +103,14 @@ func TestOpenRecoveringCorruptFile(t *testing.T) {
 func TestSaveValidJSON(t *testing.T) {
 	dir := t.TempDir()
 	path := filepath.Join(dir, "test.json")
-	db, _ := Open[testDB](path)
+	db, err := Open[testDB](path)
+	if err != nil {
+		t.Fatal(err)
+	}
 	db.Data.MyString = "hello"
-	db.Save()
+	if err = db.Save(); err != nil {
+		t.Fatal(err)
+	}
 
 	data, err := os.ReadFile(path)
 	if err != nil {

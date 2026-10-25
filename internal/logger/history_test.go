@@ -21,7 +21,11 @@ func TestHistoryContainsOnlyCurrentSession(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer bundle.Close()
+	t.Cleanup(func() {
+		if err := bundle.Close(); err != nil {
+			t.Errorf("close logger: %v", err)
+		}
+	})
 	bundle.Logger.Info("current")
 	bundle.Logger.Debug("hidden debug")
 	page := bundle.History.Read(0)

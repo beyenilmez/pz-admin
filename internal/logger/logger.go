@@ -182,7 +182,8 @@ type errorWriter struct {
 func (ew *errorWriter) Write(p []byte) (int, error) {
 	n, err := ew.w.Write(p)
 	if err != nil && ew.first.CompareAndSwap(false, true) {
-		fmt.Fprintf(ew.errw, "logger: file sink error (%s): %v\n", ew.path, err)
+		// Reporting is best-effort; return the original write error below.
+		_, _ = fmt.Fprintf(ew.errw, "logger: file sink error (%s): %v\n", ew.path, err)
 	}
 	return n, err
 }

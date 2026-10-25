@@ -64,7 +64,11 @@ func run() error {
 	if err != nil {
 		return fmt.Errorf("initialize logger: %w", err)
 	}
-	defer lg.Close()
+	defer func() {
+		if closeErr := lg.Close(); closeErr != nil {
+			fmt.Fprintf(os.Stderr, "close logger: %v\n", closeErr)
+		}
+	}()
 	slog.SetDefault(lg.Logger)
 
 	lg.Logger.Info("pz-admin starting",

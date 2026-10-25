@@ -107,7 +107,10 @@ func readFlatpakInfo(filename string) (*FlatpakInfo, error) {
 	if err != nil {
 		return nil, fmt.Errorf("read Flatpak diagnostics: %w", err)
 	}
-	defer file.Close()
+	defer func() {
+		// The file is read-only; read errors are reported by the scanner.
+		_ = file.Close()
+	}()
 
 	info := &FlatpakInfo{}
 	// Only report selected fields; the file also contains private host paths.

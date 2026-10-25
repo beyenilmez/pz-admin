@@ -104,7 +104,7 @@ func (s *Service) Save(p Profile, password string) (Profile, error) {
 		}
 		if rollbackErr != nil {
 			return Profile{}, fmt.Errorf(
-				"profile: store password: %w; rollback profile: %v",
+				"profile: store password: %w; rollback profile: %w",
 				err,
 				rollbackErr,
 			)
