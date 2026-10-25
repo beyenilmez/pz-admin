@@ -72,6 +72,7 @@ func testDefinitionRangesDoNotOverlap(t *testing.T) {
 		}
 	}
 }
+
 func testChangeOptionNormalizedValues(t *testing.T) {
 	definition, ok := Lookup("changeoption", "42")
 	if !ok {
@@ -168,6 +169,7 @@ func testVersionedCommandResponses(t *testing.T) {
 		})
 	}
 }
+
 func testCommandResponseContracts(t *testing.T) {
 	tests := []struct {
 		name     string

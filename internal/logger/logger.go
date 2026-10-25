@@ -28,9 +28,11 @@ type frameworkHandler struct{ slog.Handler }
 func (h *frameworkHandler) Enabled(ctx context.Context, level slog.Level) bool {
 	return level >= slog.LevelInfo && h.Handler.Enabled(ctx, level)
 }
+
 func (h *frameworkHandler) WithAttrs(attrs []slog.Attr) slog.Handler {
 	return &frameworkHandler{Handler: h.Handler.WithAttrs(attrs)}
 }
+
 func (h *frameworkHandler) WithGroup(name string) slog.Handler {
 	return &frameworkHandler{Handler: h.Handler.WithGroup(name)}
 }

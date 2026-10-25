@@ -250,7 +250,7 @@ func TestStartupRecoversDebugLoggingPreference(t *testing.T) {
 	if !service.Config().DebugLogging {
 		t.Fatal("startup did not load debug logging")
 	}
-	if err := os.WriteFile(configPath(service), []byte("invalid json"), 0600); err != nil {
+	if err := os.WriteFile(configPath(service), []byte("invalid json"), 0o600); err != nil {
 		t.Fatal(err)
 	}
 	startConfigService(t, service)

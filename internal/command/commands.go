@@ -61,7 +61,6 @@ func matchesNumericXPResponse(raw, username, perk, amount string) bool {
 // definitions is the canonical command catalog. Entries are registered
 // automatically during package initialization.
 var definitions = []Definition{
-
 	// Build 41 and shared commands
 
 	// Gives items to a player.

@@ -162,12 +162,14 @@ func (store *recordingPlayerDataStore) DeleteByProfile(profileID string) error {
 	store.deletedID = profileID
 	return store.err
 }
+
 func startProfileService(t *testing.T, service *Service) {
 	t.Helper()
 	if err := service.ServiceStartup(t.Context(), application.ServiceOptions{}); err != nil {
 		t.Fatalf("ServiceStartup() error = %v", err)
 	}
 }
+
 func newStartedProfileService(t *testing.T, players playerDataStore) *Service {
 	t.Helper()
 	service := NewService(players)

@@ -86,6 +86,7 @@ func TestBuild41StaffRolesReceiveStaffOfflineObservation(t *testing.T) {
 func TestOnlineObservation(t *testing.T) {
 	assertObservation(t, onlineObservation(), Observation{Online: Known(true), Banned: Known(false)})
 }
+
 func TestBannedObservation(t *testing.T) {
 	admin := "admin"
 	for _, test := range []struct {
@@ -129,6 +130,7 @@ func TestInvisibleObservation(t *testing.T) {
 func TestNoClipObservation(t *testing.T) {
 	assertObservation(t, noClipObservation(true), Observation{NoClip: Known(true)})
 }
+
 func TestVoiceBannedObservation(t *testing.T) {
 	assertObservation(t, voiceBannedObservation(true), Observation{VoiceBanned: Known(true)})
 }
@@ -141,6 +143,7 @@ func TestWhitelistedObservation(t *testing.T) {
 		assertObservation(t, whitelistedObservation(true), Observation{})
 	})
 }
+
 func TestAccessLevelObservation(t *testing.T) {
 	for _, test := range []struct {
 		name   string

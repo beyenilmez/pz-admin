@@ -14,7 +14,7 @@ import (
 
 func TestHistoryContainsOnlyCurrentSession(t *testing.T) {
 	dir := t.TempDir()
-	if err := os.WriteFile(filepath.Join(dir, "latest.log"), []byte("level=INFO msg=previous\n"), 0600); err != nil {
+	if err := os.WriteFile(filepath.Join(dir, "latest.log"), []byte("level=INFO msg=previous\n"), 0o600); err != nil {
 		t.Fatal(err)
 	}
 	bundle, err := newLogger(&bytes.Buffer{}, dir, Options{})

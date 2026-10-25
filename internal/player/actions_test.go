@@ -205,7 +205,6 @@ func TestService_StateChangingActions(t *testing.T) {
 			t.Fatalf("Banned = %v, want unchanged unknown", got)
 		}
 	})
-
 }
 
 func checkStoredBool(name string, field func(Player) *bool, want bool) func(*testing.T, *Service, string) {

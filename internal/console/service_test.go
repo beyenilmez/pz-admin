@@ -103,5 +103,4 @@ func TestService_Execute(t *testing.T) {
 			t.Errorf("observer calls = %d, want 1", observer.calls)
 		}
 	})
-
 }

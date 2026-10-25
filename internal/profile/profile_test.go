@@ -180,6 +180,7 @@ func newProfileStore(t *testing.T) *Store {
 	t.Helper()
 	return openProfileStore(t, filepath.Join(t.TempDir(), "profiles.json"))
 }
+
 func openProfileStore(t *testing.T, path string) *Store {
 	t.Helper()
 	store, err := Open(path)
@@ -188,6 +189,7 @@ func openProfileStore(t *testing.T, path string) *Store {
 	}
 	return store
 }
+
 func saveProfile(t *testing.T, store *Store, profile Profile) Profile {
 	t.Helper()
 	saved, err := store.Save(profile)
@@ -196,6 +198,7 @@ func saveProfile(t *testing.T, store *Store, profile Profile) Profile {
 	}
 	return saved
 }
+
 func validProfile(name string) Profile {
 	return Profile{Name: name, ConnectionType: connection.TypeRCON, Host: "example.com", Port: 27015, Version: "42"}
 }
