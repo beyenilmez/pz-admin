@@ -164,17 +164,40 @@ func TestClient_ExecuteCommand(t *testing.T) {
 		}
 	})
 
-	t.Run("timeout disconnects permanently", func(t *testing.T) {
+	t.Run("timeout allows reconnect", func(t *testing.T) {
+		disconnected := make(chan struct{}, 1)
 		server := newTestServer(t, func(command string) testReply {
 			if command == "slow" {
 				return testReply{}
 			}
 			return echoHandler(command)
 		})
-		client := newTestClient(t, server, Config{Timeout: time.Second})
+		client := newTestClient(t, server, Config{
+			Timeout:      time.Second,
+			OnDisconnect: func() { disconnected <- struct{}{} },
+		})
 
 		if _, err := client.ExecuteCommand(t.Context(), "slow"); !errors.Is(err, connection.ErrCommandTimeout) {
-			t.Errorf("ExecuteCommand() error = %v, want connection.ErrCommandTimeout", err)
+			t.Fatalf("ExecuteCommand() error = %v, want connection.ErrCommandTimeout", err)
+		}
+		if response, err := client.ExecuteCommand(t.Context(), "players"); err != nil || response != "echo:players" {
+			t.Fatalf("command after timeout = (%q, %v)", response, err)
+		}
+		select {
+		case <-disconnected:
+			t.Fatal("timeout notified disconnect")
+		default:
+		}
+
+		// A subsequent transport failure still ends the session normally.
+		server.Close()
+		if _, err := client.ExecuteCommand(t.Context(), "players"); err == nil {
+			t.Fatal("command after server shutdown error = nil")
+		}
+		select {
+		case <-disconnected:
+		case <-time.After(5 * time.Second):
+			t.Fatal("disconnect callback was not called")
 		}
 		if _, err := client.ExecuteCommand(t.Context(), "after"); !errors.Is(err, connection.ErrDisconnected) {
 			t.Errorf("ExecuteCommand() error = %v, want connection.ErrDisconnected", err)

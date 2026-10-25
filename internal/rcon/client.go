@@ -75,9 +75,9 @@ func Connect(ctx context.Context, config Config) (*Client, error) {
 	return &Client{conn: conn, onDisconnect: config.OnDisconnect}, nil
 }
 
-// ExecuteCommand runs a command on the established connection. The underlying
-// client serializes concurrent commands. Any transport failure closes the
-// connection permanently; callers must create a new Client to connect again.
+// ExecuteCommand runs a command on the established connection. Concurrent
+// commands are serialized. Timeouts allow reconnection on the next command;
+// other transport failures close the client.
 //
 // Empty commands are rejected before I/O. Config.Timeout bounds the round trip,
 // and timeouts report connection.ErrCommandTimeout. Cancelling ctx aborts a
@@ -103,14 +103,14 @@ func (c *Client) ExecuteCommand(ctx context.Context, cmd string) (string, error)
 			return "", fmt.Errorf("rcon: execute: %w", err)
 		}
 
-		// Any transaction failure may have left the stream ambiguous. Keep the
-		// application's explicit reconnect lifecycle instead of reusing it.
-		c.close(true)
 		var netErr net.Error
 		if errors.Is(err, context.DeadlineExceeded) ||
 			(errors.As(err, &netErr) && netErr.Timeout()) {
+			// The library discards the failed connection and authenticates a
+			// fresh one on the next command. Keep the session available.
 			return "", fmt.Errorf("rcon: execute: %w", connection.ErrCommandTimeout)
 		}
+		c.close(true)
 		return "", fmt.Errorf("rcon: execute: %w", err)
 	}
 	return response, nil
