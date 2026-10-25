@@ -125,6 +125,14 @@ tasks:
     cmds:
       - golangci-lint run ./...
 
+  vuln:backend:
+    desc: Checks the Go backend for known vulnerabilities
+    dir: "{{.ROOT_DIR}}"
+    deps:
+      - task: common:prepare:embed
+    cmds:
+      - govulncheck ./...
+
   check:frontend:
     desc: Checks and tests the frontend
     dir: frontend

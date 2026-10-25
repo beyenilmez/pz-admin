@@ -44,6 +44,10 @@ backend = "go:github.com/google/go-licenses/v2"
 version = "3.0.0-beta.34"
 backend = "go:github.com/wailsapp/wails/v3/cmd/wails3"
 
+[[tools."go:golang.org/x/vuln/cmd/govulncheck"]]
+version = "1.9.0"
+backend = "go:golang.org/x/vuln/cmd/govulncheck"
+
 [[tools.golangci-lint]]
 version = "2.15.0"
 backend = "aqua:golangci/golangci-lint"

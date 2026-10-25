@@ -5,6 +5,7 @@ lockfile = true
 "go:github.com/google/go-licenses/v2" = "2.0.1"
 # Keep the CLI aligned with the Wails dependency in go.mod.
 "go:github.com/wailsapp/wails/v3/cmd/wails3" = "{{ read_file(path=config_root ~ '/go.mod') | regex_replace(pattern='(?s)^.*?github[.]com/wailsapp/wails/v3[[:space:]]+(v[^[:space:]]+).*$', rep='$1') }}"
+"go:golang.org/x/vuln/cmd/govulncheck" = "1.9.0"
 "pipx:reuse" = "6.2.0"
 # Keep local and CI tooling aligned with the Go directive in go.mod.
 go = "{{ read_file(path=config_root ~ '/go.mod') | regex_replace(pattern='(?s)^.*?\ngo[[:space:]]+([^[:space:]]+).*$', rep='$1') }}"
