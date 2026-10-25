@@ -115,7 +115,7 @@ tasks:
       - go mod tidy -diff
       - golangci-lint fmt --diff
       - task: lint:backend
-      - task: test:backend
+      - task: test:backend:full
 
   lint:backend:
     desc: Lints the Go backend
@@ -163,6 +163,13 @@ tasks:
       - task: common:prepare:embed
     cmds:
       - go test ./...
+
+  test:backend:full:
+    desc: Tests the Go backend with race detection and shuffled execution
+    deps:
+      - task: common:prepare:embed
+    cmds:
+      - go test -race -shuffle=on ./...
 
   test:frontend:
     desc: Tests the frontend
