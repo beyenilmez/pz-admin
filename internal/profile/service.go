@@ -34,7 +34,7 @@ func newService(dir string) *Service {
 }
 
 // ServiceStartup loads or creates the profile store.
-func (s *Service) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+func (s *Service) ServiceStartup(_ context.Context, _ application.ServiceOptions) error {
 	store, err := Open(filepath.Join(s.resolveDir(), "profiles.json"))
 	if err != nil {
 		return err

@@ -30,6 +30,7 @@ type FrontendError struct {
 	Route          string `json:"route"`
 }
 
+// LogWindowName is the Wails window name for the log viewer.
 const LogWindowName = "application-logs"
 
 // Service exposes application logging to the frontend.
@@ -38,6 +39,7 @@ type Service struct {
 	config *config.Service
 }
 
+// NewService creates a logging service for the frontend.
 func NewService(bundle *Bundle, configService *config.Service) *Service {
 	return &Service{bundle: bundle, config: configService}
 }
@@ -75,10 +77,12 @@ func reportFrontendError(report FrontendError) {
 	slog.Error("frontend failure", attrs...)
 }
 
+// Read returns log entries newer than afterID and the oldest ID still available.
 func (s *Service) Read(afterID int64) Update {
 	return s.bundle.History.Read(afterID)
 }
 
+// OpenWindow opens the log viewer or focuses it if already open.
 func (s *Service) OpenWindow() {
 	application.InvokeAsync(func() {
 		// Show current window if already opened

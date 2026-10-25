@@ -13,6 +13,7 @@ import (
 // ParamType determines how Build formats a command parameter.
 type ParamType string
 
+// Supported command parameter types.
 const (
 	TypeString ParamType = "string" // Always quoted.
 	TypeInt    ParamType = "int"    // Appended unchanged after the prefix.

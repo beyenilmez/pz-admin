@@ -8,6 +8,7 @@ import "context"
 type Type string
 
 const (
+	// TypeRCON identifies an RCON connection.
 	TypeRCON Type = "rcon"
 )
 

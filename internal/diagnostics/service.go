@@ -1,3 +1,4 @@
+// Package diagnostics collects application and installation details.
 package diagnostics
 
 import (
@@ -12,6 +13,7 @@ import (
 	"github.com/wailsapp/wails/v3/pkg/application"
 )
 
+// FlatpakInfo holds installation details read from /.flatpak-info.
 type FlatpakInfo struct {
 	AppID         string `json:"appId"`
 	Version       string `json:"version"`
@@ -24,6 +26,7 @@ type FlatpakInfo struct {
 // Report contains the same diagnostic fields for the Settings view and logs.
 type Report map[string]any
 
+// LogValue returns the report as a log group with sorted keys.
 func (r Report) LogValue() slog.Value {
 	keys := make([]string, 0, len(r))
 	for key := range r {
@@ -37,10 +40,12 @@ func (r Report) LogValue() slog.Value {
 	return slog.GroupValue(attrs...)
 }
 
+// Service exposes runtime diagnostics.
 type Service struct {
 	version string
 }
 
+// NewService creates a diagnostics service.
 func NewService(version string) *Service {
 	return &Service{version: version}
 }

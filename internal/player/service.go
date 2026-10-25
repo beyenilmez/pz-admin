@@ -46,7 +46,7 @@ func newService(dir string) *Service {
 }
 
 // ServiceStartup opens the player store.
-func (s *Service) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+func (s *Service) ServiceStartup(_ context.Context, _ application.ServiceOptions) error {
 	store, err := Open(filepath.Join(s.resolveDir(), "players"))
 	if err != nil {
 		return err

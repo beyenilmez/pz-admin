@@ -1,3 +1,4 @@
+// Package notices exposes embedded application and third-party license notices.
 package notices
 
 import (
@@ -16,6 +17,7 @@ type Entry struct {
 	Text       string `json:"text"`
 }
 
+// Report contains the application license and third-party notices.
 type Report struct {
 	ApplicationLicense string  `json:"applicationLicense"`
 	Entries            []Entry `json:"entries"`
@@ -27,10 +29,12 @@ type Service struct {
 	thirdPartyNotices  string
 }
 
+// NewService creates a service from the embedded license text and notices JSON.
 func NewService(applicationLicense, thirdPartyNotices string) *Service {
 	return &Service{applicationLicense: applicationLicense, thirdPartyNotices: thirdPartyNotices}
 }
 
+// Report decodes the embedded notices.
 func (s *Service) Report() (Report, error) {
 	report := Report{ApplicationLicense: s.applicationLicense, Entries: []Entry{}}
 	// Development builds can contain the empty collection placeholder.

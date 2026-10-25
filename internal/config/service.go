@@ -18,7 +18,8 @@ import (
 const (
 	configFileName = "config.json"
 	configBakExt   = ".bak"
-	ChangedEvent   = "config:changed"
+	// ChangedEvent is emitted with the new Config after saving changes.
+	ChangedEvent = "config:changed"
 )
 
 func init() { application.RegisterEvent[Config](ChangedEvent) }
@@ -116,7 +117,7 @@ func (s *Service) update(mutate func(*Config)) error {
 
 // ServiceStartup loads the configuration, creating it with defaults when it is
 // missing. It backs up corrupt or invalid data before replacing it.
-func (s *Service) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+func (s *Service) ServiceStartup(_ context.Context, _ application.ServiceOptions) error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 

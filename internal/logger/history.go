@@ -15,6 +15,7 @@ const (
 	maxDisplayBytes   = 64 << 10
 )
 
+// Entry is a log record kept in the session history.
 type Entry struct {
 	ID        int64  `json:"id"`
 	Text      string `json:"text"`

@@ -1,3 +1,4 @@
+// Package update verifies and downloads application updates on supported platforms.
 package update
 
 import (

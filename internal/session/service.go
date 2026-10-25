@@ -44,7 +44,7 @@ func NewService(profiles *profile.Service, observers ...Observer) *Service {
 }
 
 // ServiceStartup leaves the session disconnected until Connect is called.
-func (s *Service) ServiceStartup(ctx context.Context, options application.ServiceOptions) error {
+func (s *Service) ServiceStartup(_ context.Context, _ application.ServiceOptions) error {
 	return nil
 }
 

@@ -1,3 +1,4 @@
+// Command pz-admin runs the application.
 package main
 
 import (
