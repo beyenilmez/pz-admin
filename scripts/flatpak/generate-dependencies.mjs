@@ -19,7 +19,7 @@ const root = fileURLToPath(new URL("../../", import.meta.url));
 const output = path.join(root, ".generated/flatpak");
 const goGenerator = "github.com/dennwc/flatpak-go-mod@v0.1.0";
 const nodeGenerator =
-  "git+https://github.com/flatpak/flatpak-builder-tools.git@3d6ff6697785b52ae34db8078e0ad5188a710b1f#subdirectory=node";
+  "git+https://github.com/flatpak/flatpak-builder-tools.git@9d86d336a39b9af38b86f114b6ce5820fe260f91#subdirectory=node";
 
 function run(command, args, options = {}) {
   return execFileSync(command, args, {
