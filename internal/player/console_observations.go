@@ -179,8 +179,7 @@ func (s *Service) ObserveConsoleCommand(p profile.Profile, input, output string)
 			if err != nil {
 				return err
 			}
-			_, err = s.merge(p.ID, []Observation{observation}, time.Now().UTC())
-			return err
+			return s.merge(p.ID, []Observation{observation}, time.Now().UTC())
 		}
 		return nil
 	}

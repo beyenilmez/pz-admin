@@ -25,11 +25,9 @@ type State struct {
 // NewState derives command capabilities once for the lifetime of a session.
 func NewState(p profile.Profile, channel connection.Channel) State {
 	state := State{
-		Snapshot: Snapshot{
-			Profile:  p,
-			Features: resolveFeatures(p, channel).Values(),
-		},
-		Channel: channel,
+		Profile:  p,
+		Features: resolveFeatures(p, channel).Values(),
+		Channel:  channel,
 	}
 	if channel == nil {
 		return State{}

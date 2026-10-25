@@ -102,7 +102,7 @@ func (s *Service) Observe(profileID string, observation Observation) error {
 	if s.store == nil {
 		return fmt.Errorf("player: service not started")
 	}
-	if _, err := s.merge(profileID, []Observation{observation}, time.Now().UTC()); err != nil {
+	if err := s.merge(profileID, []Observation{observation}, time.Now().UTC()); err != nil {
 		return fmt.Errorf("player: record observation: %w", err)
 	}
 	return nil
@@ -180,18 +180,18 @@ func (s *Service) refresh(ctx context.Context, state session.State) {
 		offline.ID = player.ID
 		observations = append(observations, offline)
 	}
-	if _, err := s.merge(state.Profile.ID, observations, time.Now().UTC()); err != nil {
+	if err := s.merge(state.Profile.ID, observations, time.Now().UTC()); err != nil {
 		slog.Warn("player refresh merge failed", "profile_id", state.Profile.ID, "err", err)
 	}
 }
 
-func (s *Service) merge(profileID string, observations []Observation, observedAt time.Time) ([]Player, error) {
+func (s *Service) merge(profileID string, observations []Observation, observedAt time.Time) error {
 	players, err := s.store.Merge(profileID, observations, observedAt)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	s.emitUpdate(profileID, players)
-	return players, nil
+	return nil
 }
 
 func (s *Service) emitUpdate(profileID string, players []Player) {

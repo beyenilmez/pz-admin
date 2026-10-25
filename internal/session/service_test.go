@@ -22,7 +22,7 @@ import (
 func TestService_ConnectionLifecycle(t *testing.T) {
 	application.New(application.Options{
 		Name:                        "session-test",
-		Logger:                      slog.New(slog.NewTextHandler(io.Discard, nil)),
+		Logger:                      slog.New(slog.DiscardHandler),
 		DisableDefaultSignalHandler: true,
 	})
 	keyring.MockInit()

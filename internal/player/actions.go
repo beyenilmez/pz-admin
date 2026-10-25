@@ -31,7 +31,7 @@ func (s *Service) AddLocalUser(username string) error {
 	if findByUsername(players, username) != -1 {
 		return fmt.Errorf("player: username %q already exists", username)
 	}
-	if _, err := s.merge(p.ID, []Observation{{Username: username}}, time.Now().UTC()); err != nil {
+	if err := s.merge(p.ID, []Observation{{Username: username}}, time.Now().UTC()); err != nil {
 		return fmt.Errorf("player: record local user: %w", err)
 	}
 	return nil
@@ -48,7 +48,7 @@ func (s *Service) AddUser(ctx context.Context, username, password string) error 
 		return fmt.Errorf("player: add user: %w", err)
 	}
 
-	_, err = s.merge(state.Profile.ID, []Observation{addedUserObservation(state.Profile.Version, username)}, time.Now().UTC())
+	err = s.merge(state.Profile.ID, []Observation{addedUserObservation(state.Profile.Version, username)}, time.Now().UTC())
 	if err != nil {
 		return fmt.Errorf("player: record added user: %w", err)
 	}

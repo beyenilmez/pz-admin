@@ -250,7 +250,3 @@ func openTestStore(t *testing.T) *Store {
 	}
 	return store
 }
-
-func pointer[T any](value T) *T {
-	return &value
-}
