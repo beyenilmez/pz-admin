@@ -452,10 +452,7 @@ const build41Options = {
   ShowSafety: {
     type: "boolean",
     defaultValue: true,
-    requirements: [
-      { option: "PVP", equals: true },
-      { option: "SafetySystem", equals: true },
-    ],
+    requirements: [{ option: "PVP", equals: true }],
   },
   SledgehammerOnlyInSafehouse: {
     type: "boolean",
@@ -770,10 +767,7 @@ export const build42Options = {
   ShowSafety: {
     type: "boolean",
     defaultValue: true,
-    requirements: [
-      { option: "PVP", equals: true },
-      { option: "SafetySystem", equals: true },
-    ],
+    requirements: [{ option: "PVP", equals: true }],
   },
   SledgehammerOnlyInSafehouse: {
     type: "boolean",
@@ -986,11 +980,7 @@ export const build42Options = {
   },
   GoodWordListFile: { type: "string", defaultValue: "" },
   HideAdminsInPlayerList: { type: "boolean", defaultValue: false },
-  HideDisguisedUserName: {
-    type: "boolean",
-    defaultValue: false,
-    requirements: [{ option: "UsernameDisguises", equals: true }],
-  },
+  HideDisguisedUserName: { type: "boolean", defaultValue: false },
   MaxPacketsPerSecond: {
     type: "integer",
     defaultValue: 300,
@@ -1021,17 +1011,17 @@ export const build42Options = {
     defaultValue: true,
     requirements: [{ option: "PVP", equals: true }],
   },
-  SafehouseDisableDisguises: {
-    type: "boolean",
-    defaultValue: true,
-    requirements: [{ option: "UsernameDisguises", equals: true }],
-  },
+  SafehouseDisableDisguises: { type: "boolean", defaultValue: true },
   SafehousePreventsLootRespawn: { type: "boolean", defaultValue: true },
   SafetyDisconnectDelay: {
     type: "integer",
     defaultValue: 60,
     minimum: 0,
     maximum: 60,
+    requirements: [
+      { option: "PVP", equals: true },
+      { option: "SafetySystem", equals: true },
+    ],
   },
   Seed: { type: "string", defaultValue: "", dynamicDefault: true },
   ShowCoordinates: { type: "boolean", defaultValue: false },
@@ -1209,8 +1199,8 @@ export const optionCatalogs: Record<GameBuild, OptionCategory[]> = {
           id: "pvpAndSafety",
           options: b41([
             "PVP",
-            "SafetySystem",
             "ShowSafety",
+            "SafetySystem",
             "SafetyToggleTimer",
             "SafetyCooldownTimer",
             "PVPFirearmDamageModifier",
@@ -1483,8 +1473,8 @@ export const optionCatalogs: Record<GameBuild, OptionCategory[]> = {
           id: "pvpAndSafety",
           options: b42([
             "PVP",
-            "SafetySystem",
             "ShowSafety",
+            "SafetySystem",
             "SafetyToggleTimer",
             "SafetyCooldownTimer",
             "SafetyDisconnectDelay",
