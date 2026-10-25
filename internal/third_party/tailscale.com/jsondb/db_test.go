@@ -32,7 +32,7 @@ func TestDB(t *testing.T) {
 	db.Data.MyString = "test"
 	db.Data.unexported = "don't keep"
 	db.Data.AnInt = 42
-	if err := db.Save(); err != nil {
+	if err = db.Save(); err != nil {
 		t.Fatalf("saving database: %v", err)
 	}
 

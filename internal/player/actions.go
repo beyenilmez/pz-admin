@@ -44,7 +44,7 @@ func (s *Service) AddUser(ctx context.Context, username, password string) error 
 	if err != nil {
 		return err
 	}
-	if _, err := state.CommandClient.AddUser(ctx, username, password); err != nil {
+	if _, err = state.CommandClient.AddUser(ctx, username, password); err != nil {
 		return fmt.Errorf("player: add user: %w", err)
 	}
 

@@ -126,7 +126,7 @@ func (s *Service) ServiceStartup(_ context.Context, _ application.ServiceOptions
 
 	data, err := os.ReadFile(filepath.Join(s.dir, configFileName))
 	if errors.Is(err, os.ErrNotExist) {
-		if err := s.save(); err != nil {
+		if err = s.save(); err != nil {
 			return err
 		}
 		slog.Info("default config created")

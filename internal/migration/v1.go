@@ -26,13 +26,13 @@ func V1() error {
 
 func importV1(legacyDir, configDir, dataDir string) (err error) {
 	markerPath := filepath.Join(legacyDir, markerName)
-	if _, err := os.Lstat(markerPath); !errors.Is(err, os.ErrNotExist) {
+	if _, err = os.Lstat(markerPath); !errors.Is(err, os.ErrNotExist) {
 		if err == nil {
 			slog.Debug("v1 migration skipped", "reason", "already attempted")
 		}
 		return err
 	}
-	if _, err := os.Stat(legacyDir); errors.Is(err, os.ErrNotExist) {
+	if _, err = os.Stat(legacyDir); errors.Is(err, os.ErrNotExist) {
 		slog.Debug("v1 migration skipped", "reason", "no v1 directory")
 		return nil
 	} else if err != nil {

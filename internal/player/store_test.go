@@ -118,10 +118,10 @@ func TestStore_MergeState(t *testing.T) {
 		id := players[0].ID
 		onlineAt := start.Add(time.Minute)
 		offlineAt := start.Add(2 * time.Minute)
-		if _, err := store.Merge(profileID, []Observation{{ID: id, Online: Known(true)}}, onlineAt); err != nil {
+		if _, err = store.Merge(profileID, []Observation{{ID: id, Online: Known(true)}}, onlineAt); err != nil {
 			t.Fatal(err)
 		}
-		if _, err := store.Merge(profileID, []Observation{{ID: id, Online: Known(false)}}, offlineAt); err != nil {
+		if _, err = store.Merge(profileID, []Observation{{ID: id, Online: Known(false)}}, offlineAt); err != nil {
 			t.Fatal(err)
 		}
 		players, err = store.Merge(profileID, []Observation{{ID: id, Online: Known(false)}}, offlineAt.Add(time.Minute))

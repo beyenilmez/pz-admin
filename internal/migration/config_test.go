@@ -37,7 +37,7 @@ func TestImportConfig(t *testing.T) {
 				t.Fatal(err)
 			}
 			var settings map[string]string
-			if err := json.Unmarshal(data, &settings); err != nil {
+			if err = json.Unmarshal(data, &settings); err != nil {
 				t.Fatal(err)
 			}
 			if settings["theme"] != tc.theme || settings["language"] != tc.language {
@@ -48,10 +48,10 @@ func TestImportConfig(t *testing.T) {
 			}
 			// The config loader unmarshals over defaults rather than a zero-value config.
 			loaded := config.Config{Theme: config.ThemeSystem, DownloadUpdatesOnStartup: true}
-			if err := json.Unmarshal(data, &loaded); err != nil || loaded.Validate() != nil || !loaded.DownloadUpdatesOnStartup {
+			if err = json.Unmarshal(data, &loaded); err != nil || loaded.Validate() != nil || !loaded.DownloadUpdatesOnStartup {
 				t.Fatal("import does not preserve valid defaults")
 			}
-			if err := importConfig(legacy, destination); err != nil {
+			if err = importConfig(legacy, destination); err != nil {
 				t.Fatal(err)
 			}
 			original, err := os.ReadFile(path)

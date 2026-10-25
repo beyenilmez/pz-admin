@@ -62,7 +62,7 @@ func TestImportV1(t *testing.T) {
 	if len(list) != 1 || list[0].Name != "localhost:27015" || list[0].Version != "auto" || list[0].Port != 27015 || list[0].Host != "localhost" {
 		t.Fatalf("unexpected imported profiles: %+v", list)
 	}
-	if _, password, err := profiles.Credentials(list[0].ID); err != nil || password != "test-password" {
+	if _, password, credentialsErr := profiles.Credentials(list[0].ID); credentialsErr != nil || password != "test-password" {
 		t.Fatal("password was not imported correctly")
 	}
 	store, err := player.Open(filepath.Join(data, "players"))
@@ -89,10 +89,10 @@ func TestImportV1(t *testing.T) {
 		t.Fatal("legacy history was changed")
 	}
 	// An intentionally empty store must not cause deleted profiles to reappear.
-	if err := profiles.Delete(list[0].ID); err != nil {
+	if err = profiles.Delete(list[0].ID); err != nil {
 		t.Fatal(err)
 	}
-	if err := importV1(legacy, config, data); err != nil {
+	if err = importV1(legacy, config, data); err != nil {
 		t.Fatal(err)
 	}
 	content, err := os.ReadFile(filepath.Join(config, "profiles.json"))

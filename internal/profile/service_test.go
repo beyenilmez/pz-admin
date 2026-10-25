@@ -107,7 +107,7 @@ func TestService_Save(t *testing.T) {
 		t.Cleanup(keyring.MockInit)
 		saved.Name = "after"
 
-		if _, err := service.Save(saved, "replacement"); !errors.Is(err, wantErr) {
+		if _, err = service.Save(saved, "replacement"); !errors.Is(err, wantErr) {
 			t.Fatalf("Save() error = %v, want error matching %v", err, wantErr)
 		}
 		profiles, err := service.List()
@@ -140,7 +140,7 @@ func TestService_Delete(t *testing.T) {
 		if err != nil {
 			t.Fatalf("Save() error = %v", err)
 		}
-		if err := service.Delete(saved.ID); !errors.Is(err, wantErr) {
+		if err = service.Delete(saved.ID); !errors.Is(err, wantErr) {
 			t.Errorf("Delete() error = %v, want error matching %v", err, wantErr)
 		}
 		profiles, err := service.List()

@@ -44,7 +44,7 @@ func importServer(legacyDir, configDir, dataDir string) error {
 		return err
 	}
 	var credentials legacyCredentials
-	if err := json.Unmarshal(data, &credentials); err != nil {
+	if err = json.Unmarshal(data, &credentials); err != nil {
 		return errors.New("invalid v1 credentials JSON")
 	}
 	savedProfile, password, err := convertCredentials(credentials)

@@ -41,7 +41,7 @@ func TestService_ConnectionLifecycle(t *testing.T) {
 	}
 
 	profiles := profile.NewService(nil)
-	if err := profiles.ServiceStartup(t.Context(), application.ServiceOptions{}); err != nil {
+	if err = profiles.ServiceStartup(t.Context(), application.ServiceOptions{}); err != nil {
 		t.Fatalf("profile ServiceStartup() error = %v", err)
 	}
 	saved, err := profiles.Save(profile.Profile{

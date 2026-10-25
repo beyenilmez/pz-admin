@@ -24,7 +24,7 @@ import (
 // exists then the target file's attributes and ACLs are preserved. If the target
 // filename already exists but is not a regular file, WriteFile returns an error.
 func WriteFile(filename string, data []byte, perm os.FileMode) (err error) {
-	if err := os.MkdirAll(filepath.Dir(filename), perm|0o100); err != nil {
+	if err = os.MkdirAll(filepath.Dir(filename), perm|0o100); err != nil {
 		return err
 	}
 	fi, err := os.Stat(filename)

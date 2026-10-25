@@ -25,7 +25,7 @@ app-path=/private/host/path
 name=wrong-app
 branch=wrong-branch
 `
-	if err := os.WriteFile(filename, []byte(contents), 0o600); err != nil {
+	if err = os.WriteFile(filename, []byte(contents), 0o600); err != nil {
 		t.Fatal(err)
 	}
 	info, err = readFlatpakInfo(filename)
