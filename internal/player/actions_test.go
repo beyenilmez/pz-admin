@@ -165,6 +165,7 @@ func TestService_StateChangingActions(t *testing.T) {
 		{name: "access level", response: "User Alice is now moderator", run: func(ctx context.Context, s *Service, id string) (ActionResult, error) {
 			return s.SetAccessLevel(ctx, []string{id}, "moderator")
 		}, check: func(t *testing.T, s *Service, profileID string) {
+			t.Helper()
 			if got := getOnlyPlayer(t, s, profileID).AccessLevel; got == nil || *got != "moderator" {
 				t.Fatalf("AccessLevel = %v, want moderator", got)
 			}
@@ -172,6 +173,7 @@ func TestService_StateChangingActions(t *testing.T) {
 		{name: "whitelist removal", response: "User Alice removed from white list", run: func(ctx context.Context, s *Service, id string) (ActionResult, error) {
 			return s.RemoveFromWhitelist(ctx, []string{id})
 		}, check: func(t *testing.T, s *Service, profileID string) {
+			t.Helper()
 			players, err := s.List(profileID)
 			if err != nil {
 				t.Fatal(err)

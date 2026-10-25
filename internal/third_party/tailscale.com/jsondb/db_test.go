@@ -5,6 +5,7 @@
 //   - Replaced log.Fatalf with t.Fatalf (test framework integration).
 //   - Replaced go-cmp with plain comparisons (drop dependency).
 //   - Added tests for missing, corrupt, recovered, and saved JSON files.
+//   - Use t.TempDir for automatic test directory cleanup.
 
 package jsondb
 
@@ -17,11 +18,7 @@ import (
 )
 
 func TestDB(t *testing.T) {
-	dir, err := os.MkdirTemp("", "db-test")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer os.RemoveAll(dir)
+	dir := t.TempDir()
 
 	path := filepath.Join(dir, "db.json")
 	db, err := Open[testDB](path)

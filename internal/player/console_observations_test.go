@@ -15,6 +15,7 @@ func TestService_ObserveConsoleCommandRoutesConfirmedResponses(t *testing.T) {
 		check                      func(*testing.T, []Player)
 	}{
 		{name: "add user", build: "42", input: `adduser "Bob" secret`, output: "User Bob created with password", check: func(t *testing.T, players []Player) {
+			t.Helper()
 			if findByUsername(players, "Bob") == -1 {
 				t.Fatal("Bob was not recorded")
 			}
@@ -24,6 +25,7 @@ func TestService_ObserveConsoleCommandRoutesConfirmedResponses(t *testing.T) {
 		{name: "unban", build: "42", input: `unbanuser "Alice"`, output: "System unbanned user Alice", check: checkBoolField("Banned", func(p Player) *bool { return p.Banned }, false)},
 		{name: "unban alternate", build: "42", input: `unbanuser "Alice"`, output: "User Alice is now un-banned", check: checkBoolField("Banned", func(p Player) *bool { return p.Banned }, false)},
 		{name: "kick", build: "41", input: `kick "Alice"`, output: "User Alice kicked", check: func(t *testing.T, players []Player) {
+			t.Helper()
 			if players[0].LastKnownOfflineAt.IsZero() {
 				t.Fatal("kick was not recorded as offline")
 			}
@@ -41,6 +43,7 @@ func TestService_ObserveConsoleCommandRoutesConfirmedResponses(t *testing.T) {
 		{name: "grant admin", build: "41", input: `grantadmin "Alice"`, output: "User Alice is now admin", check: checkAccessLevel("admin")},
 		{name: "remove admin", build: "41", input: `removeadmin "Alice"`, output: "User Alice no longer has access level", check: checkAccessLevel("none")},
 		{name: "remove whitelist", build: "42", input: `removeuserfromwhitelist "Alice"`, output: "User Alice removed from white list", check: func(t *testing.T, players []Player) {
+			t.Helper()
 			if len(players) != 0 {
 				t.Fatalf("players = %#v, want empty", players)
 			}
