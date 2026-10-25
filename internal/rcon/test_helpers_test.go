@@ -17,6 +17,7 @@ const (
 
 type testReply struct {
 	body       string
+	chunks     []string
 	closeWrite bool
 	respond    bool
 }
@@ -111,7 +112,25 @@ func (s *testServer) serveConn(conn net.Conn) {
 				return
 			}
 			if reply.respond {
-				_ = writeTestPacket(conn, testPacketResponse, packet.id, reply.body)
+				chunks := reply.chunks
+				if chunks == nil {
+					chunks = []string{reply.body}
+				}
+				for _, chunk := range chunks {
+					if err := writeTestPacket(conn, testPacketResponse, packet.id, chunk); err != nil {
+						return
+					}
+				}
+			}
+		case testPacketResponse:
+			if !authenticated || packet.body != "" {
+				return
+			}
+			// Project Zomboid acknowledges an empty marker request twice.
+			for range 2 {
+				if err := writeTestPacket(conn, testPacketResponse, packet.id, ""); err != nil {
+					return
+				}
 			}
 		}
 	}

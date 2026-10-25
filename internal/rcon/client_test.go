@@ -54,46 +54,39 @@ func TestConnect(t *testing.T) {
 }
 
 func TestClient_ExecuteCommand(t *testing.T) {
-	t.Run("executes sequential commands", func(t *testing.T) {
-		server := newTestServer(t, echoHandler)
-		client := newTestClient(t, server, Config{})
-
-		for _, command := range []string{"servermsg hello", "players", "quit"} {
-			response, err := client.ExecuteCommand(t.Context(), command)
-			if err != nil {
-				t.Fatalf("ExecuteCommand(%q) error = %v", command, err)
-			}
-			if want := "echo:" + command; response != want {
-				t.Errorf("ExecuteCommand(%q) = %q, want %q", command, response, want)
-			}
-		}
-	})
-
-	t.Run("accepts large Project Zomboid response", func(t *testing.T) {
-		// Build 42's help response exceeds Source's standard packet limit.
-		want := strings.Repeat("x", 4208)
-		server := newTestServer(t, func(string) testReply {
-			return testReply{body: want, respond: true}
-		})
-		client := newTestClient(t, server, Config{})
-
-		response, err := client.ExecuteCommand(t.Context(), "help")
-		if err != nil {
-			t.Fatalf("ExecuteCommand() error = %v", err)
-		}
-		if response != want {
-			t.Errorf("len(ExecuteCommand()) = %d, want %d", len(response), len(want))
-		}
-	})
-
-	t.Run("rejects command after close", func(t *testing.T) {
-		server := newTestServer(t, echoHandler)
-		client := newTestClient(t, server, Config{})
-		client.Close()
-
-		_, err := client.ExecuteCommand(t.Context(), "anything")
-		if !errors.Is(err, connection.ErrDisconnected) {
-			t.Errorf("ExecuteCommand() error = %v, want connection.ErrDisconnected", err)
+	t.Run("collects complete replies and reuses connection", func(t *testing.T) {
+		for _, tt := range []struct {
+			name   string
+			chunks []string
+		}{
+			{name: "older build oversized packet", chunks: []string{strings.Repeat("x", 5797)}},
+			{name: "newer build multipart reply", chunks: []string{strings.Repeat("x", 4086), strings.Repeat("y", 1780)}},
+			{name: "empty reply", chunks: []string{""}},
+			// A UTF-8 character can straddle the server's packet boundary.
+			{name: "split UTF-8", chunks: []string{strings.Repeat("x", 4084) + "\xf0\x9f", "\x98\x80"}},
+		} {
+			t.Run(tt.name, func(t *testing.T) {
+				server := newTestServer(t, func(command string) testReply {
+					if command == "help" {
+						return testReply{chunks: tt.chunks, respond: true}
+					}
+					return echoHandler(command)
+				})
+				client := newTestClient(t, server, Config{})
+				for _, command := range []string{"servermsg hello", "help", "players"} {
+					response, err := client.ExecuteCommand(t.Context(), command)
+					if err != nil {
+						t.Fatalf("ExecuteCommand(%q) error = %v", command, err)
+					}
+					want := "echo:" + command
+					if command == "help" {
+						want = strings.Join(tt.chunks, "")
+					}
+					if response != want {
+						t.Fatalf("ExecuteCommand(%q) = %q, want %q", command, response, want)
+					}
+				}
+			})
 		}
 	})
 

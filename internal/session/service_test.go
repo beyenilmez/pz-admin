@@ -251,6 +251,13 @@ func (s *sessionRCONServer) serveConn(conn net.Conn) {
 				response = "Ban IP. Use /banip IP"
 			}
 			_ = writeSessionRCONPacket(conn, 0, packet.id, response)
+		case 0:
+			// Project Zomboid sends two empty replies for each marker request.
+			for range 2 {
+				if err := writeSessionRCONPacket(conn, 0, packet.id, ""); err != nil {
+					return
+				}
+			}
 		}
 	}
 }

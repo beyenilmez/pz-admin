@@ -58,14 +58,13 @@ var (
 // only the initial dial and does not control the Client's lifetime.
 func Connect(ctx context.Context, config Config) (*Client, error) {
 	config = config.withDefaults()
-	// Project Zomboid returns one packet per command and can exceed Source's
-	// standard 4096-byte limit; Build 42's `help` packet is 4218 bytes.
 	conn, err := source.Dial(
 		ctx,
 		config.Addr,
 		source.WithPassword(config.Password),
 		source.WithTimeout(config.Timeout),
-		source.WithSinglePacketResponses(),
+		source.WithProjectZomboidResponses(),
+		// Older builds can send packets larger than the default limit.
 		source.WithMaxPacketSize(source.MaxPacketSizeLimit),
 		source.WithUTF8(),
 	)

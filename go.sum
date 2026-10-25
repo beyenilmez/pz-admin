@@ -32,8 +32,8 @@ github.com/wailsapp/wails/v3 v3.0.0-beta.34 h1:3p/s+rk6olaquzaDWWowVTJ1ZMIBDHEsT
 github.com/wailsapp/wails/v3 v3.0.0-beta.34/go.mod h1:Tk3i8pyehpIdV4aS9GfpgGjk7eOjuSpCrpyJXpS6y64=
 github.com/zalando/go-keyring v0.2.8 h1:6sD/Ucpl7jNq10rM2pgqTs0sZ9V3qMrqfIIy5YPccHs=
 github.com/zalando/go-keyring v0.2.8/go.mod h1:tsMo+VpRq5NGyKfxoBVjCuMrG47yj8cmakZDO5QGii0=
-gitlab.com/nyxi/go-source-rcon/v2 v2.1.0 h1:N7+9Kr2lv7KDP0soXjPJoqbfKVIYJ95BzqaaU+chhXg=
-gitlab.com/nyxi/go-source-rcon/v2 v2.1.0/go.mod h1:Sxk4aKjbVUTiTNHtyRMA/F485SIqpML8y5hCzrcw4wU=
+gitlab.com/nyxi/go-source-rcon/v2 v2.2.0 h1:j2X/8c41X2njsM39tjnSH6MjYwl4pTCIxpDujUrhK1I=
+gitlab.com/nyxi/go-source-rcon/v2 v2.2.0/go.mod h1:Sxk4aKjbVUTiTNHtyRMA/F485SIqpML8y5hCzrcw4wU=
 golang.org/x/mod v0.41.0 h1:qJmnOUb4YB+FsEuM3HcWucdZASCPGhsX6uljO6pog0c=
 golang.org/x/mod v0.41.0/go.mod h1:Ek9pY8RKWXwsWvd3rQiHYtMqkjSUV+s1Rj7j4H5Ur6o=
 golang.org/x/sys v0.1.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=
