@@ -49,16 +49,12 @@ linters:
       require-explanation: true
       require-specific: true
   exclusions:
+    # Mobile build scaffolding is unused until Android/iOS support is resumed.
+    paths:
+      - ^build/(android|ios)/
     presets:
       - common-false-positives
     rules:
-      # Wails-derived mobile build scaffolding retains upstream conventions.
-      - path: ^build/(android|ios)/
-        linters:
-          - noctx
-          - revive
-          - godot
-          - gocritic
       - path: _test\.go
         linters:
           - gosec
@@ -68,3 +64,6 @@ formatters:
   enable:
     - gofumpt
     - goimports
+  exclusions:
+    paths:
+      - ^build/(android|ios)/
