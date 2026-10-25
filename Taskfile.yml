@@ -113,14 +113,17 @@ tasks:
       - task: common:prepare:embed
     cmds:
       - go mod tidy -diff
-      - |
-        unformatted=$(gofmt -l main.go internal build) || exit 1
-        if [ -n "$unformatted" ]; then
-          printf 'Run gofmt on:\n%s\n' "$unformatted"
-          exit 1
-        fi
-      - go vet ./...
+      - golangci-lint fmt --diff
+      - task: lint:backend
       - task: test:backend
+
+  lint:backend:
+    desc: Lints the Go backend
+    dir: "{{.ROOT_DIR}}"
+    deps:
+      - task: common:prepare:embed
+    cmds:
+      - golangci-lint run ./...
 
   check:frontend:
     desc: Checks and tests the frontend
@@ -138,8 +141,9 @@ tasks:
 
   format:backend:
     desc: Formats the Go backend
+    dir: "{{.ROOT_DIR}}"
     cmds:
-      - go fmt ./...
+      - golangci-lint fmt
 
   format:frontend:
     desc: Formats the frontend

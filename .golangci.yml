@@ -1,0 +1,70 @@
+version: "2"
+
+run:
+  timeout: 5m
+  tests: true
+  modules-download-mode: readonly
+
+linters:
+  default: standard
+  enable:
+    - asasalint
+    - asciicheck
+    - bidichk
+    - bodyclose
+    - copyloopvar
+    - dupword
+    - durationcheck
+    - errorlint
+    - errname
+    - fatcontext
+    - gocheckcompilerdirectives
+    - gocritic
+    - godot
+    - gosec
+    - loggercheck
+    - makezero
+    - misspell
+    - modernize
+    - nilnesserr
+    - noctx
+    - nolintlint
+    - nosprintfhostport
+    - predeclared
+    - revive
+    - sloglint
+    - thelper
+    - unconvert
+    - unparam
+    - usestdlibvars
+    - usetesting
+    - wastedassign
+    - whitespace
+  settings:
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+  exclusions:
+    presets:
+      - common-false-positives
+    rules:
+      # Wails-derived mobile build scaffolding retains upstream conventions.
+      - path: ^build/(android|ios)/
+        linters:
+          - noctx
+          - revive
+          - godot
+          - gocritic
+      - path: _test\.go
+        linters:
+          - gosec
+          - noctx
+
+formatters:
+  enable:
+    - gofumpt
+    - goimports
