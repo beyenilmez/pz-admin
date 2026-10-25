@@ -104,8 +104,8 @@ func decryptPassword(encoded string) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	// CFB is retained only to read v1's format; new passwords go into the OS keyring.
 	iv, password := data[:aes.BlockSize], data[aes.BlockSize:]
+	//nolint:staticcheck // CFB is required to read v1 passwords; new passwords use the OS keyring.
 	cipher.NewCFBDecrypter(block, iv).XORKeyStream(password, password)
 	return string(password), nil
 }

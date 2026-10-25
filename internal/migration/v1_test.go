@@ -26,6 +26,7 @@ func legacyFixture(t *testing.T) (string, string, string) {
 	}
 	password := []byte("test-password")
 	encrypted := make([]byte, aes.BlockSize+len(password))
+	//nolint:staticcheck // The fixture must match v1's CFB password format.
 	cipher.NewCFBEncrypter(block, encrypted[:aes.BlockSize]).XORKeyStream(encrypted[aes.BlockSize:], password)
 	if err := writeJSON(filepath.Join(legacy, "credentials.json"), map[string]string{
 		"ip": "localhost", "port": "27015", "password": base64.StdEncoding.EncodeToString(encrypted),

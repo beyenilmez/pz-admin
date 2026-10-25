@@ -206,5 +206,5 @@ func randomOnlinePlayer(ctx context.Context, client *command.Client) (string, er
 	if len(players) == 0 {
 		return "", errors.New("serveraction: no players are online")
 	}
-	return players[rand.IntN(len(players))], nil
+	return players[rand.IntN(len(players))], nil // #nosec G404 -- Gameplay event targets do not require cryptographic randomness.
 }
