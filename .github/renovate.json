@@ -36,6 +36,26 @@
       "groupName": "Go dependencies (non-major)"
     },
     {
+      "description": "Refresh derived tool versions when Go dependencies raise the go directive.",
+      "matchManagers": ["gomod"],
+      "postUpgradeTasks": {
+        "commands": [
+          "mise trust",
+          "mise lock go go:github.com/wailsapp/wails/v3/cmd/wails3"
+        ],
+        "fileFilters": ["mise.lock"],
+        "executionMode": "branch",
+        "installTools": { "mise": {} }
+      }
+    },
+    {
+      "matchManagers": ["gomod"],
+      "matchDepNames": ["go"],
+      "matchDepTypes": ["golang"],
+      "rangeStrategy": "bump",
+      "groupName": "Go toolchain"
+    },
+    {
       "matchManagers": ["github-actions"],
       "groupName": "GitHub Actions",
       "separateMajorMinor": false
@@ -59,7 +79,7 @@
       "postUpgradeTasks": {
         "commands": [
           "mise trust",
-          "mise lock go:github.com/wailsapp/wails/v3/cmd/wails3"
+          "mise lock go go:github.com/wailsapp/wails/v3/cmd/wails3"
         ],
         "fileFilters": ["mise.lock"],
         "executionMode": "branch",

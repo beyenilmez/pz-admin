@@ -339,7 +339,7 @@ tasks:
 
       Usage: task build:docker [TAG=myapp:latest] [CGO_ENABLED=1] [GO_IMAGE=...] [RUNTIME_IMAGE=...]
       For CGO apps, set CGO_ENABLED=1 with libc-compatible builder/runtime images, e.g.:
-        task build:docker CGO_ENABLED=1 GO_IMAGE=golang:bookworm RUNTIME_IMAGE=gcr.io/distroless/base-debian12
+        task build:docker CGO_ENABLED=1 GO_IMAGE=golang:$(mise current go)-bookworm RUNTIME_IMAGE=gcr.io/distroless/base-debian12
     deps:
       # Build the production frontend so frontend/dist (embedded by the Go build
       # inside the image) is present and current in the Docker build context.
@@ -351,12 +351,15 @@ tasks:
     cmds:
       - >-
         docker build
+        --build-arg GO_VERSION={{.GO_VERSION}}
         --build-arg CGO_ENABLED={{.CGO_ENABLED | default "0"}}
-        --build-arg GO_IMAGE={{.GO_IMAGE | default "golang:alpine"}}
+        --build-arg GO_IMAGE={{.GO_IMAGE | default (printf "golang:%s-alpine" .GO_VERSION)}}
         --build-arg RUNTIME_IMAGE={{.RUNTIME_IMAGE | default "gcr.io/distroless/static-debian12"}}
         -t {{.TAG | default (printf "%s:latest" .APP_NAME)}}
         -f build/docker/Dockerfile.server .
     vars:
+      GO_VERSION:
+        sh: mise current go
       TAG: "{{.TAG}}"
     preconditions:
       - sh: docker info > /dev/null 2>&1
@@ -389,7 +392,10 @@ tasks:
       Builds the Docker image needed for cross-compiling to any platform.
       Run this once to enable cross-platform builds from any OS.
     cmds:
-      - docker build -t wails-cross -f build/docker/Dockerfile.cross build/docker/
+      - docker build --build-arg GO_VERSION={{.GO_VERSION}} -t wails-cross -f build/docker/Dockerfile.cross build/docker/
+    vars:
+      GO_VERSION:
+        sh: mise current go
     preconditions:
       - sh: docker info > /dev/null 2>&1
         msg: "Docker is required. Please install Docker first."

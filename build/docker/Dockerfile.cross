@@ -5,7 +5,7 @@
 # Windows: Zig + bundled mingw
 #
 # Usage:
-#   docker build -t wails-cross -f Dockerfile.cross .
+#   docker build --build-arg GO_VERSION=$(mise current go) -t wails-cross -f build/docker/Dockerfile.cross build/docker/
 #   docker run --rm -v $(pwd):/app wails-cross darwin arm64
 #   docker run --rm -v $(pwd):/app wails-cross darwin amd64
 #   docker run --rm -v $(pwd):/app wails-cross linux amd64
@@ -13,7 +13,8 @@
 #   docker run --rm -v $(pwd):/app wails-cross windows amd64
 #   docker run --rm -v $(pwd):/app wails-cross windows arm64
 
-FROM golang:1.26-bookworm
+ARG GO_VERSION
+FROM golang:${GO_VERSION}-bookworm
 
 ARG TARGETARCH
 ARG GARBLE_VERSION=v0.16.0

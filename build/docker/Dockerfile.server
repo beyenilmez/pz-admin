@@ -6,14 +6,16 @@
 #
 # If your app needs CGO, override the build args, e.g.:
 #   docker build --build-arg CGO_ENABLED=1 \
-#                --build-arg GO_IMAGE=golang:bookworm \
+#                --build-arg GO_VERSION=$(mise current go) \
+#                --build-arg GO_IMAGE=golang:$(mise current go)-bookworm \
 #                --build-arg RUNTIME_IMAGE=gcr.io/distroless/base-debian12 \
 #                -f build/docker/Dockerfile.server .
 # CGO needs a C toolchain in the builder and a libc in the runtime image; keep
 # the builder and runtime libc compatible (a glibc builder -> a glibc runtime).
 # The Taskfile passes these through: task build:docker CGO_ENABLED=1 GO_IMAGE=... RUNTIME_IMAGE=...
 
-ARG GO_IMAGE=golang:alpine
+ARG GO_VERSION
+ARG GO_IMAGE=golang:${GO_VERSION}-alpine
 ARG RUNTIME_IMAGE=gcr.io/distroless/static-debian12
 ARG CGO_ENABLED=0
 
