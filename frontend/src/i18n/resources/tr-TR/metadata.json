@@ -1,0 +1,69 @@
+{
+  "description": {
+    "attribution": "Thanks to The Indie Stone for creating Project Zomboid ({{projectZomboidUrl}}), which made this possible. This is an unofficial fan production for non-commercial purposes made under the Indie Stone Terms ({{termsUrl}}).",
+    "introduction": "PZ Admin, Project Zomboid sunucularını yönetmek için bir uygulamadır. Oyuncu yönetimini, sunucu ayarlarını ve konsol komutlarını tek bir arayüzde sunar.",
+    "offlineTools": "Eşya kataloğu, araç kataloğu ve mesaj düzenleyici bir sunucuya bağlanmadan da kullanılabilir. PZ Admin, Build 41 ve 42’ye uygun içerik ve ayarlar sunar.",
+    "requirements": "Yönetmek istediğiniz Project Zomboid sunucusunun çalışıyor ve RCON özelliğinin etkin olması gerekir."
+  },
+  "features": {
+    "catalogs": "Aranabilir kataloglarla oyunculara eşya verme ve araç oluşturma.",
+    "connectionProfiles": "Sunuculara RCON üzerinden bağlanma ve bağlantı profilleri kaydetme.",
+    "messageEditor": "Project Zomboid formatını destekleyen zengin metin düzenleyiciyle mesaj oluşturma.",
+    "playerManagement": "Oyuncu yönetimi, rol atama, XP verme, ışınlama ve moderasyon işlemleri.",
+    "serverActions": "Hava durumunu kontrol etme, sunucu olaylarını tetikleme ve dünyayı kaydetme.",
+    "serverOptions": "Sunucu ayarlarını düzenleme ve konsol komutlarını çalıştırma."
+  },
+  "keywords": {
+    "administration": "Yönetim",
+    "game": "Project Zomboid",
+    "rcon": "RCON",
+    "server": "Sunucu"
+  },
+  "screenshots": {
+    "addXp": {
+      "alt": "Bir oyuncu için seçilen beceriler ve eklenecek deneyim puanları",
+      "caption": "Oyuncuların becerilerine deneyim puanı ekleyin"
+    },
+    "console": {
+      "alt": "Önceki komutları, yanıtları ve komut önerilerini gösteren sunucu konsolu",
+      "caption": "Sunucu komutları çalıştırın"
+    },
+    "giveItems": {
+      "alt": "Bir oyuncuya verilmek üzere seçilen eşyalar",
+      "caption": "Oyunculara eşya verin"
+    },
+    "items": {
+      "alt": "Seçilen eşyaları ve adetlerini gösteren eşya kataloğu",
+      "caption": "Eşya kataloğunu inceleyin"
+    },
+    "messageEditor": {
+      "alt": "Mesaj önizlemesini ve biçimlendirilmiş çıktıyı gösteren mesaj düzenleyici",
+      "caption": "Sunucu mesajları yazın ve biçimlendirin"
+    },
+    "options": {
+      "alt": "Kaydedilmeyi bekleyen değişiklikleri içeren sunucu ayarları",
+      "caption": "Sunucu ayarlarınızı düzenleyin"
+    },
+    "players": {
+      "alt": "Oyuncuların çevrim içi durumlarını, rollerini ve oyuncu işlemlerini gösteren liste",
+      "caption": "Sunucunuzdaki oyuncuları görüntüleyin ve yönetin"
+    },
+    "serverActions": {
+      "alt": "Dünyayı kaydetme, hava durumunu değiştirme ve olay başlatma gibi sunucu işlemleri",
+      "caption": "Sunucunuzu ve oyun içi olayları yönetin"
+    },
+    "spawnVehicle": {
+      "alt": "Polis aracı seçilmiş araç oluşturma penceresi",
+      "caption": "Oyuncuların yakınında araç oluşturun"
+    },
+    "vehicleDetails": {
+      "alt": "Seçilen aracın ayrıntıları ve mevcut varyantları",
+      "caption": "Araç özelliklerini ve varyantlarını inceleyin"
+    },
+    "vehicles": {
+      "alt": "Polis araçlarını ve özelliklerini gösteren araç kataloğu",
+      "caption": "Araçlara göz atın ve özelliklerini karşılaştırın"
+    }
+  },
+  "summary": "Project Zomboid sunucu yönetim aracı"
+}

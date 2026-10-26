@@ -22,6 +22,12 @@ by typed unions or domain values.
 - Keep accessibility text beside its feature/control. Prefer visible or native
   labels; otherwise provide a meaningful standalone accessible name.
 
+## Shared metadata
+
+`metadata.json` contains MIT-licensed product text for packaging and the website.
+It is validated with UI translations but excluded from the app runtime and UI
+translation coverage.
+
 ## Commands
 
 Run from `frontend/`:

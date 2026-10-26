@@ -13,7 +13,7 @@
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "check": "pnpm check:translations && pnpm lint && pnpm format:check && tsc && pnpm test:run",
-    "check:translations": "node ./scripts/translations/validate-ui.mjs",
+    "check:translations": "node ./scripts/translations/validate.mjs",
     "format": "pnpm format:translations && cd .. && prettier --write .",
     "format:translations": "node ./scripts/translations/format.mjs --write",
     "format:check": "node ./scripts/translations/format.mjs --check && cd .. && prettier --check .",

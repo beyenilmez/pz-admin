@@ -29,7 +29,11 @@ rejectUnknown(
 );
 rejectUnknown("resource directories", supportedLanguages, resourceLanguages);
 
-const defaultNamespaces = sortedStrings(Object.keys(namespaceManifest));
+// Shared product metadata is validated here but is not an app UI namespace.
+const defaultNamespaces = sortedStrings([
+  ...Object.keys(namespaceManifest),
+  "metadata",
+]);
 compareSets(
   "namespace manifest and default resources",
   defaultNamespaces,
@@ -93,7 +97,7 @@ if (errors.length > 0) {
     (language) => language !== defaultLanguage,
   ).length;
   console.log(
-    `Translation validation passed: ${defaultLanguage} covers ${defaultNamespaces.length} UI namespaces; ${partialResourceLanguages} non-default resource locale(s) contain only valid keys; ${supportedLanguages.length} locales are registered.`,
+    `Translation validation passed: ${defaultLanguage} covers ${defaultNamespaces.length} namespaces; ${partialResourceLanguages} non-default resource locale(s) contain only valid keys; ${supportedLanguages.length} locales are registered.`,
   );
 }
 

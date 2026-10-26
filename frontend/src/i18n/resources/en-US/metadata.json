@@ -1,0 +1,69 @@
+{
+  "description": {
+    "attribution": "Thanks to The Indie Stone for creating Project Zomboid ({{projectZomboidUrl}}), which made this possible. This is an unofficial fan production for non-commercial purposes made under the Indie Stone Terms ({{termsUrl}}).",
+    "introduction": "PZ Admin is an application for managing Project Zomboid servers. Manage players, edit server options, and run console commands from one interface.",
+    "offlineTools": "The item browser, vehicle browser, and message editor can also be used without connecting to a server. PZ Admin includes catalogs and options for Builds 41 and 42.",
+    "requirements": "Server management requires a running Project Zomboid server with RCON enabled."
+  },
+  "features": {
+    "catalogs": "Give items to players and spawn vehicles using searchable catalogs.",
+    "connectionProfiles": "Connect to your servers through RCON and save connection profiles.",
+    "messageEditor": "Compose messages with a rich text editor that supports Project Zomboid formatting.",
+    "playerManagement": "Manage players: assign roles, grant XP, teleport, and perform moderation actions.",
+    "serverActions": "Control the weather, trigger server events, and save the world.",
+    "serverOptions": "Edit server options and run console commands."
+  },
+  "keywords": {
+    "administration": "Administration",
+    "game": "Project Zomboid",
+    "rcon": "RCON",
+    "server": "Server"
+  },
+  "screenshots": {
+    "addXp": {
+      "alt": "Skill selection and experience amounts for a player",
+      "caption": "Add experience points to player skills"
+    },
+    "console": {
+      "alt": "Server console with previous commands, responses, and command suggestions",
+      "caption": "Run server commands"
+    },
+    "giveItems": {
+      "alt": "Items selected to be given to a player",
+      "caption": "Give items to players"
+    },
+    "items": {
+      "alt": "Item catalog with selected items and quantities",
+      "caption": "Browse the item catalog"
+    },
+    "messageEditor": {
+      "alt": "Message editor with a message preview and formatted output",
+      "caption": "Write and format server messages"
+    },
+    "options": {
+      "alt": "Server settings with changes ready to save",
+      "caption": "Adjust your server settings"
+    },
+    "players": {
+      "alt": "Player list with online status, roles, and player actions",
+      "caption": "View and manage players on your server"
+    },
+    "serverActions": {
+      "alt": "Server actions for saving the world, changing weather, and starting events",
+      "caption": "Manage your server and in-game events"
+    },
+    "spawnVehicle": {
+      "alt": "Vehicle selection with a police car chosen",
+      "caption": "Spawn vehicles near players"
+    },
+    "vehicleDetails": {
+      "alt": "Selected vehicle details and available variants",
+      "caption": "View vehicle details and variants"
+    },
+    "vehicles": {
+      "alt": "Vehicle catalog with police vehicles and their specifications",
+      "caption": "Browse and compare vehicles"
+    }
+  },
+  "summary": "Project Zomboid server administration tool"
+}

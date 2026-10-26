@@ -39,7 +39,7 @@ export const defaultResources = {
 } as const satisfies Record<ResourceNamespace, ResourceKey>;
 
 const translationFiles = import.meta.glob<{ default: ResourceKey }>(
-  "./resources/*/*.json",
+  ["./resources/*/*.json", "!./resources/*/metadata.json"],
   { eager: true },
 );
 

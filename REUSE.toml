@@ -75,9 +75,12 @@ path = "build/linux/com.bedirhanyenilmez.pzadmin.desktop"
 SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
 SPDX-License-Identifier = "GPL-3.0-or-later"
 
-# AppStream metadata, permissively licensed for software catalogs.
+# Metadata, permissively licensed for software catalogs.
 [[annotations]]
-path = "build/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml"
+path = [
+  "build/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml",
+  "frontend/src/i18n/resources/*/metadata.json",
+]
 SPDX-FileCopyrightText = "2026 Bedirhan Yenilmez"
 SPDX-License-Identifier = "MIT"
 
