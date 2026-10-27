@@ -25,7 +25,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "players/en-US/players-en-US-light-1280x800.png"
+          "path": "players/en-US/players-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -33,7 +34,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "players/en-US/players-en-US-light-1280x800.webp"
+          "path": "players/en-US/players-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -41,7 +43,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "players/en-US/players-en-US-light-640x400.webp"
+          "path": "players/en-US/players-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -49,7 +52,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "players/en-US/players-en-US-dark-1280x800.png"
+          "path": "players/en-US/players-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -57,7 +61,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "players/en-US/players-en-US-dark-1280x800.webp"
+          "path": "players/en-US/players-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -65,7 +70,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "players/en-US/players-en-US-dark-640x400.webp"
+          "path": "players/en-US/players-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -73,7 +79,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "players/tr-TR/players-tr-TR-light-1280x800.png"
+          "path": "players/tr-TR/players-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -81,7 +88,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "players/tr-TR/players-tr-TR-light-1280x800.webp"
+          "path": "players/tr-TR/players-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -89,7 +97,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "players/tr-TR/players-tr-TR-light-640x400.webp"
+          "path": "players/tr-TR/players-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -97,7 +106,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "players/tr-TR/players-tr-TR-dark-1280x800.png"
+          "path": "players/tr-TR/players-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -105,7 +115,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "players/tr-TR/players-tr-TR-dark-1280x800.webp"
+          "path": "players/tr-TR/players-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -113,7 +124,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "players/tr-TR/players-tr-TR-dark-640x400.webp"
+          "path": "players/tr-TR/players-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -134,7 +146,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "give-items/en-US/give-items-en-US-light-1280x800.png"
+          "path": "give-items/en-US/give-items-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -142,7 +155,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "give-items/en-US/give-items-en-US-light-1280x800.webp"
+          "path": "give-items/en-US/give-items-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -150,7 +164,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "give-items/en-US/give-items-en-US-light-640x400.webp"
+          "path": "give-items/en-US/give-items-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -158,7 +173,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "give-items/en-US/give-items-en-US-dark-1280x800.png"
+          "path": "give-items/en-US/give-items-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -166,7 +182,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "give-items/en-US/give-items-en-US-dark-1280x800.webp"
+          "path": "give-items/en-US/give-items-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -174,7 +191,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "give-items/en-US/give-items-en-US-dark-640x400.webp"
+          "path": "give-items/en-US/give-items-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -182,7 +200,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "give-items/tr-TR/give-items-tr-TR-light-1280x800.png"
+          "path": "give-items/tr-TR/give-items-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -190,7 +209,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "give-items/tr-TR/give-items-tr-TR-light-1280x800.webp"
+          "path": "give-items/tr-TR/give-items-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -198,7 +218,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "give-items/tr-TR/give-items-tr-TR-light-640x400.webp"
+          "path": "give-items/tr-TR/give-items-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -206,7 +227,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "give-items/tr-TR/give-items-tr-TR-dark-1280x800.png"
+          "path": "give-items/tr-TR/give-items-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -214,7 +236,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "give-items/tr-TR/give-items-tr-TR-dark-1280x800.webp"
+          "path": "give-items/tr-TR/give-items-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -222,7 +245,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "give-items/tr-TR/give-items-tr-TR-dark-640x400.webp"
+          "path": "give-items/tr-TR/give-items-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -243,7 +267,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/en-US/add-xp-en-US-light-1280x800.png"
+          "path": "add-xp/en-US/add-xp-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -251,7 +276,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/en-US/add-xp-en-US-light-1280x800.webp"
+          "path": "add-xp/en-US/add-xp-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -259,7 +285,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "add-xp/en-US/add-xp-en-US-light-640x400.webp"
+          "path": "add-xp/en-US/add-xp-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -267,7 +294,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/en-US/add-xp-en-US-dark-1280x800.png"
+          "path": "add-xp/en-US/add-xp-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -275,7 +303,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/en-US/add-xp-en-US-dark-1280x800.webp"
+          "path": "add-xp/en-US/add-xp-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -283,7 +312,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "add-xp/en-US/add-xp-en-US-dark-640x400.webp"
+          "path": "add-xp/en-US/add-xp-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -291,7 +321,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/tr-TR/add-xp-tr-TR-light-1280x800.png"
+          "path": "add-xp/tr-TR/add-xp-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -299,7 +330,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/tr-TR/add-xp-tr-TR-light-1280x800.webp"
+          "path": "add-xp/tr-TR/add-xp-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -307,7 +339,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "add-xp/tr-TR/add-xp-tr-TR-light-640x400.webp"
+          "path": "add-xp/tr-TR/add-xp-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -315,7 +348,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-1280x800.png"
+          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -323,7 +357,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-1280x800.webp"
+          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -331,7 +366,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-640x400.webp"
+          "path": "add-xp/tr-TR/add-xp-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -352,7 +388,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-1280x800.png"
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -360,7 +397,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-1280x800.webp"
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -368,7 +406,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-640x400.webp"
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -376,7 +415,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-1280x800.png"
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -384,7 +424,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-1280x800.webp"
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -392,7 +433,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-640x400.webp"
+          "path": "spawn-vehicle/en-US/spawn-vehicle-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -400,7 +442,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-1280x800.png"
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -408,7 +451,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-1280x800.webp"
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -416,7 +460,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-640x400.webp"
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -424,7 +469,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-1280x800.png"
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -432,7 +478,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-1280x800.webp"
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -440,7 +487,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-640x400.webp"
+          "path": "spawn-vehicle/tr-TR/spawn-vehicle-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -461,7 +509,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "options/en-US/options-en-US-light-1280x800.png"
+          "path": "options/en-US/options-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -469,7 +518,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "options/en-US/options-en-US-light-1280x800.webp"
+          "path": "options/en-US/options-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -477,7 +527,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "options/en-US/options-en-US-light-640x400.webp"
+          "path": "options/en-US/options-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -485,7 +536,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "options/en-US/options-en-US-dark-1280x800.png"
+          "path": "options/en-US/options-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -493,7 +545,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "options/en-US/options-en-US-dark-1280x800.webp"
+          "path": "options/en-US/options-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -501,7 +554,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "options/en-US/options-en-US-dark-640x400.webp"
+          "path": "options/en-US/options-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -509,7 +563,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "options/tr-TR/options-tr-TR-light-1280x800.png"
+          "path": "options/tr-TR/options-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -517,7 +572,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "options/tr-TR/options-tr-TR-light-1280x800.webp"
+          "path": "options/tr-TR/options-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -525,7 +581,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "options/tr-TR/options-tr-TR-light-640x400.webp"
+          "path": "options/tr-TR/options-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -533,7 +590,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "options/tr-TR/options-tr-TR-dark-1280x800.png"
+          "path": "options/tr-TR/options-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -541,7 +599,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "options/tr-TR/options-tr-TR-dark-1280x800.webp"
+          "path": "options/tr-TR/options-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -549,7 +608,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "options/tr-TR/options-tr-TR-dark-640x400.webp"
+          "path": "options/tr-TR/options-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -570,7 +630,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/en-US/server-actions-en-US-light-1280x800.png"
+          "path": "server-actions/en-US/server-actions-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -578,7 +639,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/en-US/server-actions-en-US-light-1280x800.webp"
+          "path": "server-actions/en-US/server-actions-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -586,7 +648,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "server-actions/en-US/server-actions-en-US-light-640x400.webp"
+          "path": "server-actions/en-US/server-actions-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -594,7 +657,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/en-US/server-actions-en-US-dark-1280x800.png"
+          "path": "server-actions/en-US/server-actions-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -602,7 +666,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/en-US/server-actions-en-US-dark-1280x800.webp"
+          "path": "server-actions/en-US/server-actions-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -610,7 +675,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "server-actions/en-US/server-actions-en-US-dark-640x400.webp"
+          "path": "server-actions/en-US/server-actions-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -618,7 +684,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/tr-TR/server-actions-tr-TR-light-1280x800.png"
+          "path": "server-actions/tr-TR/server-actions-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -626,7 +693,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/tr-TR/server-actions-tr-TR-light-1280x800.webp"
+          "path": "server-actions/tr-TR/server-actions-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -634,7 +702,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "server-actions/tr-TR/server-actions-tr-TR-light-640x400.webp"
+          "path": "server-actions/tr-TR/server-actions-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -642,7 +711,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-1280x800.png"
+          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -650,7 +720,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-1280x800.webp"
+          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -658,7 +729,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-640x400.webp"
+          "path": "server-actions/tr-TR/server-actions-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -679,7 +751,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "console/en-US/console-en-US-light-1280x800.png"
+          "path": "console/en-US/console-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -687,7 +760,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "console/en-US/console-en-US-light-1280x800.webp"
+          "path": "console/en-US/console-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -695,7 +769,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "console/en-US/console-en-US-light-640x400.webp"
+          "path": "console/en-US/console-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -703,7 +778,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "console/en-US/console-en-US-dark-1280x800.png"
+          "path": "console/en-US/console-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -711,7 +787,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "console/en-US/console-en-US-dark-1280x800.webp"
+          "path": "console/en-US/console-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -719,7 +796,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "console/en-US/console-en-US-dark-640x400.webp"
+          "path": "console/en-US/console-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -727,7 +805,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "console/tr-TR/console-tr-TR-light-1280x800.png"
+          "path": "console/tr-TR/console-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -735,7 +814,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "console/tr-TR/console-tr-TR-light-1280x800.webp"
+          "path": "console/tr-TR/console-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -743,7 +823,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "console/tr-TR/console-tr-TR-light-640x400.webp"
+          "path": "console/tr-TR/console-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -751,7 +832,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "console/tr-TR/console-tr-TR-dark-1280x800.png"
+          "path": "console/tr-TR/console-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -759,7 +841,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "console/tr-TR/console-tr-TR-dark-1280x800.webp"
+          "path": "console/tr-TR/console-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -767,7 +850,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "console/tr-TR/console-tr-TR-dark-640x400.webp"
+          "path": "console/tr-TR/console-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -788,7 +872,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "items/en-US/items-en-US-light-1280x800.png"
+          "path": "items/en-US/items-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -796,7 +881,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "items/en-US/items-en-US-light-1280x800.webp"
+          "path": "items/en-US/items-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -804,7 +890,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "items/en-US/items-en-US-light-640x400.webp"
+          "path": "items/en-US/items-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -812,7 +899,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "items/en-US/items-en-US-dark-1280x800.png"
+          "path": "items/en-US/items-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -820,7 +908,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "items/en-US/items-en-US-dark-1280x800.webp"
+          "path": "items/en-US/items-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -828,7 +917,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "items/en-US/items-en-US-dark-640x400.webp"
+          "path": "items/en-US/items-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -836,7 +926,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "items/tr-TR/items-tr-TR-light-1280x800.png"
+          "path": "items/tr-TR/items-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -844,7 +935,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "items/tr-TR/items-tr-TR-light-1280x800.webp"
+          "path": "items/tr-TR/items-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -852,7 +944,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "items/tr-TR/items-tr-TR-light-640x400.webp"
+          "path": "items/tr-TR/items-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -860,7 +953,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "items/tr-TR/items-tr-TR-dark-1280x800.png"
+          "path": "items/tr-TR/items-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -868,7 +962,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "items/tr-TR/items-tr-TR-dark-1280x800.webp"
+          "path": "items/tr-TR/items-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -876,7 +971,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "items/tr-TR/items-tr-TR-dark-640x400.webp"
+          "path": "items/tr-TR/items-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -897,7 +993,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/en-US/vehicles-en-US-light-1280x800.png"
+          "path": "vehicles/en-US/vehicles-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -905,7 +1002,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/en-US/vehicles-en-US-light-1280x800.webp"
+          "path": "vehicles/en-US/vehicles-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -913,7 +1011,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicles/en-US/vehicles-en-US-light-640x400.webp"
+          "path": "vehicles/en-US/vehicles-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -921,7 +1020,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/en-US/vehicles-en-US-dark-1280x800.png"
+          "path": "vehicles/en-US/vehicles-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -929,7 +1029,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/en-US/vehicles-en-US-dark-1280x800.webp"
+          "path": "vehicles/en-US/vehicles-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -937,7 +1038,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicles/en-US/vehicles-en-US-dark-640x400.webp"
+          "path": "vehicles/en-US/vehicles-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -945,7 +1047,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/tr-TR/vehicles-tr-TR-light-1280x800.png"
+          "path": "vehicles/tr-TR/vehicles-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -953,7 +1056,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/tr-TR/vehicles-tr-TR-light-1280x800.webp"
+          "path": "vehicles/tr-TR/vehicles-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -961,7 +1065,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicles/tr-TR/vehicles-tr-TR-light-640x400.webp"
+          "path": "vehicles/tr-TR/vehicles-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -969,7 +1074,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-1280x800.png"
+          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -977,7 +1083,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-1280x800.webp"
+          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -985,7 +1092,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-640x400.webp"
+          "path": "vehicles/tr-TR/vehicles-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -1006,7 +1114,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/en-US/vehicle-details-en-US-light-1280x800.png"
+          "path": "vehicle-details/en-US/vehicle-details-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1014,7 +1123,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/en-US/vehicle-details-en-US-light-1280x800.webp"
+          "path": "vehicle-details/en-US/vehicle-details-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1022,7 +1132,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicle-details/en-US/vehicle-details-en-US-light-640x400.webp"
+          "path": "vehicle-details/en-US/vehicle-details-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1030,7 +1141,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-1280x800.png"
+          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1038,7 +1150,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-1280x800.webp"
+          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1046,7 +1159,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-640x400.webp"
+          "path": "vehicle-details/en-US/vehicle-details-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1054,7 +1168,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-1280x800.png"
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1062,7 +1177,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-1280x800.webp"
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1070,7 +1186,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-640x400.webp"
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1078,7 +1195,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-1280x800.png"
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1086,7 +1204,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-1280x800.webp"
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1094,7 +1213,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-640x400.webp"
+          "path": "vehicle-details/tr-TR/vehicle-details-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     },
@@ -1115,7 +1235,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/en-US/message-editor-en-US-light-1280x800.png"
+          "path": "message-editor/en-US/message-editor-en-US-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1123,7 +1244,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/en-US/message-editor-en-US-light-1280x800.webp"
+          "path": "message-editor/en-US/message-editor-en-US-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1131,7 +1253,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "message-editor/en-US/message-editor-en-US-light-640x400.webp"
+          "path": "message-editor/en-US/message-editor-en-US-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1139,7 +1262,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/en-US/message-editor-en-US-dark-1280x800.png"
+          "path": "message-editor/en-US/message-editor-en-US-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1147,7 +1271,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/en-US/message-editor-en-US-dark-1280x800.webp"
+          "path": "message-editor/en-US/message-editor-en-US-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "en-US",
@@ -1155,7 +1280,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "message-editor/en-US/message-editor-en-US-dark-640x400.webp"
+          "path": "message-editor/en-US/message-editor-en-US-dark-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1163,7 +1289,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/tr-TR/message-editor-tr-TR-light-1280x800.png"
+          "path": "message-editor/tr-TR/message-editor-tr-TR-light-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1171,7 +1298,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/tr-TR/message-editor-tr-TR-light-1280x800.webp"
+          "path": "message-editor/tr-TR/message-editor-tr-TR-light-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1179,7 +1307,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "message-editor/tr-TR/message-editor-tr-TR-light-640x400.webp"
+          "path": "message-editor/tr-TR/message-editor-tr-TR-light-640x400.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1187,7 +1316,8 @@
           "format": "png",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-1280x800.png"
+          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-1280x800.png",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1195,7 +1325,8 @@
           "format": "webp",
           "width": 1280,
           "height": 800,
-          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-1280x800.webp"
+          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-1280x800.webp",
+          "presentation": "desktop"
         },
         {
           "language": "tr-TR",
@@ -1203,7 +1334,8 @@
           "format": "webp",
           "width": 640,
           "height": 400,
-          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-640x400.webp"
+          "path": "message-editor/tr-TR/message-editor-tr-TR-dark-640x400.webp",
+          "presentation": "desktop"
         }
       ]
     }

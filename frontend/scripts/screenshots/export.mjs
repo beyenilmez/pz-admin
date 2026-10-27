@@ -11,8 +11,7 @@ import { prepareStory } from "./storybook.mjs";
 import { validateOutputs, writeImages } from "./images.mjs";
 import { saveManifest } from "./manifest.mjs";
 import { screenshotInputHash, screenshotsCurrent } from "./inputs.mjs";
-
-const dimensions = { width: 1280, height: 800 };
+import { captureProfiles } from "./captures.mjs";
 
 const { values } = parseArgs({
   options: {
@@ -31,10 +30,11 @@ if (!config.images.some(({ id }) => id === config.main)) {
 }
 const output = path.resolve(frontendRoot, "../assets/screenshots");
 validateOutputs(config.outputs);
+const profiles = captureProfiles(config);
 
 async function exportScene(browser, options) {
   const context = await browser.newContext({
-    viewport: dimensions,
+    viewport: options.dimensions,
     deviceScaleFactor: 1,
     timezoneId: "UTC",
   });
@@ -42,13 +42,11 @@ async function exportScene(browser, options) {
     const page = await context.newPage();
     // Keep timestamps stable so release PRs only contain meaningful image changes.
     await page.clock.setFixedTime(new Date("2004-09-22T12:00:00Z"));
-    const frame = await prepareStory(page, { ...options, dimensions });
+    const captureTarget = await prepareStory(page, options);
     if (values.check) return [];
-    return await writeImages(page, frame, {
+    return await writeImages(page, captureTarget, {
       ...options,
       output,
-      dimensions,
-      outputs: config.outputs,
     });
   } finally {
     await context.close();
@@ -91,13 +89,7 @@ async function run() {
       "utf8",
     ),
   );
-  for (const { id, alt } of config.images) {
-    if (
-      typeof alt?.[defaultLanguage] !== "string" ||
-      !alt[defaultLanguage].trim()
-    ) {
-      throw new Error(`Missing ${defaultLanguage} alt text for ${id}`);
-    }
+  for (const { id } of config.images) {
     const story = `showcases-application--${id}`;
     if (index.entries[story]?.type !== "story")
       throw new Error(`Missing built story: ${story}`);
@@ -119,18 +111,21 @@ async function run() {
     for (const locale of languages) {
       for (const scene of manifest.images) {
         const { id } = scene;
-        for (const theme of config.themes) {
-          const files = await exportScene(browser, {
-            serverUrl: server.resolvedUrls.local[0],
-            id,
-            story: `showcases-application--${id}`,
-            theme,
-            language: locale,
-          });
-          scene.files.push(...files);
-          console.log(
-            `${values.check ? "Checked" : "Captured"} ${id} (${locale}, ${theme})`,
-          );
+        for (const profile of profiles) {
+          for (const theme of config.themes) {
+            const files = await exportScene(browser, {
+              ...profile,
+              serverUrl: server.resolvedUrls.local[0],
+              id,
+              story: `showcases-application--${id}`,
+              theme,
+              language: locale,
+            });
+            scene.files.push(...files);
+            console.log(
+              `${values.check ? "Checked" : "Captured"} ${id} (${locale}, ${theme}, ${profile.presentation})`,
+            );
+          }
         }
       }
     }

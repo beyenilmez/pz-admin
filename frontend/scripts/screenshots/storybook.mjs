@@ -1,6 +1,6 @@
 export async function prepareStory(
   page,
-  { serverUrl, story, theme, language, dimensions },
+  { serverUrl, story, theme, language, dimensions, presentation },
 ) {
   const errors = [];
   page.on("pageerror", (error) => errors.push(error.message));
@@ -29,7 +29,7 @@ export async function prepareStory(
   url.searchParams.set("viewMode", "story");
   url.searchParams.set(
     "globals",
-    `theme:${theme};locale:${language};presentation:window`,
+    `theme:${theme};locale:${language};presentation:${presentation === "desktop" ? "window" : "plain"}`,
   );
   await page.goto(url.href);
   await page.waitForFunction(() => window.screenshotEvents.length > 0, null, {
@@ -59,6 +59,8 @@ export async function prepareStory(
         .map((image) => image.decode()),
     );
   });
+  if (errors.length) throw new Error(errors.join("\n"));
+  if (presentation === "mobile") return page;
   const frame = page.locator("[data-capture-window]");
   const bounds = await frame.boundingBox();
   if (
@@ -67,6 +69,5 @@ export async function prepareStory(
   ) {
     throw new Error(`${story}: unexpected window dimensions`);
   }
-  if (errors.length) throw new Error(errors.join("\n"));
   return frame;
 }

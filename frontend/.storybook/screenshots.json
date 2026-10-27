@@ -1,21 +1,30 @@
 {
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800
+    }
+  },
   "environment": "gnome",
   "themes": ["light", "dark"],
   "main": "players",
   "outputs": [
     {
       "format": "png",
-      "width": 1280
+      "width": 1280,
+      "presentation": "desktop"
     },
     {
       "format": "webp",
       "width": 1280,
-      "quality": 90
+      "quality": 90,
+      "presentation": "desktop"
     },
     {
       "format": "webp",
       "width": 640,
-      "quality": 90
+      "quality": 90,
+      "presentation": "desktop"
     }
   ],
   "images": [

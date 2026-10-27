@@ -6,7 +6,12 @@ export function validateOutputs(outputs) {
     throw new Error("Configure at least one screenshot output.");
   }
   const seen = new Set();
-  for (const { format, width, quality } of outputs) {
+  for (const { presentation, format, width, quality } of outputs) {
+    if (!["desktop", "mobile"].includes(presentation)) {
+      throw new Error(
+        "Screenshot outputs need a desktop or mobile presentation.",
+      );
+    }
     if (
       !["png", "webp"].includes(format) ||
       !Number.isInteger(width) ||
@@ -27,7 +32,7 @@ export function validateOutputs(outputs) {
         "Screenshot quality is only supported for WebP and must be between 0 and 100.",
       );
     }
-    const key = `${format}:${width}`;
+    const key = `${presentation}:${format}:${width}`;
     if (seen.has(key)) throw new Error(`Duplicate screenshot output: ${key}`);
     seen.add(key);
   }
@@ -64,10 +69,10 @@ async function encodeImage(page, png, variant) {
 
 export async function writeImages(
   page,
-  frame,
+  captureTarget,
   { output, id, language, theme, dimensions, outputs },
 ) {
-  const png = await frame.screenshot({
+  const png = await captureTarget.screenshot({
     animations: "disabled",
     caret: "hide",
     omitBackground: true,
@@ -76,7 +81,7 @@ export async function writeImages(
   await mkdir(path.join(output, id, language), { recursive: true });
   return Promise.all(
     outputs.map(async (variant) => {
-      const { format, width } = variant;
+      const { presentation, format, width } = variant;
       const height = Math.max(
         1,
         Math.round((dimensions.height * width) / dimensions.width),
@@ -85,10 +90,18 @@ export async function writeImages(
         format === "png" && width === dimensions.width
           ? png
           : await encodeImage(page, png, variant);
-      const filename = `${id}-${language}-${theme}-${width}x${height}.${format}`;
+      const filename = `${id}-${presentation}-${language}-${theme}-${width}x${height}.${format}`;
       const relativePath = `${id}/${language}/${filename}`;
       await writeFile(path.join(output, relativePath), data);
-      return { language, theme, format, width, height, path: relativePath };
+      return {
+        presentation,
+        language,
+        theme,
+        format,
+        width,
+        height,
+        path: relativePath,
+      };
     }),
   );
 }

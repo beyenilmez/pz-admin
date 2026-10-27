@@ -32,7 +32,6 @@ const meta = {
   title: "Showcases/Application",
   component: App,
   tags: ["showcase"],
-  globals: { presentation: "window" },
   loaders: [loadAppConfig],
   decorators: [withAppConfig],
   beforeEach: () => {

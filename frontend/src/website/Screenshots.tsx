@@ -46,6 +46,7 @@ export function Screenshots() {
         {manifest.images.map((screenshot, index) => {
           const files = screenshot.files.filter(
             (file) =>
+              file.presentation === "desktop" &&
               file.language === language &&
               file.theme === theme &&
               file.format === "webp",
