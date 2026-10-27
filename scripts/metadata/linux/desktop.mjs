@@ -1,4 +1,5 @@
 import { defaultLanguage } from "#/frontend/scripts/shared/metadata.mjs";
+import metadata from "#/assets/metadata.json" with { type: "json" };
 import { replaceMarker } from "#/scripts/metadata/markers.mjs";
 import { metadataLocale } from "#/scripts/metadata/locales.mjs";
 
@@ -37,7 +38,10 @@ export function generateDesktop(template, translationsByLanguage) {
         ...translations.keywords,
       };
       keywordLines.push(
-        `Keywords${localeSuffix}=${Object.values(keywordsWithFallback)
+        `Keywords${localeSuffix}=${[
+          ...Object.values(keywordsWithFallback),
+          ...metadata.keywords,
+        ]
           .map((text) => escapeDesktop(text).replaceAll(";", "\\;"))
           .join(";")};`,
       );

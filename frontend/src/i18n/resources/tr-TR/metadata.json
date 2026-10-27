@@ -15,54 +15,52 @@
   "genericName": "Project Zomboid Sunucu Yöneticisi",
   "keywords": {
     "administration": "Yönetim",
-    "game": "Project Zomboid",
-    "rcon": "RCON",
     "server": "Sunucu"
   },
   "screenshots": {
     "addXp": {
       "alt": "Bir oyuncu için seçilen beceriler ve eklenecek deneyim puanları",
-      "caption": "Oyuncuların becerilerine deneyim puanı ekleyin"
+      "caption": "Oyuncu becerileri ve deneyim puanları"
     },
     "console": {
       "alt": "Önceki komutları, yanıtları ve komut önerilerini gösteren sunucu konsolu",
-      "caption": "Sunucu komutları çalıştırın"
+      "caption": "Sunucu konsolu"
     },
     "giveItems": {
       "alt": "Bir oyuncuya verilmek üzere seçilen eşyalar",
-      "caption": "Oyunculara eşya verin"
+      "caption": "Oyuncular için eşya seçimi"
     },
     "items": {
       "alt": "Seçilen eşyaları ve adetlerini gösteren eşya kataloğu",
-      "caption": "Eşya kataloğunu inceleyin"
+      "caption": "Eşya kataloğu"
     },
     "messageEditor": {
       "alt": "Mesaj önizlemesini ve biçimlendirilmiş çıktıyı gösteren mesaj düzenleyici",
-      "caption": "Sunucu mesajları yazın ve biçimlendirin"
+      "caption": "Mesaj düzenleyici"
     },
     "options": {
       "alt": "Kaydedilmeyi bekleyen değişiklikleri içeren sunucu ayarları",
-      "caption": "Sunucu ayarlarınızı düzenleyin"
+      "caption": "Sunucu ayarları"
     },
     "players": {
       "alt": "Oyuncuların çevrim içi durumlarını, rollerini ve oyuncu işlemlerini gösteren liste",
-      "caption": "Sunucunuzdaki oyuncuları görüntüleyin ve yönetin"
+      "caption": "Oyuncu yönetimi"
     },
     "serverActions": {
       "alt": "Dünyayı kaydetme, hava durumunu değiştirme ve olay başlatma gibi sunucu işlemleri",
-      "caption": "Sunucunuzu ve oyun içi olayları yönetin"
+      "caption": "Sunucu işlemleri ve oyun içi olaylar"
     },
     "spawnVehicle": {
       "alt": "Polis aracı seçilmiş araç oluşturma penceresi",
-      "caption": "Oyuncuların yakınında araç oluşturun"
+      "caption": "Araç oluşturma"
     },
     "vehicleDetails": {
       "alt": "Seçilen aracın ayrıntıları ve mevcut varyantları",
-      "caption": "Araç özelliklerini ve varyantlarını inceleyin"
+      "caption": "Araç özellikleri ve varyantları"
     },
     "vehicles": {
       "alt": "Polis araçlarını ve özelliklerini gösteren araç kataloğu",
-      "caption": "Araçlara göz atın ve özelliklerini karşılaştırın"
+      "caption": "Araç kataloğu"
     }
   },
   "summary": "Project Zomboid sunucu yönetim aracı"

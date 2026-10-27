@@ -7,6 +7,7 @@
   <name>PZ Admin</name>
   <!-- x-summary -->
   <!-- x-description -->
+  <!-- x-keywords -->
 
   <developer id="com.bedirhanyenilmez">
     <name>Bedirhan Yenilmez</name>
@@ -14,6 +15,7 @@
   <url type="homepage">https://beyenilmez.github.io/pz-admin/</url>
   <url type="vcs-browser">https://github.com/beyenilmez/pz-admin</url>
   <url type="bugtracker">https://github.com/beyenilmez/pz-admin/issues</url>
+  <url type="contribute">https://github.com/beyenilmez/pz-admin/blob/main/CONTRIBUTING.md</url>
 
   <launchable type="desktop-id">com.bedirhanyenilmez.pzadmin.desktop</launchable>
   <provides>
@@ -24,12 +26,13 @@
   </categories>
 
   <requires>
-    <control>keyboard</control>
-    <control>pointing</control>
     <!-- Keep display requirements aligned with the minimum window size in main.go. -->
     <display_length compare="ge" side="longest">992</display_length>
     <display_length compare="ge" side="shortest">568</display_length>
   </requires>
+  <supports>
+    <internet>offline-only</internet>
+  </supports>
   <content_rating type="oars-1.1">
     <content_attribute id="violence-bloodshed">mild</content_attribute>
     <content_attribute id="violence-desecration">mild</content_attribute>

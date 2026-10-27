@@ -3,6 +3,7 @@ import { languageCoverage } from "#/frontend/scripts/shared/translations.mjs";
 import { replaceMarker } from "#/scripts/metadata/markers.mjs";
 import { buildSummaryXml, buildDescriptionXml } from "./description.mjs";
 import { buildLanguagesXml } from "./languages.mjs";
+import { buildKeywordsXml } from "./keywords.mjs";
 import { buildReleasesXml } from "./releases.mjs";
 import { buildScreenshotsXml } from "./screenshots.mjs";
 
@@ -26,6 +27,7 @@ export async function generateAppStream(template, translationsByLanguage) {
   const sections = [
     ["summary", buildSummaryXml(translationsByLanguage)],
     ["description", buildDescriptionXml(translationsByLanguage)],
+    ["keywords", buildKeywordsXml(translationsByLanguage)],
     ["language-coverage", buildLanguagesXml(await languageCoverage())],
     [
       "screenshots",

@@ -15,54 +15,52 @@
   "genericName": "Project Zomboid Server Manager",
   "keywords": {
     "administration": "Administration",
-    "game": "Project Zomboid",
-    "rcon": "RCON",
     "server": "Server"
   },
   "screenshots": {
     "addXp": {
       "alt": "Skill selection and experience amounts for a player",
-      "caption": "Add experience points to player skills"
+      "caption": "Player skills and experience"
     },
     "console": {
       "alt": "Server console with previous commands, responses, and command suggestions",
-      "caption": "Run server commands"
+      "caption": "Server console"
     },
     "giveItems": {
       "alt": "Items selected to be given to a player",
-      "caption": "Give items to players"
+      "caption": "Item selection for players"
     },
     "items": {
       "alt": "Item catalog with selected items and quantities",
-      "caption": "Browse the item catalog"
+      "caption": "Item catalog"
     },
     "messageEditor": {
       "alt": "Message editor with a message preview and formatted output",
-      "caption": "Write and format server messages"
+      "caption": "Message editor"
     },
     "options": {
       "alt": "Server settings with changes ready to save",
-      "caption": "Adjust your server settings"
+      "caption": "Server settings"
     },
     "players": {
       "alt": "Player list with online status, roles, and player actions",
-      "caption": "View and manage players on your server"
+      "caption": "Player management"
     },
     "serverActions": {
       "alt": "Server actions for saving the world, changing weather, and starting events",
-      "caption": "Manage your server and in-game events"
+      "caption": "Server actions and events"
     },
     "spawnVehicle": {
       "alt": "Vehicle selection with a police car chosen",
-      "caption": "Spawn vehicles near players"
+      "caption": "Vehicle spawning"
     },
     "vehicleDetails": {
       "alt": "Selected vehicle details and available variants",
-      "caption": "View vehicle details and variants"
+      "caption": "Vehicle details and variants"
     },
     "vehicles": {
       "alt": "Vehicle catalog with police vehicles and their specifications",
-      "caption": "Browse and compare vehicles"
+      "caption": "Vehicle catalog"
     }
   },
   "summary": "Project Zomboid server administration tool"
