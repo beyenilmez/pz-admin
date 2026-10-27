@@ -1,13 +1,11 @@
 [Desktop Entry]
+Version=1.0
 Type=Application
 Name=PZ Admin
-Exec=pz-admin
+# x-summary
 Icon=pz-admin
-Categories=Utility;
-Comment=Project Zomboid server administration tool
-Comment[tr]=Project Zomboid sunucu yönetim aracı
+Exec=pz-admin
 Terminal=false
 SingleMainWindow=true
-Keywords=Project Zomboid;Server;Administration;RCON;
-Keywords[tr]=Project Zomboid;Sunucu;Yönetim;RCON;
-Version=1.0
+Categories=Utility;
+# x-keywords

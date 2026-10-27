@@ -62,8 +62,8 @@ modules:
         go build -trimpath -buildvcs=false -ldflags='-w -s' -o /app/bin/pz-admin .
 
       # Generate AppStream metadata and copy desktop integration files.
-      - SOURCE_REF="$(cat SOURCE_REF)" SOURCE_REPOSITORY="$(cat SOURCE_REPOSITORY)" node scripts/appstream/generate.mjs
-      - install -Dm644 "build/linux/$FLATPAK_ID.desktop" "/app/share/applications/$FLATPAK_ID.desktop"
+      - SOURCE_REF="$(cat SOURCE_REF)" SOURCE_REPOSITORY="$(cat SOURCE_REPOSITORY)" node scripts/metadata/linux/generate.mjs
+      - install -Dm644 ".generated/linux/$FLATPAK_ID.desktop" "/app/share/applications/$FLATPAK_ID.desktop"
       - install -Dm644 ".generated/linux/$FLATPAK_ID.metainfo.xml" "/app/share/metainfo/$FLATPAK_ID.metainfo.xml"
       - install -Dm644 build/appicon.svg /app/share/icons/hicolor/scalable/apps/pz-admin.svg
       - |

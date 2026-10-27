@@ -47,7 +47,7 @@ contents:
     dst: "/usr/share/icons/hicolor/256x256/apps/pz-admin.png"
   - src: "./build/linux/icons/512x512/pz-admin.png"
     dst: "/usr/share/icons/hicolor/512x512/apps/pz-admin.png"
-  - src: "./build/linux/com.bedirhanyenilmez.pzadmin.desktop"
+  - src: "./.generated/linux/com.bedirhanyenilmez.pzadmin.desktop"
     dst: "/usr/share/applications/com.bedirhanyenilmez.pzadmin.desktop"
   - src: "./.generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml"
     dst: "/usr/share/metainfo/com.bedirhanyenilmez.pzadmin.metainfo.xml"

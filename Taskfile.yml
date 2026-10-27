@@ -20,6 +20,13 @@ includes:
   android: ./build/android/Taskfile.yml
 
 tasks:
+  generate:metadata:
+    desc: Generates translated platform metadata (GOOS selects the target)
+    cmds:
+      - task: common:generate:metadata
+        vars:
+          PLATFORM: "{{.GOOS}}"
+
   screenshots:
     desc: Exports publication screenshots (use -- --check to validate without capturing)
     dir: frontend
@@ -102,9 +109,11 @@ tasks:
       - sh: command -v appstreamcli && command -v desktop-file-validate
         msg: Install appstream and desktop-file-utils to check Linux metadata.
     cmds:
-      - task: linux:generate:metainfo
-      - node scripts/appstream/validate.mjs .generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml
-      - desktop-file-validate build/linux/com.bedirhanyenilmez.pzadmin.desktop
+      - task: common:generate:metadata
+        vars:
+          PLATFORM: linux
+      - node scripts/metadata/linux/appstream/validate.mjs .generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml
+      - desktop-file-validate .generated/linux/com.bedirhanyenilmez.pzadmin.desktop
 
   check:backend:
     desc: Checks and tests the Go backend

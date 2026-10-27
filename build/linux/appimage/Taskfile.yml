@@ -74,4 +74,5 @@ tasks:
       - mkdir -p '{{.WORK}}/pz-admin.AppDir/usr/bin'
       - cd '{{.WORK}}' && wails3 task licenses GOOS=linux ARCH={{ARCH}} EXTRA_TAGS='{{.EXTRA_TAGS}}'
       - cd '{{.WORK}}' && wails3 task linux:build OUTPUT='{{.WORK}}/pz-admin.AppDir/usr/bin/pz-admin' DEV=false EXTRA_TAGS='{{.EXTRA_TAGS}}'
+      - cd '{{.WORK}}' && wails3 task generate:metadata GOOS=linux
       - cd '{{.WORK}}' && python3 build/linux/appimage/package.py '{{.WORK}}/pz-admin.AppDir' /output

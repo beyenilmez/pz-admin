@@ -116,9 +116,9 @@ def main():
     desktop = "com.bedirhanyenilmez.pzadmin.desktop"
     files = {
         "build/linux/appimage/runtime-hook.sh": "apprun-hooks/pz-admin.sh",
-        f"build/linux/{desktop}": f"usr/share/applications/{desktop}",
+        f".generated/linux/{desktop}": f"usr/share/applications/{desktop}",
         "build/appicon.svg": "usr/share/icons/hicolor/scalable/apps/pz-admin.svg",
-        "build/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml": "usr/share/metainfo/com.bedirhanyenilmez.pzadmin.metainfo.xml",
+        ".generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml": "usr/share/metainfo/com.bedirhanyenilmez.pzadmin.metainfo.xml",
     }
     for icon in Path("build/linux/icons").glob("*/pz-admin.png"):
         files[str(icon)] = f"usr/share/icons/hicolor/{icon.parent.name}/apps/pz-admin.png"

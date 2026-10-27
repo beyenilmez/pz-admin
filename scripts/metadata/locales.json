@@ -1,0 +1,170 @@
+{
+  "ca": {
+    "posix": "ca",
+    "apple": "ca",
+    "android": "b+ca",
+    "windows": "0003"
+  },
+  "cs": {
+    "posix": "cs",
+    "apple": "cs",
+    "android": "b+cs",
+    "windows": "0005"
+  },
+  "da": {
+    "posix": "da",
+    "apple": "da",
+    "android": "b+da",
+    "windows": "0006"
+  },
+  "de": {
+    "posix": "de",
+    "apple": "de",
+    "android": "b+de",
+    "windows": "0007"
+  },
+  "en-US": {
+    "posix": "en_US",
+    "apple": "en-US",
+    "android": "b+en+US",
+    "windows": "0409"
+  },
+  "es-AR": {
+    "posix": "es_AR",
+    "apple": "es-AR",
+    "android": "b+es+AR",
+    "windows": "2c0a"
+  },
+  "es-CL": {
+    "posix": "es_CL",
+    "apple": "es-CL",
+    "android": "b+es+CL",
+    "windows": "340a"
+  },
+  "es-ES": {
+    "posix": "es_ES",
+    "apple": "es-ES",
+    "android": "b+es+ES",
+    "windows": "0c0a"
+  },
+  "es-MX": {
+    "posix": "es_MX",
+    "apple": "es-MX",
+    "android": "b+es+MX",
+    "windows": "080a"
+  },
+  "fi": {
+    "posix": "fi",
+    "apple": "fi",
+    "android": "b+fi",
+    "windows": "000b"
+  },
+  "fr": {
+    "posix": "fr",
+    "apple": "fr",
+    "android": "b+fr",
+    "windows": "000c"
+  },
+  "hu": {
+    "posix": "hu",
+    "apple": "hu",
+    "android": "b+hu",
+    "windows": "000e"
+  },
+  "id": {
+    "posix": "id",
+    "apple": "id",
+    "android": "b+id",
+    "windows": "0021"
+  },
+  "it": {
+    "posix": "it",
+    "apple": "it",
+    "android": "b+it",
+    "windows": "0010"
+  },
+  "ja": {
+    "posix": "ja",
+    "apple": "ja",
+    "android": "b+ja",
+    "windows": "0011"
+  },
+  "ko": {
+    "posix": "ko",
+    "apple": "ko",
+    "android": "b+ko",
+    "windows": "0012"
+  },
+  "nl": {
+    "posix": "nl",
+    "apple": "nl",
+    "android": "b+nl",
+    "windows": "0013"
+  },
+  "no": {
+    "posix": "no",
+    "apple": "no",
+    "android": "b+no",
+    "windows": "0014"
+  },
+  "pl": {
+    "posix": "pl",
+    "apple": "pl",
+    "android": "b+pl",
+    "windows": "0015"
+  },
+  "pt-BR": {
+    "posix": "pt_BR",
+    "apple": "pt-BR",
+    "android": "b+pt+BR",
+    "windows": "0416"
+  },
+  "pt-PT": {
+    "posix": "pt_PT",
+    "apple": "pt-PT",
+    "android": "b+pt+PT",
+    "windows": "0816"
+  },
+  "ro": {
+    "posix": "ro",
+    "apple": "ro",
+    "android": "b+ro",
+    "windows": "0018"
+  },
+  "ru": {
+    "posix": "ru",
+    "apple": "ru",
+    "android": "b+ru",
+    "windows": "0019"
+  },
+  "th": {
+    "posix": "th",
+    "apple": "th",
+    "android": "b+th",
+    "windows": "001e"
+  },
+  "tr-TR": {
+    "posix": "tr_TR",
+    "apple": "tr-TR",
+    "android": "b+tr+TR",
+    "windows": "041f"
+  },
+  "uk-UA": {
+    "posix": "uk_UA",
+    "apple": "uk-UA",
+    "android": "b+uk+UA",
+    "windows": "0422"
+  },
+  "zh-Hans": {
+    "posix": "zh_CN",
+    "apple": "zh-Hans",
+    "android": "b+zh+Hans",
+    "windows": "0004"
+  },
+  "zh-Hant": {
+    "posix": "zh_TW",
+    "apple": "zh-Hant",
+    "android": "b+zh+Hant",
+    "windows": "7c04"
+  }
+}

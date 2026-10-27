@@ -1,6 +1,19 @@
 version: "3"
 
 tasks:
+  generate:metadata:
+    summary: Generates translated metadata for the target platform
+    internal: true
+    run: when_changed
+    dir: "{{.ROOT_DIR}}"
+    requires:
+      vars: [PLATFORM]
+    preconditions:
+      - sh: 'test -f "scripts/metadata/{{.PLATFORM}}/generate.mjs"'
+        msg: "Metadata generation is not implemented for {{.PLATFORM}}."
+    cmds:
+      - node scripts/metadata/{{.PLATFORM}}/generate.mjs
+
   go:mod:tidy:
     summary: Runs `go mod tidy`
     internal: true

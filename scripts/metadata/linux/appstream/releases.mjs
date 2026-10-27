@@ -1,4 +1,4 @@
-function plainText(text) {
+function releaseTextXml(text) {
   return text
     .replace(
       /\s*\(\[[\da-f]{7,40}\]\(https?:\/\/[^\s)]+\/commit\/[^\s)]+\)\)/gi,
@@ -6,14 +6,14 @@ function plainText(text) {
     )
     .replace(/\[([^\]]+)\]\([^\s)]+\)/g, "$1")
     .replace(/\*\*(.+?)\*\*/g, "$1")
-    .replace(/`+([^`]+)`+/g, "$1")
     .replace(/&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[\da-f]+);)/gi, "&amp;")
     .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;");
+    .replace(/>/g, "&gt;")
+    .replace(/`+([^`]+)`+/g, "<code>$1</code>");
 }
 
-// Convert Release Please's headings, bullet lists, and paragraphs, not arbitrary Markdown.
-function description(notes) {
+// Convert Release Please's headings, bullet lists, and paragraphs.
+function buildReleaseDescriptionXml(notes) {
   const blocks = [];
   let current;
   for (const line of notes.split(/\r?\n/)) {
@@ -38,10 +38,11 @@ function description(notes) {
     if (inList && type !== "li") output.push("        </ul>");
     if (!inList && type === "li") output.push("        <ul>");
     inList = type === "li";
-    if (type === "li") output.push(`          <li>${plainText(text)}</li>`);
+    if (type === "li")
+      output.push(`          <li>${releaseTextXml(text)}</li>`);
     else if (type === "heading")
-      output.push(`        <p><em>${plainText(text)}</em></p>`);
-    else output.push(`        <p>${plainText(text)}</p>`);
+      output.push(`        <p><em>${releaseTextXml(text)}</em></p>`);
+    else output.push(`        <p>${releaseTextXml(text)}</p>`);
   }
   if (inList) output.push("        </ul>");
   return output.length
@@ -49,14 +50,18 @@ function description(notes) {
     : "";
 }
 
-export function buildReleasesXml(changelog, version, repository) {
+export function buildReleasesXml(
+  changelogMarkdown,
+  currentVersion,
+  repositoryUrl,
+) {
   // Release Please uses a plain first-release heading and linked later headings.
   const releaseHeading =
     /^## \[?(\d+\.\d+\.\d+(?:[-+][\w.+-]+)?)\]?(?:\([^)]+\))? \((\d{4}-\d{2}-\d{2})\)\r?$/gm;
-  const releases = [...changelog.matchAll(releaseHeading)];
-  if (releases[0]?.[1] !== version) {
+  const releases = [...changelogMarkdown.matchAll(releaseHeading)];
+  if (releases[0]?.[1] !== currentVersion) {
     throw new Error(
-      `CHANGELOG.md must start with a release for VERSION (${version})`,
+      `CHANGELOG.md must start with a release for VERSION (${currentVersion})`,
     );
   }
 
@@ -65,12 +70,12 @@ export function buildReleasesXml(changelog, version, repository) {
     const type = releaseVersion.split("+")[0].includes("-")
       ? "development"
       : "stable";
-    const notes = changelog.slice(
+    const notes = changelogMarkdown.slice(
       release.index + release[0].length,
       releases[index + 1]?.index,
     );
-    const url = `${repository.replace(/\/$/, "")}/releases/tag/v${releaseVersion}`;
-    return `    <release version="${releaseVersion}" date="${date}" type="${type}">\n      <url type="details">${url}</url>\n${description(notes)}    </release>`;
+    const url = `${repositoryUrl.replace(/\/$/, "")}/releases/tag/v${releaseVersion}`;
+    return `    <release version="${releaseVersion}" date="${date}" type="${type}">\n      <url type="details">${url}</url>\n${buildReleaseDescriptionXml(notes)}    </release>`;
   });
   return `  <releases>\n${entries.join("\n")}\n  </releases>\n`;
 }
