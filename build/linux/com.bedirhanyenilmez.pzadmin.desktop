@@ -1,11 +1,13 @@
 [Desktop Entry]
-Version=1.0
+Version=1.5
 Type=Application
 Name=PZ Admin
+# x-generic-name
 # x-summary
+Categories=Utility;
+# x-keywords
 Icon=pz-admin
 Exec=pz-admin
 Terminal=false
+StartupWMClass=com.bedirhanyenilmez.pzadmin
 SingleMainWindow=true
-Categories=Utility;
-# x-keywords

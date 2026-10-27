@@ -12,6 +12,7 @@
     "serverActions": "Control the weather, trigger server events, and save the world.",
     "serverOptions": "Edit server options and run console commands."
   },
+  "genericName": "Project Zomboid Server Manager",
   "keywords": {
     "administration": "Administration",
     "game": "Project Zomboid",

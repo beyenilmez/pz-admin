@@ -12,6 +12,7 @@
     "serverActions": "Hava durumunu kontrol etme, sunucu olaylarını tetikleme ve dünyayı kaydetme.",
     "serverOptions": "Sunucu ayarlarını düzenleme ve konsol komutlarını çalıştırma."
   },
+  "genericName": "Project Zomboid Sunucu Yöneticisi",
   "keywords": {
     "administration": "Yönetim",
     "game": "Project Zomboid",

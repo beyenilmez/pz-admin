@@ -14,6 +14,7 @@ function escapeDesktop(text) {
 }
 
 export function generateDesktop(template, translationsByLanguage) {
+  const genericNameLines = [];
   const commentLines = [];
   const keywordLines = [];
   for (const [language, translations] of translationsByLanguage) {
@@ -21,6 +22,10 @@ export function generateDesktop(template, translationsByLanguage) {
       language === defaultLanguage
         ? ""
         : `[${metadataLocale(language, "posix")}]`;
+    if (translations.genericName)
+      genericNameLines.push(
+        `GenericName${localeSuffix}=${escapeDesktop(translations.genericName)}`,
+      );
     if (translations.summary)
       commentLines.push(
         `Comment${localeSuffix}=${escapeDesktop(translations.summary)}`,
@@ -38,8 +43,14 @@ export function generateDesktop(template, translationsByLanguage) {
       );
     }
   }
-  const withComments = replaceMarker(
+  const withGenericNames = replaceMarker(
     template,
+    "generic-name",
+    genericNameLines.join("\n"),
+    "desktop",
+  );
+  const withComments = replaceMarker(
+    withGenericNames,
     "summary",
     commentLines.join("\n"),
     "desktop",
