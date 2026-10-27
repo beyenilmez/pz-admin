@@ -78,6 +78,7 @@ SPDX-License-Identifier = "GPL-3.0-or-later"
 # Metadata, permissively licensed for software catalogs.
 [[annotations]]
 path = [
+  "assets/metadata.json",
   "build/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml",
   "frontend/src/i18n/resources/*/metadata.json",
 ]

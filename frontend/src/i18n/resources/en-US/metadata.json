@@ -1,6 +1,5 @@
 {
   "description": {
-    "attribution": "Thanks to The Indie Stone for creating Project Zomboid ({{projectZomboidUrl}}), which made this possible. This is an unofficial fan production for non-commercial purposes made under the Indie Stone Terms ({{termsUrl}}).",
     "introduction": "PZ Admin is an application for managing Project Zomboid servers. Manage players, edit server options, and run console commands from one interface.",
     "offlineTools": "The item browser, vehicle browser, and message editor can also be used without connecting to a server. PZ Admin includes catalogs and options for Builds 41 and 42.",
     "requirements": "Server management requires a running Project Zomboid server with RCON enabled."

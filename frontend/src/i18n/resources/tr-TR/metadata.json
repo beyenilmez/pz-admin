@@ -1,6 +1,5 @@
 {
   "description": {
-    "attribution": "Thanks to The Indie Stone for creating Project Zomboid ({{projectZomboidUrl}}), which made this possible. This is an unofficial fan production for non-commercial purposes made under the Indie Stone Terms ({{termsUrl}}).",
     "introduction": "PZ Admin, Project Zomboid sunucularını yönetmek için bir uygulamadır. Oyuncu yönetimini, sunucu ayarlarını ve konsol komutlarını tek bir arayüzde sunar.",
     "offlineTools": "Eşya kataloğu, araç kataloğu ve mesaj düzenleyici bir sunucuya bağlanmadan da kullanılabilir. PZ Admin, Build 41 ve 42’ye uygun içerik ve ayarlar sunar.",
     "requirements": "Yönetmek istediğiniz Project Zomboid sunucusunun çalışıyor ve RCON özelliğinin etkin olması gerekir."
