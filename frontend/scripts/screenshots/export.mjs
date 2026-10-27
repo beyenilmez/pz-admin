@@ -5,6 +5,10 @@ import { parseArgs } from "node:util";
 import { chromium } from "playwright";
 import { preview } from "vite";
 import { frontendRoot } from "../shared/paths.mjs";
+import {
+  readMetadataTranslations,
+  screenshotText,
+} from "../shared/metadata.mjs";
 import { defaultLanguage } from "../../src/i18n/locales.ts";
 import { screenshotLanguages } from "./languages.mjs";
 import { prepareStory } from "./storybook.mjs";
@@ -25,7 +29,7 @@ const config = JSON.parse(
     "utf8",
   ),
 );
-if (!config.images.some(({ id }) => id === config.main)) {
+if (!config.images.includes(config.main)) {
   throw new Error("Main screenshot must be in images.");
 }
 const output = path.resolve(frontendRoot, "../assets/screenshots");
@@ -54,6 +58,12 @@ async function exportScene(browser, options) {
 }
 
 async function run() {
+  const translationsByLanguage = await readMetadataTranslations();
+  const screenshotEntries = config.images.map((id) => ({
+    id,
+    ...screenshotText(id, translationsByLanguage),
+    files: [],
+  }));
   const inputHash = await screenshotInputHash();
   if (
     !values.check &&
@@ -72,16 +82,10 @@ async function run() {
   const languages = await screenshotLanguages();
   const manifest = {
     inputHash,
-    environment: config.environment,
     themes: config.themes,
     main: config.main,
     defaultLanguage,
-    images: config.images.map(({ id, captions, alt }) => ({
-      id,
-      captions,
-      alt,
-      files: [],
-    })),
+    images: screenshotEntries,
   };
   const index = JSON.parse(
     await readFile(
@@ -89,7 +93,7 @@ async function run() {
       "utf8",
     ),
   );
-  for (const { id } of config.images) {
+  for (const id of config.images) {
     const story = `showcases-application--${id}`;
     if (index.entries[story]?.type !== "story")
       throw new Error(`Missing built story: ${story}`);

@@ -1,6 +1,8 @@
 import { access } from "node:fs/promises";
 import path from "node:path";
 
+const desktopEnvironment = "gnome";
+
 function escapeXml(text) {
   return text
     .replace(/&/g, "&amp;")
@@ -63,7 +65,7 @@ export async function buildScreenshotsXml(
   if (!screenshots.images.some(({ id }) => id === screenshots.main)) {
     throw new Error("Main screenshot must be in images");
   }
-  if (!/^[a-z][a-z-]*$/.test(screenshots.environment)) {
+  if (!/^[a-z][a-z-]*$/.test(desktopEnvironment)) {
     throw new Error(
       "Screenshot environment must be a desktop ID, such as gnome or plasma",
     );
@@ -94,9 +96,7 @@ export async function buildScreenshotsXml(
   const images = screenshots.themes.flatMap((theme) => {
     return scenes.map(({ id, type, captionElements, files }) => {
       const environment =
-        theme === "dark"
-          ? ` environment="${screenshots.environment}:dark"`
-          : "";
+        theme === "dark" ? ` environment="${desktopEnvironment}:dark"` : "";
       const sources = files.filter((file) => file.theme === theme);
       if (!sources.some(({ language }) => language === defaultLanguage)) {
         throw new Error(

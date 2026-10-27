@@ -3,6 +3,8 @@
 Do not edit files in this directory by hand. Configure images, formats, sizes,
 and ordering in [screenshots.json](../../frontend/.storybook/screenshots.json),
 then run `wails3 task screenshots` from the repository root.
+Captions and alt text come from each locale's `metadata.json` in
+[translation resources](../../frontend/src/i18n/resources).
 
 Unchanged inputs are skipped. Use `wails3 task screenshots -- --force` to
 regenerate, or `-- --check` to validate all scenes without saving images.
