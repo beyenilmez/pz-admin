@@ -54,17 +54,17 @@ sudo dnf install gcc gcc-c++ make pkgconf-pkg-config gtk4-devel webkitgtk6.0-dev
 
 ### Workflows
 
-| Command                         | Purpose                                                                                       |
-| ------------------------------- | --------------------------------------------------------------------------------------------- |
-| `wails3 dev`                    | Run the desktop app with frontend reloads and backend rebuilds.                               |
-| `wails3 task format`            | Format Go, translations, and Prettier-supported files across the repository.                  |
-| `wails3 task check`             | Check Go modules, formatting, lint, types, translations, tests, Linux metadata, and licenses. |
-| `wails3 task test`              | Run backend and frontend tests.                                                               |
-| `pnpm --dir frontend test`      | Run frontend tests in watch mode.                                                             |
-| `pnpm --dir frontend storybook` | Preview UI with mocked services at `http://127.0.0.1:6006`.                                   |
-| `wails3 build`                  | Build for the host platform into `bin/`.                                                      |
-| `wails3 package`                | Build and package for the host platform into `bin/`.                                          |
-| `wails3 task check:licenses`    | Check REUSE license information.                                                              |
+| Command                         | Purpose                                                                                          |
+| ------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `wails3 dev`                    | Run the desktop app with frontend reloads and backend rebuilds.                                  |
+| `wails3 task format`            | Format Go, translations, and Prettier-supported files across the repository.                     |
+| `wails3 task check`             | Check Go modules, formatting, lint, types, translations, tests, platform metadata, and licenses. |
+| `wails3 task test`              | Run backend and frontend tests.                                                                  |
+| `pnpm --dir frontend test`      | Run frontend tests in watch mode.                                                                |
+| `pnpm --dir frontend storybook` | Preview UI with mocked services at `http://127.0.0.1:6006`.                                      |
+| `wails3 build`                  | Build for the host platform into `bin/`.                                                         |
+| `wails3 package`                | Build and package for the host platform into `bin/`.                                             |
+| `wails3 task check:licenses`    | Check REUSE license information.                                                                 |
 
 ### Website
 

@@ -143,6 +143,10 @@ tasks:
 
   create:app:bundle:
     summary: Creates an `.app` bundle
+    deps:
+      - task: common:generate:metadata
+        vars:
+          PLATFORM: darwin
     cmds:
       - mkdir -p "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents/MacOS"
       - mkdir -p "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents/Resources"
@@ -155,8 +159,23 @@ tasks:
       - cp .generated/licenses/THIRD-PARTY-NOTICES.json "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents/Resources"
       - cp LICENSE "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents/Resources"
       - cp README.md "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents/Resources"
-      - cp build/darwin/Info.plist "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents"
+      - cp .generated/darwin/Info.plist "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app/Contents"
+      - task: copy:metadata:resources
+        vars:
+          BUNDLE: "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.app"
       - task: '{{if eq OS "darwin"}}codesign:adhoc{{else}}codesign:skip{{end}}'
+
+  copy:metadata:resources:
+    internal: true
+    requires:
+      vars: [BUNDLE]
+    cmds:
+      - |
+        for directory in "{{.BUNDLE}}/Contents/Resources/"*.lproj; do
+          [ -d "$directory" ] || continue
+          rm -f "$directory/InfoPlist.strings"
+        done
+      - cp -R .generated/darwin/Resources/. "{{.BUNDLE}}/Contents/Resources/"
 
   codesign:adhoc:
     summary: Ad-hoc signs the app bundle (macOS only)
@@ -171,6 +190,10 @@ tasks:
       - 'echo "Skipping codesign (not available on {{OS}}). Sign the .app on macOS before distribution."'
 
   run:
+    deps:
+      - task: common:generate:metadata
+        vars:
+          PLATFORM: darwin
     cmds:
       - mkdir -p "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/MacOS"
       - mkdir -p "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/Resources"
@@ -180,7 +203,10 @@ tasks:
           cp build/darwin/Assets.car "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/Resources"
         fi
       - cp "{{.BIN_DIR}}/{{.APP_NAME}}" "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/MacOS"
-      - cp "build/darwin/Info.dev.plist" "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/Info.plist"
+      - cp ".generated/darwin/Info.dev.plist" "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/Info.plist"
+      - task: copy:metadata:resources
+        vars:
+          BUNDLE: "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app"
       - codesign --force --deep --sign - "{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app"
       - '"{{.BIN_DIR}}/{{.PRODUCT_NAME}}.dev.app/Contents/MacOS/{{.APP_NAME}}"'
 

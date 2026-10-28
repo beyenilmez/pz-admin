@@ -17,6 +17,9 @@
     "administration": "Yönetim",
     "server": "Sunucu"
   },
+  "permissions": {
+    "localNetwork": "Yerel ağınızdaki Project Zomboid sunucularını yönetin."
+  },
   "screenshots": {
     "addXp": {
       "alt": "Bir oyuncu için seçilen beceriler ve eklenecek deneyim puanları",

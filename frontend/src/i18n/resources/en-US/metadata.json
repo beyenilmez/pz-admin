@@ -17,6 +17,9 @@
     "administration": "Administration",
     "server": "Server"
   },
+  "permissions": {
+    "localNetwork": "Manage Project Zomboid servers on your local network."
+  },
   "screenshots": {
     "addXp": {
       "alt": "Skill selection and experience amounts for a player",

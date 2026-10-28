@@ -89,14 +89,19 @@ jobs:
       - run: wails3 task check:backend
 
   metadata:
-    name: Linux metadata
-    runs-on: ubuntu-26.04
+    name: Metadata (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-26.04, macos-15]
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Install metadata validators
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install --no-install-recommends -y appstream desktop-file-utils

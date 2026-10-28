@@ -88,7 +88,7 @@ tasks:
       - node scripts/licenses/combine.mjs "{{.TARGET}}"
 
   check:
-    desc: Checks the backend, frontend, Linux metadata, and licenses
+    desc: Checks the backend, frontend, platform metadata, and licenses
     cmds:
       - task: check:backend
       - task: check:frontend
@@ -102,18 +102,34 @@ tasks:
       - reuse lint
 
   check:metadata:
-    desc: Validates Linux AppStream metadata and the desktop entry
-    platforms: [linux]
+    desc: Generates and validates metadata for the host platform
+    platforms: [linux, darwin]
+    dir: "{{.ROOT_DIR}}"
+    cmds:
+      - task: common:generate:metadata
+        vars:
+          PLATFORM: "{{OS}}"
+      - task: "check:metadata:{{OS}}"
+
+  check:metadata:linux:
+    internal: true
     dir: "{{.ROOT_DIR}}"
     preconditions:
       - sh: command -v appstreamcli && command -v desktop-file-validate
         msg: Install appstream and desktop-file-utils to check Linux metadata.
     cmds:
-      - task: common:generate:metadata
-        vars:
-          PLATFORM: linux
       - node scripts/metadata/linux/appstream/validate.mjs .generated/linux/com.bedirhanyenilmez.pzadmin.metainfo.xml
       - desktop-file-validate .generated/linux/com.bedirhanyenilmez.pzadmin.desktop
+
+  check:metadata:darwin:
+    internal: true
+    dir: "{{.ROOT_DIR}}"
+    preconditions:
+      - sh: command -v plutil
+        msg: plutil is required to check macOS metadata.
+    cmds:
+      - plutil -lint -- .generated/darwin/Info.plist .generated/darwin/Info.dev.plist
+      - find .generated/darwin/Resources -type f -name InfoPlist.strings -exec plutil -lint -- {} +
 
   check:backend:
     desc: Checks and tests the Go backend
