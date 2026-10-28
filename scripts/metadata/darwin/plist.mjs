@@ -2,6 +2,19 @@ import { defaultLanguage, locales } from "#/frontend/src/i18n/locales.ts";
 import { metadataLocale } from "#/scripts/metadata/locales.mjs";
 import { replaceMarker } from "#/scripts/metadata/markers.mjs";
 import { permissionDescriptions } from "./permissions.mjs";
+import { keywordList } from "./keywords.mjs";
+
+function stringElements(values) {
+  return Object.entries(values)
+    .map(([key, text]) => {
+      const escapedText = text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+      return `\t\t<key>${key}</key>\n\t\t<string>${escapedText}</string>`;
+    })
+    .join("\n");
+}
 
 export function generatePlist(template, translationsByLanguage) {
   const languages = [
@@ -23,26 +36,25 @@ export function generatePlist(template, translationsByLanguage) {
     ),
     "\t\t</array>",
   ].join("\n");
-  const permissions = permissionDescriptions(
-    translationsByLanguage.get(defaultLanguage),
-  );
+  const sourceTranslations = translationsByLanguage.get(defaultLanguage);
+  const permissions = permissionDescriptions(sourceTranslations);
   if (!permissions.NSLocalNetworkUsageDescription)
     throw new Error("Missing source local-network permission description");
-  const permissionElements = Object.entries(permissions).map(([key, text]) => {
-    const escapedText = text
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;");
-    return `\t\t<key>${key}</key>\n\t\t<string>${escapedText}</string>`;
-  });
   const withLocalizations = replaceMarker(
     template,
     "localizations",
     localizations,
   );
-  return replaceMarker(
+  const withKeywords = replaceMarker(
     withLocalizations,
+    "keywords",
+    stringElements({
+      MDItemKeywords: keywordList(sourceTranslations, sourceTranslations),
+    }),
+  );
+  return replaceMarker(
+    withKeywords,
     "permissions",
-    permissionElements.join("\n"),
+    stringElements(permissions),
   );
 }

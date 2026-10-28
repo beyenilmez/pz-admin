@@ -14,6 +14,7 @@
 		<string>2.1.0</string>
 		<key>NSHumanReadableCopyright</key>
 		<string>Copyright © 2026 Bedirhan Yenilmez</string>
+		<!-- x-keywords -->
 
 		<key>CFBundleIconFile</key>
 		<string>icons</string>
