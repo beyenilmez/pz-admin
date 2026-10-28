@@ -18,7 +18,7 @@
     "server": "Server"
   },
   "permissions": {
-    "localNetwork": "Manage Project Zomboid servers on your local network."
+    "localNetwork": "This allows you to connect to Project Zomboid servers on your local network."
   },
   "screenshots": {
     "addXp": {
