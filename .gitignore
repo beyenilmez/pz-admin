@@ -4,6 +4,7 @@
 .ruff_cache
 .task
 bin
+/-.o
 
 # Local workspace files
 .local
