@@ -1,5 +1,5 @@
 import { defaultLanguage } from "#/frontend/scripts/shared/metadata.mjs";
-import metadata from "#/assets/metadata.json" with { type: "json" };
+import { metadataKeywords } from "#/scripts/metadata/keywords.mjs";
 import { replaceMarker } from "#/scripts/metadata/markers.mjs";
 import { metadataLocale } from "#/scripts/metadata/locales.mjs";
 
@@ -31,21 +31,14 @@ export function generateDesktop(template, translationsByLanguage) {
       commentLines.push(
         `Comment${localeSuffix}=${escapeDesktop(translations.summary)}`,
       );
-    if (translations.keywords && Object.keys(translations.keywords).length) {
-      // Fall back within a translated keyword list when individual keys are missing.
-      const keywordsWithFallback = {
-        ...translationsByLanguage.get(defaultLanguage).keywords,
-        ...translations.keywords,
-      };
-      keywordLines.push(
-        `Keywords${localeSuffix}=${[
-          ...Object.values(keywordsWithFallback),
-          ...metadata.keywords,
-        ]
-          .map((text) => escapeDesktop(text).replaceAll(";", "\\;"))
-          .join(";")};`,
-      );
-    }
+    keywordLines.push(
+      `Keywords${localeSuffix}=${metadataKeywords(
+        translations,
+        translationsByLanguage.get(defaultLanguage),
+      )
+        .map((text) => escapeDesktop(text).replaceAll(";", "\\;"))
+        .join(";")};`,
+    );
   }
   const withGenericNames = replaceMarker(
     template,

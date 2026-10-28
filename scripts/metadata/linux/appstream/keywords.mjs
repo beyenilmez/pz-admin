@@ -1,12 +1,14 @@
-import metadata from "#/assets/metadata.json" with { type: "json" };
+import { defaultLanguage } from "#/frontend/scripts/shared/metadata.mjs";
+import { metadataKeywords } from "#/scripts/metadata/keywords.mjs";
 import { escapeXml, languageAttribute } from "./xml.mjs";
 
 export function buildKeywordsXml(translationsByLanguage) {
-  const keywords = metadata.keywords.map(
-    (text) => `    <keyword translate="no">${escapeXml(text)}</keyword>`,
-  );
+  const keywords = [];
   for (const [language, translations] of translationsByLanguage) {
-    for (const text of Object.values(translations.keywords ?? {})) {
+    for (const text of metadataKeywords(
+      translations,
+      translationsByLanguage.get(defaultLanguage),
+    )) {
       keywords.push(
         `    <keyword${languageAttribute(language)}>${escapeXml(text)}</keyword>`,
       );
