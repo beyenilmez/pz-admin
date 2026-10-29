@@ -3,168 +3,196 @@
     "posix": "ca",
     "apple": "ca",
     "android": "b+ca",
-    "windows": "0003"
+    "windows": "0003",
+    "nsis": "Catalan"
   },
   "cs": {
     "posix": "cs",
     "apple": "cs",
     "android": "b+cs",
-    "windows": "0005"
+    "windows": "0005",
+    "nsis": "Czech"
   },
   "da": {
     "posix": "da",
     "apple": "da",
     "android": "b+da",
-    "windows": "0006"
+    "windows": "0006",
+    "nsis": "Danish"
   },
   "de": {
     "posix": "de",
     "apple": "de",
     "android": "b+de",
-    "windows": "0007"
+    "windows": "0007",
+    "nsis": "German"
   },
   "en-US": {
     "posix": "en_US",
     "apple": "en-US",
     "android": "b+en+US",
-    "windows": "0409"
+    "windows": "0409",
+    "nsis": "English"
   },
   "es-AR": {
     "posix": "es_AR",
     "apple": "es-AR",
     "android": "b+es+AR",
-    "windows": "2c0a"
+    "windows": "2c0a",
+    "nsis": "SpanishInternational"
   },
   "es-CL": {
     "posix": "es_CL",
     "apple": "es-CL",
     "android": "b+es+CL",
-    "windows": "340a"
+    "windows": "340a",
+    "nsis": "SpanishInternational"
   },
   "es-ES": {
     "posix": "es_ES",
     "apple": "es-ES",
     "android": "b+es+ES",
-    "windows": "0c0a"
+    "windows": "0c0a",
+    "nsis": "SpanishInternational"
   },
   "es-MX": {
     "posix": "es_MX",
     "apple": "es-MX",
     "android": "b+es+MX",
-    "windows": "080a"
+    "windows": "080a",
+    "nsis": "SpanishInternational"
   },
   "fi": {
     "posix": "fi",
     "apple": "fi",
     "android": "b+fi",
-    "windows": "000b"
+    "windows": "000b",
+    "nsis": "Finnish"
   },
   "fr": {
     "posix": "fr",
     "apple": "fr",
     "android": "b+fr",
-    "windows": "000c"
+    "windows": "000c",
+    "nsis": "French"
   },
   "hu": {
     "posix": "hu",
     "apple": "hu",
     "android": "b+hu",
-    "windows": "000e"
+    "windows": "000e",
+    "nsis": "Hungarian"
   },
   "id": {
     "posix": "id",
     "apple": "id",
     "android": "b+id",
-    "windows": "0021"
+    "windows": "0021",
+    "nsis": "Indonesian"
   },
   "it": {
     "posix": "it",
     "apple": "it",
     "android": "b+it",
-    "windows": "0010"
+    "windows": "0010",
+    "nsis": "Italian"
   },
   "ja": {
     "posix": "ja",
     "apple": "ja",
     "android": "b+ja",
-    "windows": "0011"
+    "windows": "0011",
+    "nsis": "Japanese"
   },
   "ko": {
     "posix": "ko",
     "apple": "ko",
     "android": "b+ko",
-    "windows": "0012"
+    "windows": "0012",
+    "nsis": "Korean"
   },
   "nl": {
     "posix": "nl",
     "apple": "nl",
     "android": "b+nl",
-    "windows": "0013"
+    "windows": "0013",
+    "nsis": "Dutch"
   },
   "no": {
     "posix": "no",
     "apple": "no",
     "android": "b+no",
-    "windows": "0014"
+    "windows": "0014",
+    "nsis": "Norwegian"
   },
   "pl": {
     "posix": "pl",
     "apple": "pl",
     "android": "b+pl",
-    "windows": "0015"
+    "windows": "0015",
+    "nsis": "Polish"
   },
   "pt-BR": {
     "posix": "pt_BR",
     "apple": "pt-BR",
     "android": "b+pt+BR",
-    "windows": "0416"
+    "windows": "0416",
+    "nsis": "PortugueseBR"
   },
   "pt-PT": {
     "posix": "pt_PT",
     "apple": "pt-PT",
     "android": "b+pt+PT",
-    "windows": "0816"
+    "windows": "0816",
+    "nsis": "Portuguese"
   },
   "ro": {
     "posix": "ro",
     "apple": "ro",
     "android": "b+ro",
-    "windows": "0018"
+    "windows": "0018",
+    "nsis": "Romanian"
   },
   "ru": {
     "posix": "ru",
     "apple": "ru",
     "android": "b+ru",
-    "windows": "0019"
+    "windows": "0019",
+    "nsis": "Russian"
   },
   "th": {
     "posix": "th",
     "apple": "th",
     "android": "b+th",
-    "windows": "001e"
+    "windows": "001e",
+    "nsis": "Thai"
   },
   "tr-TR": {
     "posix": "tr_TR",
     "apple": "tr-TR",
     "android": "b+tr+TR",
-    "windows": "041f"
+    "windows": "041f",
+    "nsis": "Turkish"
   },
   "uk-UA": {
     "posix": "uk_UA",
     "apple": "uk-UA",
     "android": "b+uk+UA",
-    "windows": "0422"
+    "windows": "0422",
+    "nsis": "Ukrainian"
   },
   "zh-Hans": {
     "posix": "zh_CN",
     "apple": "zh-Hans",
     "android": "b+zh+Hans",
-    "windows": "0004"
+    "windows": "0004",
+    "nsis": "SimpChinese"
   },
   "zh-Hant": {
     "posix": "zh_TW",
     "apple": "zh-Hant",
     "android": "b+zh+Hant",
-    "windows": "7c04"
+    "windows": "7c04",
+    "nsis": "TradChinese"
   }
 }

@@ -6,6 +6,7 @@ const localeFormats = {
   apple: /^[a-z]{2,3}(?:-[A-Za-z0-9]+)*$/,
   android: /^b\+[a-z]{2,3}(?:\+[A-Za-z0-9]+)*$/,
   windows: /^[0-9a-f]{4}$/,
+  nsis: /^[A-Za-z]+$/,
 };
 
 const metadataLanguages = Object.keys(localeRegistry);
@@ -35,7 +36,8 @@ function validateLocaleMappings() {
         throw new Error(
           `Missing or invalid ${format} locale mapping for ${language}`,
         );
-      if (usedIdentifiers.has(identifier))
+      // NSIS bundles one Spanish translation for several regional locales.
+      if (format !== "nsis" && usedIdentifiers.has(identifier))
         throw new Error(`Duplicate ${format} locale mapping: ${identifier}`);
       usedIdentifiers.add(identifier);
     }

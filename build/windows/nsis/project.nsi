@@ -65,7 +65,7 @@ ManifestDPIAware true
 
 !insertmacro MUI_UNPAGE_INSTFILES # Uninstalling page
 
-!insertmacro MUI_LANGUAGE "English" # Set the Language of the installer
+!include /CHARSET=UTF8 "..\..\..\.generated\windows\installer-metadata.nsh"
 
 ## The following two statements can be used to sign the installer and the uninstaller. The path to the binaries are provided in %1
 #!uninstfinalize 'signtool --file "%1"'
@@ -96,13 +96,21 @@ Section
     File "/oname=LICENSE" "..\..\..\LICENSE"
     File "/oname=README.md" "..\..\..\README.md"
 
-    CreateShortcut "$SMPROGRAMS\${INFO_PRODUCTNAME}.lnk" "$INSTDIR\${PRODUCT_EXECUTABLE}"
-    CreateShortCut "$DESKTOP\${INFO_PRODUCTNAME}.lnk" "$INSTDIR\${PRODUCT_EXECUTABLE}"
+    CreateShortCut "$SMPROGRAMS\${INFO_PRODUCTNAME}.lnk" "$INSTDIR\${PRODUCT_EXECUTABLE}" \
+        "" "" "" "" "" "$(APP_DESCRIPTION)"
+    CreateShortCut "$DESKTOP\${INFO_PRODUCTNAME}.lnk" "$INSTDIR\${PRODUCT_EXECUTABLE}" \
+        "" "" "" "" "" "$(APP_DESCRIPTION)"
 
     !insertmacro wails.associateFiles
     !insertmacro wails.associateCustomProtocols
     
     !insertmacro wails.writeUninstaller
+
+    WriteRegStr SHCTX "${UNINST_KEY}" "InstallLocation" "$INSTDIR"
+    WriteRegStr SHCTX "${UNINST_KEY}" "URLInfoAbout" "https://beyenilmez.github.io/pz-admin/"
+    WriteRegStr SHCTX "${UNINST_KEY}" "HelpLink" "https://github.com/beyenilmez/pz-admin/issues"
+    WriteRegStr SHCTX "${UNINST_KEY}" "URLUpdateInfo" "https://github.com/beyenilmez/pz-admin/releases"
+    WriteRegStr SHCTX "${UNINST_KEY}" "Comments" "$(APP_DESCRIPTION)"
 SectionEnd
 
 Section "uninstall" 
