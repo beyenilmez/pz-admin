@@ -19,7 +19,7 @@
     }
   ],
   "prHourlyLimit": 0,
-  "postUpdateOptions": ["gomodTidy"],
+  "postUpdateOptions": ["gomodTidy", "pnpmDedupe"],
   "packageRules": [
     {
       "matchManagers": ["npm"],
