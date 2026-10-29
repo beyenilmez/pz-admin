@@ -4,12 +4,11 @@
   },
   "info": {
     "0000": {
-      "ProductVersion": "2.1.0",
-      "CompanyName": "Bedirhan Yenilmez",
-      "FileDescription": "Project Zomboid server administration tool",
-      "LegalCopyright": "Copyright © 2026 Bedirhan Yenilmez",
       "ProductName": "PZ Admin",
-      "Comments": "Project Zomboid server administration tool"
+      "CompanyName": "Bedirhan Yenilmez",
+      "LegalCopyright": "Copyright © 2026 Bedirhan Yenilmez",
+      "InternalName": "pz-admin",
+      "OriginalFilename": "pz-admin.exe"
     }
   }
 }

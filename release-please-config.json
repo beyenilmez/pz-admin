@@ -23,11 +23,6 @@
           "jsonpath": "$.fixed.file_version"
         },
         {
-          "type": "json",
-          "path": "build/windows/info.json",
-          "jsonpath": "$.info.*.ProductVersion"
-        },
-        {
           "type": "xml",
           "path": "build/windows/wails.exe.manifest",
           "xpath": "/*[local-name()='assembly']/*[local-name()='assemblyIdentity']/@version"

@@ -106,9 +106,13 @@ tasks:
 
   generate:syso:
     summary: Generates Windows `.syso` file
+    deps:
+      - task: common:generate:metadata
+        vars:
+          PLATFORM: windows
     dir: build
     cmds:
-      - wails3 generate syso -arch {{.ARCH}} -icon windows/icon.ico -manifest windows/wails.exe.manifest -info windows/info.json -out ../wails_windows_{{.ARCH}}.syso
+      - wails3 generate syso -arch {{.ARCH}} -icon windows/icon.ico -manifest windows/wails.exe.manifest -info ../.generated/windows/info.json -out ../wails_windows_{{.ARCH}}.syso
     vars:
       ARCH: "{{.ARCH | default ARCH}}"
 
