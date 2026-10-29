@@ -6,7 +6,7 @@ Unicode true
 ## If the keyword is not defined, "wails_tools.nsh" will populate them.
 ## If they are defined here, "wails_tools.nsh" will not touch them. This allows you to use this project.nsi manually
 ## from outside of Wails for debugging and development of the installer.
-## 
+##
 ## For development first make a wails nsis build to populate the "wails_tools.nsh":
 ## > wails build --target windows/amd64 --nsis
 ## Then you can call makensis on this file with specifying the path to your binary:
@@ -81,7 +81,7 @@ OutFile "..\..\..\bin\${INFO_PROJECTNAME}-installer.exe" # Name of the installer
 ShowInstDetails show # This will always show the installation details.
 
 Function .onInit
-   !insertmacro wails.checkArchitecture
+    !insertmacro wails.checkArchitecture
 FunctionEnd
 
 Section
@@ -90,7 +90,7 @@ Section
     !insertmacro wails.webview2runtime
 
     SetOutPath $INSTDIR
-    
+
     !insertmacro wails.files
     File "/oname=THIRD-PARTY-NOTICES.json" "..\..\..\.generated\licenses\THIRD-PARTY-NOTICES.json"
     File "/oname=LICENSE" "..\..\..\LICENSE"
@@ -103,7 +103,7 @@ Section
 
     !insertmacro wails.associateFiles
     !insertmacro wails.associateCustomProtocols
-    
+
     !insertmacro wails.writeUninstaller
 
     WriteRegStr SHCTX "${UNINST_KEY}" "InstallLocation" "$INSTDIR"
@@ -111,9 +111,11 @@ Section
     WriteRegStr SHCTX "${UNINST_KEY}" "HelpLink" "https://github.com/beyenilmez/pz-admin/issues"
     WriteRegStr SHCTX "${UNINST_KEY}" "URLUpdateInfo" "https://github.com/beyenilmez/pz-admin/releases"
     WriteRegStr SHCTX "${UNINST_KEY}" "Comments" "$(APP_DESCRIPTION)"
+    WriteRegDWORD SHCTX "${UNINST_KEY}" "NoModify" 1
+    WriteRegDWORD SHCTX "${UNINST_KEY}" "NoRepair" 1
 SectionEnd
 
-Section "uninstall" 
+Section "uninstall"
     !insertmacro wails.setShellContext
 
     RMDir /r "$AppData\${PRODUCT_EXECUTABLE}" # Remove the WebView2 DataPath
