@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.1.1](https://github.com/beyenilmez/pz-admin/compare/v2.1.0...v2.1.1) (2026-10-30)
+
+
+### Bug Fixes
+
+* **deps:** update frontend dependencies (non-major) ([#42](https://github.com/beyenilmez/pz-admin/issues/42)) ([a05e7a7](https://github.com/beyenilmez/pz-admin/commit/a05e7a74275ed9092bbd8f0c7c84287d07c4b1cc))
+* **deps:** update wails to v3.0.0 ([#45](https://github.com/beyenilmez/pz-admin/issues/45)) ([2f2fc98](https://github.com/beyenilmez/pz-admin/commit/2f2fc985f341034758bffd007174be5662aaa604))
+* **messages:** allow newlines at the end of text ([cb25efb](https://github.com/beyenilmez/pz-admin/commit/cb25efb45232b29a536b0db7927ec4f4d0d5148a))
+* **metadata:** clarify local network permission text ([094afc4](https://github.com/beyenilmez/pz-admin/commit/094afc400a1f731c6b3073b12e7293a3360e1519))
+
 ## [2.1.0](https://github.com/beyenilmez/pz-admin/compare/v2.0.1...v2.1.0) (2026-10-25)
 
 

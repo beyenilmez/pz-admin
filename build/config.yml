@@ -11,7 +11,7 @@ info:
   description: "Project Zomboid server administration tool" # The application description
   copyright: "Copyright © 2026 Bedirhan Yenilmez" # Copyright text
   comments: "Project Zomboid server administration tool" # Comments
-  version: "2.1.0" # x-release-please-version
+  version: "2.1.1" # x-release-please-version
   # cfBundleIconName: "appicon" # The macOS icon name in Assets.car icon bundles (optional)
   #                               # Should match the name of your .icon file without the extension
   #                               # If not set and Assets.car exists, defaults to "appicon"
