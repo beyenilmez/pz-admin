@@ -5,7 +5,7 @@ go 1.27.3
 require (
 	github.com/adrg/xdg v0.5.3
 	github.com/google/uuid v1.6.0
-	github.com/wailsapp/wails/v3 v3.0.0-beta.34
+	github.com/wailsapp/wails/v3 v3.0.0
 	github.com/zalando/go-keyring v0.2.8
 	gitlab.com/nyxi/go-source-rcon/v2 v2.2.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
