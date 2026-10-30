@@ -41,7 +41,7 @@
       "postUpgradeTasks": {
         "commands": [
           "mise trust",
-          "mise lock go go:github.com/wailsapp/wails/v3/cmd/wails3"
+          "mise lock --bump go go:github.com/wailsapp/wails/v3/cmd/wails3"
         ],
         "fileFilters": ["mise.lock"],
         "executionMode": "branch",
@@ -79,7 +79,7 @@
       "postUpgradeTasks": {
         "commands": [
           "mise trust",
-          "mise lock go go:github.com/wailsapp/wails/v3/cmd/wails3"
+          "mise lock --bump go go:github.com/wailsapp/wails/v3/cmd/wails3"
         ],
         "fileFilters": ["mise.lock"],
         "executionMode": "branch",
