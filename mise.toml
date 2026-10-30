@@ -11,7 +11,7 @@ lockfile = true
 go = "{{ read_file(path=config_root ~ '/go.mod') | regex_replace(pattern='(?s)^.*?\ngo[[:space:]]+([^[:space:]]+).*$', rep='$1') }}"
 golangci-lint = "2.15.0"
 node = "24.22.2"
-"npm:pnpm" = { version = "11.28.8", allow_builds = ["pnpm"] }
+"npm:pnpm" = { version = "12.16.1", allow_builds = ["pnpm"] }
 uv = "0.13.6"
 
 # Windows installer compiler; retain its bundled includes, plugins, and stubs.
