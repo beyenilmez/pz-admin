@@ -8,8 +8,8 @@ Manage players, edit server options, and run console commands from one interface
 [Report an issue](https://github.com/beyenilmez/pz-admin/issues/new/choose)
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/players/en-US/players-en-US-dark-1280x800.webp">
-  <img src="assets/screenshots/players/en-US/players-en-US-light-1280x800.webp" alt="Player list with online status, roles, and player actions" width="1280">
+  <source media="(prefers-color-scheme: dark)" srcset="assets/screenshots/players/en-US/players-desktop-en-US-dark-1280x800.webp">
+  <img src="assets/screenshots/players/en-US/players-desktop-en-US-light-1280x800.webp" alt="Player list with online status, roles, and player actions" width="1280">
 </picture>
 
 ## Features
