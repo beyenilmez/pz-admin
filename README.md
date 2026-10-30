@@ -41,39 +41,39 @@ Choose the download for your operating system and processor.
     <tr>
       <th scope="row">Windows</th>
       <td>Installer (.exe)</td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-windows-x64-installer.exe">Download</a></td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-windows-arm64-installer.exe">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-windows-x64-installer.exe">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-windows-arm64-installer.exe">Download</a></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
       <th scope="row">macOS</th>
       <td>DMG</td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-macos-x64.dmg">Download</a></td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-macos-arm64.dmg">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-macos-x64.dmg">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-macos-arm64.dmg">Download</a></td>
     </tr>
   </tbody>
   <tbody>
     <tr>
       <th scope="rowgroup" rowspan="4">Linux</th>
       <td>DEB</td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-x64.deb">Download</a></td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-arm64.deb">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-x64.deb">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-arm64.deb">Download</a></td>
     </tr>
     <tr>
       <td>RPM</td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-x64.rpm">Download</a></td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-arm64.rpm">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-x64.rpm">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-arm64.rpm">Download</a></td>
     </tr>
     <tr>
       <td>Arch</td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-x64.pkg.tar.zst">Download</a></td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-arm64.pkg.tar.zst">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-x64.pkg.tar.zst">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-arm64.pkg.tar.zst">Download</a></td>
     </tr>
     <tr>
       <td>Flatpak</td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-x64.flatpak">Download</a></td>
-      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.0/pz-admin-2.1.0-linux-arm64.flatpak">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-x64.flatpak">Download</a></td>
+      <td><a href="https://github.com/beyenilmez/pz-admin/releases/download/v2.1.1/pz-admin-2.1.1-linux-arm64.flatpak">Download</a></td>
     </tr>
   </tbody>
 </table>
