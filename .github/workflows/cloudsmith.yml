@@ -54,7 +54,7 @@ jobs:
               test -s "packages/pz-admin-${RELEASE_TAG#v}-linux-$arch.$format"
             done
           done
-      - uses: cloudsmith-io/cloudsmith-cli-action@69e169e2ad9bc9a1599c2dff464061a00fe9f8ba # v3
+      - uses: cloudsmith-io/cloudsmith-cli-action@92b1383b22bbd36d804b858f273abcdf4d349f6b # v3
         with:
           oidc-namespace: beyenilmez
           oidc-service-slug: github-releases-2yp1
