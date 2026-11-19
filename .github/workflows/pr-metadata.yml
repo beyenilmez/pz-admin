@@ -18,7 +18,7 @@ jobs:
     timeout-minutes: 60
     steps:
       # Read PR metadata only; never check out or execute contributor code.
-      - uses: amannn/action-semantic-pull-request@48f256284bd46cdaab1048c3721360e808335d50 # v6
+      - uses: amannn/action-semantic-pull-request@2252a14e810aa9b85c2d560bd7070c802206ecf6 # v6
         id: title
         env:
           GITHUB_TOKEN: ${{ github.token }}
